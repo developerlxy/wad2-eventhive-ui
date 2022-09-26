@@ -30,7 +30,7 @@
     /* css */
     .search-container {
         align-items:center;
-        background-color: rgb(243, 243, 243);
+        background-color: rgb(255, 255, 255);
         border: 2px solid;
         border-color: rgb(119, 153, 119);
         border-radius: 50px;
@@ -49,7 +49,7 @@
         font-size: medium;
         color: rgb(119, 153, 119);
         border: 0px none;
-        background-color: rgb(243, 243, 243);
+        background-color: rgb(255, 255, 255);
         padding: 0px 10px;
         width: 200px;
         transition: width 0.35s ease-in-out;
