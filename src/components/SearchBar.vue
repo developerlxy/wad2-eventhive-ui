@@ -48,11 +48,13 @@
                 var filters = document.getElementById("filters");
                 console.log(filters.style.visibility);
                 filters.style.visibility = "visible";
+                filters.style.display = "flex";
             },
             hideFilters() {
                 var filters = document.getElementById("filters");
                 console.log(filters.style.visibility);
                 filters.style.visibility = "hidden";
+                filters.style.display = "none";
             }
         }
     }
@@ -119,7 +121,7 @@
 
     #filters {
         visibility: hidden;
-        /*display: none;*/
+        display: none;
     }
     .filter-container {
         align-items: center;
