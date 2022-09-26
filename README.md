@@ -1,29 +1,15 @@
-# wad2-eventhive-ui
+# template-vite-vue2-vuetify
 
-This template should help get you started developing with Vue 3 in Vite.
+`Vite + Vue 2 + Vuex + Vue Router + Vuetify`
 
-## Recommended IDE Setup
+## Start
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
+```bash
+npx degit slime7/template-vite-vue2-vuetify my-project
 ```
 
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
+```bash
+yarn dev # start dev server
+yarn build # build for production
+yarn serve # locally preview production build
 ```
