@@ -21,14 +21,14 @@ const routes = [
         component: () => import('@/views/Home.vue'),
       },
       {
-        path: '/',
-        name: 'signup',
-        component: () => import('../components/Registration.vue')
-      },
-      {
         path: '/login',
         name: 'login',
-        component: () => import('../components/Login.vue')
+        component: () => import('@/views/Login.vue')
+      },
+      {
+        path: '/register',
+        name: 'register',
+        component: () => import('../components/LoginCard.vue')
       },
       {
         path: '/forgot-password',
