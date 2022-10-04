@@ -34,6 +34,11 @@ const routes = [
         path: '/forgot-password',
         name: 'forgot-password',
         component: () => import('../components/ForgotPassword.vue')
+      },
+      {
+        path: '/createevent',
+        name: 'createevent',
+        component: () => import('@/views/CreateEvent.vue')
       }
     ],
   },
