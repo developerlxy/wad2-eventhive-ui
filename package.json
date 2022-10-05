@@ -10,11 +10,13 @@
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "@fortawesome/vue-fontawesome": "^2.0.8",
+    "axios": "^1.0.0",
     "material-design-icons": "^3.0.1",
     "node": "^14.18.0",
     "vite-plugin-components": "^0.13.2",
     "vite-plugin-vue2": "^1.4.0",
     "vue": "^2.6.12",
+    "vue-axios": "^3.4.1",
     "vue-router": "^3.5.2",
     "vuetify": "^2.5.8",
     "vuex": "^3.6.2"
