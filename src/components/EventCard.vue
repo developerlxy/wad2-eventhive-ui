@@ -1,12 +1,22 @@
 <template>
-    <div class="event-card">
-        <img :src=eventDetails.imageURL alt="Event Image" class="event-image">
-        <div class="event-details">
-            <p class="event-name">{{eventDetails.name}}</p>
-            <p class="event-datetime">{{eventDetails.date}}, {{eventDetails.time}}</p>
-            <p class="event-location">{{eventDetails.location}}</p>
-        </div>
-    </div>
+    <v-card
+    class="mx-auto"
+    max-width="344"
+  >
+    <v-img
+      :src="eventDetails.eventPhotoURL"
+      height="200px"
+    ></v-img>
+
+    <v-card-title>
+        {{eventDetails.eventName}}
+    </v-card-title>
+
+    <v-card-subtitle>
+        {{eventDetails.eventDate}}
+        {{eventDetails.eventLocation}}
+    </v-card-subtitle>
+  </v-card>
 </template>
 
 <script>
