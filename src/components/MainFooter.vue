@@ -12,7 +12,7 @@
         <v-row justify="end" dense>
           <v-col>
             <v-icon class="mx-5">email</v-icon>
-            hello@eventhive.com
+            hello@eventhive.com.sg
           </v-col>
         </v-row>
       </v-container>
@@ -31,3 +31,9 @@ export default {
   name: 'MainFooter'
 };
 </script>
+
+<!-- <style>
+  footer{
+    cursor: url('../assets/images/bee.png')
+  }
+</style> -->
