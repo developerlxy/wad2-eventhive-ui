@@ -6,15 +6,7 @@
     <NavBar></NavBar>
 
     <Categories></Categories>
-    <EventCard :eventDetails="{
-      name: 'Event Name',
-      imageURL: 'https://picsum.photos/200/300',
-      date: '2020-12-12',
-      time: '12:00',
-      location: 'Location',
-      category: 'Category',
-      id: 0
-    }"></EventCard>
+
   </div>
 </template>
 
