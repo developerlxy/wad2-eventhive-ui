@@ -33,7 +33,7 @@ export default {
   props: {
     imageURL: {
       type: String,
-      default: "../src/assets/images/bee.png",
+      default: "../src/assets/images/test.png",
     },
   },
   methods: {
