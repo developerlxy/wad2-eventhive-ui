@@ -20,6 +20,16 @@ const routes = [
         name: 'Home',
         component: () => import('@/views/Home.vue'),
       },
+      {
+        path: '/events/create',
+        name: 'Create Event',
+        component: () => import('@/views/CreateEvent.vue'),
+      },
+      {
+        path: '/events/createDummy', //for me to experiment pls leave it -kev
+        name: 'Create Event',
+        component: () => import('@/views/CreateEventDummy.vue'),
+      },
     ],
   },
 ];
