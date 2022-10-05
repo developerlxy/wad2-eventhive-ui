@@ -9,12 +9,12 @@
           v-for="category in categories"
           :key="category.title"
         >
+        <router-link style="text-decoration: none;" :to="`/events?category=${category.filter}`">
         <v-hover
         v-slot="{ hover }">
         <v-card class="pa-md-4 mx-lg-auto" 
         elevation=0
         :color="hover ? 'brownLight' : 'white'"
-        v-on:click="eventViewWithFilter(category.filter)"
         >
 
           <font-awesome-icon :icon="category.src" />
@@ -22,6 +22,7 @@
           
         </v-card>
         </v-hover>
+        </router-link>
         </v-col>
       </v-row>
     </v-container>
@@ -40,32 +41,5 @@
         { title: 'Others', src: "fa-solid fa-shuffle", filter: 'others'},
       ],
     }),
-    methods: {
-      eventViewWithFilter: function (filter){
-        var data = JSON.stringify({
-          "categories": [
-            filter
-          ]
-        });
-
-        var config = {
-          method: 'post',
-          url: 'https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/categories',
-          headers: { 
-            'Content-Type': 'application/json'
-          },
-          data : data
-        };
-
-        this.axios(config)
-        .then(function (response) {
-          console.log(JSON.stringify(response.data));
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-
-      }
-    }
   }
 </script>

@@ -20,6 +20,11 @@ const routes = [
         name: 'Home',
         component: () => import('@/views/Home.vue'),
       },
+      {
+        path: '/events',
+        name: 'Events',
+        component: () => import('@/views/FullEvents.vue'),
+      },
     ],
   },
 ];
