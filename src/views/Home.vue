@@ -3,9 +3,11 @@
 
   <div v-else>
     <!-- navbar component -->
-    <SearchBar></SearchBar>
+        <Google_button></Google_button>
+        <SearchBar></SearchBar>
 
     <Categories></Categories>
+
   </div>
 </template>
 
@@ -13,10 +15,11 @@
 import LandingScreen from '../components/LandingScreen.vue';
 import Categories from '@/components/Categories.vue';
 import SearchBar from '@/components/SearchBar.vue';
+import Google_button from '@/components/google_button.vue';
 
 export default {
     name: "Home",
-    components: { LandingScreen, Categories, SearchBar },
+    components: { LandingScreen, Categories, SearchBar, Google_button },
     mounted() {
     setTimeout(() => {
       this.isLoading = false;
