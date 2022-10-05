@@ -1,17 +1,17 @@
 <template>
   <LandingScreen v-if="isLoading"></LandingScreen>
   <v-container v-else fill-height fluid class="peachLight">
-    <LoginCard></LoginCard>
-    
-  </v-container>
+    <RegistrationCard></RegistrationCard>
+
+    </v-container>
   </template>
   
   <script>
-  import LoginCard from '../components/LoginCard.vue';
+  import RegistrationCard from '../components/RegistrationCard.vue';
   
   export default {
-      name: "Login",
-      components: { LoginCard },
+      name: "Register",
+      components: { RegistrationCard },
       mounted() {
       setTimeout(() => {
         this.isLoading = false;

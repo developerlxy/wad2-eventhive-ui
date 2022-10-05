@@ -28,7 +28,7 @@ const routes = [
       {
         path: '/register',
         name: 'register',
-        component: () => import('../components/LoginCard.vue')
+        component: () => import('@/views/Register.vue')
       },
       {
         path: '/forgot-password',
