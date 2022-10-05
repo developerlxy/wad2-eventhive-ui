@@ -19,7 +19,6 @@
             }
         }
     }
-    console.log(this)
 
 </script>
 
