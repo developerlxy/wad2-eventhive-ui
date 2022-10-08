@@ -21,9 +21,14 @@ export default {
     name: "Home",
     components: { LandingScreen, Categories, SearchBar, NavBar, EventCard },
     mounted() {
-    setTimeout(() => {
-      this.isLoading = false;
-    }, 2000);
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 2000);
+      if(localStorage.getItem('user')) {
+        this.user = JSON.parse(localStorage.getItem('user'))
+        console.log("user logged in:")
+        console.log(this.user)
+        }
     },
     data() {
       return {

@@ -10,6 +10,7 @@
 
     <SearchBar id="search-bar"></SearchBar>
     <button class="login-btn" id="login-btn" @click="login">Log In</button>
+    <button @click="logout">Logout</button>
 
     <img
         :src="imageURL"
@@ -40,6 +41,13 @@ export default {
     login() {
       //TOOD: implement login function onclick
       this.$router.push("/login");
+    },
+    logout: function(event) {
+      if (localStorage.getItem('user')) {
+        console.log("logging out")
+        console.log(JSON.parse(localStorage.getItem('user')))
+        localStorage.removeItem('user')
+      }
     }
   },
 };

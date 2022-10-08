@@ -21,6 +21,21 @@ const routes = [
         component: () => import('@/views/Home.vue'),
       },
       {
+        path: '/login',
+        name: 'login',
+        component: () => import('@/views/Login.vue')
+      },
+      {
+        path: '/register',
+        name: 'register',
+        component: () => import('@/views/Register.vue')
+      },
+      {
+        path: '/forgot-password',
+        name: 'forgot-password',
+        component: () => import('../components/ForgotPassword.vue')
+      },
+      {
         path: '/events',
         name: 'Events',
         component: () => import('@/views/FullEvents.vue'),
