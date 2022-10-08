@@ -11,6 +11,7 @@
         class="search-box "
         append-icon="search"
         @focus="isAdvanced = true"
+        @keyup.enter="search"
       ></v-text-field>
     </v-row>
     <div v-if="isAdvanced" class="row">
@@ -41,34 +42,6 @@
       >
     </div>
   </v-container>
-
-  <!-- <div class="search">
-    <div class="search-container">
-        <div class="search-box">
-            <input id="search-input" class="search-input" type="text" placeholder="Search for anything" v-model="searchText" @keyup.enter="search" @focus="showFilters()" @focusout="hideFilters()"/>
-        </div>
-        <button class="search-btn" type="submit">
-            <font-awesome-icon icon="magnifying-glass"/>
-        </button>
-    </div>
-        <div class="filters" id="filters">
-        <div class="filter-container">
-            <button class="filter-button">
-                <font-awesome-icon icon="location-dot" />
-                Anywhere</button>
-        </div>
-        <div class="filter-container">
-            <button class="filter-button">
-                <font-awesome-icon icon="calendar" />
-                Anytime</button>
-        </div>
-        <div class="filter-container">
-            <button class="filter-button">
-                <font-awesome-icon icon="person" />
-                Any group size</button>
-        </div>
-    </div>
-    </div> -->
 </template>
 
 <script>
@@ -84,27 +57,9 @@ export default {
   methods: {
     search() {
       // TODO: implement search function onclick
+      console.log("searching")
       this.$emit("search", this.searchText);
-    },
-    showFilters() {
-      var filters = document.getElementById("filters");
-      console.log(filters.style.visibility);
-      filters.style.visibility = "visible";
-      filters.style.display = "flex";
-    },
-    hideFilters() {
-      var filters = document.getElementById("filters");
-      console.log(filters.style.visibility);
-      filters.style.visibility = "hidden";
-      filters.style.display = "none";
     },
   },
 };
 </script>
-
-<style>
-/* css */
-.v-text-field {
-
-}
-</style>
