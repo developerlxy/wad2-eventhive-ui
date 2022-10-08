@@ -1,39 +1,20 @@
 <template>
   <!-- html -->
-  <v-toolbar>
-  <v-img
-  class="ma-5"
+  <v-toolbar class="navbar" height="100px">
+    <v-img
+      class="ma-5"
       max-height="100px"
       max-width="100px"
       src="src/assets/images/logo.png"
     />
     <SearchBar></SearchBar>
     <v-spacer></v-spacer>
-    <v-btn color="greenDark" class="ma-2 white--text">Create an Event</v-btn>
-    <v-btn text class="ma-2 greenDark--text">Log In</v-btn>
+    <v-btn color="greenDark" class="white--text">Create an Event</v-btn>
+    <v-avatar v-if="isLoggedIn" color="greenMid" class="ml-5" size="50">
+      <span class="white--text text-h5">JA</span>
+    </v-avatar>
+    <v-btn v-else text class="greenDark--text ml-5">Log In</v-btn>
   </v-toolbar>
-  <!-- <div class="navbar" id="navbar">
-    <img
-      src="../assets/images/logo.png"
-      alt="logo"
-      class="logo"
-      id="navbar-logo"
-    />
-
-    <SearchBar id="search-bar"></SearchBar>
-    <button class="login-btn" id="login-btn" @click="login">Log In</button>
-
-    <img
-        :src="imageURL"
-      alt="User"
-      class="user-profile-pic"
-    />
-
-    <button class="logged-in-user" id="logged-in-user" @click="logout">
-      <font-awesome-icon icon="user-circle" />
-      {{ user }}
-    </button>
-  </div> -->
 </template>
 
 <script>
@@ -43,6 +24,10 @@ export default {
   name: "NavBar",
   components: { SearchBar },
   props: {
+    isLoggedIn: {
+      type: Boolean,
+      default: false,
+    },
     imageURL: {
       type: String,
       default: "../src/assets/images/test.png",
@@ -59,9 +44,7 @@ export default {
 
 <style>
 /* css */
-.colored-btn {
-  color: black;
-  background-color: #c62e2e;
+.navbar {
+  flex: 0;
 }
-
 </style>
