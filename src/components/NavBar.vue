@@ -1,6 +1,18 @@
 <template>
   <!-- html -->
-  <div class="navbar" id="navbar">
+  <v-toolbar>
+  <v-img
+  class="ma-5"
+      max-height="100px"
+      max-width="100px"
+      src="src/assets/images/logo.png"
+    />
+    <SearchBar></SearchBar>
+    <v-spacer></v-spacer>
+    <v-btn color="greenDark" class="ma-2 white--text">Create an Event</v-btn>
+    <v-btn text class="ma-2 greenDark--text">Log In</v-btn>
+  </v-toolbar>
+  <!-- <div class="navbar" id="navbar">
     <img
       src="../assets/images/logo.png"
       alt="logo"
@@ -17,11 +29,11 @@
       class="user-profile-pic"
     />
 
-    <!-- <button class="logged-in-user" id="logged-in-user" @click="logout">
+    <button class="logged-in-user" id="logged-in-user" @click="logout">
       <font-awesome-icon icon="user-circle" />
       {{ user }}
-    </button> -->
-  </div>
+    </button>
+  </div> -->
 </template>
 
 <script>
@@ -40,45 +52,16 @@ export default {
     login() {
       //TOOD: implement login function onclick
       this.$router.push("/login");
-    }
+    },
   },
 };
 </script>
 
 <style>
 /* css */
-#navbar {
-  height: 120px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+.colored-btn {
+  color: black;
+  background-color: #c62e2e;
 }
 
-#navbar-logo {
-  max-width: 100%;
-  max-height: 100%;
-}
-
-#search-bar {
-  margin-left: 20px;
-}
-
-#login-btn {
-  position: absolute;
-  right: 0;
-  margin-right: 20px;
-  color: rgb(119, 153, 119);
-  font-weight: bold;
-  cursor: pointer;
-  visibility: visible;
-}
-
-.user-profile-pic {
-  position: absolute;
-  max-height: 60px;
-  right: 0;
-  margin-right: 20px;
-  border-radius: 50%;
-  visibility: hidden;
-}
 </style>
