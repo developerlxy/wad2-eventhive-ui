@@ -14,7 +14,7 @@
         @keyup.enter="search"
       ></v-text-field>
     </v-row>
-    <div v-if="isAdvanced" class="row">
+    <v-row v-if="isAdvanced" width="100px" class="d-inline-flex flex-wrap-nowrap">
       <v-text-field
         rounded
         hide-details
@@ -40,7 +40,7 @@
         class="filter ma-1"
         >Any Group Size</v-text-field
       >
-    </div>
+    </v-row>
   </v-container>
 </template>
 
