@@ -9,8 +9,8 @@
     />
 
     <SearchBar id="search-bar"></SearchBar>
-    <button class="login-btn" id="login-btn" @click="login">Log In</button>
-    <button @click="logout">Logout</button>
+    
+    <ProfileButton></ProfileButton>
 
     <img
         :src="imageURL"
@@ -18,19 +18,17 @@
       class="user-profile-pic"
     />
 
-    <!-- <button class="logged-in-user" id="logged-in-user" @click="logout">
-      <font-awesome-icon icon="user-circle" />
-      {{ user }}
-    </button> -->
+    
   </div>
 </template>
 
 <script>
 import SearchBar from "./SearchBar.vue";
+import ProfileButton from "./ProfileButton.vue";
 // javascript
 export default {
   name: "NavBar",
-  components: { SearchBar },
+  components: { SearchBar, ProfileButton }, 
   props: {
     imageURL: {
       type: String,
@@ -42,12 +40,8 @@ export default {
       //TOOD: implement login function onclick
       this.$router.push("/login");
     },
-    logout: function(event) {
-      if (localStorage.getItem('user')) {
-        console.log("logging out")
-        console.log(JSON.parse(localStorage.getItem('user')))
-        localStorage.removeItem('user')
-      }
+    getInitials() {
+
     }
   },
 };
