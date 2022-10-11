@@ -29,6 +29,24 @@ const routes = [
         path: '/events/createDummy', //for me to experiment pls leave it -kev
         name: 'Create Event',
         component: () => import('@/views/CreateEventDummy.vue'),
+        path: '/login',
+        name: 'login',
+        component: () => import('@/views/Login.vue')
+      },
+      {
+        path: '/register',
+        name: 'register',
+        component: () => import('@/views/Register.vue')
+      },
+      {
+        path: '/forgot-password',
+        name: 'forgot-password',
+        component: () => import('../components/ForgotPassword.vue')
+      },
+      {
+        path: '/events',
+        name: 'Events',
+        component: () => import('@/views/FullEvents.vue'),
       },
     ],
   },

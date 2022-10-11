@@ -3,9 +3,10 @@
 
   <div v-else>
     <!-- navbar component -->
-    <SearchBar></SearchBar>
+    <NavBar></NavBar>
 
     <Categories></Categories>
+
   </div>
 </template>
 
@@ -13,14 +14,21 @@
 import LandingScreen from '../components/LandingScreen.vue';
 import Categories from '@/components/Categories.vue';
 import SearchBar from '@/components/SearchBar.vue';
+import NavBar from '@/components/NavBar.vue';
+import EventCard from '@/components/EventCard.vue';
 
 export default {
     name: "Home",
-    components: { LandingScreen, Categories, SearchBar },
+    components: { LandingScreen, Categories, SearchBar, NavBar, EventCard },
     mounted() {
-    setTimeout(() => {
-      this.isLoading = false;
-    }, 2000);
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 2000);
+      if(localStorage.getItem('user')) {
+        this.user = JSON.parse(localStorage.getItem('user'))
+        console.log("user logged in:")
+        console.log(this.user)
+        }
     },
     data() {
       return {
