@@ -3,6 +3,7 @@
 
   <div v-else>
     <Categories></Categories>
+    <Review></Review>
 
   </div>
 </template>
@@ -11,10 +12,11 @@
 import LandingScreen from '../components/LandingScreen.vue';
 import Categories from '@/components/Categories.vue';
 import EventCard from '@/components/EventCard.vue';
+import Review from '@/components/Review.vue';
 
 export default {
     name: "Home",
-    components: { LandingScreen, Categories, EventCard },
+    components: { LandingScreen, Categories, EventCard, Review },
     mounted() {
     setTimeout(() => {
       this.isLoading = false;
