@@ -29,7 +29,6 @@
             }
         }
     }
-    console.log(this)
 
 </script>
 

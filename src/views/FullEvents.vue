@@ -4,7 +4,7 @@
   <div v-else>
     <NavBar></NavBar>
     <Categories></Categories>
-
+    <v-container class="mb-4">
     <v-row>
       <v-col
           v-for="event in events"
@@ -14,7 +14,7 @@
           <EventCard :eventDetails="event"></EventCard>
       </v-col>
     </v-row>
-
+  </v-container>
   </div>
 </template>
 
@@ -32,8 +32,6 @@ export default {
     setTimeout(() => {
       this.isLoading = false;
     }, 2000);
-    let categoryFilter = this.$route.query.category
-    this.eventViewWithFilter(categoryFilter)
     },
     data() {
       return {
@@ -68,5 +66,14 @@ export default {
         });
       }
     },
+    watch: {
+    '$route.params': {
+        handler() {
+            let categoryFilter = this.$route.query.category
+            this.eventViewWithFilter(categoryFilter)
+        },
+        immediate: true,
+    }
+}
 };
 </script>

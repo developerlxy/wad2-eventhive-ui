@@ -7,6 +7,7 @@
       max-width="100px"
       src="src/assets/images/logo.png"
     />
+<<<<<<< HEAD
     <SearchBar></SearchBar>
     <v-spacer></v-spacer>
     <v-btn color="greenDark" class="white--text">Create an Event</v-btn>
@@ -15,6 +16,24 @@
     </v-avatar>
     <v-btn v-else text class="greenDark--text ml-5">Log In</v-btn>
   </v-toolbar>
+=======
+
+    <SearchBar id="search-bar"></SearchBar>
+    <button class="login-btn" id="login-btn" @click="login">Log In</button>
+    <button @click="logout">Logout</button>
+
+    <img
+        :src="imageURL"
+      alt="User"
+      class="user-profile-pic"
+    />
+
+    <!-- <button class="logged-in-user" id="logged-in-user" @click="logout">
+      <font-awesome-icon icon="user-circle" />
+      {{ user }}
+    </button> -->
+  </div>
+>>>>>>> f1da1c2e9ebfb38736e4686fe1b46eb889a97268
 </template>
 
 <script>
@@ -38,6 +57,16 @@ export default {
       //TOOD: implement login function onclick
       this.$router.push("/login");
     },
+<<<<<<< HEAD
+=======
+    logout: function(event) {
+      if (localStorage.getItem('user')) {
+        console.log("logging out")
+        console.log(JSON.parse(localStorage.getItem('user')))
+        localStorage.removeItem('user')
+      }
+    }
+>>>>>>> f1da1c2e9ebfb38736e4686fe1b46eb889a97268
   },
 };
 </script>
