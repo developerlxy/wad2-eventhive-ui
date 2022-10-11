@@ -8,8 +8,10 @@
         <v-col
           v-for="category in categories"
           :key="category.title"
+
+          @click="handleClick(category.filter)"
         >
-        <router-link style="text-decoration: none;" :to="`/events?category=${category.filter}`">
+        
         <v-hover
         v-slot="{ hover }">
         <v-card class="pa-md-4 mx-lg-auto" 
@@ -22,7 +24,6 @@
           
         </v-card>
         </v-hover>
-        </router-link>
         </v-col>
       </v-row>
     </v-container>
@@ -41,5 +42,10 @@
         { title: 'Others', src: "fa-solid fa-shuffle", filter: 'others'},
       ],
     }),
+    methods:{
+      handleClick: function (filter){
+        this.$router.push({ path:`/events?category=${filter}`})
+      }
+    }
   }
 </script>
