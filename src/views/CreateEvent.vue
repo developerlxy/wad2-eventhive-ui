@@ -20,11 +20,6 @@
 </template>
 
 <script>
-import CreateEventForm from "../components/CreateEventForm.vue";//vuetify script from https://vuetifyjs.com/en/components/forms/#validation-with-submit-26-clear
-
-</script>
-
-<script>
 import LandingScreen from '../components/LandingScreen.vue';
 import Categories from '@/components/Categories.vue';
 import SearchBar from '@/components/SearchBar.vue';
