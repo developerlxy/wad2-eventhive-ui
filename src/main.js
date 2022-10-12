@@ -13,15 +13,6 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(fas)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(VueAxios, axios)
-Vue.prototype.$categories = [
-  { title: 'Sports', src: 'fa-solid fa-volleyball', filter: 'sports'},
-  { title: 'Arts', src: 'fa-solid fa-palette', filter: 'arts'},
-  { title: 'Music', src: 'fa-solid fa-music', filter: 'music'},
-  { title: 'Food', src: 'fa-solid fa-utensils', filter: 'food'},
-  { title: 'Pets', src: "fa-solid fa-dog", filter: 'pets'},
-  { title: 'Games', src: "fa-solid fa-gamepad", filter: 'games'},
-  { title: 'Others', src: "fa-solid fa-shuffle", filter: 'others'},
-]
 
 new Vue({
   vuetify,

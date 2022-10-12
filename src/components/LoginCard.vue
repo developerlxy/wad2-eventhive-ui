@@ -110,8 +110,8 @@ export default {
               this.loginSuccessful = true
               this.wrongPassword = false
               this.mustRegister = false
-              const user = JSON.stringify(response.data)
-              localStorage.setItem('user', user)
+              const user = response.data
+              this.$store.commit("login", user)
               this.$router.push("/");
             }
             this.isDisabled = false
