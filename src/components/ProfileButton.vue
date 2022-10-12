@@ -1,8 +1,8 @@
 <template>
-  <div id="profile-btn">
+  <div id="login-profile-btn">
     <button v-if="this.$store.state.user == null" class="login-btn" id="login-btn" @click="login">Log In</button>
     <button v-else >
-    <v-avatar class="white--text" id="logged-in-user" color="rgb(119, 153, 119)" size="36">
+    <v-avatar class="white--text" id="profile-btn" color="rgb(119, 153, 119)" size="36" @click="logout">
         {{ initials }}
     </v-avatar>
     </button>
@@ -28,6 +28,9 @@
         //TOOD: implement login function onclick
         this.$router.push("/login");
       },
+      logout() {
+        this.$store.commit("logout")
+      },
       getInitials() {
         if(this.$store.state.user != null) {
             var userName = this.$store.state.user.userName
@@ -45,12 +48,10 @@
   
   <style>
   /* css */
- 
-  
-  #profile-btn {
-    position: absolute;
-    right: 0;
-    margin-right: 20px;
+
+  #login-btn{
+    color: rgb(119, 153, 119);
+    font-weight: bold;
   }
   
   

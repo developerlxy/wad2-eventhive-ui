@@ -9,7 +9,6 @@
     />
 
     <SearchBar id="search-bar"></SearchBar>
-    
     <ProfileButton></ProfileButton>
 
     <img
@@ -65,14 +64,13 @@ export default {
   margin-left: 20px;
 }
 
-#login-btn {
+#login-profile-btn {
   position: absolute;
   right: 0;
   margin-right: 20px;
-  color: rgb(119, 153, 119);
-  font-weight: bold;
   cursor: pointer;
   visibility: visible;
+  display: flex;
 }
 
 .user-profile-pic {
