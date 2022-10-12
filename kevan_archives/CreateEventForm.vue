@@ -23,6 +23,7 @@
 <script>
 export default {
   data: () => ({
+    // props: ['eventName', 'category', 'location'],
     valid: true,
     eventName: '',
     nameRules: [
