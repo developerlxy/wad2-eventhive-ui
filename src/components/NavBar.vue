@@ -10,11 +10,11 @@
     />
     <SearchBar></SearchBar>
     <v-spacer></v-spacer>
-    <v-btn color="greenDark" class="white--text">Create an Event</v-btn>
-    <v-avatar v-if="isLoggedIn" color="greenMid" class="ml-5" size="50">
+    <v-btn color="greenDark" class="white--text" @click="createEvent()">Create an Event</v-btn>
+    <v-avatar v-if="this.$store.state.user != null" color="greenMid" class="ml-5" size="50">
       <span class="white--text text-h5">JA</span>
     </v-avatar>
-    <v-btn v-else text class="greenDark--text ml-5">Log In</v-btn>
+    <v-btn v-else text class="greenDark--text ml-5" @click="login()">Log In</v-btn>
   </v-toolbar>
 </template>
 
@@ -41,10 +41,17 @@ export default {
     },
     login() {
       //TOOD: implement login function onclick
+      console.log(this.$store.state.user)
       this.$router.push("/login");
     },
     getInitials() {
-
+    
+    },
+    createEvent(){
+      this.$router.push("/events/create");
+    },
+    logout: function(event) {
+      this.$store.state.user = null;
     }
   },
 };

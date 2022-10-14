@@ -1,20 +1,21 @@
 <template>
   <!-- html -->
   <v-container class="ma-3">
-    <v-row>
+    <v-row class="d-flex flex-row">
       <v-text-field
         placeholder="Search for anything"
         outlined
         dense
         rounded
         hide-details
-        class="search-box "
+        class="search-box"
         append-icon="search"
         @focus="isAdvanced = true"
         @keyup.enter="search"
       ></v-text-field>
     </v-row>
-    <v-row v-if="isAdvanced" width="100px" class="d-inline-flex flex-wrap-nowrap">
+    <v-row v-if="isAdvanced" width="100px" class="d-flex flex-row">
+      <!--  -->
       <v-text-field
         rounded
         hide-details
@@ -23,6 +24,8 @@
         placeholder="Anytime"
         class="filter ma-1"
       ></v-text-field>
+
+      <!-- Anywhere to change to dropdown -->
       <v-text-field
         rounded
         hide-details
@@ -31,6 +34,8 @@
         placeholder="Anywhere"
         class="filter ma-1"
       ></v-text-field>
+
+      <!-- check capacity of event -->
       <v-text-field
         rounded
         hide-details

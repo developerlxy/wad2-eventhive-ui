@@ -14,11 +14,14 @@
         <v-rating
           empty-icon="far fa-star"
           full-icon="fas fa-star"
-          half-icon="mdi-star-half-full"
           hover
           length="5"
-          size="64"
-          value="3"
+          size="20"
+          color="greenDark"
+          background-color="grey"
+          value="5"
+          v-model="ratingValue"
+          @click="test()"
         ></v-rating>
         <v-textarea
           outlined
@@ -39,7 +42,14 @@ export default {
   data() {
     return {
       inputReview: false,
+      ratingValue: 5,
+
     };
+  },
+  methods: {
+    test() {
+      console.log(this.ratingValue)
+    },
   },
 };
 </script>
