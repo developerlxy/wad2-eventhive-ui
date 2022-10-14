@@ -20,10 +20,11 @@
 
 <script>
 import SearchBar from "./SearchBar.vue";
+import ProfileButton from "./ProfileButton.vue";
 // javascript
 export default {
   name: "NavBar",
-  components: { SearchBar },
+  components: { SearchBar, ProfileButton }, 
   props: {
     isLoggedIn: {
       type: Boolean,
@@ -42,12 +43,8 @@ export default {
       //TOOD: implement login function onclick
       this.$router.push("/login");
     },
-    logout: function(event) {
-      if (localStorage.getItem('user')) {
-        console.log("logging out")
-        console.log(JSON.parse(localStorage.getItem('user')))
-        localStorage.removeItem('user')
-      }
+    getInitials() {
+
     }
   },
 };

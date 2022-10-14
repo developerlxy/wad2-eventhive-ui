@@ -21,11 +21,10 @@ export default {
       setTimeout(() => {
         this.isLoading = false;
       }, 2000);
-      if(localStorage.getItem('user')) {
-        this.user = JSON.parse(localStorage.getItem('user'))
-        console.log("user logged in:")
-        console.log(this.user)
-        }
+      this.$store.dispatch('getEvents')
+      if (this.$store.state.user != null) {
+        console.log(`current user: ${this.$store.state.user.userName}`)
+      }
     },
     data() {
       return {
