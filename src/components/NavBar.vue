@@ -1,6 +1,6 @@
 <template>
   <!-- html -->
-  <v-toolbar class="navbar" height="100px">
+  <v-toolbar class="navbar" height="min-height">
     <v-img
       class="ma-5 logo"
       max-height="100px"
@@ -62,7 +62,6 @@ export default {
 .navbar {
   flex: 0;
 }
-
 .logo {
   cursor: pointer;
 }

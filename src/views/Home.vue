@@ -3,8 +3,6 @@
 
   <div v-else>
     <Categories></Categories>
-    <Review></Review>
-
   </div>
 </template>
 
