@@ -28,7 +28,7 @@ const routes = [
       {
         path: '/register',
         name: 'register',
-        component: () => import('../components/LoginCard.vue')
+        component: () => import('@/views/Register.vue')
       },
       {
         path: '/forgot-password',
@@ -36,10 +36,10 @@ const routes = [
         component: () => import('../components/ForgotPassword.vue')
       },
       {
-        path: '/createevent',
-        name: 'createevent',
-        component: () => import('@/views/CreateEvent.vue')
-      }
+        path: '/events',
+        name: 'Events',
+        component: () => import('@/views/FullEvents.vue'),
+      },
     ],
   },
 ];

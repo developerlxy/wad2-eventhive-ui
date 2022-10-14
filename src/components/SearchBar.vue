@@ -42,6 +42,7 @@
         },
         methods: {
             search() {
+                // TODO: implement search function onclick
                 this.$emit('search', this.searchText)
             },
             showFilters() {
@@ -58,23 +59,11 @@
             }
         }
     }
-
      
 </script>
 
 <style>
     /* css */
-    .search {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        margin-top: 20px;
-    }
-    .search * {
-        font-size: medium;
-        border-color: rgb(119, 153, 119);
-    }
 
     .search-container {
         align-items:center;
@@ -102,7 +91,7 @@
     }
     .search-input:focus {
         outline: none;
-        width: 300px;
+        width: 400px;
     }
 
     .search-btn {
