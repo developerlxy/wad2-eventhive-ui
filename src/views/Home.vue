@@ -2,6 +2,7 @@
   <LandingScreen v-if="isLoading"></LandingScreen>
 
   <div v-else>
+    <NavBar></NavBar>
     <Categories></Categories>
   </div>
 </template>
@@ -9,12 +10,11 @@
 <script>
 import LandingScreen from '../components/LandingScreen.vue';
 import Categories from '@/components/Categories.vue';
-import EventCard from '@/components/EventCard.vue';
-import Review from '@/components/Review.vue';
+import NavBar from '@/components/NavBar.vue';
 
 export default {
     name: "Home",
-    components: { LandingScreen, Categories, EventCard, Review },
+    components: { LandingScreen, Categories, NavBar },
     mounted() {
       setTimeout(() => {
         this.isLoading = false;

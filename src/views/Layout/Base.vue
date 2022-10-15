@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    <nav-bar></nav-bar>
     <v-main>
       <!-- <div>
         <v-btn text :to="{ name: 'Landing' }" exact>Landing</v-btn>
@@ -14,13 +13,11 @@
 
 <script>
 import MainFooter from '@/components/MainFooter.vue';
-import NavBar from '@/components/NavBar.vue';
 
 export default {
   name: 'Base',
   components: {
-    MainFooter,
-    NavBar
-},
+    MainFooter
+  },
 };
 </script>

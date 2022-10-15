@@ -1,21 +1,31 @@
 <template>
   <!-- html -->
-  <v-toolbar class="navbar" height="min-height">
-    <v-img
-      class="ma-5 logo"
-      max-height="100px"
-      max-width="100px"
-      src="src/assets/images/logo.png"
-      @click="toHome()"
-    />
-    <SearchBar></SearchBar>
-    <v-spacer></v-spacer>
-    <v-btn color="greenDark" class="white--text" @click="createEvent()">Create an Event</v-btn>
-    <v-avatar v-if="this.$store.state.user != null" color="greenMid" class="ml-5" size="50">
-      <span class="white--text text-h5">JA</span>
-    </v-avatar>
-    <v-btn v-else text class="greenDark--text ml-5" @click="login()">Log In</v-btn>
-  </v-toolbar>
+  <v-app-bar height="min-height" color="white" class="navbar">
+      <v-img
+        class="ma-5 logo"
+        max-height="100px"
+        max-width="100px"
+        src="../src/assets/images/logo.png"
+        contain
+        @click="toHome()"
+      />
+      <SearchBar></SearchBar>
+      <v-spacer></v-spacer>
+      <v-btn color="greenDark" class="white--text" @click="createEvent()"
+        >Create an Event</v-btn
+      >
+      <v-avatar
+        v-if="this.$store.state.user != null"
+        color="greenMid"
+        class="ml-5"
+        size="50"
+      >
+        <span class="white--text text-h5">JA</span>
+      </v-avatar>
+      <v-btn v-else text class="greenDark--text ml-5" @click="login()"
+        >Log In</v-btn
+      >
+  </v-app-bar>
 </template>
 
 <script>
@@ -24,7 +34,7 @@ import ProfileButton from "./ProfileButton.vue";
 // javascript
 export default {
   name: "NavBar",
-  components: { SearchBar, ProfileButton }, 
+  components: { SearchBar, ProfileButton },
   props: {
     isLoggedIn: {
       type: Boolean,
@@ -40,19 +50,19 @@ export default {
       this.$router.push("/");
     },
     login() {
-      //TOOD: implement login function onclick
-      console.log(this.$store.state.user)
+      // TOOD: implement login function onclick
+      console.log(this.$store.state.user);
       this.$router.push("/login");
     },
     getInitials() {
-    
+      // TODO: implement getInitials function
     },
-    createEvent(){
+    createEvent() {
       this.$router.push("/events/create");
     },
-    logout: function(event) {
+    logout: function (event) {
       this.$store.state.user = null;
-    }
+    },
   },
 };
 </script>

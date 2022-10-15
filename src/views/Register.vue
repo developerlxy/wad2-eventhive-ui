@@ -1,8 +1,7 @@
 <template>
   <LandingScreen v-if="isLoading"></LandingScreen>
-  <v-container v-else fill-height fluid class="peachLight">
+  <v-container v-else fluid class="peachLight fill-height">
     <RegistrationCard></RegistrationCard>
-
     </v-container>
   </template>
   
