@@ -2,6 +2,7 @@
   <LoadingScreen v-if="isLoading"></LoadingScreen>
 
   <div v-else>
+    <NavBar></NavBar>
     <Categories></Categories>
     <v-container class="mb-4">
     <v-row>
@@ -20,12 +21,13 @@
 <script>
 import LoadingScreen from '../components/LoadingScreen.vue';
 import Categories from '@/components/Categories.vue';
+import NavBar from '@/components/NavBar.vue';
 import EventCard from '@/components/EventCard.vue';
 
 
 export default {
     name: "Home",
-    components: { LoadingScreen, Categories, EventCard },
+    components: { LoadingScreen, NavBar, Categories, EventCard },
     mounted() {
     setTimeout(() => {
       this.isLoading = false;
