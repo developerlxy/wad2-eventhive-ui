@@ -2,9 +2,7 @@
   <LandingScreen v-if="isLoading"></LandingScreen>
 
   <div v-else>
-    <!-- navbar component -->
-    <SearchBar></SearchBar>
-
+    <NavBar> </NavBar>
     <br>
     <h1>
       Fancy A New Event?
@@ -175,11 +173,11 @@
 <script>
 import LandingScreen from '../components/LandingScreen.vue';
 import Categories from '@/components/Categories.vue';
-import SearchBar from '@/components/SearchBar.vue';
+import NavBar from '@/components/NavBar.vue';
 
 export default {
     name: "createEvent",
-    components: { LandingScreen, Categories, SearchBar },
+    components: { LandingScreen, Categories, NavBar },
     mounted() {
     setTimeout(() => {
       this.isLoading = false;
