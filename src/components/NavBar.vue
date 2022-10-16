@@ -11,20 +11,12 @@
       />
       <SearchBar></SearchBar>
       <v-spacer></v-spacer>
-      <v-btn color="greenDark" class="white--text" @click="createEvent()"
+      <v-btn color="greenDark mx-4" class="white--text" @click="createEvent()"
         >Create an Event</v-btn
       >
-      <v-avatar
-        v-if="this.$store.state.user != null"
-        color="greenMid"
-        class="ml-5"
-        size="50"
-      >
-        <span class="white--text text-h5">JA</span>
-      </v-avatar>
-      <v-btn v-else text class="greenDark--text ml-5" @click="login()"
-        >Log In</v-btn
-      >
+
+      <ProfileButton></ProfileButton>
+
   </v-app-bar>
 </template>
 

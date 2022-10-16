@@ -1,6 +1,6 @@
 <template>
   <div id="login-profile-btn">
-    <button v-if="this.$store.state.user == null" class="login-btn" id="login-btn" @click="login">Log In</button>
+    <button v-if="this.$store.state.user == null" class="login-btn mx-4" id="login-btn" @click="login">Log In</button>
     <button v-else >
     <v-avatar class="white--text" id="profile-btn" color="rgb(119, 153, 119)" size="36" @click="logout">
         {{ initials }}
