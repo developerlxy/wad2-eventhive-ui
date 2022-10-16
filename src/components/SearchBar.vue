@@ -121,7 +121,13 @@ export default {
     search() {
       // TODO: implement search function onclick
       console.log("searching");
-      this.$emit("search", this.searchText);
+      var config = {
+        method: "get",
+        url: "https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
     },
   },
   computed: {

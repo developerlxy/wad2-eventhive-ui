@@ -41,19 +41,8 @@ export default {
     toHome() {
       this.$router.push("/");
     },
-    login() {
-      // TOOD: implement login function onclick
-      console.log(this.$store.state.user);
-      this.$router.push("/login");
-    },
-    getInitials() {
-      // TODO: implement getInitials function
-    },
     createEvent() {
       this.$router.push("/events/create");
-    },
-    logout: function (event) {
-      this.$store.state.user = null;
     },
   },
 };
