@@ -44,7 +44,7 @@ const routes = [
         path: '/user/:eventType',
         name: 'user-events',
         component: () => import('../views/UserEvents.vue'),
-      }
+      },
     ],
   },
 ];
