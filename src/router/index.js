@@ -50,6 +50,11 @@ const routes = [
         name: 'Events',
         component: () => import('@/views/FullEvents.vue'),
       },
+      {
+        path: '/profile',
+        name: 'User Profile',
+        component: () => import('@/views/UserProfile.vue'),
+      },
     ],
   },
 ];

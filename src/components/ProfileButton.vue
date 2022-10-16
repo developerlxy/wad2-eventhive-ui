@@ -39,6 +39,9 @@
       </template>
       <v-list>
         <v-list-item @click="myProfile"> My Profile </v-list-item>
+        <v-list-item @click="registered"> Registered Events </v-list-item>
+        <v-list-item @click="wishlist"> My WishList </v-list-item>
+        <v-list-item @click="history"> Attended Events </v-list-item>
         <v-list-item @click="logout"> Log Out </v-list-item>
       </v-list>
     </v-menu>
@@ -79,6 +82,18 @@ export default {
     },
     myProfile() {
       this.$router.push("/profile");
+    },
+    registered() {
+      // TODO: create pages & routes
+      this.$router.push("/registered");
+    },
+    wishlist() {
+      // TODO: create pages & routes
+      this.$router.push("/wishlist");
+    },
+    history() {
+      // TODO: create pages & routes
+      this.$router.push("/history");
     },
   },
 };
