@@ -22,7 +22,7 @@
 
 <script>
 import SearchBar from "./SearchBar.vue";
-import ProfileButton from "./ProfileButton.vue";
+import ProfileButton from "./LoginProfileButton.vue";
 // javascript
 export default {
   name: "NavBar",
