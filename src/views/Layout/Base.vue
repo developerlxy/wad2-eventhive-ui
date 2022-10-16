@@ -17,7 +17,7 @@ import MainFooter from '@/components/MainFooter.vue';
 export default {
   name: 'Base',
   components: {
-    MainFooter,
+    MainFooter
   },
 };
 </script>
