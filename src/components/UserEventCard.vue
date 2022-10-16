@@ -1,26 +1,41 @@
 <template>
-    <v-card elevation="2">
+    <v-card elevation="2" >
         <v-row>
             <v-col
-            cols="3"
-            class="event-card-img pl-8 pr-2"
+            class="event-card-img pl-8 pr-8 col-sm-6 col-md-3"
+            
             >
             <v-img
+              contain
               class="v-img"
               :src="eventObj.eventPhotoURL"
+              
             >
-
             </v-img>
             </v-col>
 
             <v-col
-            cols="9"
-            class="event-card-text pl-0"
+            class="event-card-text col-sm-6 col-md-9 pl-6 pl-sm-0 text-left justify-center my-md-4 my-lg-12"
             >
-                <div class="event-card-date">{{eventDateString}}</div>
-                <v-card-title class="mb-6"><h3>{{eventObj.eventName}}</h3></v-card-title>
-                <v-card-subtitle class="">{{eventObj.eventLocation}}</v-card-subtitle>
-                <v-card-text>Sample text</v-card-text>
+                <div class="event-card-date body-1">{{eventDateString}}</div>
+                <v-card-title class="mb-4 text-h5">{{eventObj.eventName}}</v-card-title>
+                <v-card-subtitle class="text-subtitle-1">{{eventObj.eventLocation}}</v-card-subtitle>
+                <v-btn 
+                  v-if="this.eventType=='Registered Events'"
+                  class="text-none ml-4 mb-5"
+                  color="greenDark"
+                  dark
+                >
+                  View event details
+                </v-btn>
+                <v-btn 
+                  v-else
+                  class="text-none ml-4 mb-4"
+                  color="greenDark"
+                  dark
+                >
+                  Review event
+                </v-btn>
             </v-col>
         </v-row>
     </v-card>        
@@ -32,6 +47,9 @@
         props: {
           eventObj: {
             type: Object
+          },
+          eventType: {
+            type: String
           }
         },
         methods: {
@@ -68,14 +86,13 @@
         },
         mounted() {
           this.getFormattedDate()
+          console.log(this.eventType)
         }
     }
 </script>
 
 <style>
-    .event-card-text{
-        text-align: left;
-    }
+
     .event-card-date{
         margin-left: 16px;
         padding:0;
@@ -84,8 +101,6 @@
     .event-card-img{
         justify-content: center;
         display: flex;
-        height: 250px;
-        width: 250px;
         padding: 20px;
     }
 
