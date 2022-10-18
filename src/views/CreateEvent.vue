@@ -14,29 +14,42 @@
     <v-form ref="form" v-model="valid" lazy-validation class="mx-16">
       <v-text-field v-model="eventName" :counter="50" :rules="nameRules" label="Event Name" required></v-text-field>
 
-      <v-text-field v-model="category" :rules="categoryRules" label="Category" required></v-text-field>
+      <v-textarea
+        v-model="eventDescription"  
+        clearable
+        clear-icon="mdi-close-circle"
+        label="Event Description"
+        :rules="descriptionRules"
+        required
+      ></v-textarea>
+      
+      <v-select
+        v-model="selectedCategory"  
+        :items="category"
+        :rules="categoryRules"
+        label="Category"
+        required
+      >
+      </v-select>
 
+      <LocationSearchBar></LocationSearchBar>
+
+      <br>
+      selected location: {{ select }}
+      
       <v-text-field v-model="location" :rules="locationRules" label="Location" required></v-text-field>
 
-      <!-- <v-select v-model="select" :items="items" :rules="[v => !!v || 'Item is required']" label="Item" required>
-      </v-select> -->
-      <!-- commented this for if wan convert categories to dropdown list in the future -->
-
-
-      <!-- <v-checkbox v-model="checkbox" :rules="[v => !!v || 'You must agree to continue!']" label="Do you agree?"
-        required></v-checkbox> -->
-
-      <!-- <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">
-        Validate
-      </v-btn> -->
     </v-form>
     <br>
-    <!-- Checking if the component is imported correctly, here is eventName: {{eventName}}<br>
-    Checking if the component is imported correctly, here is Category: {{category}}<br>
+    Checking if the component is imported correctly, here is eventName: {{eventName}}<br>
+    Checking if the component is imported correctly, here is eventDescription: {{eventDescription}}<br>
+    Checking if the component is imported correctly, here is selectedCategory: {{selectedCategory}}<br>
+    Checking if the component is imported correctly, here is select: {{select}}<br>
+
     Checking if the component is imported correctly, here is location: {{location}}<br>
     Checking if the component is imported correctly, here is eventTime: {{eventTime}}<br>
     Checking if the component is imported correctly, here is eventDate: {{eventDate}}<br>
-    <br> -->
+    <br>
     
     <v-expansion-panels class="ml-16">
       <v-expansion-panel>
@@ -164,7 +177,7 @@
 
 
     <br>
-    <v-btn color="success" class="mr-4" v-on:click="submitCreateEvent">
+    <v-btn :disabled="!valid" color="success" class="mr-4" v-on:click="submitCreateEvent">
         Let's go!
     </v-btn>
   </div>
@@ -186,17 +199,27 @@ export default {
     data() {
       return {
         isLoading: true,
-
         valid: true,
         eventName: '',
         nameRules: [
-          v => !!v || 'Name is required',
+          v => !!v || 'No name? Come on you can do better than that',
           v => (v && v.length <= 50) || 'Name must be less than 50 characters',
         ],
-        category: '',
+
+        eventDescription: '',
+        descriptionRules: [
+          v => !!v || `Nobody is gonna come if you don't add fun details!`,
+        ],
+
+        // category: '',
+        category: ['Sports', 'Arts', 'Music', 'Food', 'Pets', 'Games', 'Others'],
+        selectedCategory: '',
         categoryRules: [
           v => !!v || 'Please indicate what category your event BEE-longs to',
         ],
+        
+        select: null,
+
         location: '',
         locationRules: [
           v => !!v || 'Please tell us where is your event located at',
@@ -204,7 +227,8 @@ export default {
 
         eventDate: null,
         eventTime: null,
-        modal2: false
+        modal2: false,
+        date: null
       }
     },
     methods: {
