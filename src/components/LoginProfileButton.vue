@@ -83,7 +83,7 @@ export default {
     },
     registered() {
       // TODO: create pages & routes
-      this.$router.push("/registered");
+      this.$router.push("/user/registered-events");
     },
     wishlist() {
       // TODO: create pages & routes
@@ -91,7 +91,7 @@ export default {
     },
     history() {
       // TODO: create pages & routes
-      this.$router.push("/history");
+      this.$router.push("/user/attended-events");
     },
   },
 };

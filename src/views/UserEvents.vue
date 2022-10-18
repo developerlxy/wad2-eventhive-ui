@@ -24,7 +24,7 @@
       }, 2000);
       if (this.$route.params.eventType == 'registered-events'){
         this.userEventType = 'Registered Events'
-      } else {
+      } else if (this.$route.params.eventType == 'attended-events') {
         this.userEventType = 'Attended Events'
       }
     },
