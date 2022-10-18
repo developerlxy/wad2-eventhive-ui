@@ -60,6 +60,10 @@ const routes = [
         name: 'User Profile',
         component: () => import('@/views/UserProfile.vue'),
       },
+      {
+        path: '/ls',
+        component: () => import('../components/LocationSearchBar.vue')
+      }
     ],
   },
 ];
