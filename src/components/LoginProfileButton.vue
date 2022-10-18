@@ -1,11 +1,11 @@
 <template>
   <div id="login-profile-btn">
-    <v-btn text v-if="this.$store.state.user == null" class="login-btn" id="login-btn" @click="login">Log In</v-btn>
-    <button v-else >
-    <v-avatar class="white--text" id="profile-btn" color="rgb(119, 153, 119)" size="36" @click="logout">
-        {{ initials }}
-    </v-avatar>
-    </button>
+    <v-btn text v-if="this.$store.state.user == null" 
+      class="login-btn" 
+      id="login-btn" 
+      @click="login">
+      Log In
+    </v-btn>
 
     <v-menu
       v-else
@@ -96,7 +96,7 @@ export default {
   },
 };
 </script>
-
+<style>
   #login-btn{
     color: rgb(107, 135, 107);
     font-weight: bold;
