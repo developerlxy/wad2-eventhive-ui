@@ -17,7 +17,12 @@
                 type: Object,
                 required: true
             }
-        }
+        },
+
+        event() {
+      //TOOD: implement login function onclick
+      this.$router.push("/event",);
+    }
     }
     console.log(this)
 

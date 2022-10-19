@@ -20,6 +20,12 @@ const routes = [
         name: 'Home',
         component: () => import('@/views/Home.vue'),
       },
+      {
+        path: '/event',
+        name: 'Event',
+        component: () => import('@/views/IndivEvent.vue'),
+      },
+
     ],
   },
 ];
