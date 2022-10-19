@@ -1,84 +1,59 @@
 <template>
   <!-- html -->
-  <div class="navbar" id="navbar">
-    <img
-      src="../assets/images/logo.png"
-      alt="logo"
-      class="logo"
-      id="navbar-logo"
-    />
+  <v-app-bar height="min-height" color="white" class="navbar">
+      <v-img
+        class="ma-5 logo"
+        max-height="100px"
+        max-width="100px"
+        src="../src/assets/images/logo.png"
+        contain
+        @click="toHome()"
+      />
+      <SearchBar></SearchBar>
+      <v-spacer></v-spacer>
+      <v-btn color="greenDark mx-4" class="white--text" @click="createEvent()"
+        >Create an Event</v-btn
+      >
 
-    <SearchBar id="search-bar"></SearchBar>
-    <button class="login-btn" id="login-btn" @click="login">Log In</button>
+      <ProfileButton></ProfileButton>
 
-    <img
-        :src="imageURL"
-      alt="User"
-      class="user-profile-pic"
-    />
-
-    <!-- <button class="logged-in-user" id="logged-in-user" @click="logout">
-      <font-awesome-icon icon="user-circle" />
-      {{ user }}
-    </button> -->
-  </div>
+  </v-app-bar>
 </template>
 
 <script>
 import SearchBar from "./SearchBar.vue";
+import ProfileButton from "./LoginProfileButton.vue";
 // javascript
 export default {
   name: "NavBar",
-  components: { SearchBar },
+  components: { SearchBar, ProfileButton },
   props: {
+    isLoggedIn: {
+      type: Boolean,
+      default: false,
+    },
     imageURL: {
       type: String,
       default: "../src/assets/images/test.png",
     },
   },
   methods: {
-    login() {
-      //TOOD: implement login function onclick
-      this.$router.push("/login");
-    }
+    toHome() {
+      this.$router.push("/");
+    },
+    createEvent() {
+      this.$router.push("/events/create");
+    },
   },
 };
 </script>
 
 <style>
 /* css */
-#navbar {
-  height: 120px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+.navbar {
+  flex: 0;
 }
-
-#navbar-logo {
-  max-width: 100%;
-  max-height: 100%;
-}
-
-#search-bar {
-  margin-left: 20px;
-}
-
-#login-btn {
-  position: absolute;
-  right: 0;
-  margin-right: 20px;
-  color: rgb(119, 153, 119);
-  font-weight: bold;
+.logo {
   cursor: pointer;
-  visibility: visible;
-}
-
-.user-profile-pic {
-  position: absolute;
-  max-height: 60px;
-  right: 0;
-  margin-right: 20px;
-  border-radius: 50%;
-  visibility: hidden;
 }
 </style>
