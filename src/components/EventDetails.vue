@@ -3,29 +3,36 @@
         <v-container>
             <v-row>
                 <v-col cols="8">
-            <img :src='"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSLpdgugvyUbhiRYtWXXtWqFa5iFaHWBIstQ&usqp=CAU"'
+            <img v-bind:src="specificEvent.eventPhotoURL"
                 aspect-ratio="16/9"
                 width="75%"
 >
                 </v-col>
                 <v-col cols="4" >
                     <v-container class="fill-height">
-                    <v-row>
-                    <h4 class="text-left">16 Sep</h4>
-                    <h1 class="text-left">ADEX Ocean Vision 2022</h1>
-                    <h4 class="text-left">by UW360</h4>
+                    <v-row class="d-flex flex-column">
+                        <v-col>
+                            <h3 class="text-left">{{this.newDate(this.specificEvent.eventDate)}}</h3>
+                        </v-col>
+                        <v-col>
+                            <h1 class="text-left"> {{specificEvent.eventName}} </h1>
+                        </v-col>
+                        <v-col>
+                            <h3 class="text-left">by {{host.userName}}</h3>
+                        </v-col>
                     </v-row>
                     <v-row class=" align-end justify-center">
                         <v-btn 
-                                color="success darken-3"
-                                class="justify-start"
-                                
+                                color="greenDark"
+                                class="justify-start white--text"
+                                @click="register"
                             >
                                 Register your interest
                             </v-btn>
                             <v-btn 
                                 color="greenDark"
-                                class=" ml-5"
+                                class=" ml-5 white--text"
+                                @click="wishlist"
                             >
                                 <v-icon>mdi-heart</v-icon>
                             </v-btn>
@@ -42,17 +49,7 @@
                 <v-col cols="8">
                     <h3 class="text-left">Description</h3>
                     <br>
-                    <p class="text-left">
-                        ADEX Asia Dive Expo – The largest and longest-running dive consumer and trade show in Asia is back as ADEX Ocean Vision 2022 to reign once again as the must-attend event for anyone interested or involved in the world of diving!
-<br><br>
-Having celebrated its silver jubilee in 2019, ADEX Ocean Vision 2022 returns on Sep 16 – 18 at Sands Expo and Convention Centre, after the grand halt caused by the global pandemic, to bring together divers from all over the world to rediscover, renew and revive one's long-desired passion and dive deep into Asia's magnificent and spectacular blue biodiversity and to progress towards a blue recovery!
-<br><br>
-2022 Dedicates its Theme to the Blue Whale
-<br><br>
-Dedicating "Balaenoptera musculus", otherwise commonly known as the elusive "blue whales", will be the focal highlight at the ADEX Ocean Vision 2022!
-<br><br>
-Federally listed as "endangered" under the Endangered Species Act and it is protected under the Marine Mammal Protection Act, the blue whale population have tragically plummeted due to the technological advances in whaling technology which makes it easy for commercial whaling activities worldwide.
-
+                    <p v-html="desc" class="text-left">
                     </p>
                 </v-col>
                 <v-col cols="4">
@@ -60,7 +57,7 @@ Federally listed as "endangered" under the Endangered Species Act and it is prot
 
                             <v-card class="mb-4 pa-4">
                                 <v-container fill-height>
-                                <v-row class="justify-start align-center mt-4">
+                                <v-row class="justify-start align-center">
                             <v-col>
                                 <v-icon>mdi-calendar</v-icon>
                             </v-col>
@@ -71,16 +68,15 @@ Federally listed as "endangered" under the Endangered Species Act and it is prot
  
                         </v-row>
                         <v-row align-center class="justify-start">
-                            <p class="text-left ml-3">
-                                Fri,16 Sep 2022, 10:00 AM - 5:00 PM
-                                <br>
-                                Singapore Standard Time
+                            <p class="text-left ml-3 overflow-auto">
+                                {{reviewDate(specificEvent.eventDate)}}
                             </p>
                         </v-row>
                         <v-row class="justify-center">
                             <v-btn
                                 block
-                                color="teal lighten-3"
+                                color="greenDark"
+                                class="white--text"
                             >
                                 Add to My Calendar
                             </v-btn>
@@ -101,14 +97,15 @@ Federally listed as "endangered" under the Endangered Species Act and it is prot
                         </v-row >
                         <v-row class="justify-start my-4">
                             <p class="text-left ml-3">
-                                1 Expo Drive, Singapore 486150
+                                {{specificEvent.eventLocation}}
                                 
                             </p>
                         </v-row>
                         <v-row class="justify-center">
                             <v-btn
                                 block
-                                color="teal lighten-3"
+                                color="greenDark"
+                                class="white--text"
                             >
                                 View Map
                             </v-btn>
@@ -135,17 +132,17 @@ Federally listed as "endangered" under the Endangered Species Act and it is prot
                     >
                         <h2 class="my-4">Reviews</h2>
                         <v-virtual-scroll
-                        :bench="benched"
-                        :items="items"
+                        :items="this.reviews"
+
                         height="250"
                         item-height="125"
                         >
                         <template v-slot:default="{ item }">
                             <v-list-item :key="item">
-                            <v-list-item-action>
+                            <v-list-item-action >
                             <v-card-text>
                                 <v-rating
-                                :value="4.5"
+                                :value="item.numStars"
                                 color="amber"
                                 dense
                                 half-increments
@@ -158,23 +155,17 @@ Federally listed as "endangered" under the Endangered Species Act and it is prot
                 
                             <v-list-item-content>
                                 <v-list-item-title class="d-flex flex-wrap flex-grow-1">
-                                <strong>ID {{ item }}</strong>
+                                <strong class="mb-2">{{item.userName}}</strong>
                                 <br>
-                                <p size="0.75rem">12 September 2020</p>
+                                <p size="0.75rem" class="overflow-visible">{{reviewDate(item.dateReviewed)}}</p>
                                 <!-- review.UserName -->
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. A ea cum aliquid quidem sint dolor quae odit, neque consequatur qui voluptatibus culpa explicabo, omnis tempore voluptate ut? Quam, minima quaerat. </p>
+                                <p>{{item.reviewText}}  </p>
                                 <!-- review.reviewText -->
                                 </v-list-item-title>
                             </v-list-item-content>
-                
-                            <v-list-item-action>
-                                <v-icon big>
-                                mdi-open-in-new
-                                </v-icon>
-                            </v-list-item-action>
                             </v-list-item>
                 
-                            <v-divider></v-divider>
+
                         </template>
                         </v-virtual-scroll>
                 </v-card>
@@ -189,23 +180,62 @@ Federally listed as "endangered" under the Endangered Species Act and it is prot
 <script>
     export default {
         name: 'EventDetails',
-        // props: {
-        //     eventDetails: {
-        //         type: Object,
-        //         required: true
-        //     }
-        // },
-        data: () => ({
-      benched: 0,
-      width: 300,
-    }),
-    computed: {
-      items () {
-        return Array.from({ length: this.length }, (k, v) => v + 1)
-      },
-      length () {
-        return 20
-      },
+
+        data() { return {
+            isLoading: true,
+            benched: 10,
+            events: [this.$store.state.events],
+            eventID: '6350f232ca88afcea5e30456',
+            specificEvent: null,
+            date: null,
+            reviews: null,
+            desc: "",
+            userlist: [],
+            host: null,
+        }
+    },
+    methods: {
+        pullHost() {
+            this.axios.get("https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users")
+            .then(response => {
+          this.userlist = response.data;
+          this.host = this.userlist.find(user => user._id === this.specificEvent.eventHost);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+        },
+
+        findCorrectEvent() {
+            this.specificEvent = this.events[0].find(event => event._id === this.eventID)
+            // console.log(this.specificEvent)
+            this.reviews = this.specificEvent.eventReviews
+            this.desc = this.specificEvent.eventDesc
+        },
+        reviewDate(ISODate) {
+            var test = new Date(ISODate)
+            return(test)
+        },
+
+        newDate(inputDate) {
+            var test = new Date(inputDate)
+            return(test.toDateString())
+        },
+        register () {
+            this.$router.push("/register")
+        },
+        wishlist() {
+      this.$router.push("/wishlist");
+    },
+    },
+    mounted() {
+        this.findCorrectEvent(),
+        this.reviewDate(),
+        this.pullHost(),
+        setTimeout(() => {
+      this.isLoading = false;
+    },2000);
     },
     }
 </script>
