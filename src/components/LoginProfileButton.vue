@@ -9,8 +9,6 @@
 
     <v-menu
       v-else
-      ref="showProfile"
-      v-model="showProfile"
       open-on-click
       offset-y
       nudge-bottom="5"
@@ -57,7 +55,6 @@ export default {
   },
   mounted() {
     this.getInitials();
-    console.log(this.initials);
   },
   methods: {
     login() {

@@ -1,7 +1,7 @@
 <template>
   <!-- html -->
-  <v-col class="col-6 ma-3" width="100px">
-    <v-row>
+  <v-container class="col-md-7 col-sm-5 my-4">
+    <v-row class="flex-nowrap ">
       <v-text-field
         placeholder="Search for anything"
         outlined
@@ -9,13 +9,15 @@
         rounded
         hide-details
         class="search-box"
-        append-icon="fa-solid fa-search"
-        @focus="isAdvanced = !isAdvanced"
         @keyup.enter="search"
+        @click="isAdvanced = !isAdvanced"
       ></v-text-field>
+      <v-btn icon small color="greenDark" class="ml-1 my-auto" @click="search"
+        ><v-icon>search</v-icon></v-btn
+      >
     </v-row>
-    <v-row v-if="isAdvanced" class="">
-      <!-- AnyWhere -->
+    <v-row v-if="isAdvanced" class="mr-5">
+      <!-- Anytime -->
       <v-menu
         ref="menu"
         v-model="menu"
@@ -27,10 +29,10 @@
       >
         <template v-slot:activator="{ on, attrs }">
           <v-text-field
-            class="mt-1"
+            class="mt-1 col-md"
             v-model="dateRangeText"
-            outlined
             rounded
+            outlined
             dense
             hide-details
             placeholder="Anytime"
@@ -45,37 +47,42 @@
           range
           scrollable
           :min="today"
-          @click="$refs.menu.save(dateSelected)"
+          @input="$refs.menu.save(dateSelected)"
         >
           <v-spacer></v-spacer>
+          <v-btn text color="primary" @click="menu = false"> Cancel </v-btn>
+          <v-btn text color="primary" @click="$refs.menu.save(dateSelected)">
+            OK
+          </v-btn>
         </v-date-picker>
       </v-menu>
 
       <!-- Anywhere to change to dropdown -->
       <v-select
-        :items="availableLocations"
+        :items="availableLoc"
         :menu-props="{ bottom: true, offsetY: true }"
+        v-model="locationSelected"
         rounded
         hide-details
         dense
         placeholder="Anywhere"
         outlined
-        class="mt-1"
+        class="mt-1 col-md"
       ></v-select>
-
       <!-- check capacity of event -->
       <v-select
         :items="maxGroupSize"
         :menu-props="{ bottom: true, offsetY: true }"
+        v-model="groupSizeSelected"
         rounded
         hide-details
         dense
         placeholder="Any Group Size"
         outlined
-        class="mt-1"
+        class="mt-1 col-md"
       ></v-select>
     </v-row>
-  </v-col>
+  </v-container>
 </template>
 
 <script>
@@ -90,10 +97,10 @@ export default {
       dateSelected: "",
       locationSelected: "",
       groupSizeSelected: 2, // let's say 2 is the default
-      
-      today: new Date().toISOString().slice(0, 10), 
 
-      availableLocations: this.availableLocations(),
+      today: new Date().toISOString().slice(0, 10),
+
+      availableLoc: this.availableLocations(),
       maxGroupSize: ["1", "2 - 4", "5 - 10", "10+"],
     };
   },
@@ -110,9 +117,9 @@ export default {
       };
       this.axios(config).then(function (response) {
         for (let event of response.data) {
-          let eventDate = event["eventLocation"];
-          if (!locationsInDB.includes(eventDate)) {
-            locationsInDB.push(eventDate);
+          let eventLoc = event["eventLocation"];
+          if (eventLoc != "" && !locationsInDB.includes(eventLoc)) {
+            locationsInDB.push(eventLoc);
           }
         }
       });
@@ -121,13 +128,16 @@ export default {
     search() {
       // TODO: implement search function onclick
       console.log("searching");
-      var config = {
-        method: "get",
-        url: "https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
+      // var config = {
+      //   method: "get",
+      //   url: "https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      // };
+      console.log(this.$store.state.events);
+
+      this.$router.push("/events");
     },
   },
   computed: {
@@ -148,7 +158,10 @@ export default {
       ];
 
       // if there is only one date selected, return that one date
-      if(this.dateSelected.length == 1){
+      if (
+        this.dateSelected.length == 1 ||
+        this.dateSelected[0] == this.dateSelected[1]
+      ) {
         [year1, month1, day1] = this.dateSelected[0].split("-");
         return `${day1}/${month1}/${year1}`;
       }
@@ -165,7 +178,10 @@ export default {
       // if there is an end date, get end date
       if (this.dateSelected[1] != "") {
         [year2, month2, day2] = this.dateSelected[1].split("-");
-      } 
+        if (this.dateSelected[0] == "") {
+          return `${day2}/${month2}/${year2}`;
+        }
+      }
 
       // return dates in ascending order
       if (this.dateSelected[0] > this.dateSelected[1]) {
