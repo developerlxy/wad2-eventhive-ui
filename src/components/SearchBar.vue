@@ -15,7 +15,7 @@
       ></v-text-field>
     </v-row>
     <v-row v-if="isAdvanced" class="">
-      <!-- AnyWhere -->
+      <!-- Anytime -->
       <v-menu
         ref="menu"
         v-model="menu"
@@ -55,6 +55,7 @@
       <v-select
         :items="availableLoc"
         :menu-props="{ bottom: true, offsetY: true }"
+        v-model="locationSelected"
         rounded
         hide-details
         dense
@@ -62,11 +63,11 @@
         outlined
         class="mt-1"
       ></v-select>
-
       <!-- check capacity of event -->
       <v-select
         :items="maxGroupSize"
         :menu-props="{ bottom: true, offsetY: true }"
+        v-model="groupSizeSelected"
         rounded
         hide-details
         dense
