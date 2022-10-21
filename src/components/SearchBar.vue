@@ -9,7 +9,7 @@
         rounded
         hide-details
         class="search-box"
-        append-icon="search"
+        append-icon="fa-solid fa-search"
         @focus="isAdvanced = !isAdvanced"
         @keyup.enter="search"
       ></v-text-field>

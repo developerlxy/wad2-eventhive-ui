@@ -15,18 +15,17 @@
         >Create an Event</v-btn
       >
 
-      <ProfileButton></ProfileButton>
-
+    <LoginProfileButton></LoginProfileButton>
   </v-app-bar>
 </template>
 
 <script>
 import SearchBar from "./SearchBar.vue";
-import ProfileButton from "./LoginProfileButton.vue";
+import LoginProfileButton from "./LoginProfileButton.vue";
 // javascript
 export default {
   name: "NavBar",
-  components: { SearchBar, ProfileButton },
+  components: { SearchBar, LoginProfileButton },
   props: {
     isLoggedIn: {
       type: Boolean,

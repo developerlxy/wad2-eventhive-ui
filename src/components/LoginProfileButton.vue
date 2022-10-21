@@ -11,7 +11,7 @@
       v-else
       ref="showProfile"
       v-model="showProfile"
-      open-on-hover
+      open-on-click
       offset-y
       nudge-bottom="5"
       bottom
