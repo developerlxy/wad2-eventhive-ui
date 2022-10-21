@@ -57,7 +57,6 @@ export default {
   },
   mounted() {
     this.getInitials();
-    console.log(this.initials);
   },
   methods: {
     login() {

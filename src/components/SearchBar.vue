@@ -53,7 +53,7 @@
 
       <!-- Anywhere to change to dropdown -->
       <v-select
-        :items="availableLocations"
+        :items="availableLoc"
         :menu-props="{ bottom: true, offsetY: true }"
         rounded
         hide-details
@@ -93,7 +93,7 @@ export default {
       
       today: new Date().toISOString().slice(0, 10), 
 
-      availableLocations: this.availableLocations(),
+      availableLoc: this.availableLocations(),
       maxGroupSize: ["1", "2 - 4", "5 - 10", "10+"],
     };
   },
@@ -110,9 +110,9 @@ export default {
       };
       this.axios(config).then(function (response) {
         for (let event of response.data) {
-          let eventDate = event["eventLocation"];
-          if (!locationsInDB.includes(eventDate)) {
-            locationsInDB.push(eventDate);
+          let eventLoc = event["eventLocation"];
+          if (eventLoc != "" && !locationsInDB.includes(eventLoc)) {
+            locationsInDB.push(eventLoc);
           }
         }
       });
