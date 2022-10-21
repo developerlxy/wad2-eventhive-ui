@@ -9,7 +9,7 @@
         rounded
         hide-details
         class="search-box"
-        append-icon="fa-solid fa-search"
+        append-icon="fa-search"
         @focus="isAdvanced = !isAdvanced"
         @keyup.enter="search"
       ></v-text-field>
@@ -17,39 +17,53 @@
     <v-row v-if="isAdvanced" class="">
       <!-- Anytime -->
       <v-menu
-        ref="menu"
-        v-model="menu"
-        :close-on-content-click="false"
-        :return-value.sync="dateSelected"
-        transition="scale-transition"
-        offset-y
-        min-width="auto"
-      >
-        <template v-slot:activator="{ on, attrs }">
-          <v-text-field
-            class="mt-1"
-            v-model="dateRangeText"
-            outlined
-            rounded
-            dense
-            hide-details
-            placeholder="Anytime"
-            readonly
-            v-bind="attrs"
-            v-on="on"
-          ></v-text-field>
-        </template>
-        <v-date-picker
-          v-model="dateSelected"
-          no-title
-          range
-          scrollable
-          :min="today"
-          @click="$refs.menu.save(dateSelected)"
+          ref="menu"
+          v-model="menu"
+          :close-on-content-click="false"
+          :return-value.sync="dateSelected"
+          transition="scale-transition"
+          offset-y
+          min-width="auto"
         >
-          <v-spacer></v-spacer>
-        </v-date-picker>
-      </v-menu>
+          <template v-slot:activator="{ on, attrs }">
+            <v-text-field
+              class="mt-1"
+              v-model="dateRangeText"
+              outlined
+              rounded
+              dense
+              hide-details
+              placeholder="Anytime"
+              readonly
+              v-bind="attrs"
+              v-on="on"
+            ></v-text-field>
+          </template>
+          <v-date-picker
+            v-model="dateSelected"
+            no-title
+            range
+            scrollable
+            :min="today"
+            @input="$refs.menu.save(dateSelected)"
+          >
+            <v-spacer></v-spacer>
+            <v-btn
+            text
+            color="primary"
+            @click="menu = false"
+          >
+            Cancel
+          </v-btn>
+          <v-btn
+            text
+            color="primary"
+            @click="$refs.menu.save(dateSelected)"
+          >
+            OK
+          </v-btn>
+          </v-date-picker>
+        </v-menu>
 
       <!-- Anywhere to change to dropdown -->
       <v-select
@@ -91,8 +105,8 @@ export default {
       dateSelected: "",
       locationSelected: "",
       groupSizeSelected: 2, // let's say 2 is the default
-      
-      today: new Date().toISOString().slice(0, 10), 
+
+      today: new Date().toISOString().slice(0, 10),
 
       availableLoc: this.availableLocations(),
       maxGroupSize: ["1", "2 - 4", "5 - 10", "10+"],
@@ -149,7 +163,7 @@ export default {
       ];
 
       // if there is only one date selected, return that one date
-      if(this.dateSelected.length == 1){
+      if (this.dateSelected.length == 1 || this.dateSelected[0] == this.dateSelected[1]) {
         [year1, month1, day1] = this.dateSelected[0].split("-");
         return `${day1}/${month1}/${year1}`;
       }
@@ -166,7 +180,10 @@ export default {
       // if there is an end date, get end date
       if (this.dateSelected[1] != "") {
         [year2, month2, day2] = this.dateSelected[1].split("-");
-      } 
+        if (this.dateSelected[0] == "") {
+          return `${day2}/${month2}/${year2}`
+        }
+      }
 
       // return dates in ascending order
       if (this.dateSelected[0] > this.dateSelected[1]) {
