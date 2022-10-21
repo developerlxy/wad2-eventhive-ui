@@ -9,8 +9,6 @@
 
     <v-menu
       v-else
-      ref="showProfile"
-      v-model="showProfile"
       open-on-click
       offset-y
       nudge-bottom="5"
