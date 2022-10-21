@@ -1,7 +1,7 @@
 <template>
   <!-- html -->
-  <v-col class="col-6 ma-3" width="100px">
-    <v-row>
+  <v-container class="col-md-7 col-sm-5">
+    <v-row class="flex-nowrap" >
       <v-text-field
         placeholder="Search for anything"
         outlined
@@ -9,12 +9,12 @@
         rounded
         hide-details
         class="search-box"
-        append-icon="fa-search"
-        @focus="isAdvanced = !isAdvanced"
         @keyup.enter="search"
+        @click="isAdvanced = !isAdvanced"
       ></v-text-field>
+      <v-btn icon small color="greenDark" class="ml-1 my-auto" @click="search"><v-icon>search</v-icon></v-btn>
     </v-row>
-    <v-row v-if="isAdvanced" class="">
+    <v-row v-if="isAdvanced" class="mt-0 mr-9">
       <!-- Anytime -->
       <v-menu
           ref="menu"
@@ -27,10 +27,10 @@
         >
           <template v-slot:activator="{ on, attrs }">
             <v-text-field
-              class="mt-1"
+              class="mt-1 col-md"
               v-model="dateRangeText"
-              outlined
               rounded
+              outlined
               dense
               hide-details
               placeholder="Anytime"
@@ -75,7 +75,7 @@
         dense
         placeholder="Anywhere"
         outlined
-        class="mt-1"
+        class="mt-1 col-md"
       ></v-select>
       <!-- check capacity of event -->
       <v-select
@@ -87,10 +87,11 @@
         dense
         placeholder="Any Group Size"
         outlined
-        class="mt-1"
+        class="mt-1 col-md"
       ></v-select>
     </v-row>
-  </v-col>
+    
+  </v-container>
 </template>
 
 <script>
