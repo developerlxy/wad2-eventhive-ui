@@ -1,7 +1,7 @@
 <template>
   <!-- html -->
-  <v-container class="col-md-7 col-sm-5">
-    <v-row class="flex-nowrap" >
+  <v-container class="col-md-7 col-sm-5 my-4">
+    <v-row class="flex-nowrap ">
       <v-text-field
         placeholder="Search for anything"
         outlined
@@ -12,58 +12,50 @@
         @keyup.enter="search"
         @click="isAdvanced = !isAdvanced"
       ></v-text-field>
-      <v-btn icon small color="greenDark" class="ml-1 my-auto" @click="search"><v-icon>search</v-icon></v-btn>
+      <v-btn icon small color="greenDark" class="ml-1 my-auto" @click="search"
+        ><v-icon>search</v-icon></v-btn
+      >
     </v-row>
-    <v-row v-if="isAdvanced" class="mt-0 mr-9">
+    <v-row v-if="isAdvanced" class="mr-5">
       <!-- Anytime -->
       <v-menu
-          ref="menu"
-          v-model="menu"
-          :close-on-content-click="false"
-          :return-value.sync="dateSelected"
-          transition="scale-transition"
-          offset-y
-          min-width="auto"
+        ref="menu"
+        v-model="menu"
+        :close-on-content-click="false"
+        :return-value.sync="dateSelected"
+        transition="scale-transition"
+        offset-y
+        min-width="auto"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-text-field
+            class="mt-1 col-md"
+            v-model="dateRangeText"
+            rounded
+            outlined
+            dense
+            hide-details
+            placeholder="Anytime"
+            readonly
+            v-bind="attrs"
+            v-on="on"
+          ></v-text-field>
+        </template>
+        <v-date-picker
+          v-model="dateSelected"
+          no-title
+          range
+          scrollable
+          :min="today"
+          @input="$refs.menu.save(dateSelected)"
         >
-          <template v-slot:activator="{ on, attrs }">
-            <v-text-field
-              class="mt-1 col-md"
-              v-model="dateRangeText"
-              rounded
-              outlined
-              dense
-              hide-details
-              placeholder="Anytime"
-              readonly
-              v-bind="attrs"
-              v-on="on"
-            ></v-text-field>
-          </template>
-          <v-date-picker
-            v-model="dateSelected"
-            no-title
-            range
-            scrollable
-            :min="today"
-            @input="$refs.menu.save(dateSelected)"
-          >
-            <v-spacer></v-spacer>
-            <v-btn
-            text
-            color="primary"
-            @click="menu = false"
-          >
-            Cancel
-          </v-btn>
-          <v-btn
-            text
-            color="primary"
-            @click="$refs.menu.save(dateSelected)"
-          >
+          <v-spacer></v-spacer>
+          <v-btn text color="primary" @click="menu = false"> Cancel </v-btn>
+          <v-btn text color="primary" @click="$refs.menu.save(dateSelected)">
             OK
           </v-btn>
-          </v-date-picker>
-        </v-menu>
+        </v-date-picker>
+      </v-menu>
 
       <!-- Anywhere to change to dropdown -->
       <v-select
@@ -90,7 +82,6 @@
         class="mt-1 col-md"
       ></v-select>
     </v-row>
-    
   </v-container>
 </template>
 
@@ -137,13 +128,16 @@ export default {
     search() {
       // TODO: implement search function onclick
       console.log("searching");
-      var config = {
-        method: "get",
-        url: "https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
+      // var config = {
+      //   method: "get",
+      //   url: "https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      // };
+      console.log(this.$store.state.events);
+
+      this.$router.push("/events");
     },
   },
   computed: {
@@ -164,7 +158,10 @@ export default {
       ];
 
       // if there is only one date selected, return that one date
-      if (this.dateSelected.length == 1 || this.dateSelected[0] == this.dateSelected[1]) {
+      if (
+        this.dateSelected.length == 1 ||
+        this.dateSelected[0] == this.dateSelected[1]
+      ) {
         [year1, month1, day1] = this.dateSelected[0].split("-");
         return `${day1}/${month1}/${year1}`;
       }
@@ -182,7 +179,7 @@ export default {
       if (this.dateSelected[1] != "") {
         [year2, month2, day2] = this.dateSelected[1].split("-");
         if (this.dateSelected[0] == "") {
-          return `${day2}/${month2}/${year2}`
+          return `${day2}/${month2}/${year2}`;
         }
       }
 
