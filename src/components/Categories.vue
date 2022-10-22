@@ -6,10 +6,12 @@
           potential: onHover, card increases in size
         -->
         <v-col
-          v-for="category in categories"
+          v-for="category in this.$store.state.categories"
           :key="category.title"
+
+          @click="handleClick(category.filter)"
         >
-        <router-link style="text-decoration: none;" :to="`/events?category=${category.filter}`">
+        
         <v-hover
         v-slot="{ hover }">
         <v-card class="pa-md-4 mx-lg-auto" 
@@ -22,7 +24,6 @@
           
         </v-card>
         </v-hover>
-        </router-link>
         </v-col>
       </v-row>
     </v-container>
@@ -31,15 +32,12 @@
 <script>
   export default {
     data: () => ({
-      categories: [
-        { title: 'Sports', src: 'fa-solid fa-volleyball', filter: 'sports'},
-        { title: 'Arts', src: 'fa-solid fa-palette', filter: 'arts'},
-        { title: 'Music', src: 'fa-solid fa-music', filter: 'music'},
-        { title: 'Food', src: 'fa-solid fa-utensils', filter: 'food'},
-        { title: 'Pets', src: "fa-solid fa-dog", filter: 'pets'},
-        { title: 'Games', src: "fa-solid fa-gamepad", filter: 'games'},
-        { title: 'Others', src: "fa-solid fa-shuffle", filter: 'others'},
-      ],
+      
     }),
+    methods:{
+      handleClick: function (filter){
+        this.$router.push({ path:`/events?category=${filter}`})
+      }
+    }
   }
 </script>

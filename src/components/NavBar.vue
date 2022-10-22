@@ -1,92 +1,63 @@
 <template>
   <!-- html -->
-  <div class="navbar" id="navbar">
-    <img
-      src="../assets/images/logo.png"
-      alt="logo"
-      class="logo"
-      id="navbar-logo"
+  <v-app-bar height="min-height" color="white" class="navbar mb-0" elevation="0">
+    <v-row class="align-center justify-center">  
+    <v-img
+      class="ma-4 logo"
+      max-height="100px"
+      max-width="100px"
+      src="../src/assets/images/logo.png"
+      contain
+      @click="toHome()"
     />
-
-    <SearchBar id="search-bar"></SearchBar>
-    <button class="login-btn" id="login-btn" @click="login">Log In</button>
-    <button @click="logout">Logout</button>
-
-    <img
-        :src="imageURL"
-      alt="User"
-      class="user-profile-pic"
-    />
-
-    <!-- <button class="logged-in-user" id="logged-in-user" @click="logout">
-      <font-awesome-icon icon="user-circle" />
-      {{ user }}
-    </button> -->
-  </div>
+    <SearchBar></SearchBar>
+    <v-spacer></v-spacer>
+    <!-- <v-row class="ma-0"> -->
+      <v-btn color="greenDark mx-2 d-none d-sm-flex px-1" class="white--text" @click="createEvent()"
+      >Create Event</v-btn
+    >
+    <Google_button></Google_button>
+    <LoginProfileButton class="d-none d-sm-flex mx-2"></LoginProfileButton>
+    </v-row>
+      
+  </v-app-bar>
 </template>
 
 <script>
 import SearchBar from "./SearchBar.vue";
+import LoginProfileButton from "./LoginProfileButton.vue";
+import Google_button from '@/components/google_button.vue';
 // javascript
 export default {
   name: "NavBar",
-  components: { SearchBar },
+  components: { SearchBar, LoginProfileButton, Google_button },
   props: {
+    isLoggedIn: {
+      type: Boolean,
+      default: false,
+    },
     imageURL: {
       type: String,
       default: "../src/assets/images/test.png",
     },
   },
   methods: {
-    login() {
-      //TOOD: implement login function onclick
-      this.$router.push("/login");
+    toHome() {
+      this.$router.push("/");
     },
-    logout: function(event) {
-      if (localStorage.getItem('user')) {
-        console.log("logging out")
-        console.log(JSON.parse(localStorage.getItem('user')))
-        localStorage.removeItem('user')
-      }
-    }
+    createEvent() {
+      this.$router.push("/events/create");
+    },
   },
 };
 </script>
 
 <style>
 /* css */
-#navbar {
-  height: 120px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+.navbar {
+  flex: 0;
 }
-
-#navbar-logo {
-  max-width: 100%;
-  max-height: 100%;
-}
-
-#search-bar {
-  margin-left: 20px;
-}
-
-#login-btn {
-  position: absolute;
-  right: 0;
-  margin-right: 20px;
-  color: rgb(119, 153, 119);
-  font-weight: bold;
+.logo {
   cursor: pointer;
-  visibility: visible;
-}
-
-.user-profile-pic {
-  position: absolute;
-  max-height: 60px;
-  right: 0;
-  margin-right: 20px;
-  border-radius: 50%;
-  visibility: hidden;
 }
 </style>

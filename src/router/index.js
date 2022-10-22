@@ -21,6 +21,11 @@ const routes = [
         component: () => import('@/views/Home.vue'),
       },
       {
+        path: '/events/create',
+        name: 'Create Event',
+        component: () => import('@/views/CreateEvent.vue'),
+      },
+      {
         path: '/login',
         name: 'login',
         component: () => import('@/views/Login.vue')
@@ -49,6 +54,24 @@ const routes = [
         path: '/hostmgmt',
         name: 'HostManagement',
         component: () => import('@/views/HostManagement.vue'),
+        path: '/user/:eventType',
+        name: 'user-events',
+        component: () => import('../views/UserEvents.vue'),
+      },
+      {
+        path: '/profile',
+        name: 'User Profile',
+        component: () => import('@/views/UserProfile.vue'),
+      },
+      {
+        path: '/event',
+        name: 'Event',
+        component: () => import('@/views/IndivEvent.vue'),
+      },
+      {
+        path: '/event/random',
+        name: 'Random Event',
+        component: () => import('@/views/IndivEventRandom.vue'),
       },
     ],
   },
