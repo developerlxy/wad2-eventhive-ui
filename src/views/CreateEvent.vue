@@ -21,10 +21,10 @@
       <v-select v-model="selectedCategory" :items="category" :rules="categoryRules" label="Category" required>
       </v-select>
 
-      <LocationSearchBar></LocationSearchBar>
+      <LocationSearchBar @locationSelected="onLocationSelected"></LocationSearchBar>
 
       <br>
-      selected location: {{ select }}
+      selected location: {{ location }}
 
       <v-text-field v-model="location" :rules="locationRules" label="Location" required></v-text-field>
       <v-text-field v-model="maxCapacity" label="Max Capacity" required></v-text-field>
@@ -231,6 +231,9 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+    },
+    onLocationSelected: function(selectedLocation) {
+      this.location = selectedLocation
     },
     onFileChange (e) {
       let files = e.target.files || e.dataTransfer.files

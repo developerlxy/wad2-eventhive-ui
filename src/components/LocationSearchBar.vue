@@ -24,7 +24,7 @@
         select: null,
         results: [],
         dropdownItems: [],
-
+        selectedLocation: null
       }
     },
     watch: {
@@ -38,13 +38,21 @@
           }
           )
         })
-        console.log(this.getLocationObject())
       },
+      select(newLocation, oldLocation) {
+        this.selectedLocation = this.getLocationObject();
+        this.onLocationSelect();
+      }
     },
     methods: {
       getLocationObject() {
         return this.results.find((result) => result.SEARCHVAL == this.select)
+      },
+      onLocationSelect (event) {
+        this.$emit('locationSelected', this.selectedLocation)
       }
+      
     },
+
   }
 </script>
