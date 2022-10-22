@@ -2,31 +2,35 @@
   <!-- html -->
   <v-app-bar height="min-height" color="white" class="navbar mb-0" elevation="0">
       <v-img
-        class="ma-5 logo"
-        max-height="100px"
-        max-width="100px"
-        src="../src/assets/images/logo.png"
-        contain
-        @click="toHome()"
-      />
-      <SearchBar></SearchBar>
-      <v-spacer></v-spacer>
-      <v-btn color="greenDark mx-4" class="white--text" @click="createEvent()"
-        >Create an Event</v-btn
-      >
+      class="ma-4 logo"
+      max-height="100px"
+      max-width="100px"
+      src="../src/assets/images/logo.png"
+      contain
+      @click="toHome()"
+    />
+    <SearchBar></SearchBar>
+    <v-spacer></v-spacer>
+    <!-- <v-row class="ma-0"> -->
+      <v-btn color="greenDark mx-2 d-none d-sm-flex px-1" class="white--text" @click="createEvent()"
+      >Create Event</v-btn
+    >
+    <LoginProfileButton class="d-none d-sm-flex mx-2"></LoginProfileButton>
+    <!-- </v-row> -->
+    
 
-      <ProfileButton></ProfileButton>
-
+    </v-row>
+      
   </v-app-bar>
 </template>
 
 <script>
 import SearchBar from "./SearchBar.vue";
-import ProfileButton from "./LoginProfileButton.vue";
+import LoginProfileButton from "./LoginProfileButton.vue";
 // javascript
 export default {
   name: "NavBar",
-  components: { SearchBar, ProfileButton },
+  components: { SearchBar, LoginProfileButton },
   props: {
     isLoggedIn: {
       type: Boolean,

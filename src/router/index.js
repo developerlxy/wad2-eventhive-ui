@@ -26,11 +26,6 @@ const routes = [
         component: () => import('@/views/CreateEvent.vue'),
       },
       {
-        path: '/events/createDummy', //for me to experiment pls leave it -kev
-        name: 'Create Event',
-        component: () => import('@/views/CreateEvent.vue'),
-      },
-      {
         path: '/login',
         name: 'login',
         component: () => import('@/views/Login.vue')
@@ -59,6 +54,16 @@ const routes = [
         path: '/profile',
         name: 'User Profile',
         component: () => import('@/views/UserProfile.vue'),
+      },
+      {
+        path: '/event',
+        name: 'Event',
+        component: () => import('@/views/IndivEvent.vue'),
+      },
+      {
+        path: '/event/random',
+        name: 'Random Event',
+        component: () => import('@/views/IndivEventRandom.vue'),
       },
     ],
   },
