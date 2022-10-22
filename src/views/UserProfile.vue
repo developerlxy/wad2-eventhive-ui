@@ -1,5 +1,11 @@
 <template>
   <LandingScreen v-if="isLoading"></LandingScreen>
+  <div v-else-if="this.$store.state.user == null">
+    <NavBar></NavBar>
+    <v-alert class="brownLight ma-2">
+      You are not logged in. Please login to view your profile.
+    </v-alert>
+  </div>
   <div v-else>
     <NavBar></NavBar>
     <v-container>
