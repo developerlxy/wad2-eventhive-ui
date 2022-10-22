@@ -35,6 +35,7 @@
           <v-textarea
             outlined
             hide-details
+            v-model="reviewText"
             placeholder="Enter your review here"
             background-color="white"
           >
@@ -58,14 +59,12 @@ export default {
     return {
       updateSuccess: false,
       inputReview: false,
+      reviewText: "",
       ratingValue: 5,
       eventReviews: [],
     };
   },
   methods: {
-    test() {
-      console.log(this.ratingValue);
-    },
     setAlertTimeout() {
       setTimeout(() => {
         this.updateSuccess = false;
@@ -83,12 +82,13 @@ export default {
           day: "numeric",
         }),
         numStars: this.ratingValue,
-        reviewText: this.inputReview,
+        reviewText: this.reviewText,
       });
       let reqBody = {
         _id: this.event["_id"],
         eventReviews: reviews,
       };
+      console.log(reqBody);
       this.axios
         .patch(
           `https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/reviews`,
