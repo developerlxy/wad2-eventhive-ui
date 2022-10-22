@@ -40,7 +40,7 @@
 
     </v-form>
     <br>
-    Checking if the component is imported correctly, here is eventName: {{eventName}}<br>
+    <!-- Checking if the component is imported correctly, here is eventName: {{eventName}}<br>
     Checking if the component is imported correctly, here is eventDescription: {{eventDescription}}<br>
     Checking if the component is imported correctly, here is selectedCategory: {{selectedCategory}}<br>
     Checking if the component is imported correctly, here is select: {{select}}<br>
@@ -48,7 +48,7 @@
     Checking if the component is imported correctly, here is location: {{location}}<br>
     Checking if the component is imported correctly, here is maxCapacity: {{maxCapacity}}<br>
     Checking if the component is imported correctly, here is eventTime: {{eventTime}}<br>
-    Checking if the component is imported correctly, here is eventDate: {{eventDate}}<br>
+    Checking if the component is imported correctly, here is eventDate: {{eventDate}}<br> -->
     <br>
 
     <v-expansion-panels class="ml-16">
@@ -116,6 +116,19 @@
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
+  
+    <!-- UPLOAD IMAGE SECTION -->
+    <br>
+    <div v-if="!image">
+      <h2>Upload your cool event photo here!</h2>
+      <input type="file" @change="onFileChange" accept="image/jpeg">
+    </div>
+    <div v-else>
+      <img :src="image" />
+      <button v-if="!uploadURL" @click="removeImage">Remove image</button>
+      <button v-if="!uploadURL" @click="uploadImage">Upload image</button>
+    </div>
+    <h2 v-if="uploadURL">Success! Image uploaded to bucket.</h2>
 
 
 
@@ -130,6 +143,14 @@
 import LandingScreen from '../components/LandingScreen.vue';
 import Categories from '@/components/Categories.vue';
 import NavBar from '@/components/NavBar.vue';
+
+// variables to upload image
+const MAX_IMAGE_SIZE = 1000000
+
+/* ENTER YOUR ENDPOINT HERE */
+
+const API_ENDPOINT = 'https://xt96j6drmd.execute-api.ap-southeast-1.amazonaws.com/uploads' // e.g. https://ab1234ab123.execute-api.us-east-1.amazonaws.com/uploads
+
 
 export default {
   name: "createEvent",
@@ -172,7 +193,10 @@ export default {
       eventDate: null,
       eventTime: null,
       modal2: false,
-      date: null
+      date: null,
+
+      image: '',
+      uploadURL: ''
     }
   },
   methods: {
@@ -185,9 +209,9 @@ export default {
         "maxCapacity": self.maxCapacity,
         "eventDate": self.eventDate,
         "eventCategory": self.selectedCategory,
-        "eventTime": self.eventTime
+        "eventTime": self.eventTime, //NEED ADD THIS TO DATABASE SETUP
+        "eventPhotoURL": self.uploadURL
         // ------------------------ NEED TO ADD -------------------------
-        // "eventPhotoURL": "url here"
         // "eventHost": self.eventHost
       });
 
@@ -207,6 +231,55 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+    },
+    onFileChange (e) {
+      let files = e.target.files || e.dataTransfer.files
+      if (!files.length) return
+      this.createImage(files[0])
+    },
+    createImage (file) {
+      // var image = new Image()
+      let reader = new FileReader()
+      reader.onload = (e) => {
+        console.log('length: ', e.target.result.includes('data:image/jpeg'))
+        if (!e.target.result.includes('data:image/jpeg')) {
+          return alert('Wrong file type - JPG only.')
+        }
+        if (e.target.result.length > MAX_IMAGE_SIZE) {
+          return alert('Image is loo large.')
+        }
+        this.image = e.target.result
+      }
+      reader.readAsDataURL(file)
+    },
+    removeImage: function (e) {
+      console.log('Remove clicked')
+      this.image = ''
+    },
+    uploadImage: async function (e) {
+      console.log('Upload clicked')
+      // Get the presigned URL
+      const response = await this.axios({
+        method: 'GET',
+        url: API_ENDPOINT
+      })
+      console.log('Response: ', response)
+      console.log('Uploading: ', this.image)
+      let binary = atob(this.image.split(',')[1])
+      let array = []
+      for (var i = 0; i < binary.length; i++) {
+        array.push(binary.charCodeAt(i))
+      }
+      let blobData = new Blob([new Uint8Array(array)], {type: 'image/jpeg'})
+      console.log('Uploading to: ', response.data.uploadURL)
+      const result = await fetch(response.data.uploadURL, {
+        method: 'PUT',
+        body: blobData
+      })
+      console.log('Result: ', result)
+      // Final URL for the user doesn't need the query string params
+      this.uploadURL = response.data.uploadURL.split('?')[0]
+      console.log(`image url at ${result.url.split("?")[0]}`);
     }
   }
 };
