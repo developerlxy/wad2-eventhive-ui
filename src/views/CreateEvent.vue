@@ -26,7 +26,6 @@
       <br>
       selected location: {{ location }}
 
-      <v-text-field v-model="location" :rules="locationRules" label="Location" required></v-text-field>
       <v-text-field v-model="maxCapacity" label="Max Capacity" required></v-text-field>
       <v-slider
               v-model="maxCapacity"
@@ -164,13 +163,13 @@ export default {
     return {
       isLoading: true,
       valid: true,
-      eventName: 'How to fucking create a motherfucking web application',
+      eventName: '',
       nameRules: [
         v => !!v || 'No name? Come on you can do better than that',
         v => (v && v.length <= 100) || 'Name must be less than 100 characters',
       ],
 
-      eventDescription: 'This will teach you to fucking create a web application that does not fucking send cocksucking errors every other fucking second and make you wanna throw your sucking fucking balls to the walls',
+      eventDescription: '',
       descriptionRules: [
         v => !!v || `Nobody is gonna come if you don't add fun details!`,
       ],
@@ -184,10 +183,10 @@ export default {
 
       select: null,
 
-      location: 'Sum backward toothless hillbilly shack somewhere',
-      locationRules: [
-        v => !!v || 'Please tell us where is your event located at',
-      ],
+      location: '',
+      // locationRules: [
+      //   v => !!v || 'Please tell us where is your event located at',
+      // ],
       maxCapacity: null,
 
       eventDate: null,
@@ -211,7 +210,7 @@ export default {
         "eventCategory": self.selectedCategory,
         "eventTime": self.eventTime, //NEED ADD THIS TO DATABASE SETUP
         "eventPhotoURL": self.uploadURL
-        // ------------------------ NEED TO ADD -------------------------
+        // ------------------------ NEED TO ADD  -------------------------
         // "eventHost": self.eventHost
       });
 
