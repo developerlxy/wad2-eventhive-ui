@@ -14,13 +14,13 @@ export default new Vuex.Store({
     user: null,
     events : null,
     categories: [
-      { title: 'Sports', src: 'fa-solid fa-volleyball', filter: 'sports'},
-      { title: 'Arts', src: 'fa-solid fa-palette', filter: 'arts'},
-      { title: 'Music', src: 'fa-solid fa-music', filter: 'music'},
-      { title: 'Food', src: 'fa-solid fa-utensils', filter: 'food'},
-      { title: 'Pets', src: "fa-solid fa-dog", filter: 'pets'},
-      { title: 'Games', src: "fa-solid fa-gamepad", filter: 'games'},
-      { title: 'Others', src: "fa-solid fa-shuffle", filter: 'others'},
+      { title: 'Sports', src: 'fa-solid fa-volleyball', filter: 'Sports'},
+      { title: 'Arts', src: 'fa-solid fa-palette', filter: 'Arts'},
+      { title: 'Music', src: 'fa-solid fa-music', filter: 'Music'},
+      { title: 'Food', src: 'fa-solid fa-utensils', filter: 'Food'},
+      { title: 'Pets', src: "fa-solid fa-dog", filter: 'Pets'},
+      { title: 'Games', src: "fa-solid fa-gamepad", filter: 'Games'},
+      { title: 'Others', src: "fa-solid fa-shuffle", filter: 'Others'},
     ]
   },
 

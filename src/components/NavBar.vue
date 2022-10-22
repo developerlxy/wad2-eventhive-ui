@@ -1,7 +1,6 @@
 <template>
   <!-- html -->
-  <v-app-bar height="min-height" color="white" class="navbar">
-    <v-row class="align-center justify-center">
+  <v-app-bar height="min-height" color="white" class="navbar mb-0" elevation="0">
       <v-img
       class="ma-4 logo"
       max-height="100px"

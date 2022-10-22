@@ -6,7 +6,7 @@
           potential: onHover, card increases in size
         -->
         <v-col
-          v-for="category in categories"
+          v-for="category in this.$store.state.categories"
           :key="category.title"
 
           @click="handleClick(category.filter)"
@@ -32,15 +32,7 @@
 <script>
   export default {
     data: () => ({
-      categories: [
-        { title: 'Sports', src: 'fa-solid fa-volleyball', filter: 'sports'},
-        { title: 'Arts', src: 'fa-solid fa-palette', filter: 'arts'},
-        { title: 'Music', src: 'fa-solid fa-music', filter: 'music'},
-        { title: 'Food', src: 'fa-solid fa-utensils', filter: 'food'},
-        { title: 'Pets', src: "fa-solid fa-dog", filter: 'pets'},
-        { title: 'Games', src: "fa-solid fa-gamepad", filter: 'games'},
-        { title: 'Others', src: "fa-solid fa-shuffle", filter: 'others'},
-      ],
+      
     }),
     methods:{
       handleClick: function (filter){
