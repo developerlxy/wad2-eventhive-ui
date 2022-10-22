@@ -1,7 +1,7 @@
 <template>
   <!-- html -->
-  <v-container class="col-md-7 col-sm-5 my-4">
-    <v-row class="flex-nowrap">
+  <v-container class="col-md-7 col-sm-5 my-4" flat v-click-outside="hide" @click="isAdvanced = true">
+    <v-row class="flex-nowrap" onmouseover="isAdvanced = true">
       <v-text-field
         placeholder="Search for anything"
         outlined
@@ -11,7 +11,7 @@
         class="search-box"
         v-model="searchText"
         @keyup.enter="search"
-        @click="isAdvanced = !isAdvanced"
+        
       ></v-text-field>
       <v-btn icon small color="greenDark" class="ml-1 my-auto" @click="search"
         ><v-icon>search</v-icon></v-btn
@@ -113,6 +113,10 @@ export default {
     };
   },
   methods: {
+    hide() {
+      this.isAdvanced = false;
+      console.log(this.isAdvanced);
+    },
     search() {
       // call search page with the search parameters
       console.log("searching");
