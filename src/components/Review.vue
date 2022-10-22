@@ -1,54 +1,104 @@
 <template>
-  <v-form class="review d-inline-flex flex-column">
-    <v-row>
-      <v-btn
-        class="greenDark white--text reviewBtn ma-2"
-        @focus="inputReview = !inputReview"
-      >
-        Review Event
-      </v-btn>
-    </v-row>
-
-    <v-row>
-      <v-container v-if="inputReview" class="greenLight">
-        <v-rating
-          empty-icon="far fa-star"
-          full-icon="fas fa-star"
-          hover
-          length="5"
-          size="20"
-          color="greenDark"
-          background-color="grey"
-          value="5"
-          v-model="ratingValue"
-          @click="test()"
-        ></v-rating>
-        <v-textarea
-          outlined
-          hide-details
-          placeholder="Enter your review here"
-          background-color="white"
+  <v-container class="review">
+    <v-col>
+      <v-row class="justify-start">
+        <v-btn
+          class="greenDark white--text reviewBtn ma-2"
+          @click="inputReview = !inputReview"
         >
-        </v-textarea>
-        <v-btn class="ma-2"> Cancel </v-btn>
-        <v-btn class="ma-2"> Submit </v-btn>
-      </v-container>
-    </v-row>
-  </v-form>
+          Review Event
+        </v-btn>
+          <v-icon
+          v-if="updateSuccess"
+          color="greenDark"
+          transition="scale-transition"
+          large
+        >
+          check_circle
+        </v-icon>
+        
+      </v-row>
+
+      <v-row class="justify-start">
+        <v-container v-if="inputReview" class="greenLight justify-start">
+          <v-rating
+            empty-icon="far fa-star"
+            full-icon="fas fa-star"
+            hover
+            length="5"
+            size="20"
+            color="greenDark"
+            background-color="grey"
+            value="5"
+            v-model="ratingValue"
+          ></v-rating>
+          <v-textarea
+            outlined
+            hide-details
+            v-model="reviewText"
+            placeholder="Enter your review here"
+            background-color="white"
+          >
+          </v-textarea>
+          <v-btn class="ma-2" @click="inputReview = !inputReview">
+            Cancel
+          </v-btn>
+          <v-btn class="ma-2" @click="addReview"> Submit </v-btn>
+        </v-container>
+      </v-row>
+    </v-col>
+  </v-container>
 </template>
 <script>
 export default {
   name: "Review",
+  props: {
+    event: Object,
+  },
   data() {
     return {
+      updateSuccess: false,
       inputReview: false,
+      reviewText: "",
       ratingValue: 5,
-
+      eventReviews: [],
     };
   },
   methods: {
-    test() {
-      console.log(this.ratingValue)
+    setAlertTimeout() {
+      setTimeout(() => {
+        this.updateSuccess = false;
+      }, 2000);
+    },
+    addReview() {
+      console.log("add review");
+      let today = new Date();
+      let reviews = this.$store.state.events[0].eventReviews;
+      reviews.push({
+        userName: this.$store.state.user.userName,
+        dateReviewed: today.toLocaleDateString("en-GB", {
+          year: "numeric",
+          month: "numeric",
+          day: "numeric",
+        }),
+        numStars: this.ratingValue,
+        reviewText: this.reviewText,
+      });
+      let reqBody = {
+        _id: this.event["_id"],
+        eventReviews: reviews,
+      };
+      console.log(reqBody);
+      this.axios
+        .patch(
+          `https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/reviews`,
+          reqBody
+        )
+        .then((response) => {
+          this.updateSuccess = true;
+          this.inputReview = false;
+          this.setAlertTimeout();
+        });
     },
   },
 };

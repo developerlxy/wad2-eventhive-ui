@@ -96,12 +96,22 @@
           @click:append="showPass = !showPass"
         ></v-text-field>
       </v-row>
-      <v-btn
-        color="greenDark"
-        class="white--text ma-4 pa-1"
-        @click="updateProfile()"
-        >Update Profile</v-btn
-      >
+      <v-row>
+        <v-btn
+          color="greenDark"
+          class="white--text ma-4 pa-1"
+          @click="updateProfile()"
+          >Update Profile</v-btn
+        >
+        <v-icon
+          v-if="updateSuccess"
+          color="greenDark"
+          transition="scale-transition"
+          large
+        >
+          check_circle
+        </v-icon>
+      </v-row>
     </v-container>
   </div>
 </template>
@@ -158,6 +168,11 @@ export default {
     };
   },
   methods: {
+    setAlertTimeout() {
+      setTimeout(() => {
+        this.updateSuccess = false;
+      }, 2000);
+    },
     updateProfile() {
       let reqBody = {};
       if (this.firstname != "") {
@@ -184,6 +199,7 @@ export default {
         .then((response) => {
           if (response.data == "Update Success") {
             this.updateSuccess = true;
+            this.setAlertTimeout();
           }
         });
     },
