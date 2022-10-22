@@ -2,6 +2,7 @@
     <v-card
     class="mx-auto"
     max-width="250px"
+    height="300px"
   >
     <v-img
       :src="eventDetails.eventPhotoURL"

@@ -4,9 +4,13 @@
   <div v-else>
     <NavBar></NavBar>
     <Categories></Categories>
+    <div class="my-2" v-if="this.$store.state.user">
+      <h2 class="peachDark--text">Just For You</h2>
+      <EventCarousel :allEvents="getAllUser(this.$store.state.events, this.$store.state.user)"></EventCarousel>
+    </div>
     <div class="my-2 ">
       <h2 class="peachDark--text">Buzzing Now!</h2>
-      <EventCarousel></EventCarousel>
+      <EventCarousel :allEvents="getAllBuzzing(this.$store.state.events)"></EventCarousel>
     </div>
   </div>
 </template>
@@ -32,6 +36,26 @@ export default {
     data() {
       return {
         isLoading: true
+      }
+    },
+    methods: {
+      getAllBuzzing: function (events){
+        var buzzingEvents = [];
+        for (let indiv of events){
+          if (indiv.isBuzzing){
+            buzzingEvents.push(indiv)
+          }
+        }
+        return buzzingEvents
+      },
+      getAllUser: function (events, user){
+        var reccEvents = [];
+        for (let indiv of events){
+          if (user.categoryPrefs.includes(indiv.category)){
+            reccEvents.push(indiv)
+          }
+        }
+        return reccEvents
       }
     }
 };
