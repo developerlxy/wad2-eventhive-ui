@@ -1,148 +1,199 @@
 <template>
-    <!-- html -->
-    <div class="search">
-    <div class="search-container">
-        <div class="search-box">
-            <input id="search-input" class="search-input" type="text" placeholder="Search for anything" v-model="searchText" @keyup.enter="search" @focus="showFilters()" @focusout="hideFilters()"/>
-        </div>
-        <button class="search-btn" type="submit">
-            <font-awesome-icon icon="magnifying-glass"/>
-        </button>
-    </div>
-        <div class="filters" id="filters">
-        <div class="filter-container">
-            <button class="filter-button">
-                <font-awesome-icon icon="location-dot" />
-                Anywhere</button>
-        </div>
-        <div class="filter-container">
-            <button class="filter-button">
-                <font-awesome-icon icon="calendar" />
-                Anytime</button>
-        </div>
-        <div class="filter-container">
-            <button class="filter-button">
-                <font-awesome-icon icon="person" />
-                Any group size</button>
-        </div>
-    </div>
+  <!-- html -->
+  <v-container class="col-md-7 col-sm-5 my-4">
+    <v-row class="flex-nowrap ">
+      <v-text-field
+        placeholder="Search for anything"
+        outlined
+        dense
+        rounded
+        hide-details
+        class="search-box"
+        @keyup.enter="search"
+        @click="isAdvanced = !isAdvanced"
+      ></v-text-field>
+      <v-btn icon small color="greenDark" class="ml-1 my-auto" @click="search"
+        ><v-icon>search</v-icon></v-btn
+      >
+    </v-row>
+    <v-row v-if="isAdvanced" class="mr-5">
+      <!-- Anytime -->
+      <v-menu
+        ref="menu"
+        v-model="menu"
+        :close-on-content-click="false"
+        :return-value.sync="dateSelected"
+        transition="scale-transition"
+        offset-y
+        min-width="auto"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-text-field
+            class="mt-1 col-md"
+            v-model="dateRangeText"
+            rounded
+            outlined
+            dense
+            hide-details
+            placeholder="Anytime"
+            readonly
+            v-bind="attrs"
+            v-on="on"
+          ></v-text-field>
+        </template>
+        <v-date-picker
+          v-model="dateSelected"
+          no-title
+          range
+          scrollable
+          :min="today"
+          @input="$refs.menu.save(dateSelected)"
+        >
+          <v-spacer></v-spacer>
+          <v-btn text color="primary" @click="menu = false"> Cancel </v-btn>
+          <v-btn text color="primary" @click="$refs.menu.save(dateSelected)">
+            OK
+          </v-btn>
+        </v-date-picker>
+      </v-menu>
 
-    </div>
-
+      <!-- Anywhere to change to dropdown -->
+      <v-select
+        :items="availableLoc"
+        :menu-props="{ bottom: true, offsetY: true }"
+        v-model="locationSelected"
+        rounded
+        hide-details
+        dense
+        placeholder="Anywhere"
+        outlined
+        class="mt-1 col-md"
+      ></v-select>
+      <!-- check capacity of event -->
+      <v-select
+        :items="maxGroupSize"
+        :menu-props="{ bottom: true, offsetY: true }"
+        v-model="groupSizeSelected"
+        rounded
+        hide-details
+        dense
+        placeholder="Any Group Size"
+        outlined
+        class="mt-1 col-md"
+      ></v-select>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
-    // javascript
-    export default {
-        name: 'SearchBar',
-        data() {
-            return {
-                searchText: ''
-            }
+// javascript
+export default {
+  name: "SearchBar",
+  data() {
+    return {
+      menu: false,
+      searchText: "",
+      isAdvanced: false,
+      dateSelected: "",
+      locationSelected: "",
+      groupSizeSelected: 2, // let's say 2 is the default
+
+      today: new Date().toISOString().slice(0, 10),
+
+      availableLoc: this.availableLocations(),
+      maxGroupSize: ["1", "2 - 4", "5 - 10", "10+"],
+    };
+  },
+  methods: {
+    availableLocations() {
+      let locationsInDB = [];
+
+      var config = {
+        method: "get",
+        url: "https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events",
+        headers: {
+          "Content-Type": "application/json",
         },
-        methods: {
-            search() {
-                this.$emit('search', this.searchText)
-            },
-            showFilters() {
-                var filters = document.getElementById("filters");
-                console.log(filters.style.visibility);
-                filters.style.visibility = "visible";
-                filters.style.display = "flex";
-            },
-            hideFilters() {
-                var filters = document.getElementById("filters");
-                console.log(filters.style.visibility);
-                filters.style.visibility = "hidden";
-                filters.style.display = "none";
-            }
+      };
+      this.axios(config).then(function (response) {
+        for (let event of response.data) {
+          let eventLoc = event["eventLocation"];
+          if (eventLoc != "" && !locationsInDB.includes(eventLoc)) {
+            locationsInDB.push(eventLoc);
+          }
         }
-    }
+      });
+      return locationsInDB;
+    },
+    search() {
+      // TODO: implement search function onclick
+      console.log("searching");
+      // var config = {
+      //   method: "get",
+      //   url: "https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      // };
+      console.log(this.$store.state.events);
 
-     
+      this.$router.push("/events");
+    },
+  },
+  computed: {
+    dateRangeText() {
+      console.log(this.dateSelected);
+
+      // if no date selected, leave empty
+      if (this.dateSelected.length == 0) {
+        return "";
+      }
+
+      var today = new Date();
+
+      let [year1, month1, day1] = [
+        today.getFullYear(),
+        today.getMonth() + 1,
+        today.getDate(),
+      ];
+
+      // if there is only one date selected, return that one date
+      if (
+        this.dateSelected.length == 1 ||
+        this.dateSelected[0] == this.dateSelected[1]
+      ) {
+        [year1, month1, day1] = this.dateSelected[0].split("-");
+        return `${day1}/${month1}/${year1}`;
+      }
+
+      // range of dates (2 dates selected)
+
+      // if there is a start date, get start date
+      if (this.dateSelected[0] != "") {
+        [year1, month1, day1] = this.dateSelected[0].split("-");
+      }
+
+      let [year2, month2, day2] = ["", "", ""];
+
+      // if there is an end date, get end date
+      if (this.dateSelected[1] != "") {
+        [year2, month2, day2] = this.dateSelected[1].split("-");
+        if (this.dateSelected[0] == "") {
+          return `${day2}/${month2}/${year2}`;
+        }
+      }
+
+      // return dates in ascending order
+      if (this.dateSelected[0] > this.dateSelected[1]) {
+        return (
+          `${day2}/${month2}/${year2}` + " - " + `${day1}/${month1}/${year1}`
+        );
+      } else {
+        return (
+          `${day1}/${month1}/${year1}` + " - " + `${day2}/${month2}/${year2}`
+        );
+      }
+    },
+  },
+};
 </script>
-
-<style>
-    /* css */
-    .search {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        margin-top: 20px;
-    }
-    .search * {
-        font-size: medium;
-        border-color: rgb(119, 153, 119);
-    }
-
-    .search-container {
-        align-items:center;
-        background-color: rgb(255, 255, 255);
-        border: 2px solid rgb(119, 153, 119);
-        border-radius: 50px;
-        display: flex;
-        padding: 5px;
-        position: relative;
-        width: fit-content;
-    }
-    ::placeholder {
-        color: rgb(119, 153, 119);
-        font-size: medium;
-        text-align: left;
-    }
-
-    .search-input {
-        font-size: medium;
-        border: 0px none;
-        background-color: rgb(255, 255, 255);
-        padding: 0px 10px;
-        width: 200px;
-        transition: width 0.35s ease-in-out;
-    }
-    .search-input:focus {
-        outline: none;
-        width: 300px;
-    }
-
-    .search-btn {
-        background-color: rgb(119, 153, 119);
-        color: white;
-        border: 0px none;
-        border-radius: 50%;
-        height: 30px;
-        width: 30px;
-        display: inline-block;
-    }
-    .search-btn:hover {
-        background-color: rgb(107, 135, 107);
-    }
-
-
-    #filters {
-        visibility: hidden;
-        display: none;
-    }
-    .filter-container {
-        align-items: center;
-        background-color: rgb(255, 255, 255);
-        border: 2px solid rgb(119, 153, 119);
-        border-radius: 50px;
-        display: inline-block;
-        padding: 5px;
-        margin-top: 10px;
-        margin-right: 10px;
-        position: relative;
-        width: fit-content;
-    }
-    .filter-container:hover {
-        background-color: rgb(245, 245, 245);
-    }
-    .filter-button {
-        color: rgb(119, 153, 119);
-        border: 0px none;
-    }
-    .filter-button > * {
-        padding: 0px 2px;
-    }
-</style>

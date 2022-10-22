@@ -1,0 +1,90 @@
+<template>
+    <div class="user-event-carousel mx-lg-12 mx-sm-10 mx-6 mt-10">
+      <div class="d-flex text-h5 brownDark--text font-weight-medium ml-4">
+        {{userEventType}}
+      </div>
+      <v-row
+          v-for="event in filteredEvents"
+          :key="event._id"
+          class="my-6"
+      >
+        <v-col>
+          <UserEventCard :event-obj="event" :event-type="userEventType"></UserEventCard>
+        </v-col>
+          
+      </v-row>
+
+    </div>
+
+
+</template>
+
+
+
+<script>
+import UserEventCard from "./UserEventCard.vue";
+
+export default {
+    name: 'UserEventCarousel',
+    components: { UserEventCard},
+    props: {
+        userEventType: {
+            type: String,
+            default: 'Registered Events'
+        }
+    },
+    data() {    
+        return {
+            allEvents: [],
+            user: null,
+            filteredEvents: []
+        }
+    },
+    mounted() {
+        this.allEvents = this.$store.state.events
+        this.user = this.$store.state.user
+        this.getFilteredEvents();
+        console.log(this.user.registeredEvents)
+    },
+    methods: {
+      getFilteredEvents() {
+        const allUserEvents = this.user.registeredEvents
+        if (this.userEventType == 'Registered Events') {
+          allUserEvents.forEach(
+            (eventID) => {
+              const eventObj = this.allEvents.find((eventObj) => eventObj._id == eventID)
+              const eventDate = new Date(eventObj.eventDate)
+              if(this.isAfterToday(eventDate)){
+                this.filteredEvents.push(eventObj) 
+              }
+            }
+          )
+        } else {
+          allUserEvents.forEach(
+            (eventID) => {
+              const eventObj = this.allEvents.find((eventObj) => eventObj._id == eventID)
+              const eventDate = new Date(eventObj.eventDate)
+              if(!this.isAfterToday(eventDate)){
+                this.filteredEvents.push(eventObj) 
+              }
+            }
+          )
+        }
+      },
+      isAfterToday(date) {
+        const today = new Date();
+
+        today.setHours(23, 59, 59, 998);
+
+        return date > today;
+      }
+    }
+}
+
+
+</script>
+
+<style>
+
+</style>
+
