@@ -55,6 +55,16 @@ const routes = [
         name: 'User Profile',
         component: () => import('@/views/UserProfile.vue'),
       },
+      {
+        path: '/event',
+        name: 'Event',
+        component: () => import('@/views/IndivEvent.vue'),
+      },
+      {
+        path: '/event/random',
+        name: 'Random Event',
+        component: () => import('@/views/IndivEventRandom.vue'),
+      },
     ],
   },
 ];
