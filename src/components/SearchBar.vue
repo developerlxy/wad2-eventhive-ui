@@ -9,6 +9,7 @@
         rounded
         hide-details
         class="search-box"
+        v-model="searchText"
         @keyup.enter="search"
         @click="isAdvanced = !isAdvanced"
       ></v-text-field>
@@ -58,17 +59,6 @@
       </v-menu>
 
       <!-- Anywhere to change to LocationSearchBar -->
-      <!-- <v-select
-        :items="availableLoc"
-        :menu-props="{ bottom: true, offsetY: true }"
-        v-model="locationSelected"
-        rounded
-        hide-details
-        dense
-        placeholder="Anywhere"
-        outlined
-        class="mt-1 col-md"
-      ></v-select> -->
       <v-autocomplete
         v-model="locationSelected"
         :loading="loading"
