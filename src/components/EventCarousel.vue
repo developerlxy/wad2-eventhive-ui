@@ -3,7 +3,6 @@
   <v-sheet
     class="mx-auto"
     width="90%"
-    height="30%"
   >
     <v-slide-group
       class="p-4"
@@ -11,7 +10,7 @@
       show-arrows
     >
       <v-slide-item
-        v-for="event in this.$store.state.events"
+        v-for="event in allEvents"
         :key="event.name"
         
       >
@@ -28,8 +27,15 @@
 import EventCard from '@/components/EventCard.vue';
 
   export default {
+    name: 'EventCarousel',
+    props: {
+          allEvents: {
+              type: Array,
+              required: true
+          }
+    },
     data: () => ({
-
+      
     }),
   }
 </script>
