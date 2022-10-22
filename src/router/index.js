@@ -65,6 +65,11 @@ const routes = [
         name: 'Event',
         component: () => import('@/views/IndivEvent.vue'),
       },
+      {
+        path: '/event/random',
+        name: 'Random Event',
+        component: () => import('@/views/IndivEventRandom.vue'),
+      },
     ],
   },
 ];
