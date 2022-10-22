@@ -1,7 +1,8 @@
 <template>
   <!-- html -->
   <v-app-bar height="min-height" color="white" class="navbar mb-0" elevation="0">
-      <v-img
+    <v-row class="align-center justify-center">  
+    <v-img
       class="ma-4 logo"
       max-height="100px"
       max-width="100px"
@@ -17,7 +18,7 @@
     >
     <Google_button></Google_button>
     <LoginProfileButton class="d-none d-sm-flex mx-2"></LoginProfileButton>
-    <!-- </v-row> -->
+    </v-row>
       
   </v-app-bar>
 </template>
