@@ -17,8 +17,18 @@
                         <v-col>
                             <h1 class="text-left"> {{specificEvent.eventName}} </h1>
                         </v-col>
-                        <v-col>
-                            <h3 class="text-left">by {{host.userName}}</h3>
+                        <v-col class="justify-start">
+                            <span>
+                            <h3 class="text-left">by
+                            <v-btn
+                            @click="hostProfile(specificEvent.eventHost)"
+                            text
+                            tile
+                            color=""
+                            class="pd"
+                            > {{host.userName}}</v-btn></h3> 
+
+                        </span>
                         </v-col>
                     </v-row>
                     <v-row class=" align-end justify-center">
@@ -185,7 +195,7 @@
             isLoading: true,
             benched: 10,
             events: [this.$store.state.events],
-            eventID: '6350f232ca88afcea5e30456',
+            eventID: '6350f247ca88afcea5e30457',
             specificEvent: null,
             date: null,
             reviews: null,
@@ -200,6 +210,7 @@
             .then(response => {
           this.userlist = response.data;
           this.host = this.userlist.find(user => user._id === this.specificEvent.eventHost);
+          console.log(this.host)
         })
         .catch(function (error) {
           console.log(error);
@@ -221,6 +232,9 @@
         newDate(inputDate) {
             var test = new Date(inputDate)
             return(test.toDateString())
+        },
+        host (HostID) {
+            this.$router.push("/host/" + HostID)
         },
         register () {
             this.$router.push("/register")
