@@ -38,7 +38,7 @@ export default new Vuetify({
         peachDark: '#BC7547',
         peachMid: '#DC8D6C',
         peachLight: '#FFE6D8',
-        error: '#D42900',
+        error: '#bd5959',
         success: '#86B71B',
         warning: 'FF853F'
       },

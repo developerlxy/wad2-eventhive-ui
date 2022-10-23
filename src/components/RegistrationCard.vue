@@ -1,8 +1,7 @@
 <template>
-    
     <v-card
       class="mx-auto px-10 pt-11 pb-9"
-      width="450px"
+      :width="width"
       outlined
     >
       <img
@@ -13,24 +12,29 @@
         />
     <v-form ref="form">
     <v-text-field
+        color="#000000"
         dense
         outlined
         label="Email"
         :rules="emailRules"
         append-icon="mdi-map-marker"
         v-model="email"
+        @keyup.enter="signup"
       ></v-text-field>
 
       <v-text-field
+        color="#000000"
         dense
         outlined
         label="Username"
         append-icon="mdi-map-marker"
         :rules="usernameRules"
         v-model="userName"
+        @keyup.enter="signup"
       ></v-text-field>
 
       <v-text-field
+        color="#000000"
         dense
         outlined
         v-model="password"
@@ -41,9 +45,11 @@
         label="Password"
         hint="At least 8 characters"
         @click:append="show1 = !show1"
+        @keyup.enter="signup"
       ></v-text-field>
 
       <v-text-field
+        color="#000000"
         dense
         outlined
         :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
@@ -53,10 +59,10 @@
         label="Confirm Password"
         hint="Must match password above"
         @click:append="show1 = !show1"
+        @keyup.enter="signup"
       ></v-text-field>
-    </v-form>
       <v-btn
-        class="text-none"
+        class="text-none my-1 mb-4"
         :color="isDisabled ? 'grey' : 'greenDark'"
         dark
         block
@@ -64,15 +70,25 @@
       >
       Sign Up
       </v-btn>
-      <br>
-      <a href>Already have an account? Log in here!</a>
-      <p class="pt-1 pb-0 m-0 red--text" v-show="userExists">This email already exists. Please login!</p>
-      <p class="pt-1 pb-0 m-0 red--text" v-show="userCreated">User registered. Redirecting you to login page...</p>
+
+      <v-btn
+        class="btn-multiline"
+        text
+        @click.native="pushToLogin"
+      >
+        <span class="text-wrap">Already have an account? Log in here!</span>
+      </v-btn>
+    </v-form>
+      
+      <SignupSnackbar :show-snackbar="showSnackbar" :text="snackbarText"></SignupSnackbar>
     </v-card>
+
   </template>
    
   <script>
+  import SignupSnackbar from "./SignupSnackbar.vue";
   export default {
+    components: {SignupSnackbar},
     name: "RegistrationCard",
       data () {
         return {
@@ -81,8 +97,8 @@
           email: '',
           userName: '',
           password: '',
-          userExists: false,
-          userCreated: false,
+          showSnackbar: false,
+          snackbarText: '',
           passwordRules: [
             v => !!v || 'Password is required',
             value => (value && value.length >= 6) || 'Minimum 8 characters',
@@ -101,30 +117,64 @@
         ]
         }
       },
+      computed: {
+        width () {
+          switch(this.$vuetify.breakpoint.name) {
+            case 'xs': return 360
+            case 'sm': return 450
+            case 'md': return 450
+            case 'lg': return 450
+            case 'xl': return 450
+          }
+        }
+      },
       methods: {
         signup: function(event) {
             if (this.$refs.form.validate()) {
-                this.isDisabled = true
-                this.axios.post("https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users/register",
-                    {
-                        userName: this.userName,
-                        userPassword: this.password,
-                        userEmail: this.email,
-                    }
-                ).then(response => {
-                    if (typeof response.data == "string" && response.data == "User Exists") {
-                        this.userExists = true
-                    } else if (typeof response.data == "object") {
-                        this.userCreated = true
-                        setTimeout(() => {
-                            this.$router.push({name: "login", params: {email: this.email}})
-                        }, 2000);
-                    }
-                    this.isDisabled = false
-                })
-                
+              this.emailExists = false
+              this.usernameExists = false
+              this.bothExists = false
+              this.isDisabled = true
+              this.axios.post("https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users/register",
+                  {
+                      userName: this.userName,
+                      userPassword: this.password,
+                      userEmail: this.email,
+                  }
+              ).then(response => {
+                this.showSnackbar = true
+                this.snackbarText = "User created. Taking you to login page..."
+                this.userCreated = true
+                this.isDisabled = false
+                setTimeout(
+                  ()=>{
+                    this.$router.push({name: "login", params: {email: this.email}})
+                  }, 3500
+                )
+              }).catch(error => {
+                console.log(error)
+                if (error.response.data == "Email is in use") {
+                  this.emailExists = true
+                  this.snackbarText = "This email already exists. Please log in!"
+                  this.showSnackbar = true
+                }
+                else if (error.response.data == "Username is in use") {
+                  this.snackbarText = "This username has been taken. Please choose another one!"
+                  this.showSnackbar = true
+                  this.usernameExists = true
+                } else {
+                  this.snackbarText = "This email and username already exists. Please login!"
+                  this.showSnackbar = true
+                  this.bothExists = true
+                }
+                this.isDisabled = false
+                setTimeout(()=> this.showSnackbar = false, 3500)
+              })
             }
-        }
+        },
+        pushToLogin: function(event) {
+          this.$router.push({name: 'login', params: {email: this.email}})
+      }
       }
     }
   </script>
@@ -132,4 +182,9 @@
   .v-text-field--outlined >>> fieldset {
     border-color: #A9C4BB;
   }
+
+  .btn-multiline > span {
+    width: 100%
+  }
+
   </style>
