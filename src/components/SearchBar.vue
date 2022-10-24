@@ -1,94 +1,97 @@
 <template>
   <!-- html -->
-  <v-container class="col-md-7 col-sm-5 my-4" flat v-click-outside="hide" @click="isAdvanced = true">
-    <v-row class="flex-nowrap" onmouseover="isAdvanced = true">
-      <v-text-field
-        placeholder="Search for anything"
-        outlined
-        dense
-        rounded
-        hide-details
-        class="search-box"
-        v-model="searchText"
-        @keyup.enter="search"
-        
-      ></v-text-field>
-      <v-btn icon small color="greenDark" class="ml-1 my-auto" @click="search"
-        ><v-icon>search</v-icon></v-btn
-      >
-    </v-row>
-    <v-row v-if="isAdvanced" class="mr-5">
-      <!-- Anytime -->
-      <v-menu
-        ref="menu"
-        v-model="menu"
-        :close-on-content-click="false"
-        :return-value.sync="dateSelected"
-        transition="scale-transition"
-        offset-y
-        min-width="auto"
-      >
-        <template v-slot:activator="{ on, attrs }">
-          <v-text-field
-            class="mt-1 col-md"
-            v-model="dateRangeText"
-            rounded
-            outlined
-            dense
-            hide-details
-            placeholder="Anytime"
-            readonly
-            v-bind="attrs"
-            v-on="on"
-          ></v-text-field>
-        </template>
-        <v-date-picker
-          v-model="dateSelected"
-          no-title
-          range
-          scrollable
-          :min="today"
-          @input="$refs.menu.save(dateSelected)"
+  <v-hover v-slot="{hover}">
+    <v-container class='px-0 my-6' flat v-click-outside="hide" @click="isAdvanced = true">
+      <v-row class="flex-nowrap" >
+        <v-text-field
+          placeholder="Search for anything"
+          outlined
+          dense
+          rounded
+          hide-details
+          class="search-box"
+          v-model="searchText"
+          @keyup.enter="search"
+          
+        ></v-text-field>
+        <v-btn icon small color="greenDark" class="ml-1 my-auto" @click="search"
+          ><v-icon>search</v-icon></v-btn
         >
-          <v-spacer></v-spacer>
-          <v-btn text color="primary" @click="menu = false"> Cancel </v-btn>
-          <v-btn text color="primary" @click="$refs.menu.save(dateSelected)">
-            OK
-          </v-btn>
-        </v-date-picker>
-      </v-menu>
+      </v-row>
+      <v-row v-if="hover||isAdvanced" class="mr-5">
+        <!-- Anytime -->
+        <v-menu
+          ref="menu"
+          v-model="menu"
+          :close-on-content-click="false"
+          :return-value.sync="dateSelected"
+          transition="scale-transition"
+          offset-y
+          min-width="auto"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-text-field
+              class="mt-1 col-sm-4"
+              v-model="dateRangeText"
+              rounded
+              outlined
+              dense
+              hide-details
+              placeholder="Anytime"
+              readonly
+              v-bind="attrs"
+              v-on="on"
+            ></v-text-field>
+          </template>
+          <v-date-picker
+            v-model="dateSelected"
+            no-title
+            range
+            scrollable
+            :min="today"
+            @input="$refs.menu.save(dateSelected)"
+          >
+            <v-spacer></v-spacer>
+            <v-btn text color="primary" @click="menu = false"> Cancel </v-btn>
+            <v-btn text color="primary" @click="$refs.menu.save(dateSelected)">
+              OK
+            </v-btn>
+          </v-date-picker>
+        </v-menu>
 
-      <!-- Anywhere to change to LocationSearchBar -->
-      <v-autocomplete
-        v-model="locationSelected"
-        :loading="loading"
-        :items="locationItems"
-        :search-input.sync="searchLocation"
-        cache-items
-        class="mt-1 col-md"
-        flat
-        hide-no-data
-        hide-details
-        outlined
-        dense
-        rounded
-        placeholder="Anywhere"
-      ></v-autocomplete>
+        <!-- Anywhere to change to LocationSearchBar -->
+        <v-autocomplete
+          v-model="locationSelected"
+          :loading="loading"
+          :items="locationItems"
+          :search-input.sync="searchLocation"
+          cache-items
+          class="mt-1 col-sm-4"
+          flat
+          hide-no-data
+          hide-details
+          outlined
+          dense
+          rounded
+          placeholder="Anywhere"
+        ></v-autocomplete>
 
-      <!-- check capacity of event -->
-      <v-select
-        :items="maxGroupSize"
-        :menu-props="{ bottom: true, offsetY: true }"
-        v-model="groupSizeSelected"
-        rounded
-        hide-details
-        dense
-        placeholder="Any Group Size"
-        outlined
-        class="mt-1 col-md"
-      ></v-select>
-    </v-row>
-  </v-container>
+        <!-- check capacity of event -->
+        <v-select
+          :items="maxGroupSize"
+          :menu-props="{ bottom: true, offsetY: true }"
+          v-model="groupSizeSelected"
+          rounded
+          hide-details
+          dense
+          placeholder="Any Group Size"
+          outlined
+          class="mt-1 col-sm-4"
+        ></v-select>
+      </v-row>
+    </v-container>
+  </v-hover>
+  
 </template>
 
 <script>

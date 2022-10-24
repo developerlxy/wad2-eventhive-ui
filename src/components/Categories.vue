@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container class="fluid">
       <v-row dense>
         <!-- onClick, redirect to Full Events page with Category filter placed on 
         

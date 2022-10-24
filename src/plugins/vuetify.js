@@ -40,7 +40,7 @@ export default new Vuetify({
         peachLight: '#FFE6D8',
         error: '#bd5959',
         success: '#86B71B',
-        warning: 'FF853F'
+        warning: '#FF853F'
       },
     },
   },

@@ -9,22 +9,21 @@
 
     <v-menu
       v-else
+      open-on-hover
       open-on-click
       offset-y
-      nudge-bottom="5"
       bottom
       left
       min-width="auto"
-
       origin="top right"
       transition="scale-transition"
     >
       <template v-slot:activator="{ on, attrs }">
-        <button>
+        <button >
           <v-avatar
-            class="white--text"
+            class="white--text ml-4"
             id="profile-btn"
-            color="rgb(119, 153, 119)"
+            color="peachDark"
             size="36"
             v-bind="attrs"
             v-on="on"
@@ -36,7 +35,6 @@
       <v-list>
         <v-list-item @click="myProfile"> My Profile </v-list-item>
         <v-list-item @click="registered"> Registered Events </v-list-item>
-        <v-list-item @click="wishlist"> My WishList </v-list-item>
         <v-list-item @click="history"> Attended Events </v-list-item>
         <v-list-item @click="logout"> Log Out </v-list-item>
       </v-list>
@@ -81,10 +79,6 @@ export default {
     registered() {
       // TODO: create pages & routes
       this.$router.push("/user/registered-events");
-    },
-    wishlist() {
-      // TODO: create pages & routes
-      this.$router.push("/wishlist");
     },
     history() {
       // TODO: create pages & routes
