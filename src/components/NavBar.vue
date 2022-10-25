@@ -1,7 +1,7 @@
 <template>
   <!-- html -->
   <v-app-bar height="min-height" color="white" class="navbar mb-0" elevation="0">
-    <v-row class="align-center justify-center mx-2 px-2" v-if="xsBreakpoint">  
+    <v-row class="align-center justify-center mx-2" v-if="smBreakpoint">  
       <v-img
           class="my-4 logo col-xs-3"
           max-height="100px"
@@ -64,7 +64,7 @@ export default {
     },
   },
   computed: {
-    xsBreakpoint() {
+    smBreakpoint() {
       return this.$vuetify.breakpoint.name == 'xs' || this.$vuetify.breakpoint.name == 'sm' 
     }
   },

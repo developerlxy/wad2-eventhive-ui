@@ -1,12 +1,12 @@
 <template>
-    <div class="user-event-carousel mx-lg-12 mx-sm-10 mx-6 mt-10">
-      <div class="d-flex text-h5 brownDark--text font-weight-medium ml-4">
+    <div class="user-event-carousel mx-lg-12 mx-sm-10 mx-6 mt-2">
+      <p class="d-flex text-h4 brownDark--text font-weight-bold  ml-4">
         {{userEventType}}
-      </div>
+      </p>
       <v-row
           v-for="event in filteredEvents"
           :key="event._id"
-          class="my-6"
+          class="my-4"
       >
         <v-col>
           <UserEventCard :event-obj="event" :event-type="userEventType"></UserEventCard>
