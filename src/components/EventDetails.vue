@@ -3,7 +3,7 @@
         <v-container>
             <v-row>
                 <v-col cols="8">
-            <img v-bind:src="specificEvent.eventPhotoURL"
+            <img v-bind:src="this.specificEvent.eventPhotoURL"
                 aspect-ratio="16/9"
                 width="75%"
 >
@@ -15,44 +15,91 @@
                             <h3 class="text-left">{{this.newDate(this.specificEvent.eventDate)}}</h3>
                         </v-col>
                         <v-col>
-                            <h1 class="text-left"> {{specificEvent.eventName}} </h1>
+                            <h1 class="text-left"> {{this.specificEvent.eventName}} </h1>
                         </v-col>
                         <v-col class="justify-start">
                             <span>
                             <h3 class="text-left">by
                             <v-btn
-                            @click="hostProfile(specificEvent.eventHost)"
+                            v-if="this.host"
+                            @click="hostProfile(this.specificEvent.eventHost)"
                             text
                             tile
                             color=""
                             class="pd"
-                            > {{host.userName}}</v-btn></h3> 
+                            > {{this.host.userName}}</v-btn></h3> 
 
                         </span>
                         </v-col>
                     </v-row>
                     <v-row class=" align-end justify-center">
-                        <v-btn 
-                                color="greenDark"
+                        <template v-if="this.registered">
+                            
+                            <v-btn
+                                brick
+                                disabled
+                                color="warning"
                                 class="justify-start white--text"
-                                @click="register"
                             >
-                                Register your interest
+                                Registered
                             </v-btn>
-                            <v-btn 
-                                color="greenDark"
-                                class=" ml-5 white--text"
-                                @click="wishlist"
+                        </template>
+                        <template v-else-if="this.specificEvent.attendees.length >= this.specificEvent.maxCapacity">
+                            <v-btn
+                            brick
+                                disabled
+                                color="warning"
+                                class="justify-start white--text"
                             >
-                                <v-icon>mdi-heart</v-icon>
+                                Event full
                             </v-btn>
+                        </template>
+                        <template v-else>
+                            <div>
+                            <v-dialog
+                            v-model="dialog"
+                            width="500"
+                            >
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-btn
+                                    brick
+                                    color="greenDark"
+                                    class="justify-start white--text"
+                                    v-bind="attrs"
+                                    v-on="on"
+                                    
+                                >
+                                    Register your interest
+                                </v-btn>
+                        </template>
+                        <v-card>
+                            <v-card-title class="text-h5 grey lighten-2">
+                                Confirmation
+                            </v-card-title>
+
+                            <v-card-text>
+                                {{this.acctUser.registeredEvents}}
+                                You are signing up for the event: {{this.specificEvent.eventName}}.
+                            </v-card-text>
+
+                            <v-divider></v-divider>
+
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn
+                                color="primary"
+                                text
+                                @click="intermediate"
+                                >
+                                I accept
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                        </v-dialog>
+                        </div>
+                        </template>
                     </v-row>
                 </v-container>
-
-                    <!--  -->
-                    
-                    
-                    
                 </v-col>
             </v-row>
             <v-row>
@@ -79,7 +126,7 @@
                         </v-row>
                         <v-row align-center class="justify-start">
                             <p class="text-left ml-3 overflow-auto">
-                                {{reviewDate(specificEvent.eventDate)}}
+                                {{reviewDate(this.specificEvent.eventDate)}}
                             </p>
                         </v-row>
                         <v-row class="justify-center">
@@ -107,7 +154,7 @@
                         </v-row >
                         <v-row class="justify-start my-4">
                             <p class="text-left ml-3">
-                                {{specificEvent.eventLocation}}
+                                {{this.specificEvent.eventLocation}}
                                 
                             </p>
                         </v-row>
@@ -195,13 +242,16 @@
             isLoading: true,
             benched: 10,
             events: [this.$store.state.events],
-            eventID: '6350f247ca88afcea5e30457',
+            eventID: '6349a29b7a272e522ceb4e95',
             specificEvent: null,
             date: null,
             reviews: null,
             desc: "",
             userlist: [],
             host: null,
+            acctUser: null,
+            registered: false,
+            dialog: false
         }
     },
     methods: {
@@ -209,8 +259,7 @@
             this.axios.get("https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users")
             .then(response => {
           this.userlist = response.data;
-          this.host = this.userlist.find(user => user._id === this.specificEvent.eventHost);
-          console.log(this.host)
+          this.host = this.userlist.find(user => user._id == this.specificEvent.eventHost);
         })
         .catch(function (error) {
           console.log(error);
@@ -219,8 +268,9 @@
         },
 
         findCorrectEvent() {
+            console.log(this.events)
             this.specificEvent = this.events[0].find(event => event._id === this.eventID)
-            // console.log(this.specificEvent)
+            console.log(this.specificEvent)
             this.reviews = this.specificEvent.eventReviews
             this.desc = this.specificEvent.eventDesc
         },
@@ -233,23 +283,110 @@
             var test = new Date(inputDate)
             return(test.toDateString())
         },
-        host (HostID) {
+        hostProfile (HostID) {
             this.$router.push("/host/" + HostID)
         },
-        register () {
-            this.$router.push("/register")
+        isBuzzing () {
+            if (this.specificEvent.eventAttendees.length > this.specificEvent.maxCapacity) {
+                this.specificEvent.isBuzzing = true
+            }
         },
-        wishlist() {
-      this.$router.push("/wishlist");
-    },
-    },
+        intermediate () {
+            this.dialog = false
+            this.eventPatch()
+            this.userPatch()
+            this.$store.dispatch('getEvents')
+            console.log(this.acctUser.registeredEvents)
+        },
+        isRegistered() {
+            if (this.specificEvent.attendees.includes(this.acctUser._id)) {
+                this.registered = true
+            }
+            else {
+                this.registered = false
+            }
+        },
+        eventPatch () {
+            if(this.$store.state.user == null){
+                this.$router.push("/login")
+            }
+            else{
+            this.specificEvent.attendees.push(this.$store.state.user._id)
+            var data = JSON.stringify({
+                "_id": this.eventID,
+                "attendees": [this.specificEvent.attendees]
+                });
+
+            var config = {
+            method: 'patch',
+            url: 'https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/attendees',
+            headers: { 
+                'Content-Type': 'application/json'
+            },
+            data : data
+            };
+
+            this.axios(config)
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+            })
+            .catch(function (error) {
+            console.log(error);
+            });
+            this.registered = true
+        }},
+        userPatch () {
+            let regList = this.acctUser.registeredEvents
+            console.log(regList)
+            regList.push(this.eventID)
+            var data = JSON.stringify({
+                "_id": this.acctUser._id,
+                "registeredEvents": [regList]
+                });
+
+            var config = {
+            method: 'patch',
+            url: 'https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/attendees',
+            headers: { 
+                'Content-Type': 'application/json'
+            },
+            data : data
+            };
+
+            this.axios(config)
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+            })
+            .catch(function (error) {
+            console.log(error);
+            });
+        },
+        async setup() {
+            await this.findCorrectEvent(),
+            this.reviewDate(),
+            this.pullHost()
+            this.isRegistered()
+            this.isBuzzing()
+            if(this.acctUser.registeredEvents.includes(this.eventID)) {
+                this.registered = true
+            }else if (this.specificEvent.attendees.includes(this.acctUser._id)){
+                this.registered = true
+        }
+    }
+ },
     mounted() {
-        this.findCorrectEvent(),
-        this.reviewDate(),
-        this.pullHost(),
+        this.setup()
+        if(this.$store.state.user == null){
+            this.$router.push("/login")
+        }
+        else{
+            this.acctUser = this.$store.state.user
+            console.log(this.acctUser.registeredEvents)
+        }
         setTimeout(() => {
       this.isLoading = false;
     },2000);
-    },
     }
+}
+    
 </script>
