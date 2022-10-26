@@ -11,7 +11,7 @@ export default {
   name: 'RandomEventPrompt',
   methods: {
     toRandomEvent() {
-      this.$router.push("/events/random");
+      this.$router.push("/event/random");
     }
   }
 }
