@@ -11,7 +11,7 @@
         class="search-box"
         v-model="searchText"
         @keyup.enter="search"
-        
+        color="greenDark"
       ></v-text-field>
       <v-btn icon small color="greenDark" class="ml-1 my-auto" @click="search"
         ><v-icon>search</v-icon></v-btn
@@ -38,8 +38,10 @@
             hide-details
             placeholder="Anytime"
             readonly
+            clearable
             v-bind="attrs"
             v-on="on"
+            color="greenDark"
           ></v-text-field>
         </template>
         <v-date-picker
@@ -48,11 +50,12 @@
           range
           scrollable
           :min="today"
+          color="greenDark"
           @input="$refs.menu.save(dateSelected)"
         >
           <v-spacer></v-spacer>
-          <v-btn text color="primary" @click="menu = false"> Cancel </v-btn>
-          <v-btn text color="primary" @click="$refs.menu.save(dateSelected)">
+          <v-btn text color="greenDark" @click="menu = false"> Cancel </v-btn>
+          <v-btn text color="greenDark" @click="$refs.menu.save(dateSelected)">
             OK
           </v-btn>
         </v-date-picker>
@@ -65,14 +68,15 @@
         :items="locationItems"
         :search-input.sync="searchLocation"
         cache-items
+        autofocus
         class="mt-1 col-md"
-        flat
-        hide-no-data
+        clearable
         hide-details
         outlined
         dense
         rounded
         placeholder="Anywhere"
+        color="greenDark"
       ></v-autocomplete>
 
       <!-- check capacity of event -->
@@ -82,10 +86,12 @@
         v-model="groupSizeSelected"
         rounded
         hide-details
+        clearable
         dense
         placeholder="Any Group Size"
         outlined
         class="mt-1 col-md"
+        color="greenDark"
       ></v-select>
     </v-row>
   </v-container>
@@ -104,18 +110,19 @@ export default {
       dateSelected: "",
 
       loading: false,
-      locationSelected: "", // shown on the v-autocomplete
+      locationSelected: null, // shown on the v-autocomplete
       locationItems: [], // array of locations shown on the dropdown menu
       searchLocation: "",
 
-      groupSizeSelected: 2, // let's say 2 is the default
+      groupSizeSelected: null,
       maxGroupSize: ["1", "2 - 4", "5 - 10", "10+"],
     };
   },
   methods: {
     hide() {
-      this.isAdvanced = false;
-      console.log(this.isAdvanced);
+      if (this.dateSelected == "" && this.locationSelected == null && this.groupSizeSelected == null) {
+        this.isAdvanced = false;
+      }
     },
     search() {
       // call search page with the search parameters
