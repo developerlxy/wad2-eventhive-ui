@@ -1,6 +1,6 @@
 <template>
     <v-card
-    class="col-2"
+    width="300px"
     @click="toEvent()"
   >
     <v-img
@@ -9,7 +9,7 @@
     ></v-img>
 
     <v-card-title>
-      <v-row class="py-2">
+      <v-row class="py-2 mx-1">
         {{eventDetails.eventName}}
         <v-spacer></v-spacer>
         <v-icon class="mx-1">star</v-icon>
@@ -18,15 +18,15 @@
     </v-card-title>
 
     <v-card-text>
-      <v-row class="py-2">
+      <v-row class="py-2 mx-1">
         <v-icon class="mx-1">place</v-icon>
         {{eventDetails.eventLocation}}
       </v-row>
-      <v-row class="py-2">
+      <v-row class="py-2 mx-1">
         <v-icon class="mx-1">event</v-icon>
         {{ getFormattedDate }}
       </v-row>
-      <v-row class="py-2">
+      <v-row class="pt-2 pb-3 mx-1">
         <v-icon class="mx-1">schedule</v-icon>
         <!-- TODO: add time in the db -->
         <!-- {{ getFormattedTime }} -->
