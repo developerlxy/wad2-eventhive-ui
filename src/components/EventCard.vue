@@ -1,32 +1,46 @@
 <template>
     <v-card
-    class="col-2"
     @click="toEvent()"
   >
     <v-img
       :src="eventDetails.eventPhotoURL"
+      lazy-src="../src/assets/images/no-image-placeholder.jpg"
       height="200px"
     ></v-img>
 
-    <v-card-title>
-      <v-row class="py-2">
-        {{eventDetails.eventName}}
+    <v-card-title class="d-block">
+      <v-row class="pa-2 d-flex flex-nowrap">
+        <div class="text-truncate">
+          {{eventDetails.eventName}}
+        </div>
         <v-spacer></v-spacer>
         <v-icon class="mx-1">star</v-icon>
-        {{ getAvgRating }}
+        <div class="">
+          {{ getAvgRating }}
+        </div>
       </v-row>
     </v-card-title>
 
-    <v-card-text>
-      <v-row class="py-2">
+    <v-card-text class="d-block">
+      <v-row class="pa-2">
+        <!-- <v-icon class="mx-1">star</v-icon>
+        <div class="text-truncate">
+          {{ getAvgRating }}
+        </div> -->
+      </v-row>
+      <v-row class="pa-2 d-flex flex-nowrap">
         <v-icon class="mx-1">place</v-icon>
-        {{eventDetails.eventLocation}}
+        <div class="text-truncate">
+          {{eventDetails.eventLocation}}
+        </div>
       </v-row>
-      <v-row class="py-2">
+      <v-row class="pa-2 d-flex flex-nowrap">
         <v-icon class="mx-1">event</v-icon>
+        <div class="text-truncate">
         {{ getFormattedDate }}
+        </div>
       </v-row>
-      <v-row class="py-2">
+      <v-row class="pa-2">
         <v-icon class="mx-1">schedule</v-icon>
         <!-- TODO: add time in the db -->
         <!-- {{ getFormattedTime }} -->
