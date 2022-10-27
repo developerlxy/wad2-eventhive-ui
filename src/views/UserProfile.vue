@@ -35,28 +35,6 @@
       </v-row>
 
       <v-row class="col-12 pa-0 ma-0">
-        <v-text-field
-          v-model="firstname"
-          :rules="nameRules"
-          label="First Name"
-          outlined
-          hide-details
-          required
-          class="ma-2"
-        ></v-text-field>
-
-        <v-text-field
-          v-model="lastname"
-          :rules="nameRules"
-          label="Last Name"
-          outlined
-          hide-details
-          required
-          class="ma-2"
-        ></v-text-field>
-      </v-row>
-
-      <v-row class="col-12 pa-0 ma-0">
         <v-select
           v-model="gender"
           :items="['Male', 'Female']"
@@ -136,14 +114,6 @@ export default {
     return {
       isLoading: true,
       updateSuccess: false,
-      firstname:
-        this.$store.state.user["userFirstName"] == null
-          ? ""
-          : this.$store.state.user["userFirstName"],
-      lastname:
-        this.$store.state.user["userLastName"] == null
-          ? ""
-          : this.$store.state.user["userLastName"],
       email:
         this.$store.state.user["userEmail"] == null
           ? ""
@@ -181,12 +151,6 @@ export default {
     },
     updateProfile() {
       let reqBody = {};
-      if (this.firstname != "") {
-        reqBody["userFirstName"] = this.firstname;
-      }
-      if (this.lastname != "") {
-        reqBody["userLastName"] = this.lastname;
-      }
       if (this.password != "") {
         reqBody["userPassword"] = this.password;
       }

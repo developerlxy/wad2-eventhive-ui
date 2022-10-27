@@ -1,7 +1,7 @@
 <template>
   <!-- html -->
-  <v-container class="col-md-7 col-sm-5 my-4">
-    <v-row class="flex-nowrap ">
+  <v-container class="col-md-7 col-sm-5 my-4" flat v-click-outside="hide" @click="isAdvanced = true">
+    <v-row class="flex-nowrap" onmouseover="isAdvanced = true">
       <v-text-field
         placeholder="Search for anything"
         outlined
@@ -9,8 +9,9 @@
         rounded
         hide-details
         class="search-box"
+        v-model="searchText"
         @keyup.enter="search"
-        @click="isAdvanced = !isAdvanced"
+        
       ></v-text-field>
       <v-btn icon small color="greenDark" class="ml-1 my-auto" @click="search"
         ><v-icon>search</v-icon></v-btn
@@ -57,18 +58,23 @@
         </v-date-picker>
       </v-menu>
 
-      <!-- Anywhere to change to dropdown -->
-      <v-select
-        :items="availableLoc"
-        :menu-props="{ bottom: true, offsetY: true }"
+      <!-- Anywhere to change to LocationSearchBar -->
+      <v-autocomplete
         v-model="locationSelected"
-        rounded
-        hide-details
-        dense
-        placeholder="Anywhere"
-        outlined
+        :loading="loading"
+        :items="locationItems"
+        :search-input.sync="searchLocation"
+        cache-items
         class="mt-1 col-md"
-      ></v-select>
+        flat
+        hide-no-data
+        hide-details
+        outlined
+        dense
+        rounded
+        placeholder="Anywhere"
+      ></v-autocomplete>
+
       <!-- check capacity of event -->
       <v-select
         :items="maxGroupSize"
@@ -94,50 +100,46 @@ export default {
       menu: false,
       searchText: "",
       isAdvanced: false,
-      dateSelected: "",
-      locationSelected: "",
-      groupSizeSelected: 2, // let's say 2 is the default
-
       today: new Date().toISOString().slice(0, 10),
+      dateSelected: "",
 
-      availableLoc: this.availableLocations(),
+      loading: false,
+      locationSelected: "", // shown on the v-autocomplete
+      locationItems: [], // array of locations shown on the dropdown menu
+      searchLocation: "",
+
+      groupSizeSelected: 2, // let's say 2 is the default
       maxGroupSize: ["1", "2 - 4", "5 - 10", "10+"],
     };
   },
   methods: {
-    availableLocations() {
-      let locationsInDB = [];
-
-      var config = {
-        method: "get",
-        url: "https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-      this.axios(config).then(function (response) {
-        for (let event of response.data) {
-          let eventLoc = event["eventLocation"];
-          if (eventLoc != "" && !locationsInDB.includes(eventLoc)) {
-            locationsInDB.push(eventLoc);
-          }
-        }
-      });
-      return locationsInDB;
+    hide() {
+      this.isAdvanced = false;
+      console.log(this.isAdvanced);
     },
     search() {
-      // TODO: implement search function onclick
+      // call search page with the search parameters
       console.log("searching");
-      // var config = {
-      //   method: "get",
-      //   url: "https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      // };
-      console.log(this.$store.state.events);
-
-      this.$router.push("/events");
+      let startdate =
+        this.dateSelected[0] > this.dateSelected[1]
+          ? this.dateSelected[1]
+          : this.dateSelected[0];
+      let enddate =
+        this.dateSelected[1] > this.dateSelected[0]
+          ? this.dateSelected[1]
+          : this.dateSelected[0];
+      this.$router.push(
+        "/search?name=" +
+          this.searchText +
+          "&location=" +
+          this.locationSelected +
+          "&groupSize=" +
+          this.groupSizeSelected +
+          "&startdate=" +
+          startdate +
+          "&enddate=" +
+          enddate
+      );
     },
   },
   computed: {
@@ -193,6 +195,25 @@ export default {
           `${day1}/${month1}/${year1}` + " - " + `${day2}/${month2}/${year2}`
         );
       }
+    },
+  },
+  watch: {
+    searchLocation(val) {
+      console.log("searchLocation" + val);
+      this.axios
+        .get(
+          `https://developers.onemap.sg/commonapi/search?searchVal=${val}&returnGeom=Y&getAddrDetails=Y&pageNum=1`
+        )
+        .then((response) => {
+          this.locationItems = [];
+          response.data.results.forEach((result) => {
+            this.locationItems.push(result.SEARCHVAL);
+            // this.results.push(result);
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };

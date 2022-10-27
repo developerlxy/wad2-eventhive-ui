@@ -12,6 +12,7 @@
       <h2 class="peachDark--text">Buzzing Now!</h2>
       <EventCarousel :allEvents="getAllBuzzing(this.$store.state.events)"></EventCarousel>
     </div>
+    <RandomEventPrompt></RandomEventPrompt>
   </div>
 </template>
 
