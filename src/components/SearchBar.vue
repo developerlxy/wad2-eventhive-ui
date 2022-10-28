@@ -38,7 +38,6 @@
             hide-details
             placeholder="Anytime"
             readonly
-            clearable
             v-bind="attrs"
             v-on="on"
             color="greenDark"
@@ -54,7 +53,7 @@
           @input="$refs.menu.save(dateSelected)"
         >
           <v-spacer></v-spacer>
-          <v-btn text color="greenDark" @click="menu = false"> Cancel </v-btn>
+          <v-btn text color="greenDark" @click="clearLocation"> Clear </v-btn>
           <v-btn text color="greenDark" @click="$refs.menu.save(dateSelected)">
             OK
           </v-btn>
@@ -118,6 +117,11 @@ export default {
     };
   },
   methods: {
+    clearLocation() {
+      this.dateSelected = "";
+      this.$refs.menu.save(this.dateSelected);
+      this.$refs.menu = false;
+    },
     hide() {
       if (this.dateSelected == "" && this.locationSelected == null && this.groupSizeSelected == null) {
         this.isAdvanced = false;
@@ -126,22 +130,25 @@ export default {
     search() {
       // call search page with the search parameters
       console.log("searching");
-      let startdate = this.dateSelected == "" ? null :
+      console.log(this.dateSelected);
+      let startdate = this.dateSelected == "" ? "" :
         (this.dateSelected[0] > this.dateSelected[1]
           ? this.dateSelected[1]
           : this.dateSelected[0]);
-      let enddate = this.dateSelected == "" ? null :
+      let enddate = this.dateSelected == "" ? "" :
         (this.dateSelected[1] > this.dateSelected[0]
           ? this.dateSelected[1]
           : this.dateSelected[0]);
-          
+      let location = this.locationSelected == null ? "" : this.locationSelected;
+      let groupsize = this.groupSizeSelected == null ? "" : this.groupSizeSelected;
+
       this.$router.push(
         "/search?name=" +
           this.searchText +
           "&location=" +
-          this.locationSelected +
+          location +
           "&groupSize=" +
-          this.groupSizeSelected +
+          groupsize +
           "&startdate=" +
           startdate +
           "&enddate=" +
