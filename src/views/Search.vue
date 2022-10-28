@@ -40,40 +40,37 @@ export default {
       }
     },
     methods: {
-      eventViewWithFilter: function (categoryFilter){
-        var self = this;
-        var data = JSON.stringify({
-          "categories": [
-            categoryFilter
-          ]
-        });
-
-        var config = {
-          method: 'post',
-          url: 'https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/categories',
-          headers: { 
-            'Content-Type': 'application/json'
-          },
-          data : data
-        };
-
-        this.axios(config)
-        .then(function (response) {
-          self.events = response.data;
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-      },
       gotoEvent: function (id){
         this.$router.push({ path:`/event?id=${id}`})
+      },
+      getAllSearchEvents: function(name, location, groupSize, startDate, endDate){
+        this.events = [];
+        //location search api goes here
+        for (let e of this.$store.state.events){
+          let eName = e.eventName.toLowerCase();
+          let eGroupSize = e.maxCapacity - e.attendees.length;
+          //add date search
+
+          if (eName.includes(name.toLowerCase())){
+            this.events.push(e)
+          }
+        }
       }
     },
     watch: {
     '$route.params': {
         handler() {
-            let categoryFilter = this.$route.query.category
-            this.eventViewWithFilter(categoryFilter)
+            let nameSearch = this.$route.query.name
+            console.log(nameSearch)
+            let locationSearch = this.$route.query.location
+            console.log(locationSearch)
+            let groupSizeSearch = this.$route.query.groupSize
+            console.log(groupSizeSearch)
+            let startDateSearch = this.$route.query.startdate
+            console.log(startDateSearch)
+            let endDateSearch = this.$route.query.enddate
+            console.log(endDateSearch)
+            this.getAllSearchEvents(nameSearch, locationSearch, groupSizeSearch, startDateSearch, endDateSearch)
         },
         immediate: true,
     }
