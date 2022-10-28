@@ -68,7 +68,6 @@
         :items="locationItems"
         :search-input.sync="searchLocation"
         cache-items
-        autofocus
         class="mt-1 col-md"
         clearable
         hide-details
@@ -127,14 +126,15 @@ export default {
     search() {
       // call search page with the search parameters
       console.log("searching");
-      let startdate =
-        this.dateSelected[0] > this.dateSelected[1]
+      let startdate = this.dateSelected == "" ? null :
+        (this.dateSelected[0] > this.dateSelected[1]
           ? this.dateSelected[1]
-          : this.dateSelected[0];
-      let enddate =
-        this.dateSelected[1] > this.dateSelected[0]
+          : this.dateSelected[0]);
+      let enddate = this.dateSelected == "" ? null :
+        (this.dateSelected[1] > this.dateSelected[0]
           ? this.dateSelected[1]
-          : this.dateSelected[0];
+          : this.dateSelected[0]);
+          
       this.$router.push(
         "/search?name=" +
           this.searchText +
