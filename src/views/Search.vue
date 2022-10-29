@@ -4,17 +4,29 @@
   <div v-else>
     <NavBar></NavBar>
     <Categories></Categories>
-    <v-container class="mb-4">
-    <v-row>
-      <v-col
-          v-for="event in events"
-          :key="event.name"
-          class="col-sm-6 col-md-4 col-lg-3"
-        >
-          <EventCard :eventDetails="event" onclick="goToEvent"></EventCard>
-      </v-col>
-    </v-row>
-  </v-container>
+    <v-container class="mb-4 mx-8" width="80%" fluid>
+      <v-row cols="2">
+        <v-col>
+          <v-row cols="12">
+            <v-col
+                v-for="event in events"
+                :key="event.name"
+                class="col-sm-12"
+              >
+                <SecondaryEventCard :eventDetails="event" @mouseover.native="previewEvent(event)" onclick="goToEvent"></SecondaryEventCard>
+            </v-col>
+          </v-row>
+        </v-col>
+        <v-col col-sm-1>
+          <div v-if="eventPreview!=false">
+            <PreviewEventCard :eventDetails="this.eventPreview"></PreviewEventCard>
+          </div>
+          <div v-else>
+            <h4>Hover over to view!</h4>
+          </div>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
@@ -22,12 +34,13 @@
 import LoadingScreen from '../components/LoadingScreen.vue';
 import Categories from '@/components/Categories.vue';
 import NavBar from '@/components/NavBar.vue';
-import EventCard from '@/components/EventCard.vue';
+import SecondaryEventCard from '@/components/SecondaryEventCard.vue';
+import PreviewEventCard from '@/components/PreviewEventCard.vue';
 
 
 export default {
     name: "Home",
-    components: { LoadingScreen, NavBar, Categories, EventCard },
+    components: { LoadingScreen, NavBar, Categories, SecondaryEventCard, PreviewEventCard },
     mounted() {
     setTimeout(() => {
       this.isLoading = false;
@@ -37,11 +50,16 @@ export default {
       return {
         isLoading: true,
         events:[],
+        eventPreview: false,
       }
     },
     methods: {
       gotoEvent: function (id){
         this.$router.push({ path:`/event?id=${id}`})
+      },
+      previewEvent: function(event){
+        console.log(event)
+        this.eventPreview = event
       },
       getAllSearchEvents: function(name, location, groupSize, startDate, endDate){
         this.events = [];
