@@ -13,11 +13,11 @@
         </v-avatar>
 
         <div>
-          <v-card-title class="text-h4">
+          <h1 class="mt-3 ml-3">
             <v-row class="py-2 mx-1 mt-1 mb-2">
               {{eventDetails.eventName}}
             </v-row>
-          </v-card-title>
+          </h1>
 
           <v-card-text>
             <v-row class="py-2 mx-1">
