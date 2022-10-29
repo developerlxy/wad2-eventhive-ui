@@ -57,7 +57,7 @@
         },
         methods: {
             toEvent() {
-                this.$router.push("/events/" + this.eventDetails["_id"]);
+                this.$router.push("/event/?id=" + this.eventDetails["_id"]);
             }
         },
         computed: {
