@@ -2,13 +2,23 @@
     <div class="event-card">
         <v-container>
             <v-row>
-                <v-col cols="8">
+                <v-card
+                class="mx-auto mt-5"
+                :width="width"
+                outlined
+                color="transparent"
+                >
             <img v-bind:src="this.specificEvent.eventPhotoURL"
                 aspect-ratio="16/9"
                 width="100%"
 >
-                </v-col>
-                <v-col cols="4" >
+                </v-card>
+                <v-card
+                class="mx-auto"
+                :width="width"
+                outlined
+                color="transparent"
+                >
                     <v-container class="fill-height">
                     <v-row class="d-flex flex-column">
                         <v-col>
@@ -100,16 +110,26 @@
                         </template>
                     </v-row>
                 </v-container>
-                </v-col>
+                </v-card>
             </v-row>
             <v-row>
-                <v-col cols="8">
+                <v-card
+                class="mx-auto px-10 pt-8 pb-9"
+                :width="width"
+                outlined
+                color="transparent"
+                >
                     <h3 class="text-left">Description</h3>
                     <br>
                     <p v-html="desc" class="text-left">
                     </p>
-                </v-col>
-                <v-col cols="4">
+                </v-card>
+                <v-card
+                class="mx-auto px-10 pt-8 pb-9"
+                :width="width"
+                outlined
+                color="transparent"
+                >
                     <div class="d-flex flex-column align-left ml-2">
 
                             <v-card class="mb-4 pa-4">
@@ -129,7 +149,7 @@
                                 {{reviewDate(this.specificEvent.eventDate)}}
                             </p>
                         </v-row>
-                        <v-row class="justify-center">
+                        <!-- <v-row class="justify-center">
                             <v-btn
                                 block
                                 color="greenDark"
@@ -137,7 +157,7 @@
                             >
                                 Add to My Calendar
                             </v-btn>
-                        </v-row>
+                        </v-row> -->
                         
                                 </v-container>
                     </v-card>
@@ -163,6 +183,7 @@
                                 block
                                 color="greenDark"
                                 class="white--text"
+                                @click="redirect"
                             >
                                 View Map
                             </v-btn>
@@ -226,7 +247,7 @@
                         </template>
                         </v-virtual-scroll>
                 </v-card>
-                            </v-col>
+                            </v-card>
                         </v-row>
                     </v-container>
                     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
@@ -252,9 +273,13 @@
             acctUser: null,
             registered: false,
             dialog: false
+            
         }
     },
     methods: {
+        redirect() {
+            window.location.href = 'https://www.google.com/maps/search/' + this.specificEvent.eventLocation.POSTAL
+        },
         pullHost() {
             this.axios.get("https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users")
             .then(response => {
@@ -390,7 +415,18 @@
         },
         immediate: true,
     }
-}
+},
+computed: {
+      width () {
+        switch(this.$vuetify.breakpoint.name) {
+          case 'xs': return 360
+          case 'sm': return 450
+          case 'md': return 450
+          case 'lg': return 500
+          case 'xl': return 500
+        }
+      }
+    }
 }
     
 </script>
