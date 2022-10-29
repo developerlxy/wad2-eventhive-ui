@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuetify from 'vuetify/lib/framework';
 import '../assets/styles/material-icons.css';
 import '@fortawesome/fontawesome-free/css/all.css'
+import '@mdi/font/css/materialdesignicons.css' // Ensure you are using css-loader
 
 
 Vue.use(Vuetify);

@@ -15,8 +15,14 @@
     <v-form ref="form" v-model="valid" lazy-validation class="mx-16">
       <v-text-field v-model="eventName" :counter="50" :rules="nameRules" label="Event Name" required></v-text-field>
 
-      <v-textarea v-model="eventDescription" clearable clear-icon="mdi-close-circle" label="Event Description"
-        :rules="descriptionRules" required></v-textarea>
+      <!-- <v-textarea v-model="eventDescription" clearable clear-icon="mdi-close-circle" label="Event Description"
+        :rules="descriptionRules" required>
+      </v-textarea> -->
+      
+      <p style="color: grey;" class="text-left">
+        Event Description
+      </p>
+      <tiptap-vuetify v-model="eventDescription" :extensions="extensions" />
 
       <v-select v-model="selectedCategory" :items="category" :rules="categoryRules" label="Category" required>
       </v-select>
@@ -27,15 +33,8 @@
       selected location: {{ location }}
 
       <v-text-field v-model="maxCapacity" label="Max Capacity" required></v-text-field>
-      <v-slider
-              v-model="maxCapacity"
-              color="orange"
-              label="Fun Slider"
-              hint="Be honest"
-              min="1"
-              max="1000"
-              thumb-label
-            ></v-slider>
+      <v-slider v-model="maxCapacity" color="orange" label="Fun Slider" hint="Be honest" min="1" max="1000" thumb-label>
+      </v-slider>
 
     </v-form>
     <br>
@@ -115,7 +114,7 @@
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
-  
+
     <!-- UPLOAD IMAGE SECTION -->
     <br>
     <div v-if="!image">
@@ -135,10 +134,30 @@
     <v-btn :disabled="!valid" color="success" class="mr-4" v-on:click="submitCreateEvent()">
       Let's go!
     </v-btn>
-    <p v-if="processingCreateEvent">
-      Processing...
-    </p>
-    <br><br><hr>
+    <!-- OVERLAY PROCESSING CREATE EVENT STARTS HERE -->
+    <v-overlay :value="processingCreateEvent">
+      <v-progress-circular
+        indeterminate
+        size="64"
+      ></v-progress-circular>
+    </v-overlay>
+    <!-- OVERLAY ONCE EVENT CREATED STARTS HERE -->
+    <v-overlay :value="createEventSuccess" :opacity="0.9">
+      <h1>
+        BUZZ BUZZ!
+        Your event has gone live 👍
+      </h1>
+      <br>
+      <v-btn color="success" @click="seeNewEvent()">
+        Take me to my event!
+        <v-icon right>
+          mdi-bee-flower
+        </v-icon>
+      </v-btn>>
+
+    </v-overlay>
+    <br><br>
+    <hr>
     =========================== Search distance between 2 locations ===================
     <br><br>
     <LocationSearchBar @locationSelected="onLocationSelected1"></LocationSearchBar>
@@ -159,13 +178,14 @@
     <br>
     location 2 long: {{ location2_long }}
     <br>
-    <v-btn color="success" class="mr-4" v-on:click="getDistanceFromLatLonInKm(location1_lat, location1_long, location2_lat, location2_long)">
+    <v-btn color="success" class="mr-4"
+      v-on:click="getDistanceFromLatLonInKm(location1_lat, location1_long, location2_lat, location2_long)">
       Calculate Distance
     </v-btn>
     <br>
     Distance between the 2 locations: {{ calculatedDistance }} KM
 
-  
+
   </div>
 </template>
 
@@ -173,6 +193,7 @@
 import LandingScreen from '../components/LandingScreen.vue';
 import Categories from '@/components/Categories.vue';
 import NavBar from '@/components/NavBar.vue';
+import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragraph, BulletList, OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History } from 'tiptap-vuetify'
 
 // variables to upload image
 const MAX_IMAGE_SIZE = 1000000
@@ -184,11 +205,14 @@ const API_ENDPOINT = 'https://xt96j6drmd.execute-api.ap-southeast-1.amazonaws.co
 
 export default {
   name: "createEvent",
-  components: { LandingScreen, Categories, NavBar },
+  components: { LandingScreen, Categories, NavBar, TiptapVuetify },
   mounted() {
     console.log('======== retrieving all stored events ========'),
-    console.log(this.allStoredEvents[0]), 
+    console.log(this.allStoredEvents[0]),
     console.log('======== all stored events retrieved. if null, navigate to homepage first then try again ========'),
+    console.log('======== retrieving current user ========'),
+    console.log(this.currentUser),
+    console.log('======== current user retrieved ========'),
     setTimeout(() => {
       this.isLoading = false;
     }, 2000);
@@ -203,10 +227,13 @@ export default {
         v => (v && v.length <= 50) || 'Name must be less than 50 characters',
       ],
 
-      eventDescription: '',
-      descriptionRules: [
-        v => !!v || `Nobody is gonna come if you don't add fun details!`,
-      ],
+      eventDescription: `
+        <h1>Yay Headlines!</h1>
+        <p>All these <strong>cool tags</strong> are working now.</p>
+      `,
+      // descriptionRules: [
+      //   v => !!v || `Nobody is gonna come if you don't add fun details!`,
+      // ],
 
       // category: '',
       category: ['Sports', 'Arts', 'Music', 'Food', 'Pets', 'Games', 'Others'],
@@ -231,7 +258,13 @@ export default {
       image: '',
       uploadURL: '',
 
+      
+      currentUser: this.$store.state.user,
+
       processingCreateEvent: false,
+      createEventSuccess: false,
+
+      // DATA FOR DISTANCE CALCULATION
       allStoredEvents: [this.$store.state.events],
       location1: '',
       location1_lat: '',
@@ -239,14 +272,37 @@ export default {
       location2: '',
       location2_lat: '',
       location2_long: '',
-      calculatedDistance: null
+      calculatedDistance: null,
+
+      //FOR RICH TEXT
+      extensions: [
+        History,
+        Blockquote,
+        Link,
+        Underline,
+        Strike,
+        Italic,
+        ListItem,
+        BulletList,
+        OrderedList,
+        [Heading, {
+          options: {
+            levels: [1, 2, 3]
+          }
+        }],
+        Bold,
+        Code,
+        HorizontalRule,
+        Paragraph,
+        HardBreak
+      ]
     }
   },
   methods: {
     submitCreateEvent: function () {
       console.log('===== START OF CREATE EVENT =======')
       this.processingCreateEvent = true
-      
+
       var self = this;
       var data = JSON.stringify({
         "eventName": self.eventName,
@@ -255,10 +311,9 @@ export default {
         "maxCapacity": self.maxCapacity,
         "eventDate": self.eventDate,
         "eventCategory": self.selectedCategory,
-        "eventTime": self.eventTime, //NEED ADD THIS TO DATABASE SETUP
-        "eventPhotoURL": self.uploadURL
-        // ------------------------ NEED TO ADD  -------------------------
-        // "eventHost": self.eventHost
+        "eventTime": self.eventTime, 
+        "eventPhotoURL": self.uploadURL,
+        "eventHost": this.currentUser._id
       });
 
       var config = {
@@ -271,33 +326,35 @@ export default {
       };
 
       this.axios(config)
-      .then(response => {
-        console.log(JSON.stringify(response.data));
-        console.log('Event Successfuly Created')
-        this.processingCreateEvent = false
+        .then(response => {
+          console.log("id of newly created event below:");
+          console.log(JSON.stringify(response.data));
+          console.log('Event Successfuly Created')
+          this.processingCreateEvent = false
+          this.createEventSuccess = true
 
-        console.log('===== END OF CREATE EVENT =======')
-      })
-      // .then(function (response) {
-      //   console.log(JSON.stringify(response.data));
-      //   console.log('Event Successfuly Created')
-      //   this.processingCreateEvent = false
+          console.log('===== END OF CREATE EVENT =======')
+        })
+        // .then(function (response) {
+        //   console.log(JSON.stringify(response.data));
+        //   console.log('Event Successfuly Created')
+        //   this.processingCreateEvent = false
 
-      //   console.log('===== END OF CREATE EVENT =======')
+        //   console.log('===== END OF CREATE EVENT =======')
 
-      // })
-      .catch(function (error) {
-        console.log(error);
-        console.log('Event NOT created')
-        console.log('===== END OF CREATE EVENT =======')
-      });      
+        // })
+        .catch(function (error) {
+          console.log(error);
+          console.log('Event NOT created')
+          console.log('===== END OF CREATE EVENT =======')
+        });
     },
-    onLocationSelected: function(selectedLocation) {
+    onLocationSelected: function (selectedLocation) {
       this.location = selectedLocation
     },
 
     // SEARCH DISTANCE BETWEEN 2 LOCATIONS SECTION
-    onLocationSelected1: function(selectedLocation) {
+    onLocationSelected1: function (selectedLocation) {
       this.location1 = selectedLocation
       console.log(this.location1)
       this.location1_lat = this.location1.LATITUDE
@@ -305,7 +362,7 @@ export default {
       this.location1_long = this.location1.LONGITUDE
       console.log(this.location1_lat)
     },
-    onLocationSelected2: function(selectedLocation) {
+    onLocationSelected2: function (selectedLocation) {
       this.location2 = selectedLocation
       console.log(this.location2)
       this.location2_lat = this.location2.LATITUDE
@@ -314,32 +371,32 @@ export default {
       console.log(this.location2_lat)
     },
 
-    getDistanceFromLatLonInKm: function(lat1, lon1, lat2, lon2) {
+    getDistanceFromLatLonInKm: function (lat1, lon1, lat2, lon2) {
       console.log('========== CALCULATING DISTANCE ============')
       var R = 6371; // Radius of the earth in km
-      var dLat = this.deg2rad(lat2-lat1);  // deg2rad below
-      var dLon = this.deg2rad(lon2-lon1); 
-      var a = 
-        Math.sin(dLat/2) * Math.sin(dLat/2) +
-        Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) * 
-        Math.sin(dLon/2) * Math.sin(dLon/2)
-        ; 
-      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+      var dLat = this.deg2rad(lat2 - lat1);  // deg2rad below
+      var dLon = this.deg2rad(lon2 - lon1);
+      var a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2)
+        ;
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
       var d = R * c; // Distance in km
-      this.calculatedDistance = d;
+      this.calculatedDistance = d.toFixed(2); //round to 2 dp
     },
 
-    deg2rad: function(deg) {
-      return deg * (Math.PI/180)
+    deg2rad: function (deg) {
+      return deg * (Math.PI / 180)
     },
     // SEARCH DISTANCE BETWEEN 2 LOCATIONS SECTION STOPS HERE
 
-    onFileChange (e) {
+    onFileChange(e) {
       let files = e.target.files || e.dataTransfer.files
       if (!files.length) return
       this.createImage(files[0])
     },
-    createImage (file) {
+    createImage(file) {
       // var image = new Image()
       let reader = new FileReader()
       reader.onload = (e) => {
@@ -372,7 +429,7 @@ export default {
       for (var i = 0; i < binary.length; i++) {
         array.push(binary.charCodeAt(i))
       }
-      let blobData = new Blob([new Uint8Array(array)], {type: 'image/jpeg'})
+      let blobData = new Blob([new Uint8Array(array)], { type: 'image/jpeg' })
       console.log('Uploading to: ', response.data.uploadURL)
       const result = await fetch(response.data.uploadURL, {
         method: 'PUT',
@@ -382,7 +439,10 @@ export default {
       // Final URL for the user doesn't need the query string params
       this.uploadURL = response.data.uploadURL.split('?')[0]
       console.log(`image url at ${result.url.split("?")[0]}`);
-    }
+    },
+    seeNewEvent() {
+      this.$router.push("/event"); //TODO: add the newly created id to this link
+    },
   }
 };
 
