@@ -5,7 +5,7 @@
                 <v-col cols="8">
             <img v-bind:src="this.specificEvent.eventPhotoURL"
                 aspect-ratio="16/9"
-                width="75%"
+                width="100%"
 >
                 </v-col>
                 <v-col cols="4" >
@@ -154,7 +154,7 @@
                         </v-row >
                         <v-row class="justify-start my-4">
                             <p class="text-left ml-3">
-                                {{this.specificEvent.eventLocation}}
+                                {{this.specificEvent.eventLocation.ADDRESS}}
                                 
                             </p>
                         </v-row>
@@ -242,7 +242,7 @@
             isLoading: true,
             benched: 10,
             events: [this.$store.state.events],
-            eventID: '6349a29b7a272e522ceb4e95',
+            eventID: null,
             specificEvent: null,
             date: null,
             reviews: null,
@@ -268,9 +268,7 @@
         },
 
         findCorrectEvent() {
-            console.log(this.events)
             this.specificEvent = this.events[0].find(event => event._id === this.eventID)
-            console.log(this.specificEvent)
             this.reviews = this.specificEvent.eventReviews
             this.desc = this.specificEvent.eventDesc
         },
@@ -287,7 +285,7 @@
             this.$router.push("/host/" + HostID)
         },
         isBuzzing () {
-            if (this.specificEvent.eventAttendees.length > this.specificEvent.maxCapacity) {
+            if (this.specificEvent.attendees.length > this.specificEvent.maxCapacity) {
                 this.specificEvent.isBuzzing = true
             }
         },
@@ -295,11 +293,11 @@
             this.dialog = false
             this.eventPatch()
             this.userPatch()
-            this.$store.dispatch('getEvents')
-            console.log(this.acctUser.registeredEvents)
+            this.isRegistered()
+            this.setup()
         },
         isRegistered() {
-            if (this.specificEvent.attendees.includes(this.acctUser._id)) {
+            if (this.acctUser._id in this.specificEvent.attendees) {
                 this.registered = true
             }
             else {
@@ -311,10 +309,11 @@
                 this.$router.push("/login")
             }
             else{
-            this.specificEvent.attendees.push(this.$store.state.user._id)
+            let eventList = this.specificEvent.attendees
+            eventList.push(this.$store.state.user._id)
             var data = JSON.stringify({
                 "_id": this.eventID,
-                "attendees": [this.specificEvent.attendees]
+                "attendees": [eventList]
                 });
 
             var config = {
@@ -333,11 +332,9 @@
             .catch(function (error) {
             console.log(error);
             });
-            this.registered = true
         }},
         userPatch () {
             let regList = this.acctUser.registeredEvents
-            console.log(regList)
             regList.push(this.eventID)
             var data = JSON.stringify({
                 "_id": this.acctUser._id,
@@ -381,12 +378,19 @@
         }
         else{
             this.acctUser = this.$store.state.user
-            console.log(this.acctUser.registeredEvents)
         }
         setTimeout(() => {
       this.isLoading = false;
     },2000);
+    },
+    watch: {
+    '$route.params': {
+        handler() {
+            this.eventID = this.$route.query.id
+        },
+        immediate: true,
     }
+}
 }
     
 </script>
