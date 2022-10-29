@@ -18,7 +18,7 @@
           </v-row>
         </v-col>
         <v-col col-sm-1>
-          <div v-if="eventPreview!=false">
+          <div v-if="eventPreview!=false" id="preview">
             <PreviewEventCard :eventDetails="this.eventPreview"></PreviewEventCard>
           </div>
           <div v-else>
@@ -95,3 +95,12 @@ export default {
 }
 };
 </script>
+
+<style>
+#preview{
+  position: sticky; 
+  z-index: 1;
+  top: 50px; 
+  margin: auto;
+}
+</style>
