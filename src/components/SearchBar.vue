@@ -146,13 +146,13 @@ export default {
       console.log("searching");
       console.log(this.dateSelected);
       let startdate =
-        this.dateSelected == ""
+        this.dateSelected == "" || this.dateSelected == null
           ? ""
           : this.dateSelected[0] > this.dateSelected[1]
           ? this.dateSelected[1]
           : this.dateSelected[0];
       let enddate =
-        this.dateSelected == ""
+        this.dateSelected == "" || this.dateSelected == null
           ? ""
           : this.dateSelected[1] > this.dateSelected[0]
           ? this.dateSelected[1]
