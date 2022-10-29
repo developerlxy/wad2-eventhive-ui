@@ -72,6 +72,9 @@
   </template>
    
   <script>
+  import {firebaseAuth} from '../utils/firebaseInit'
+  import {createUserWithEmailAndPassword} from 'firebase/auth'
+
   export default {
     name: "RegistrationCard",
       data () {
@@ -116,6 +119,16 @@
                         this.userExists = true
                     } else if (typeof response.data == "object") {
                         this.userCreated = true
+
+                        createUserWithEmailAndPassword(firebaseAuth, email, password)
+                        .then((userCredential) => {
+                          const user = userCredential.user
+                        })
+                        .catch((error) => {
+                          const errorCode = error.code 
+                          const errorMessage = error.message
+                        })
+                        
                         setTimeout(() => {
                             this.$router.push({name: "login", params: {email: this.email}})
                         }, 2000);

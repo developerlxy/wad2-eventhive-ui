@@ -14,6 +14,7 @@ library.add(fas)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(VueAxios, axios)
 
+
 new Vue({
   vuetify,
   router,

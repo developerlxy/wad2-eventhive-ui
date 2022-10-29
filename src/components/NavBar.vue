@@ -16,7 +16,7 @@
       <v-btn color="greenDark mx-2 d-none d-sm-flex px-1" class="white--text" @click="createEvent()"
       >Create Event</v-btn
     >
-    <Google_button></Google_button>
+    <GoogleSignInButton></GoogleSignInButton>
     <LoginProfileButton class="d-none d-sm-flex mx-2"></LoginProfileButton>
     </v-row>
       
@@ -26,11 +26,12 @@
 <script>
 import SearchBar from "./SearchBar.vue";
 import LoginProfileButton from "./LoginProfileButton.vue";
-import Google_button from '@/components/google_button.vue';
+import GoogleSignInButton from "./GoogleSignInButton.vue";
+
 // javascript
 export default {
   name: "NavBar",
-  components: { SearchBar, LoginProfileButton, Google_button },
+  components: { SearchBar, LoginProfileButton, GoogleSignInButton },
   props: {
     isLoggedIn: {
       type: Boolean,
