@@ -1,5 +1,6 @@
 <template>
     <v-card
+    width="300px"
     @click="toEvent()"
   >
     <v-img
