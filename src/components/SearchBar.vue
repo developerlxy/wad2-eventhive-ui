@@ -12,7 +12,7 @@
           class="search-box"
           v-model="searchText"
           @keyup.enter="search"
-          
+        color="greenDark"  
         ></v-text-field>
         <v-btn icon small color="greenDark" class="ml-1 my-auto" @click="search"
           ><v-icon>search</v-icon></v-btn
@@ -41,6 +41,7 @@
               readonly
               v-bind="attrs"
               v-on="on"
+            color="greenDark"
             ></v-text-field>
           </template>
           <v-date-picker
@@ -49,49 +50,51 @@
             range
             scrollable
             :min="today"
+          color="greenDark"
             @input="$refs.menu.save(dateSelected)"
           >
             <v-spacer></v-spacer>
-            <v-btn text color="primary" @click="menu = false"> Cancel </v-btn>
-            <v-btn text color="primary" @click="$refs.menu.save(dateSelected)">
+            <v-btn text color="greenDark" @click="clearLocation"> Clear </v-btn>
+            <v-btn text color="greenDark" @click="$refs.menu.save(dateSelected)">
               OK
             </v-btn>
           </v-date-picker>
         </v-menu>
 
-        <!-- Anywhere to change to LocationSearchBar -->
-        <v-autocomplete
-          v-model="locationSelected"
-          :loading="loading"
-          :items="locationItems"
-          :search-input.sync="searchLocation"
-          cache-items
-          class="mt-1 col-sm-4"
-          flat
-          hide-no-data
-          hide-details
-          outlined
-          dense
-          rounded
-          placeholder="Anywhere"
-        ></v-autocomplete>
+      <!-- Anywhere to change to LocationSearchBar -->
+      <v-autocomplete
+        v-model="locationSelected"
+        :loading="loading"
+        :items="locationItems"
+        :search-input.sync="searchLocation"
+        cache-items
+        class="mt-1 col-md"
+        clearable
+        hide-details
+        outlined
+        dense
+        rounded
+        placeholder="Anywhere"
+        color="greenDark"
+      ></v-autocomplete>
 
-        <!-- check capacity of event -->
-        <v-select
-          :items="maxGroupSize"
-          :menu-props="{ bottom: true, offsetY: true }"
-          v-model="groupSizeSelected"
-          rounded
-          hide-details
-          dense
-          placeholder="Any Group Size"
-          outlined
-          class="mt-1 col-sm-4"
-        ></v-select>
-      </v-row>
-    </v-container>
+      <!-- check capacity of event -->
+      <v-select
+        :items="maxGroupSize"
+        :menu-props="{ bottom: true, offsetY: true }"
+        v-model="groupSizeSelected"
+        rounded
+        hide-details
+        clearable
+        dense
+        placeholder="Any Group Size"
+        outlined
+        class="mt-1 col-md"
+        color="greenDark"
+      ></v-select>
+    </v-row>
+  </v-container>
   </v-hover>
-  
 </template>
 
 <script>
@@ -107,37 +110,47 @@ export default {
       dateSelected: "",
 
       loading: false,
-      locationSelected: "", // shown on the v-autocomplete
+      locationSelected: null, // shown on the v-autocomplete
       locationItems: [], // array of locations shown on the dropdown menu
       searchLocation: "",
 
-      groupSizeSelected: 2, // let's say 2 is the default
+      groupSizeSelected: null,
       maxGroupSize: ["1", "2 - 4", "5 - 10", "10+"],
     };
   },
   methods: {
+    clearLocation() {
+      this.dateSelected = "";
+      this.$refs.menu.save(this.dateSelected);
+      this.$refs.menu = false;
+    },
     hide() {
-      this.isAdvanced = false;
-      console.log(this.isAdvanced);
+      if (this.dateSelected == "" && this.locationSelected == null && this.groupSizeSelected == null) {
+        this.isAdvanced = false;
+      }
     },
     search() {
       // call search page with the search parameters
       console.log("searching");
-      let startdate =
-        this.dateSelected[0] > this.dateSelected[1]
+      console.log(this.dateSelected);
+      let startdate = this.dateSelected == "" ? "" :
+        (this.dateSelected[0] > this.dateSelected[1]
           ? this.dateSelected[1]
-          : this.dateSelected[0];
-      let enddate =
-        this.dateSelected[1] > this.dateSelected[0]
+          : this.dateSelected[0]);
+      let enddate = this.dateSelected == "" ? "" :
+        (this.dateSelected[1] > this.dateSelected[0]
           ? this.dateSelected[1]
-          : this.dateSelected[0];
+          : this.dateSelected[0]);
+      let location = this.locationSelected == null ? "" : this.locationSelected;
+      let groupsize = this.groupSizeSelected == null ? "" : this.groupSizeSelected;
+
       this.$router.push(
         "/search?name=" +
           this.searchText +
           "&location=" +
-          this.locationSelected +
+          location +
           "&groupSize=" +
-          this.groupSizeSelected +
+          groupsize +
           "&startdate=" +
           startdate +
           "&enddate=" +

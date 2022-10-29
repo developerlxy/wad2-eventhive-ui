@@ -13,7 +13,7 @@
     </p>
 
     <v-form ref="form" v-model="valid" lazy-validation class="mx-16">
-      <v-text-field v-model="eventName" :counter="100" :rules="nameRules" label="Event Name" required></v-text-field>
+      <v-text-field v-model="eventName" :counter="50" :rules="nameRules" label="Event Name" required></v-text-field>
 
       <v-textarea v-model="eventDescription" clearable clear-icon="mdi-close-circle" label="Event Description"
         :rules="descriptionRules" required></v-textarea>
@@ -119,7 +119,7 @@
     <!-- UPLOAD IMAGE SECTION -->
     <br>
     <div v-if="!image">
-      <h2>Upload your cool event photo here!</h2>
+      <h2>Upload your cool event photo below!</h2>
       <input type="file" @change="onFileChange" accept="image/jpeg">
     </div>
     <div v-else>
@@ -135,6 +135,37 @@
     <v-btn :disabled="!valid" color="success" class="mr-4" v-on:click="submitCreateEvent()">
       Let's go!
     </v-btn>
+    <p v-if="processingCreateEvent">
+      Processing...
+    </p>
+    <br><br><hr>
+    =========================== Search distance between 2 locations ===================
+    <br><br>
+    <LocationSearchBar @locationSelected="onLocationSelected1"></LocationSearchBar>
+
+    <br>
+    selected location 1: {{ location1 }}
+    <br>
+    location 1 lat: {{ location1_lat }}
+    <br>
+    location 1 long: {{ location1_long }}
+
+    <LocationSearchBar @locationSelected="onLocationSelected2"></LocationSearchBar>
+
+    <br>
+    selected location 2: {{ location2 }}
+    <br>
+    location 2 lat: {{ location2_lat }}
+    <br>
+    location 2 long: {{ location2_long }}
+    <br>
+    <v-btn color="success" class="mr-4" v-on:click="getDistanceFromLatLonInKm(location1_lat, location1_long, location2_lat, location2_long)">
+      Calculate Distance
+    </v-btn>
+    <br>
+    Distance between the 2 locations: {{ calculatedDistance }} KM
+
+  
   </div>
 </template>
 
@@ -155,6 +186,9 @@ export default {
   name: "createEvent",
   components: { LandingScreen, Categories, NavBar },
   mounted() {
+    console.log('======== retrieving all stored events ========'),
+    console.log(this.allStoredEvents[0]), 
+    console.log('======== all stored events retrieved. if null, navigate to homepage first then try again ========'),
     setTimeout(() => {
       this.isLoading = false;
     }, 2000);
@@ -166,7 +200,7 @@ export default {
       eventName: '',
       nameRules: [
         v => !!v || 'No name? Come on you can do better than that',
-        v => (v && v.length <= 100) || 'Name must be less than 100 characters',
+        v => (v && v.length <= 50) || 'Name must be less than 50 characters',
       ],
 
       eventDescription: '',
@@ -195,11 +229,24 @@ export default {
       date: null,
 
       image: '',
-      uploadURL: ''
+      uploadURL: '',
+
+      processingCreateEvent: false,
+      allStoredEvents: [this.$store.state.events],
+      location1: '',
+      location1_lat: '',
+      location1_long: '',
+      location2: '',
+      location2_lat: '',
+      location2_long: '',
+      calculatedDistance: null
     }
   },
   methods: {
     submitCreateEvent: function () {
+      console.log('===== START OF CREATE EVENT =======')
+      this.processingCreateEvent = true
+      
       var self = this;
       var data = JSON.stringify({
         "eventName": self.eventName,
@@ -224,16 +271,69 @@ export default {
       };
 
       this.axios(config)
-        .then(function (response) {
-          console.log(JSON.stringify(response.data));
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      .then(response => {
+        console.log(JSON.stringify(response.data));
+        console.log('Event Successfuly Created')
+        this.processingCreateEvent = false
+
+        console.log('===== END OF CREATE EVENT =======')
+      })
+      // .then(function (response) {
+      //   console.log(JSON.stringify(response.data));
+      //   console.log('Event Successfuly Created')
+      //   this.processingCreateEvent = false
+
+      //   console.log('===== END OF CREATE EVENT =======')
+
+      // })
+      .catch(function (error) {
+        console.log(error);
+        console.log('Event NOT created')
+        console.log('===== END OF CREATE EVENT =======')
+      });      
     },
     onLocationSelected: function(selectedLocation) {
       this.location = selectedLocation
     },
+
+    // SEARCH DISTANCE BETWEEN 2 LOCATIONS SECTION
+    onLocationSelected1: function(selectedLocation) {
+      this.location1 = selectedLocation
+      console.log(this.location1)
+      this.location1_lat = this.location1.LATITUDE
+      console.log(this.location1_lat)
+      this.location1_long = this.location1.LONGITUDE
+      console.log(this.location1_lat)
+    },
+    onLocationSelected2: function(selectedLocation) {
+      this.location2 = selectedLocation
+      console.log(this.location2)
+      this.location2_lat = this.location2.LATITUDE
+      console.log(this.location2_lat)
+      this.location2_long = this.location2.LONGITUDE
+      console.log(this.location2_lat)
+    },
+
+    getDistanceFromLatLonInKm: function(lat1, lon1, lat2, lon2) {
+      console.log('========== CALCULATING DISTANCE ============')
+      var R = 6371; // Radius of the earth in km
+      var dLat = this.deg2rad(lat2-lat1);  // deg2rad below
+      var dLon = this.deg2rad(lon2-lon1); 
+      var a = 
+        Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) * 
+        Math.sin(dLon/2) * Math.sin(dLon/2)
+        ; 
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+      var d = R * c; // Distance in km
+      this.calculatedDistance = d;
+    },
+
+    deg2rad: function(deg) {
+      return deg * (Math.PI/180)
+    },
+    // SEARCH DISTANCE BETWEEN 2 LOCATIONS SECTION STOPS HERE
+
     onFileChange (e) {
       let files = e.target.files || e.dataTransfer.files
       if (!files.length) return

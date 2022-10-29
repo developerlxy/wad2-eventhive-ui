@@ -1,6 +1,6 @@
 <template>
   <!-- html -->
-  <v-app-bar height="min-height" color="white" class="navbar mb-0" elevation="0">
+  <v-app-bar height="min-height" color="white" class="navbar mb-0 mt-2" elevation="0">
     <v-row class="align-center justify-center mx-2" v-if="smBreakpoint">  
       <v-img
           class="my-4 logo col-xs-3"
