@@ -1,43 +1,93 @@
 <template>
     <v-card elevation="2" >
-        <v-row>
-            <v-col
-            class="event-card-img pl-8 pr-8 col-sm-6 col-md-3"
-            
-            >
-            <v-img
-              contain
-              class="v-img"
-              :src="eventObj.eventPhotoURL"
-              
-            >
-            </v-img>
-            </v-col>
+      <div v-if="xsBreakpoint" class="">
+        <v-col class="pa-5">
+          <v-img
+          contain
+          class="v-img my-auto mx-auto "
+          :src="eventObj.eventPhotoURL"
+          max-height="300"
+          >
+          </v-img>
+        </v-col>
+      <div class="my-auto px-3">
+        <p class="ml-4 mb-0 font-weight-medium text-left">{{eventDateString}}</p>
+        <v-card-title class="text-h5 text-left mb-3 font-weight-bold brownDark--text">{{eventObj.eventName}}</v-card-title>
+        <v-card-subtitle class="text-left text-h6 font-weight-medium mb-1">{{eventObj.eventLocation}}</v-card-subtitle>
+        <v-col
+          v-if="this.eventType=='Registered Events'"
+          class="text-left pt-0"
+        >
+          <v-btn 
+          block
+          class="text-none mb-2"
+          color="greenDark"
+          dark
+          >
+          View event details
+          </v-btn>
+        </v-col>
+        <v-col class="text-left pt-0" v-else>
+          <v-btn 
+            block
+            class="text-none align-left"
+            color="greenDark"
+            dark
+          >
+            Review event
+          </v-btn>
+        </v-col>
+        
+      </div>
+    </div>
+    
+    <div v-else class="d-flex flex-no-wrap justify-start">
+      <v-avatar
+        tile
+        size="250"
+        class="ma-4"
+       >
+        <v-img
+          contain
+          class="v-img my-auto"
+          :src="eventObj.eventPhotoURL"
+          max-height="225"
+          max-width="225"
+          >
+        </v-img>
+      </v-avatar>
+      <div class="my-auto">
+        <p class="ml-4 mb-5 font-weight-medium text-left mt-3">{{eventDateString}}</p>
+        <v-card-title class="text-h5 text-left mb-5 font-weight-bold brownDark--text">{{eventObj.eventName}}</v-card-title>
+        <v-card-subtitle class="text-left text-h6 font-weight-medium mb-5">{{eventObj.eventLocation}}</v-card-subtitle>
+        <v-col
+          v-if="this.eventType=='Registered Events'"
+          class="text-left pt-0"
+        >
+          <v-btn 
+          
+          class="text-none mb-2"
+          color="greenDark"
+          dark
+          >
+          View event details
+          </v-btn>
+        </v-col>
+        <v-col class="text-left pt-0" v-else>
+          <v-btn 
+            class="text-none align-left"
+            color="greenDark"
+            dark
+          >
+            Review event
+          </v-btn>
+        </v-col>
+        
+      </div>
+    </div>
+      
+    
 
-            <v-col
-            class="event-card-text col-sm-6 col-md-9 pl-6 pl-sm-0 text-left justify-center my-md-4 my-lg-12"
-            >
-                <div class="event-card-date body-1">{{eventDateString}}</div>
-                <v-card-title class="mb-4 text-h5">{{eventObj.eventName}}</v-card-title>
-                <v-card-subtitle class="text-subtitle-1">{{eventObj.eventLocation}}</v-card-subtitle>
-                <v-btn 
-                  v-if="this.eventType=='Registered Events'"
-                  class="text-none ml-4 mb-5"
-                  color="greenDark"
-                  dark
-                >
-                  View event details
-                </v-btn>
-                <v-btn 
-                  v-else
-                  class="text-none ml-4 mb-4"
-                  color="greenDark"
-                  dark
-                >
-                  Review event
-                </v-btn>
-            </v-col>
-        </v-row>
     </v-card>        
 </template>
 
@@ -77,7 +127,12 @@
               this.eventDateString = eventDateList[2] + " " + eventDateList[1] + " " + eventDateList[3] + ', ' + formattedDay 
             },
             redirectToEventPage() {
-            }
+            },
+        },
+        computed: {
+          xsBreakpoint() {
+            return this.$vuetify.breakpoint.name == 'xs' 
+          }
         },
         data() {
           return {
@@ -94,9 +149,7 @@
 <style>
 
     .event-card-date{
-        margin-left: 16px;
-        padding:0;
-        margin-top: 16px
+      font-weight: bold;
     }
     .event-card-img{
         justify-content: center;

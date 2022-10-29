@@ -13,7 +13,7 @@ import RegistrationCard from "../components/RegistrationCard.vue";
 
 export default {
   name: "Register",
-  components: { RegistrationCard },
+  components: { RegistrationCard},
   mounted() {
     setTimeout(() => {
       this.isLoading = false;

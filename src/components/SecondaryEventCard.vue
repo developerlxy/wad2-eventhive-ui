@@ -1,54 +1,49 @@
 <template>
+  <v-col>
     <v-card
-    width="300px"
-    @click="toEvent()"
-  >
-    <v-img
-      :src="eventDetails.eventPhotoURL"
-      lazy-src="../src/assets/images/no-image-placeholder.jpg"
-      height="200px"
-    ></v-img>
+      @click="toEvent()"
+    >
+      <div class="d-flex flex-no-wrap justify-start">
+        <v-avatar
+          class="ma-3"
+          size="200"
+          tile>
+          <v-img 
+          :src="eventDetails.eventPhotoURL"></v-img>
+        </v-avatar>
 
-    <v-card-title class="d-block">
-      <v-row class="pa-2 d-flex flex-nowrap">
-        <div class="text-truncate">
-          {{eventDetails.eventName}}
-        </div>
-        <v-spacer></v-spacer>
-        <v-icon class="mx-1">star</v-icon>
-        <div class="">
-          {{ getAvgRating }}
-        </div>
-      </v-row>
-    </v-card-title>
+        <div>
+          <v-card-title>
+            <v-row class="py-2 mx-1 mt-1 mb-2">
+              {{eventDetails.eventName}}
+            </v-row>
+          </v-card-title>
 
-    <v-card-text class="d-block">
-      <v-row class="pa-2">
-      </v-row>
-      <v-row class="pa-2 d-flex flex-nowrap">
-        <v-icon class="mx-1">place</v-icon>
-        <div class="text-truncate">
-          {{eventDetails.eventLocation}}
+          <v-card-text>
+            <v-row class="py-2 mx-1">
+              <v-icon class="mx-1">place</v-icon>
+              {{eventDetails.eventLocation}}
+            </v-row>
+            <v-row class="py-2 mx-1">
+              <v-icon class="mx-1">event</v-icon>
+              {{ getFormattedDate }}
+            </v-row>
+            <v-row class="pt-2 pb-3 mx-1">
+              <v-icon class="mx-1">schedule</v-icon>
+              <!-- TODO: add time in the db -->
+              <!-- {{ getFormattedTime }} -->
+            </v-row>
+          </v-card-text>
         </div>
-      </v-row>
-      <v-row class="pa-2 d-flex flex-nowrap">
-        <v-icon class="mx-1">event</v-icon>
-        <div class="text-truncate">
-        {{ getFormattedDate }}
-        </div>
-      </v-row>
-      <v-row class="pa-2">
-        <v-icon class="mx-1">schedule</v-icon>
-        <!-- TODO: add time in the db -->
-        <!-- {{ getFormattedTime }} -->
-      </v-row>
-    </v-card-text>
-  </v-card>
+      </div>
+    </v-card>
+  </v-col>
+
 </template>
 
 <script>
     export default {
-        name: 'EventCard',
+        name: 'SecondaryEventCard',
         props: {
             eventDetails: {
                 type: Object,

@@ -11,7 +11,7 @@
           :key="event.name"
           class="col-sm-6 col-md-4 col-lg-3"
         >
-          <EventCard :eventDetails="event"></EventCard>
+          <EventCard :eventDetails="event" onclick="goToEvent"></EventCard>
       </v-col>
     </v-row>
   </v-container>
@@ -64,6 +64,9 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+      },
+      gotoEvent: function (id){
+        this.$router.push({ path:`/event?id=${id}`})
       }
     },
     watch: {

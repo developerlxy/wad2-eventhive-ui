@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuetify from 'vuetify/lib/framework';
 import '../assets/styles/material-icons.css';
 import '@fortawesome/fontawesome-free/css/all.css'
+import '@mdi/font/css/materialdesignicons.css' // Ensure you are using css-loader
 
 
 Vue.use(Vuetify);
@@ -11,7 +12,11 @@ Vue.directive('click-outside', {
       // here I check that click was outside the el and his children
       if (!(el == event.target || el.contains(event.target))) {
         // and if it did, call method provided in attribute value
-        vnode.context[binding.expression](event);
+        try {
+          vnode.context[binding.expression](event);
+        } catch (err) {
+          console.log("Error: ", err);
+        }
       }
     };
     document.body.addEventListener('click', el.clickOutsideEvent)
@@ -38,9 +43,9 @@ export default new Vuetify({
         peachDark: '#BC7547',
         peachMid: '#DC8D6C',
         peachLight: '#FFE6D8',
-        error: '#D42900',
+        error: '#bd5959',
         success: '#86B71B',
-        warning: 'FF853F'
+        warning: '#FF853F'
       },
     },
   },

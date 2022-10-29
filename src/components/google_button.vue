@@ -21,9 +21,7 @@
       recaptchaScript.setAttribute('src', 'https://accounts.google.com/gsi/client')
       recaptchaScript.setAttribute('async', 'true')
       recaptchaScript.setAttribute('defer', 'true')
-      document.head.appendChild(recaptchaScript)
-
-      
+      document.head.appendChild(recaptchaScript) 
     },
     methods: {
         onWindowLoad() {
