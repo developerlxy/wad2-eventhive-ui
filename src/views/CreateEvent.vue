@@ -313,7 +313,7 @@ export default {
         "eventCategory": self.selectedCategory,
         "eventTime": self.eventTime, 
         "eventPhotoURL": self.uploadURL,
-        "eventHost": this.currentUser._id
+        "eventHost": this.currentUser
       });
 
       var config = {
