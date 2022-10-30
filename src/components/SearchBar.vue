@@ -47,6 +47,7 @@
               v-bind="attrs"
               v-on="on"
               color="greenDark"
+              @focus="isAdvanced = true"
             ></v-text-field>
           </template>
           <v-date-picker
