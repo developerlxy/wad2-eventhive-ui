@@ -134,7 +134,7 @@ export default {
     },
     hide() {
       if (
-        this.dateSelected == "" &&
+        (this.dateSelected == null || this.dateSelected == "") &&
         this.locationSelected == null &&
         this.groupSizeSelected == null
       ) {
