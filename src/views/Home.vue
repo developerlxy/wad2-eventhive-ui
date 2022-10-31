@@ -52,7 +52,7 @@ export default {
       getAllUser: function (events, user){
         var reccEvents = [];
         for (let indiv of events){
-          if (user.categoryPrefs.includes(indiv.category)){
+          if (user.categoryPrefs.includes(indiv.eventCategory)){
             reccEvents.push(indiv)
           }
         }
