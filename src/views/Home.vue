@@ -4,12 +4,20 @@
   <div v-else>
     <NavBar></NavBar>
     <Categories></Categories>
-    <div class="my-2" v-if="this.$store.state.user">
-      <h2 class="peachDark--text">Just For You</h2>
+    <v-row class="mx-6">
+      <v-col class="d-flex align-content-center flex-wrap justify-end mx-6">
+        <h1 id="header" class="font-weight-black peachMid--text ml-14 pl-14 text-start">BEE there or BEE <span style="background-color: peachpuff;">square!</span></h1>
+      </v-col>
+      <v-col class="d-flex align-content-center justify-start pr-16 mr-16">
+        <img src="../assets/images/graphics1.png" height="400px">
+      </v-col>
+    </v-row>
+    <div class="my-2 pa-6 ml-6" v-if="this.$store.state.user">
+      <h1 class="greenDark--text mb-3 font-weight-black carouselheader ml-16 pl-16 text-start">Just For You</h1>
       <EventCarousel :allEvents="getAllUser(this.$store.state.events, this.$store.state.user)"></EventCarousel>
     </div>
-    <div class="my-2 ">
-      <h2 class="peachDark--text">Buzzing Now!</h2>
+    <div class="my-2 pa-6 ml-6">
+      <h1 class="greenDark--text mb-3 font-weight-black carouselheader ml-16 pl-16 text-start">Buzzing Now!</h1>
       <EventCarousel :allEvents="getAllBuzzing(this.$store.state.events)"></EventCarousel>
     </div>
     <RandomEventPrompt></RandomEventPrompt>
@@ -52,7 +60,7 @@ export default {
       getAllUser: function (events, user){
         var reccEvents = [];
         for (let indiv of events){
-          if (user.categoryPrefs.includes(indiv.category)){
+          if (user.categoryPrefs.includes(indiv.eventCategory)){
             reccEvents.push(indiv)
           }
         }
@@ -61,3 +69,13 @@ export default {
     }
 };
 </script>
+
+<style>
+#header{
+  font-size: 4em
+}
+
+.carouselheader{
+  font-size: 3em
+}
+</style>

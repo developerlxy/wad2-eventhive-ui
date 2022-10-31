@@ -28,7 +28,7 @@
       <v-row class="pa-2 d-flex flex-nowrap">
         <v-icon class="mx-1">place</v-icon>
         <div class="text-truncate">
-          {{eventDetails.eventLocation}}
+          {{ eventDetails.eventLocation }}
         </div>
       </v-row>
       <v-row class="pa-2 d-flex flex-nowrap">
@@ -39,8 +39,7 @@
       </v-row>
       <v-row class="pa-2">
         <v-icon class="mx-1">schedule</v-icon>
-        <!-- TODO: add time in the db -->
-        <!-- {{ getFormattedTime }} -->
+        {{ eventDetails.eventTime ? eventDetails.eventTime : "TBD" }}
       </v-row>
     </v-card-text>
   </v-card>
@@ -79,8 +78,8 @@
           },
           getFormattedTime() {
             // TODO: add time in the db
-            // let date = new Date(this.eventDetails.eventDate);
-            // return date.getHours() + ":" + date.getMinutes();
+            let date = new Date(this.eventDetails.eventDate);
+            return date.getHours() + ":" + date.getMinutes();
           }
         },
     }

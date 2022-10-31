@@ -1,8 +1,13 @@
 <template>
   <!-- html -->
-  <v-hover v-slot="{hover}">
-    <v-container class='px-0 my-6' flat v-click-outside="hide" @click="isAdvanced = true">
-      <v-row class="flex-nowrap" >
+  <v-hover v-slot="{ hover }">
+    <v-container
+      class="px-0 my-6"
+      flat
+      v-click-outside="hide"
+      @click="isAdvanced = true"
+    >
+      <v-row class="flex-nowrap">
         <v-text-field
           placeholder="Search for anything"
           outlined
@@ -12,13 +17,13 @@
           class="search-box"
           v-model="searchText"
           @keyup.enter="search"
-        color="greenDark"  
+          color="greenDark"
         ></v-text-field>
         <v-btn icon small color="greenDark" class="ml-1 my-auto" @click="search"
           ><v-icon>search</v-icon></v-btn
         >
       </v-row>
-      <v-row v-if="hover||isAdvanced" class="mr-5">
+      <v-row v-if="hover || isAdvanced" class="mr-5">
         <!-- Anytime -->
         <v-menu
           ref="menu"
@@ -41,7 +46,8 @@
               readonly
               v-bind="attrs"
               v-on="on"
-            color="greenDark"
+              color="greenDark"
+              @focus="isAdvanced = true"
             ></v-text-field>
           </template>
           <v-date-picker
@@ -50,50 +56,53 @@
             range
             scrollable
             :min="today"
-          color="greenDark"
-            @input="$refs.menu.save(dateSelected)"
+            color="greenDark"
           >
             <v-spacer></v-spacer>
             <v-btn text color="greenDark" @click="clearLocation"> Clear </v-btn>
-            <v-btn text color="greenDark" @click="$refs.menu.save(dateSelected)">
+            <v-btn
+              text
+              color="greenDark"
+              @click="$refs.menu.save(dateSelected)"
+            >
               OK
             </v-btn>
           </v-date-picker>
         </v-menu>
 
-      <!-- Anywhere to change to LocationSearchBar -->
-      <v-autocomplete
-        v-model="locationSelected"
-        :loading="loading"
-        :items="locationItems"
-        :search-input.sync="searchLocation"
-        cache-items
-        class="mt-1 col-md"
-        clearable
-        hide-details
-        outlined
-        dense
-        rounded
-        placeholder="Anywhere"
-        color="greenDark"
-      ></v-autocomplete>
+        <!-- Anywhere to change to LocationSearchBar -->
+        <v-autocomplete
+          v-model="locationSelected"
+          :loading="loading"
+          :items="locationItems"
+          :search-input.sync="searchLocation"
+          cache-items
+          class="mt-1 col-md"
+          clearable
+          hide-details
+          outlined
+          dense
+          rounded
+          placeholder="Anywhere"
+          color="greenDark"
+        ></v-autocomplete>
 
-      <!-- check capacity of event -->
-      <v-select
-        :items="maxGroupSize"
-        :menu-props="{ bottom: true, offsetY: true }"
-        v-model="groupSizeSelected"
-        rounded
-        hide-details
-        clearable
-        dense
-        placeholder="Any Group Size"
-        outlined
-        class="mt-1 col-md"
-        color="greenDark"
-      ></v-select>
-    </v-row>
-  </v-container>
+        <!-- check capacity of event -->
+        <v-select
+          :items="maxGroupSize"
+          :menu-props="{ bottom: true, offsetY: true }"
+          v-model="groupSizeSelected"
+          rounded
+          hide-details
+          clearable
+          dense
+          placeholder="Any Group Size"
+          outlined
+          class="mt-1 col-md"
+          color="greenDark"
+        ></v-select>
+      </v-row>
+    </v-container>
   </v-hover>
 </template>
 
@@ -107,7 +116,7 @@ export default {
       searchText: "",
       isAdvanced: false,
       today: new Date().toISOString().slice(0, 10),
-      dateSelected: "",
+      dateSelected: null,
 
       loading: false,
       locationSelected: null, // shown on the v-autocomplete
@@ -125,7 +134,11 @@ export default {
       this.$refs.menu = false;
     },
     hide() {
-      if (this.dateSelected == "" && this.locationSelected == null && this.groupSizeSelected == null) {
+      if (
+        (this.dateSelected == null || this.dateSelected == "") &&
+        this.locationSelected == null &&
+        this.groupSizeSelected == null
+      ) {
         this.isAdvanced = false;
       }
     },
@@ -133,16 +146,21 @@ export default {
       // call search page with the search parameters
       console.log("searching");
       console.log(this.dateSelected);
-      let startdate = this.dateSelected == "" ? "" :
-        (this.dateSelected[0] > this.dateSelected[1]
+      let startdate =
+        this.dateSelected == "" || this.dateSelected == null
+          ? ""
+          : this.dateSelected[0] > this.dateSelected[1]
           ? this.dateSelected[1]
-          : this.dateSelected[0]);
-      let enddate = this.dateSelected == "" ? "" :
-        (this.dateSelected[1] > this.dateSelected[0]
+          : this.dateSelected[0];
+      let enddate =
+        this.dateSelected == "" || this.dateSelected == null
+          ? ""
+          : this.dateSelected[1] > this.dateSelected[0]
           ? this.dateSelected[1]
-          : this.dateSelected[0]);
+          : this.dateSelected[0];
       let location = this.locationSelected == null ? "" : this.locationSelected;
-      let groupsize = this.groupSizeSelected == null ? "" : this.groupSizeSelected;
+      let groupsize =
+        this.groupSizeSelected == null ? "" : this.groupSizeSelected;
 
       this.$router.push(
         "/search?name=" +
@@ -163,7 +181,7 @@ export default {
       console.log(this.dateSelected);
 
       // if no date selected, leave empty
-      if (this.dateSelected.length == 0) {
+      if (this.dateSelected == null || this.dateSelected == "") {
         return "";
       }
 
