@@ -68,8 +68,14 @@ export default {
           let eName = e.eventName.toLowerCase();
           let eGroupSize = e.maxCapacity - e.attendees.length;
           //add date search
-
-          if (eName.includes(name.toLowerCase())){
+          let eDate = e.eventDate;
+          let dateMatch = true;
+          if (startDate != "" && endDate != "") {
+            if (Date.parse(eDate) < Date.parse(startDate) || Date.parse(eDate) > Date.parse(endDate)) {
+              dateMatch = false
+            }
+          }
+          if (eName.includes(name.toLowerCase()) && dateMatch){
             this.events.push(e)
           }
         }
