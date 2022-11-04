@@ -1,10 +1,18 @@
 <template>
   <LoadingScreen v-if="isLoading"></LoadingScreen>
 
-  <div v-else>
+  <div v-else height="100%">
     <NavBar></NavBar>
     <Categories></Categories>
-    <v-container class="mb-4 mx-8" width="80%" fluid>
+    <v-container v-if="events.length==0">
+      <v-row class="justify-center mb-5">
+        <img src="../assets/images/flying-bee.gif">
+      </v-row>
+      <v-row class="justify-center">
+        <h2>Buzz off, there ain't any events for ya!</h2>
+      </v-row>
+    </v-container>
+    <v-container v-else class="mb-4 mx-8" width="80%" fluid>
       <v-row cols="2">
         <v-col>
           <v-row cols="12">
@@ -95,6 +103,7 @@ export default {
             let endDateSearch = this.$route.query.enddate
             console.log(endDateSearch)
             this.getAllSearchEvents(nameSearch, locationSearch, groupSizeSearch, startDateSearch, endDateSearch)
+            this.eventPreview = false
         },
         immediate: true,
     }
