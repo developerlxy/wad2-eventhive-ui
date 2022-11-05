@@ -122,16 +122,17 @@
       <input type="file" @change="onFileChange" accept="image/jpeg">
     </div>
     <div v-else>
-      <img :src="image" />
-      <button v-if="!uploadURL" @click="removeImage">Remove image</button>
-      <button v-if="!uploadURL" @click="uploadImage">Upload image</button>
+      <img :src="image" style="border:2px solid black" />
+      <br>
+      <v-btn outlined v-if="!uploadURL" @click="removeImage">Remove image</v-btn>
+      <!-- <button v-if="!uploadURL" @click="uploadImage">Upload image</button> -->
     </div>
-    <h2 v-if="uploadURL">Success! Image uploaded to bucket.</h2>
+    <!-- <h2 v-if="uploadURL">Success! Image uploaded to bucket.</h2> -->
 
 
 
     <br>
-    <v-btn :disabled="!valid" color="success" class="mr-4" v-on:click="submitCreateEvent()">
+    <v-btn x-large :disabled="!valid" color="success" class="mr-4" v-on:click="submitCreateEvent()">
       Let's go!
     </v-btn>
     <!-- OVERLAY PROCESSING CREATE EVENT STARTS HERE -->
@@ -305,7 +306,8 @@ export default {
             },
     submitCreateEvent: async function () {
       console.log('===== START OF CREATE EVENT =======')
-      this.processingCreateEvent = true
+      this.processingCreateEvent = true //loading screen
+      await this.uploadImage()
 
       var self = this;
       var data = JSON.stringify({
