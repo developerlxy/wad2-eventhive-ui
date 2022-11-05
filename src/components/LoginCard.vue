@@ -33,7 +33,7 @@
         :type="show1 ? 'text' : 'password'"
         name="input-10-1"
         label="Password"
-        hint="At least 8 characters"
+        hint="At least 6 characters"
         @click:append="show1 = !show1"
         @keyup.enter="login"
       ></v-text-field>
