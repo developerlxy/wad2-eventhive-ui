@@ -5,7 +5,7 @@
     <NavBar></NavBar>
     <Categories></Categories>
     <v-container class="mb-4">
-    <v-row>
+    <v-row justify="center">
       <v-col
           v-for="event in events"
           :key="event.name"

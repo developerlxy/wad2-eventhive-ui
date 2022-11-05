@@ -21,7 +21,8 @@ export default new Vuex.Store({
       { title: 'Pets', src: "fa-solid fa-dog", filter: 'Pets'},
       { title: 'Games', src: "fa-solid fa-gamepad", filter: 'Games'},
       { title: 'Others', src: "fa-solid fa-shuffle", filter: 'Others'},
-    ]
+    ],
+    buzzingEvents: null
   },
 
   mutations: {
@@ -33,17 +34,19 @@ export default new Vuex.Store({
     },
     saveEvents(state, events) {
       state.events = events
+    },
+    saveBuzzingEvents(state, buzzingEvents) {
+      state.buzzingEvents = buzzingEvents
     }
   },
   actions: {
     getEvents({commit}) {
       Vue.axios.get('https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events')
         .then(result => {
-          console.log(result.data)
           commit('saveEvents', result.data)
         })
         .catch(console.log("Get events error"))
-    }
+    },
   },
   
   modules: {
