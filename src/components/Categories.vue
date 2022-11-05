@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container class="fluid">
       <v-row dense>
         <!-- onClick, redirect to Full Events page with Category filter placed on 
         
@@ -14,7 +14,7 @@
         
         <v-hover
         v-slot="{ hover }">
-        <v-card class="pa-md-4 mx-lg-auto" 
+        <v-card class="pa-sm-1 mx-lg-auto" 
         elevation=0
         :color="hover ? 'brownLight' : 'white'"
         >

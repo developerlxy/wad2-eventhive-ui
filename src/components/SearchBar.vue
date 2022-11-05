@@ -1,88 +1,109 @@
 <template>
   <!-- html -->
-  <v-container class="col-md-7 col-sm-5 my-4">
-    <v-row class="flex-nowrap ">
-      <v-text-field
-        placeholder="Search for anything"
-        outlined
-        dense
-        rounded
-        hide-details
-        class="search-box"
-        @keyup.enter="search"
-        @click="isAdvanced = !isAdvanced"
-      ></v-text-field>
-      <v-btn icon small color="greenDark" class="ml-1 my-auto" @click="search"
-        ><v-icon>search</v-icon></v-btn
-      >
-    </v-row>
-    <v-row v-if="isAdvanced" class="mr-5">
-      <!-- Anytime -->
-      <v-menu
-        ref="menu"
-        v-model="menu"
-        :close-on-content-click="false"
-        :return-value.sync="dateSelected"
-        transition="scale-transition"
-        offset-y
-        min-width="auto"
-      >
-        <template v-slot:activator="{ on, attrs }">
-          <v-text-field
-            class="mt-1 col-md"
-            v-model="dateRangeText"
-            rounded
-            outlined
-            dense
-            hide-details
-            placeholder="Anytime"
-            readonly
-            v-bind="attrs"
-            v-on="on"
-          ></v-text-field>
-        </template>
-        <v-date-picker
-          v-model="dateSelected"
-          no-title
-          range
-          scrollable
-          :min="today"
-          @input="$refs.menu.save(dateSelected)"
+  <v-hover v-slot="{ hover }">
+    <v-container
+      class="px-0 my-6"
+      flat
+      v-click-outside="hide"
+      @click="isAdvanced = true"
+    >
+      <v-row class="flex-nowrap">
+        <v-text-field
+          placeholder="Search for anything"
+          outlined
+          dense
+          rounded
+          hide-details
+          class="search-box"
+          v-model="searchText"
+          @keyup.enter="search"
+          color="greenDark"
+        ></v-text-field>
+        <v-btn icon small color="greenDark" class="ml-1 my-auto" @click="search"
+          ><v-icon>search</v-icon></v-btn
         >
-          <v-spacer></v-spacer>
-          <v-btn text color="primary" @click="menu = false"> Cancel </v-btn>
-          <v-btn text color="primary" @click="$refs.menu.save(dateSelected)">
-            OK
-          </v-btn>
-        </v-date-picker>
-      </v-menu>
+      </v-row>
+      <v-row v-if="hover || isAdvanced" class="mr-5">
+        <!-- Anytime -->
+        <v-menu
+          ref="menu"
+          v-model="menu"
+          :close-on-content-click="false"
+          :return-value.sync="dateSelected"
+          transition="scale-transition"
+          offset-y
+          min-width="auto"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-text-field
+              class="mt-1 col-sm-4"
+              v-model="dateRangeText"
+              rounded
+              outlined
+              dense
+              hide-details
+              placeholder="Anytime"
+              readonly
+              v-bind="attrs"
+              v-on="on"
+              color="greenDark"
+              @focus="isAdvanced = true"
+            ></v-text-field>
+          </template>
+          <v-date-picker
+            v-model="dateSelected"
+            no-title
+            range
+            scrollable
+            :min="today"
+            color="greenDark"
+          >
+            <v-spacer></v-spacer>
+            <v-btn text color="greenDark" @click="clearLocation"> Clear </v-btn>
+            <v-btn
+              text
+              color="greenDark"
+              @click="$refs.menu.save(dateSelected)"
+            >
+              OK
+            </v-btn>
+          </v-date-picker>
+        </v-menu>
 
-      <!-- Anywhere to change to dropdown -->
-      <v-select
-        :items="availableLoc"
-        :menu-props="{ bottom: true, offsetY: true }"
-        v-model="locationSelected"
-        rounded
-        hide-details
-        dense
-        placeholder="Anywhere"
-        outlined
-        class="mt-1 col-md"
-      ></v-select>
-      <!-- check capacity of event -->
-      <v-select
-        :items="maxGroupSize"
-        :menu-props="{ bottom: true, offsetY: true }"
-        v-model="groupSizeSelected"
-        rounded
-        hide-details
-        dense
-        placeholder="Any Group Size"
-        outlined
-        class="mt-1 col-md"
-      ></v-select>
-    </v-row>
-  </v-container>
+        <!-- Anywhere to change to LocationSearchBar -->
+        <v-autocomplete
+          v-model="locationSelected"
+          :loading="loading"
+          :items="locationItems"
+          :search-input.sync="searchLocation"
+          cache-items
+          class="mt-1 col-md"
+          clearable
+          hide-details
+          outlined
+          dense
+          rounded
+          placeholder="Anywhere"
+          color="greenDark"
+        ></v-autocomplete>
+
+        <!-- check capacity of event -->
+        <v-select
+          :items="maxGroupSize"
+          :menu-props="{ bottom: true, offsetY: true }"
+          v-model="groupSizeSelected"
+          rounded
+          hide-details
+          clearable
+          dense
+          placeholder="Any Group Size"
+          outlined
+          class="mt-1 col-md"
+          color="greenDark"
+        ></v-select>
+      </v-row>
+    </v-container>
+  </v-hover>
 </template>
 
 <script>
@@ -94,50 +115,65 @@ export default {
       menu: false,
       searchText: "",
       isAdvanced: false,
-      dateSelected: "",
-      locationSelected: "",
-      groupSizeSelected: 2, // let's say 2 is the default
-
       today: new Date().toISOString().slice(0, 10),
+      dateSelected: null,
 
-      availableLoc: this.availableLocations(),
+      loading: false,
+      locationSelected: null, // shown on the v-autocomplete
+      locationItems: [], // array of locations shown on the dropdown menu
+      searchLocation: "",
+
+      groupSizeSelected: null,
       maxGroupSize: ["1", "2 - 4", "5 - 10", "10+"],
     };
   },
   methods: {
-    availableLocations() {
-      let locationsInDB = [];
-
-      var config = {
-        method: "get",
-        url: "https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-      this.axios(config).then(function (response) {
-        for (let event of response.data) {
-          let eventLoc = event["eventLocation"];
-          if (eventLoc != "" && !locationsInDB.includes(eventLoc)) {
-            locationsInDB.push(eventLoc);
-          }
-        }
-      });
-      return locationsInDB;
+    clearLocation() {
+      this.dateSelected = "";
+      this.$refs.menu.save(this.dateSelected);
+      this.$refs.menu = false;
+    },
+    hide() {
+      if (
+        (this.dateSelected == null || this.dateSelected == "") &&
+        this.locationSelected == null &&
+        this.groupSizeSelected == null
+      ) {
+        this.isAdvanced = false;
+      }
     },
     search() {
-      // TODO: implement search function onclick
+      // call search page with the search parameters
       console.log("searching");
-      // var config = {
-      //   method: "get",
-      //   url: "https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      // };
-      console.log(this.$store.state.events);
+      console.log(this.dateSelected);
+      let startdate =
+        this.dateSelected == "" || this.dateSelected == null
+          ? ""
+          : this.dateSelected[0] > this.dateSelected[1]
+          ? this.dateSelected[1]
+          : this.dateSelected[0];
+      let enddate =
+        this.dateSelected == "" || this.dateSelected == null
+          ? ""
+          : this.dateSelected[1] > this.dateSelected[0]
+          ? this.dateSelected[1]
+          : this.dateSelected[0];
+      let location = this.locationSelected == null ? "" : this.locationSelected;
+      let groupsize =
+        this.groupSizeSelected == null ? "" : this.groupSizeSelected;
 
-      this.$router.push("/events");
+      this.$router.push(
+        "/search?name=" +
+          this.searchText +
+          "&location=" +
+          location +
+          "&groupSize=" +
+          groupsize +
+          "&startdate=" +
+          startdate +
+          "&enddate=" +
+          enddate
+      );
     },
   },
   computed: {
@@ -145,7 +181,7 @@ export default {
       console.log(this.dateSelected);
 
       // if no date selected, leave empty
-      if (this.dateSelected.length == 0) {
+      if (this.dateSelected == null || this.dateSelected == "") {
         return "";
       }
 
@@ -193,6 +229,25 @@ export default {
           `${day1}/${month1}/${year1}` + " - " + `${day2}/${month2}/${year2}`
         );
       }
+    },
+  },
+  watch: {
+    searchLocation(val) {
+      console.log("searchLocation" + val);
+      this.axios
+        .get(
+          `https://developers.onemap.sg/commonapi/search?searchVal=${val}&returnGeom=Y&getAddrDetails=Y&pageNum=1`
+        )
+        .then((response) => {
+          this.locationItems = [];
+          response.data.results.forEach((result) => {
+            this.locationItems.push(result.SEARCHVAL);
+            // this.results.push(result);
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };

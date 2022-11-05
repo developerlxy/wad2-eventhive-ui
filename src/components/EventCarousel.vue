@@ -1,25 +1,43 @@
 <template>
-  <div>
-  <v-sheet
-    class="mx-auto"
-    width="90%"
-  >
-    <v-slide-group
-      class="p-4"
-      center-active
-      show-arrows
+  <div v-if="xsBreakpoint">
+    <v-carousel
+    cycle
+    height="500"
+    hide-delimiters
     >
-      <v-slide-item
+      <v-carousel-item 
         v-for="event in allEvents"
         :key="event.name"
-        
+        >
+        <v-row align="center" justify="center">
+          <div class="mt-14">
+            <EventCard :eventDetails="event" ></EventCard>
+          </div>
+        </v-row>
+          
+      </v-carousel-item>
+    </v-carousel>
+  </div>
+  <div v-else>
+    <v-sheet
+      class="mx-auto"
+      width="90%"
+    >
+      <v-slide-group
+        class="p-4"
+        center-active
+        show-arrows
       >
-        <div class="mx-3 my-2">
-          <EventCard :eventDetails="event" ></EventCard>
-        </div>
-      </v-slide-item>
-    </v-slide-group>
-  </v-sheet>
+        <v-slide-item
+          v-for="event in allEvents"
+          :key="event.name"
+        >
+          <div class="mx-3 my-2">
+            <EventCard :eventDetails="event" ></EventCard>
+          </div>
+        </v-slide-item>
+      </v-slide-group>
+    </v-sheet>
   </div>
 </template>
 
@@ -37,5 +55,14 @@ import EventCard from '@/components/EventCard.vue';
     data: () => ({
       
     }),
+    computed: {
+      xsBreakpoint() {
+        return this.$vuetify.breakpoint.name == 'xs' 
+      }
+    }
   }
 </script>
+
+<style>
+
+</style>

@@ -1,9 +1,9 @@
 <template>
 <footer>
   <div>
-    <v-footer color="greenLight" height="100px">
-      <v-container>
-        <v-row justify="end" dense>
+    <v-footer color="greenLight">
+      <v-container >
+        <v-row justify="end" dense >
           <v-col>
             <v-icon class="mx-5">phone</v-icon>
             +65 1234 5678

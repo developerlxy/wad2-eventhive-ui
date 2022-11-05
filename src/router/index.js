@@ -73,6 +73,23 @@ const routes = [
         name: 'Random Event',
         component: () => import('@/views/IndivEventRandom.vue'),
       },
+      {
+        path: '/search',
+        name: 'Search',
+        component: () => import('@/views/Search.vue'),
+      },
+      {
+        path: '/buzzing',
+        name: 'Buzzing',
+        component: () => import('@/views/BuzzingForYou.vue'),
+        props: true
+      },
+      {
+        path: '/for-you',
+        name: 'For You',
+        component: () => import('@/views/BuzzingForYou.vue'),
+        props: true
+      },
     ],
   },
 ];
