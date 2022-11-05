@@ -127,6 +127,11 @@
               this.eventDateString = eventDateList[2] + " " + eventDateList[1] + " " + eventDateList[3] + ', ' + formattedDay 
             },
             redirectToEventPage() {
+              if (this.eventType == 'Hosted Events' ) {
+                this.$router.push() //host page url
+              } else {
+                // thad method
+              }
             },
         },
         computed: {

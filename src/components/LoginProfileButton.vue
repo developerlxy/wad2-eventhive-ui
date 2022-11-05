@@ -78,11 +78,9 @@ export default {
       this.$router.push("/profile");
     },
     registered() {
-      // TODO: create pages & routes
       this.$router.push("/user/registered-events");
     },
     history() {
-      // TODO: create pages & routes
       this.$router.push("/user/attended-events");
     },
     hosted() {

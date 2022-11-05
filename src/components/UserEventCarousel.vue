@@ -9,7 +9,7 @@
           class="my-4"
       >
         <v-col>
-          <UserEventCard :event-obj="event" :event-type="userEventType"></UserEventCard>
+          <UserEventCard :event-obj="event" :event-type="userEventType" ></UserEventCard>
         </v-col>
           
       </v-row>
@@ -48,6 +48,7 @@ export default {
     },
     methods: {
       getFilteredEvents() {
+        console.log("getFilteredEvents", this.userEventType)
         const allUserEvents = this.user.registeredEvents
         if (this.userEventType == 'Registered Events') {
           allUserEvents.forEach(
@@ -59,13 +60,23 @@ export default {
               }
             }
           )
-        } else {
+        } else if (this.userEventType == 'Attended Events') {
           allUserEvents.forEach(
             (eventID) => {
               const eventObj = this.allEvents.find((eventObj) => eventObj._id == eventID)
               const eventDate = new Date(eventObj.eventDate)
               if(!this.isAfterToday(eventDate)){
                 this.filteredEvents.push(eventObj) 
+              }
+            }
+          )
+        } else if (this.userEventType == 'Hosted Events') {
+          console.log("here", this.$store.state.events)
+          allUserEvents.forEach(
+            (eventObj) => {
+              console.log(eventObj)
+              if(eventObj.hostID == this.user._id){
+                this.filteredEvents.push(eventObj)
               }
             }
           )

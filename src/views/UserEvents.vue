@@ -26,6 +26,8 @@
         this.userEventType = 'Registered Events'
       } else if (this.$route.params.eventType == 'attended-events') {
         this.userEventType = 'Attended Events'
+      } else if (this.$route.params.eventType == 'hosted-events') {
+        this.userEventType = 'Hosted Events'
       }
     },
     data() {
