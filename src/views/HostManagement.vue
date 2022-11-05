@@ -326,6 +326,7 @@
   import NavBar from '@/components/NavBar.vue';
   
   
+  
   export default {
       name: "Home",
       components: { LoadingScreen, NavBar },
