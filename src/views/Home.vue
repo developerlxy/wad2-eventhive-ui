@@ -5,7 +5,7 @@
     <NavBar></NavBar>
     <Categories></Categories>
     <WelcomeImage></WelcomeImage>
-    <div v-if="xsBreakpoint" class="">
+    <div v-if="xsBreakpoint">
       <div class="mb-2 pt-6 pb-6" v-if="this.$store.state.user">
         <h1 class="mb-3 font-weight-black carouselheader text-center"><a class="greenDark--text" @click="pushToForYou">Just For You</a></h1>
         <EventCarousel :allEvents="userForYou"></EventCarousel>
@@ -26,9 +26,9 @@
         <EventCarousel :allEvents="buzzingEvents"></EventCarousel>
       </div>
     </div>
-
     <RandomEventPrompt class="bottom-stick"></RandomEventPrompt>
-  </div>
+    </div>
+
 </template>
 
 <script>
@@ -117,4 +117,5 @@ export default {
   position: fixed;
   bottom: 0;
 }
+
 </style>

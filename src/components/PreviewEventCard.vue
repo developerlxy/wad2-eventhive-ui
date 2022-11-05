@@ -14,22 +14,22 @@
 
         <div>
           <h1 class="mt-3 ml-3">
-            <v-row class="py-2 mx-1 mt-1 mb-2">
+            <v-row class="py-2 mx-1 mt-1 mb-2 font-weight-bold">
               {{eventDetails.eventName}}
             </v-row>
           </h1>
 
           <v-card-text>
-            <v-row class="py-2 mx-1">
-              <v-icon class="mx-1">place</v-icon>
+            <v-row class="py-2 mx-1 font-weight-medium">
+              <v-icon class="mx-1" color="greenDark">place</v-icon>
               {{eventDetails.eventLocation.SEARCHVAL}}
             </v-row>
-            <v-row class="py-2 mx-1">
-              <v-icon class="mx-1">event</v-icon>
+            <v-row class="py-2 mx-1 font-weight-medium">
+              <v-icon class="mx-1" color="greenDark">event</v-icon>
               {{ getFormattedDate }}
             </v-row>
-            <v-row class="pt-2 pb-3 mx-1">
-              <v-icon class="mx-1">schedule</v-icon>
+            <v-row class="pt-2 pb-3 mx-1 font-weight-medium">
+              <v-icon class="mx-1" color="greenDark">schedule</v-icon>
               {{ eventDetails.eventTime ? getFormattedTime : "TBD" }}
             </v-row>
           </v-card-text>
