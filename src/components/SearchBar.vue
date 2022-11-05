@@ -178,7 +178,7 @@ export default {
   },
   computed: {
     dateRangeText() {
-      console.log(this.dateSelected);
+      // console.log(this.dateSelected);
 
       // if no date selected, leave empty
       if (this.dateSelected == null || this.dateSelected == "") {

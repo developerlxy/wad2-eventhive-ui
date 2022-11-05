@@ -4,7 +4,7 @@
   <div v-else>
     <!-- navbar component -->
     <NavBar></NavBar>
-    <UserEventCarousel :user-event-type="userEventType"></UserEventCarousel>      
+    <UserEventCarousel :user-event-type="getUserEventType"></UserEventCarousel>      
 
   </div>
 </template>
@@ -22,18 +22,21 @@
       setTimeout(() => {
         this.isLoading = false;
       }, 2000);
-      if (this.$route.params.eventType == 'registered-events'){
-        this.userEventType = 'Registered Events'
-      } else if (this.$route.params.eventType == 'attended-events') {
-        this.userEventType = 'Attended Events'
-      } else if (this.$route.params.eventType == 'hosted-events') {
-        this.userEventType = 'Hosted Events'
-      }
     },
     data() {
       return {
         isLoading: true,
-        userEventType: null
+      }
+    },
+    computed: {
+      getUserEventType() {
+        if (this.$route.params.eventType == 'registered-events'){
+        return'Registered Events'
+      } else if (this.$route.params.eventType == 'attended-events') {
+        return 'Attended Events'
+      } else if (this.$route.params.eventType == 'hosted-events') {
+        return 'Hosted Events'
+      }
       }
     }
   };
