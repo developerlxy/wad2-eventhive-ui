@@ -114,10 +114,6 @@
           </v-chip>
         </v-chip-group>
       </v-row>
-      <!-- items {{ items }}
-      {{ items.indexOf("Sports") }}
-      chips {{ chips }} -->
-      {{ this.$store.state.user }}
       <div class="d-flex brownDark--text mx-4">
         About me
       </div>
