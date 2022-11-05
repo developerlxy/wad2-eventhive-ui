@@ -88,7 +88,6 @@
                             </v-card-title>
 
                             <v-card-text>
-                                {{this.acctUser.registeredEvents}}
                                 You are signing up for the event: {{this.specificEvent.eventName}}.
                             </v-card-text>
 
@@ -335,6 +334,7 @@
             }
             else{
             let eventList = this.specificEvent.attendees
+            // console.log(eventList)
             eventList.push(this.$store.state.user._id)
             var data = JSON.stringify({
                 "_id": this.eventID,
