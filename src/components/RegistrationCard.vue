@@ -105,7 +105,7 @@
           passwordRules: [
             v => !!v || 'Password is required',
             value => (value && value.length >= 6) || 'Minimum 8 characters',
-            v => v && /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/.test(v) || 'At least one number and one character',
+            v => v && /(?=.*?[0-9])(?=.*?[A-Za-z]).+/.test(v) || 'At least one number and one letter',
           ],
           confirmPasswordRules: [
             v => !!v || 'Please confirm password',
@@ -157,7 +157,6 @@
                   const errorCode = error.code 
                   const errorMessage = error.message
                 })
-                console.log("should push to log in now")
                 setTimeout(
                   ()=>{
                     this.$router.push({name: "login", params: {email: this.email}})
