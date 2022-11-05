@@ -89,7 +89,6 @@ export default {
   #login-btn{
     color: rgb(107, 135, 107);
     font-weight: bold;
-    min-width: 0;
   }
   
   
