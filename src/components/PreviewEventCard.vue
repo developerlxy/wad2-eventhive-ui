@@ -30,8 +30,7 @@
             </v-row>
             <v-row class="pt-2 pb-3 mx-1">
               <v-icon class="mx-1">schedule</v-icon>
-              <!-- TODO: add time in the db -->
-              <!-- {{ getFormattedTime }} -->
+              {{ eventDetails.eventTime ? eventDetails.eventTime : "TBD" }}
             </v-row>
           </v-card-text>
         </div>
