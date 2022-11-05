@@ -19,7 +19,7 @@
         :color="hover ? 'brownLight' : 'white'"
         >
 
-          <font-awesome-icon :icon="category.src" />
+          <font-awesome-icon :icon="category.src" color="#779977"/>
           <div v-text="category.title"></div>
           
         </v-card>

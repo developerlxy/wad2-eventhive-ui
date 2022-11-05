@@ -37,7 +37,10 @@ export default new Vuex.Store({
     },
     saveBuzzingEvents(state, buzzingEvents) {
       state.buzzingEvents = buzzingEvents
-    }
+    },
+    saveUser(state, userObj) {
+      state.user = userObj
+    },
   },
   actions: {
     getEvents({commit}) {
@@ -46,6 +49,20 @@ export default new Vuex.Store({
           commit('saveEvents', result.data)
         })
         .catch(console.log("Get events error"))
+    },
+    getUser({commit}) {
+      Vue.axios.get('https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users')
+        .then(result => {
+          var currUser = null
+          const users = result.data
+          users.forEach(userObj => {
+            if (userObj._id == this.state.user._id) {
+              currUser = userObj
+            }
+          })
+          commit('saveUser', currUser)
+        })
+        .catch(console.log("Get users error"))
     },
   },
   

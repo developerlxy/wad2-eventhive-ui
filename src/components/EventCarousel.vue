@@ -24,9 +24,9 @@
       width="90%"
     >
       <v-slide-group
-        class="p-4"
+        class="p-4 align-center"
         center-active
-        show-arrows
+        show-arrows="desktop"
       >
         <v-slide-item
           v-for="event in allEvents"

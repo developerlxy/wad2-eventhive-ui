@@ -16,8 +16,7 @@
         >
         <GoogleSignInButton v-if="this.$store.state.user==null"></GoogleSignInButton>
         <LoginProfileButton class="pl-2"></LoginProfileButton>
-        <SearchBar class="mt-0"></SearchBar>
-        <!-- <v-row class="ma-0"> -->
+        <SearchBar class="d-block mt-0"></SearchBar>
     </v-row>
     <v-row  v-else class='align-center justify-center mx-4'>
       <v-img
