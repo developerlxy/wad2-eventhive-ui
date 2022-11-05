@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <v-btn
-    @click="googleSignIn">
-    </v-btn>
+  <div class="pl-2 ml-0 pt-1">
+    <a><img src="../assets/images/google_signin_btn.png" v-on:click="googleSignIn" width="30" height=30/></a>
   </div>
 
 </template>
@@ -40,7 +38,19 @@ export default {
           console.log(this.userExists)
           if (userExists) {
             this.$store.commit("login", userExists)
-            this.$router.push("/")
+            this.$router.go()
+          } else {
+            console.log("no google user found")
+            axios.post('https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users/register', 
+            {
+              userName: this.googleUser.email.split("@")[0],
+              userPassword: null,
+              userEmail: this.googleUser.email
+            })
+            .then(result => {
+              this.$store.commit("login", result.data)
+              this.$router.go()
+            })
           }
         })
         // ...

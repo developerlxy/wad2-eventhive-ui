@@ -17,7 +17,7 @@
         outlined
         label="Email"
         :rules="emailRules"
-        append-icon="mdi-map-marker"
+        append-icon="mdi-email"
         v-model="email"
         @keyup.enter="signup"
       ></v-text-field>
@@ -27,7 +27,7 @@
         dense
         outlined
         label="Username"
-        append-icon="mdi-map-marker"
+        append-icon="mdi-account"
         :rules="usernameRules"
         v-model="userName"
         @keyup.enter="signup"
@@ -38,7 +38,7 @@
         dense
         outlined
         v-model="password"
-        append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+        :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
         :rules="passwordRules"
         :type="show1 ? 'text' : 'password'"
         name="input-10-1"
