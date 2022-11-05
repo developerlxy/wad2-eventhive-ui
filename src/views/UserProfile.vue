@@ -109,6 +109,7 @@ export default {
     setTimeout(() => {
       this.isLoading = false;
     }, 2000);
+    this.$store.dispatch('getUser') // use this to get the current user after updating their particulars in db
   },
   data() {
     return {

@@ -174,7 +174,7 @@ export default {
               this.$router.push('/')
             } else {
               console.log("no google user found")
-              axios.post('https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users/register', 
+              this.axios.post('https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users/register', 
               {
                 userName: this.googleUser.email.split("@")[0],
                 userPassword: null,
