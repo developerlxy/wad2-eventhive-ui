@@ -14,10 +14,9 @@
         <v-btn color="greenDark" class="white--text col-xs-2 mr-sm-4 mr-md-5 mr-2 px-1" elevation="0" @click="createEvent()"
           >Create Event</v-btn
         >
-        <GoogleSignInButton v-show="this.$store.state.user==null"></GoogleSignInButton>
-        <LoginProfileButton></LoginProfileButton>
+        <GoogleSignInButton v-if="this.$store.state.user==null"></GoogleSignInButton>
+        <LoginProfileButton class="pl-2"></LoginProfileButton>
         <SearchBar class="mt-0"></SearchBar>
-        <v-spacer></v-spacer>
         <!-- <v-row class="ma-0"> -->
     </v-row>
     <v-row  v-else class='align-center justify-center mx-4'>
@@ -30,7 +29,7 @@
           @click="toHome()"
         />
         <SearchBar class="col-7 col-md-6"></SearchBar>
-        <div class="col-sm-2 text-right mr-2">
+        <div class="col-sm-2 col-md-2 text-right mr-2 ml-0 pl-0">
           <v-btn color="greenDark" class="white--text" elevation="0" @click="createEvent()"
           >Create Event</v-btn
         >
