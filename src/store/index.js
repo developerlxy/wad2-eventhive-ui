@@ -62,7 +62,9 @@ export default new Vuex.Store({
           })
           commit('saveUser', currUser)
         })
-        .catch(console.log("Get users error"))
+        .catch(error => {
+          console.log("Get users error", error)
+        })
     },
   },
   
