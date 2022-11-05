@@ -2,67 +2,133 @@
     <div class="event-card">
         <v-container>
             <v-row>
-                <v-col cols="8">
-            <img v-bind:src="specificEvent.eventPhotoURL"
+                <v-card
+                class="mx-auto mt-5"
+                :width="width"
+                outlined
+                color="transparent"
+                >
+            <img v-bind:src="this.specificEvent.eventPhotoURL"
                 aspect-ratio="16/9"
-                width="75%"
+                width="100%"
 >
-                </v-col>
-                <v-col cols="4" >
+                </v-card>
+                <v-card
+                class="mx-auto"
+                :width="width"
+                outlined
+                color="transparent"
+                >
                     <v-container class="fill-height">
                     <v-row class="d-flex flex-column">
                         <v-col>
                             <h3 class="text-left">{{this.newDate(this.specificEvent.eventDate)}}</h3>
                         </v-col>
                         <v-col>
-                            <h1 class="text-left"> {{specificEvent.eventName}} </h1>
+                            <h1 class="text-left"> {{this.specificEvent.eventName}} </h1>
                         </v-col>
                         <v-col class="justify-start">
                             <span>
                             <h3 class="text-left">by
                             <v-btn
-                            @click="hostProfile(specificEvent.eventHost)"
+                            v-if="this.host"
+                            @click="hostProfile(this.specificEvent.eventHost)"
                             text
                             tile
                             color=""
                             class="pd"
-                            > {{host.userName}}</v-btn></h3> 
+                            > {{this.host.userName}}</v-btn></h3> 
 
                         </span>
                         </v-col>
                     </v-row>
                     <v-row class=" align-end justify-center">
-                        <v-btn 
-                                color="greenDark"
+                        <template v-if="this.registered">
+                            
+                            <v-btn
+                                brick
+                                disabled
+                                color="warning"
                                 class="justify-start white--text"
-                                @click="register"
                             >
-                                Register your interest
+                                Registered
                             </v-btn>
-                            <v-btn 
-                                color="greenDark"
-                                class=" ml-5 white--text"
-                                @click="wishlist"
+                        </template>
+                        <template v-else-if="this.specificEvent.attendees.length >= this.specificEvent.maxCapacity">
+                            <v-btn
+                            brick
+                                disabled
+                                color="warning"
+                                class="justify-start white--text"
                             >
-                                <v-icon>mdi-heart</v-icon>
+                                Event full
                             </v-btn>
+                        </template>
+                        <template v-else>
+                            <div>
+                            <v-dialog
+                            v-model="dialog"
+                            width="500"
+                            >
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-btn
+                                    brick
+                                    color="greenDark"
+                                    class="justify-start white--text"
+                                    v-bind="attrs"
+                                    v-on="on"
+                                    
+                                >
+                                    Register your interest
+                                </v-btn>
+                        </template>
+                        <v-card>
+                            <v-card-title class="text-h5 grey lighten-2">
+                                Confirmation
+                            </v-card-title>
+
+                            <v-card-text>
+                                You are signing up for the event: {{this.specificEvent.eventName}}.
+                            </v-card-text>
+
+                            <v-divider></v-divider>
+
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn
+                                color="primary"
+                                text
+                                @click="intermediate"
+                                >
+                                I accept
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                        </v-dialog>
+                        </div>
+                        </template>
                     </v-row>
                 </v-container>
-
-                    <!--  -->
-                    
-                    
-                    
-                </v-col>
+                </v-card>
             </v-row>
             <v-row>
-                <v-col cols="8">
+                <v-card
+                class="mx-auto px-10 pt-8 pb-9"
+                :width="width"
+                outlined
+                color="transparent"
+                >
                     <h3 class="text-left">Description</h3>
                     <br>
                     <p v-html="desc" class="text-left">
                     </p>
-                </v-col>
-                <v-col cols="4">
+                </v-card>
+                <v-card
+                class="mx-auto px-10 pt-8 pb-9"
+                :width="width"
+                outlined
+                color="transparent"
+                >
                     <div class="d-flex flex-column align-left ml-2">
 
                             <v-card class="mb-4 pa-4">
@@ -79,10 +145,10 @@
                         </v-row>
                         <v-row align-center class="justify-start">
                             <p class="text-left ml-3 overflow-auto">
-                                {{reviewDate(specificEvent.eventDate)}}
+                                {{reviewDate(this.specificEvent.eventDate)}}
                             </p>
                         </v-row>
-                        <v-row class="justify-center">
+                        <!-- <v-row class="justify-center">
                             <v-btn
                                 block
                                 color="greenDark"
@@ -90,7 +156,7 @@
                             >
                                 Add to My Calendar
                             </v-btn>
-                        </v-row>
+                        </v-row> -->
                         
                                 </v-container>
                     </v-card>
@@ -107,7 +173,7 @@
                         </v-row >
                         <v-row class="justify-start my-4">
                             <p class="text-left ml-3">
-                                {{specificEvent.eventLocation}}
+                                {{this.specificEvent.eventLocation.ADDRESS}}
                                 
                             </p>
                         </v-row>
@@ -116,6 +182,7 @@
                                 block
                                 color="greenDark"
                                 class="white--text"
+                                @click="redirect"
                             >
                                 View Map
                             </v-btn>
@@ -179,7 +246,7 @@
                         </template>
                         </v-virtual-scroll>
                 </v-card>
-                            </v-col>
+                            </v-card>
                         </v-row>
                     </v-container>
                     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
@@ -195,22 +262,28 @@
             isLoading: true,
             benched: 10,
             events: [this.$store.state.events],
-            eventID: '6350f247ca88afcea5e30457',
+            eventID: null,
             specificEvent: null,
             date: null,
             reviews: null,
             desc: "",
             userlist: [],
             host: null,
+            acctUser: null,
+            registered: false,
+            dialog: false
+            
         }
     },
     methods: {
+        redirect() {
+            window.location.href = 'https://www.google.com/maps/search/' + this.specificEvent.eventLocation.POSTAL
+        },
         pullHost() {
             this.axios.get("https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users")
             .then(response => {
           this.userlist = response.data;
-          this.host = this.userlist.find(user => user._id === this.specificEvent.eventHost);
-          console.log(this.host)
+          this.host = this.userlist.find(user => user._id == this.specificEvent.eventHost);
         })
         .catch(function (error) {
           console.log(error);
@@ -220,7 +293,6 @@
 
         findCorrectEvent() {
             this.specificEvent = this.events[0].find(event => event._id === this.eventID)
-            // console.log(this.specificEvent)
             this.reviews = this.specificEvent.eventReviews
             this.desc = this.specificEvent.eventDesc
         },
@@ -233,23 +305,128 @@
             var test = new Date(inputDate)
             return(test.toDateString())
         },
-        host (HostID) {
+        hostProfile (HostID) {
             this.$router.push("/host/" + HostID)
         },
-        register () {
-            this.$router.push("/register")
+        isBuzzing () {
+            if (this.specificEvent.attendees.length > this.specificEvent.maxCapacity) {
+                this.specificEvent.isBuzzing = true
+            }
         },
-        wishlist() {
-      this.$router.push("/wishlist");
-    },
-    },
+        intermediate () {
+            this.dialog = false
+            this.eventPatch()
+            this.userPatch()
+            this.isRegistered()
+            this.setup()
+        },
+        isRegistered() {
+            if (this.acctUser._id in this.specificEvent.attendees) {
+                this.registered = true
+            }
+            else {
+                this.registered = false
+            }
+        },
+        eventPatch () {
+            if(this.$store.state.user == null){
+                this.$router.push("/login")
+            }
+            else{
+            let eventList = this.specificEvent.attendees
+            // console.log(eventList)
+            eventList.push(this.$store.state.user._id)
+            var data = JSON.stringify({
+                "_id": this.eventID,
+                "attendees": [eventList]
+                });
+
+            var config = {
+            method: 'patch',
+            url: 'https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/attendees',
+            headers: { 
+                'Content-Type': 'application/json'
+            },
+            data : data
+            };
+
+            this.axios(config)
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+            })
+            .catch(function (error) {
+            console.log(error);
+            });
+        }},
+        userPatch () {
+            let regList = this.acctUser.registeredEvents
+            regList.push(this.eventID)
+            var data = JSON.stringify({
+                "_id": this.acctUser._id,
+                "registeredEvents": [regList]
+                });
+
+            var config = {
+            method: 'patch',
+            url: 'https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/attendees',
+            headers: { 
+                'Content-Type': 'application/json'
+            },
+            data : data
+            };
+
+            this.axios(config)
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+            })
+            .catch(function (error) {
+            console.log(error);
+            });
+        },
+        async setup() {
+            await this.findCorrectEvent(),
+            this.reviewDate(),
+            this.pullHost()
+            this.isRegistered()
+            this.isBuzzing()
+            if(this.acctUser.registeredEvents.includes(this.eventID)) {
+                this.registered = true
+            }else if (this.specificEvent.attendees.includes(this.acctUser._id)){
+                this.registered = true
+        }
+    }
+ },
     mounted() {
-        this.findCorrectEvent(),
-        this.reviewDate(),
-        this.pullHost(),
+        this.setup()
+        if(this.$store.state.user == null){
+            this.$router.push("/login")
+        }
+        else{
+            this.acctUser = this.$store.state.user
+        }
         setTimeout(() => {
       this.isLoading = false;
     },2000);
     },
+    watch: {
+    '$route.params': {
+        handler() {
+            this.eventID = this.$route.query.id
+        },
+        immediate: true,
     }
+},
+computed: {
+      width () {
+        switch(this.$vuetify.breakpoint.name) {
+          case 'xs': return 360
+          case 'sm': return 450
+          case 'md': return 450
+          case 'lg': return 500
+          case 'xl': return 500
+        }
+      }
+    }
+}
+    
 </script>
