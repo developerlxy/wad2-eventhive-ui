@@ -4,7 +4,7 @@
         {{userEventType}}
       </p>
       <v-row
-          v-for="event in filteredEvents"
+          v-for="event in getFilteredEvents"
           :key="event._id"
           class="my-4"
       >
@@ -33,27 +33,29 @@ export default {
             default: 'Registered Events'
         }
     },
+    
     data() {    
         return {
             allEvents: [],
-            user: null,
+            user: this.$store.state.user,
             filteredEvents: []
         }
     },
     mounted() {
         this.allEvents = this.$store.state.events
-        this.user = this.$store.state.user
-        this.getFilteredEvents();
+        // this.getFilteredEvents();
         console.log(this.user.registeredEvents)
     },
-    methods: {
+    computed: {
       getFilteredEvents() {
+        this.filteredEvents = []
         console.log("getFilteredEvents", this.userEventType)
         const allUserEvents = this.user.registeredEvents
+        console.log(allUserEvents)
         if (this.userEventType == 'Registered Events') {
           allUserEvents.forEach(
-            (eventID) => {
-              const eventObj = this.allEvents.find((eventObj) => eventObj._id == eventID)
+            (eventObj) => {
+              // const eventObj = this.allEvents.find((eventObj) => eventObj._id == event._id)
               const eventDate = new Date(eventObj.eventDate)
               if(this.isAfterToday(eventDate)){
                 this.filteredEvents.push(eventObj) 
@@ -62,8 +64,8 @@ export default {
           )
         } else if (this.userEventType == 'Attended Events') {
           allUserEvents.forEach(
-            (eventID) => {
-              const eventObj = this.allEvents.find((eventObj) => eventObj._id == eventID)
+            (eventObj) => {
+              // const eventObj = this.allEvents.find((eventObj) => eventObj._id == eventID)
               const eventDate = new Date(eventObj.eventDate)
               if(!this.isAfterToday(eventDate)){
                 this.filteredEvents.push(eventObj) 
@@ -82,7 +84,11 @@ export default {
             }
           )
         }
+        console.log("filteredEvents:", this.filteredEvents)
+        return this.filteredEvents
       },
+    },
+    methods: {
       isAfterToday(date) {
         const today = new Date();
 

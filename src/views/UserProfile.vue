@@ -20,7 +20,7 @@
           label="Username"
           required
           hide-details
-          class="ma-2"
+          class="ma-2 col-sm"
         ></v-text-field>
 
         <v-text-field
@@ -30,7 +30,7 @@
           disabled
           hide-details
           label="Email"
-          class="ma-2"
+          class="ma-2 col-sm"
         ></v-text-field>
       </v-row>
 
@@ -42,7 +42,7 @@
           label="Gender"
           outlined
           hide-details
-          class="ma-2 col"
+          class="ma-2 col-sm"
         ></v-select>
         <v-text-field
           v-model="age"
@@ -50,7 +50,7 @@
           type="number"
           label="Age"
           hide-details
-          class="ma-2 col"
+          class="ma-2 col-sm"
         ></v-text-field>
       </v-row>
 
@@ -63,7 +63,7 @@
           label="New Password"
           hint="At least 8 characters"
           outlined
-          class="ma-2"
+          class="ma-2 col-sm"
           hide-details
           @click:append="showPass = !showPass"
         ></v-text-field>
@@ -75,13 +75,13 @@
           label="Confirm Password"
           hint="At least 8 characters"
           outlined
-          class="ma-2"
+          class="ma-2 col-sm"
           hide-details
           @click:append="showPass = !showPass"
         ></v-text-field>
       </v-row>
 
-      <v-row class="col-6 pa-0 ma-0">
+      <v-row class="col-sm-6 col-xs-12 pa-0 ma-0">
         <v-text-field
         v-model="contact"
         outlined
@@ -105,6 +105,7 @@
           v-model="chips"
           active-class="greenDark--text"
           class="ma-2"
+          column
         >
           <v-chip
             v-for="tag in items"
