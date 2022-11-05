@@ -149,12 +149,12 @@
         Your event has gone live 👍
       </h1>
       <br>
-      <v-btn color="success" @click="seeNewEvent()">
+      <v-btn color="success" @click="toEvent()">
         Take me to my event!
         <v-icon right>
           mdi-bee-flower
         </v-icon>
-      </v-btn>>
+      </v-btn>
 
     </v-overlay>
     <br><br>
@@ -296,10 +296,14 @@ export default {
         HorizontalRule,
         Paragraph,
         HardBreak
-      ]
+      ],
+      newEventID: '',
     }
   },
   methods: {
+    toEvent() {
+                this.$router.push("/event/?id=" + this.newEventID);
+            },
     submitCreateEvent: async function () {
       console.log('===== START OF CREATE EVENT =======')
       this.processingCreateEvent = true //loading screen
@@ -331,6 +335,7 @@ export default {
         .then(response => {
           console.log("id of newly created event below:");
           console.log(JSON.stringify(response.data));
+          this.newEventID = response.data;
           console.log('Event Successfuly Created')
           this.processingCreateEvent = false
           this.createEventSuccess = true
