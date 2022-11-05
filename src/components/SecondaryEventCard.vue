@@ -14,23 +14,22 @@
 
         <div>
           <v-card-title>
-            <v-row class="py-2 mx-1 mt-1 mb-2">
+            <v-row class="py-2 mx-1 mt-1 mb-1 brownDark--text font-weight-bold">
               {{eventDetails.eventName}}
             </v-row>
           </v-card-title>
-
           <v-card-text>
-            <v-row class="py-2 mx-1">
-              <v-icon class="mx-1">place</v-icon>
+            <v-row class="py-2 mx-1 font-weight-medium">
+              <v-icon class="mx-1" color="#779977">place</v-icon>
               {{eventDetails.eventLocation.SEARCHVAL}}
             </v-row>
-            <v-row class="py-2 mx-1">
-              <v-icon class="mx-1">event</v-icon>
+            <v-row class="py-2 mx-1 font-weight-medium">
+              <v-icon class="mx-1" color="#779977">event</v-icon>
               {{ getFormattedDate }}
             </v-row>
-            <v-row class="pt-2 pb-3 mx-1">
-              <v-icon class="mx-1">schedule</v-icon>
-              {{ eventDetails.eventTime ? eventDetails.eventTime : "TBD" }}
+            <v-row class="pt-2 pb-3 mx-1 font-weight-medium">
+              <v-icon class="mx-1" color="#779977">schedule</v-icon>
+              {{ eventDetails.eventTime ? getFormattedTime : "TBD" }}
             </v-row>
           </v-card-text>
         </div>
@@ -71,6 +70,13 @@
             let date = new Date(this.eventDetails.eventDate);
             return date.getDate() + " " + months[date.getMonth()] + ", " + date.getFullYear();
           },
+          getFormattedTime() {
+            const unformattedTime = this.eventDetails.eventTime
+            const unformattedTimeList = unformattedTime.split(":")
+            const hours = (unformattedTimeList[0] % 12) || 12
+            const suffix = unformattedTimeList[0] >= 12 ? 'PM' : 'AM'
+            return hours + '.' + unformattedTimeList[1] + " " + suffix
+          }
         },
     }
 

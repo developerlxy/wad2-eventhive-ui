@@ -1,7 +1,7 @@
 <template>
   <!-- html -->
   <v-app-bar height="min-height" color="white" class="navbar mb-0 mt-2" elevation="0">
-    <v-row class="align-start justify-start mx-2" v-if="smBreakpoint">  
+    <v-row class="align-start justify-start mx-1" v-if="smBreakpoint">  
       <v-col order="1" class="col-12 d-flex pt-2 pb-0">
         <v-img
           id="v-img"
@@ -15,11 +15,11 @@
         <v-btn color="greenDark" class="white--text mr-sm-4 mr-md-5 mr-2 px-1 my-auto" elevation="0" @click="createEvent()"
           >Create Event</v-btn
         >
-        <GoogleSignInButton  v-if="this.$store.state.user==null"></GoogleSignInButton>
-        <LoginProfileButton class="pl-2" ></LoginProfileButton>
+        <GoogleSignInButton class="my-auto"  v-if="this.$store.state.user==null"></GoogleSignInButton>
+        <LoginProfileButton class="pl-2 my-auto" ></LoginProfileButton>
       </v-col>
       <v-col order="2" class="pb-0 pt-1">
-        <SearchBar class="d-block mt-0"></SearchBar>
+        <SearchBar class="d-block mt-0 mb-4"></SearchBar>
       </v-col>
     </v-row>
     <v-row  v-else class='align-center justify-center mx-4'>

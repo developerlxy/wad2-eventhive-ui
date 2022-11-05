@@ -13,7 +13,7 @@
       <div class="my-auto px-3">
         <p class="ml-4 mb-0 font-weight-medium text-left">{{eventDateString}}</p>
         <v-card-title class="text-h5 text-left mb-3 font-weight-bold brownDark--text">{{eventObj.eventName}}</v-card-title>
-        <v-card-subtitle class="text-left text-h6 font-weight-medium mb-1">{{eventObj.eventLocation}}</v-card-subtitle>
+        <v-card-subtitle class="text-left text-h6 font-weight-medium mb-1"><v-icon class="mx-1">place</v-icon>{{eventObj.eventLocation.SEARCHVAL}}</v-card-subtitle>
         <v-col
           v-if="this.eventType=='Registered Events'"
           class="text-left pt-0"
@@ -59,7 +59,7 @@
       <div class="my-auto">
         <p class="ml-4 mb-5 font-weight-medium text-left mt-3">{{eventDateString}}</p>
         <v-card-title class="text-h5 text-left mb-5 font-weight-bold brownDark--text">{{eventObj.eventName}}</v-card-title>
-        <v-card-subtitle class="text-left text-h6 font-weight-medium mb-5">{{eventObj.eventLocation}}</v-card-subtitle>
+        <v-card-subtitle class="text-left text-h6 font-weight-medium mb-5"><v-icon class="mx-1" color="#779977">place</v-icon>{{eventObj.eventLocation.SEARCHVAL}}</v-card-subtitle>
         <v-col
           v-if="this.eventType=='Registered Events'"
           class="text-left pt-0"

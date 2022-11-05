@@ -12,6 +12,21 @@
         <h2>Buzz off, there ain't any events for ya!</h2>
       </v-row>
     </v-container>
+    <v-container v-else-if="smBreakpoint" class="mb-4 mx-8" width="80%" fluid>
+      <v-row cols="2">
+        <v-col>
+          <v-row cols="12">
+            <v-col
+                v-for="event in events"
+                :key="event.name"
+                class="col-sm-12"
+              >
+                <SecondaryEventCard :eventDetails="event" @mouseover.native="previewEvent(event)" @mouseout.native="eventPreview=false" onclick="goToEvent"></SecondaryEventCard>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-container>
     <v-container v-else class="mb-4 mx-8" width="80%" fluid>
       <v-row cols="2">
         <v-col>
@@ -72,6 +87,11 @@ export default {
         location2_long: '',
         }
     },
+    computed: {
+      smBreakpoint() {
+        return this.$vuetify.breakpoint.name == 'sm' 
+      }
+    },  
     methods: {
       gotoEvent: function (id){
         this.$router.push({ path:`/event?id=${id}`})

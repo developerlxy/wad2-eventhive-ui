@@ -30,7 +30,7 @@
             </v-row>
             <v-row class="pt-2 pb-3 mx-1">
               <v-icon class="mx-1">schedule</v-icon>
-              {{ eventDetails.eventTime ? eventDetails.eventTime : "TBD" }}
+              {{ eventDetails.eventTime ? getFormattedTime : "TBD" }}
             </v-row>
           </v-card-text>
         </div>
@@ -74,9 +74,11 @@
             return date.getDate() + " " + months[date.getMonth()] + ", " + date.getFullYear();
           },
           getFormattedTime() {
-            // TODO: add time in the db
-            // let date = new Date(this.eventDetails.eventDate);
-            // return date.getHours() + ":" + date.getMinutes();
+            const unformattedTime = this.eventDetails.eventTime
+            const unformattedTimeList = unformattedTime.split(":")
+            const hours = (unformattedTimeList[0] % 12) || 12
+            const suffix = unformattedTimeList[0] >= 12 ? 'PM' : 'AM'
+            return hours + '.' + unformattedTimeList[1] + " " + suffix
           }
         },
     }
