@@ -70,6 +70,18 @@ const routes = [
         name: 'Search',
         component: () => import('@/views/Search.vue'),
       },
+      {
+        path: '/buzzing',
+        name: 'Buzzing',
+        component: () => import('@/views/BuzzingForYou.vue'),
+        props: true
+      },
+      {
+        path: '/for-you',
+        name: 'For You',
+        component: () => import('@/views/BuzzingForYou.vue'),
+        props: true
+      },
     ],
   },
 ];

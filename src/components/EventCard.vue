@@ -2,6 +2,7 @@
     <v-card
     width="300px"
     @click="toEvent()"
+    class="mx-auto"
   >
     <v-img
       :src="eventDetails.eventPhotoURL"

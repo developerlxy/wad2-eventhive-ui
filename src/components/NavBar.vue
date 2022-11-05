@@ -14,8 +14,7 @@
         <v-btn color="greenDark" class="white--text col-xs-2" elevation="0" @click="createEvent()"
           >Create Event</v-btn
         >
-        
-        <Google_button></Google_button>
+        <GoogleSignInButton v-show="this.$store.state.user==null"></GoogleSignInButton>
         <LoginProfileButton></LoginProfileButton>
         <SearchBar class="mt-0"></SearchBar>
         <v-spacer></v-spacer>
@@ -31,10 +30,12 @@
           @click="toHome()"
         />
         <SearchBar class="col-7"></SearchBar>
-        <v-btn color="greenDark col-sm-2" class="white--text" elevation="0" @click="createEvent()"
+        <div class="col-sm-2 text-right">
+          <v-btn color="greenDark" class="white--text" elevation="0" @click="createEvent()"
           >Create Event</v-btn
         >
-        <Google_button></Google_button>
+        </div>
+        <GoogleSignInButton v-show="this.$store.state.user==null"></GoogleSignInButton>
         <LoginProfileButton ></LoginProfileButton>
         
         
@@ -48,11 +49,12 @@
 <script>
 import SearchBar from "./SearchBar.vue";
 import LoginProfileButton from "./LoginProfileButton.vue";
-import Google_button from '@/components/google_button.vue';
+import GoogleSignInButton from "./GoogleSignInButton.vue";
+
 // javascript
 export default {
   name: "NavBar",
-  components: { SearchBar, LoginProfileButton, Google_button },
+  components: { SearchBar, LoginProfileButton, GoogleSignInButton },
   props: {
     isLoggedIn: {
       type: Boolean,
