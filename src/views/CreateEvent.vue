@@ -362,7 +362,7 @@ export default {
   computed: {
     width () {
       switch(this.$vuetify.breakpoint.name) {
-        case 'xs': return 360
+        case 'xs': return 450
         case 'sm': return 540
         case 'md': return 720
         case 'lg': return 960
