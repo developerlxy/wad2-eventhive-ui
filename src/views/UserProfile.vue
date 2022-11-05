@@ -152,6 +152,7 @@ export default {
       this.isLoading = false;
     }, 2000);
     this.setExistingPrefs();
+    this.$store.dispatch('getUser') // use this to get the current user after updating their particulars in db
   },
   data() {
     return {

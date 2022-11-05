@@ -1,164 +1,225 @@
 <template>
   <LandingScreen v-if="isLoading"></LandingScreen>
 
-  <div v-else>
+  <div v-else class="fill-height peachLight">
     <NavBar> </NavBar>
-    <br>
-    <h1>
-      Fancy A New Event?
-    </h1>
-    <p style="color: grey;">
-      Create a cool name and tell event-goers why they should come. Add details so they know what kind of fun they are
-      in for!
-    </p>
-
-    <v-form ref="form" v-model="valid" lazy-validation class="mx-16">
-      <v-text-field v-model="eventName" :counter="50" :rules="nameRules" label="Event Name" required></v-text-field>
-
-      <!-- <v-textarea v-model="eventDescription" clearable clear-icon="mdi-close-circle" label="Event Description"
-        :rules="descriptionRules" required>
-      </v-textarea> -->
-      
-      <p style="color: grey;" class="text-left">
-        Event Description
-      </p>
-      <tiptap-vuetify v-model="eventDescription" :extensions="extensions" />
-
-      <v-select v-model="selectedCategory" :items="category" :rules="categoryRules" label="Category" required>
-      </v-select>
-
-      <LocationSearchBar @locationSelected="onLocationSelected"></LocationSearchBar>
-
+    <!-- class="mx-auto px-10 pt-8 pb-9" -->
+    <v-card
+      class="mx-auto my-10 px-0 pt-8 pb-9"
+      :width="width"
+      outlined
+    >
       <br>
-      selected location: {{ location }}
-
-      <v-text-field v-model="maxCapacity" label="Max Capacity" required></v-text-field>
-      <v-slider v-model="maxCapacity" color="orange" label="Fun Slider" hint="Be honest" min="1" max="1000" thumb-label>
-      </v-slider>
-
-    </v-form>
-    <br>
-    <!-- Checking if the component is imported correctly, here is eventName: {{eventName}}<br>
-    Checking if the component is imported correctly, here is eventDescription: {{eventDescription}}<br>
-    Checking if the component is imported correctly, here is selectedCategory: {{selectedCategory}}<br>
-    Checking if the component is imported correctly, here is select: {{select}}<br>
-
-    Checking if the component is imported correctly, here is location: {{location}}<br>
-    Checking if the component is imported correctly, here is maxCapacity: {{maxCapacity}}<br>
-    Checking if the component is imported correctly, here is eventTime: {{eventTime}}<br>
-    Checking if the component is imported correctly, here is eventDate: {{eventDate}}<br> -->
-    <br>
-
-    <v-expansion-panels class="ml-16">
-      <v-expansion-panel>
-        <v-expansion-panel-header v-slot="{ open }">
-          <v-row no-gutters>
-            <v-col cols="4">
-              Event date and time
-            </v-col>
-            <v-col cols="8" class="text--secondary">
-              <v-fade-transition leave-absolute>
-                <span v-if="open">When is your event going to be held?</span>
-                <v-row v-else no-gutters style="width: 100%">
-                  <v-col cols="6">
-                    Event date: {{ eventDate || 'Not set' }}
-                  </v-col>
-                  <v-col cols="6">
-                    Event time: {{ eventTime || 'Not set' }}
-                  </v-col>
-                </v-row>
-              </v-fade-transition>
-            </v-col>
-          </v-row>
-        </v-expansion-panel-header>
-        <v-expansion-panel-content>
-          <v-row justify="space-around" no-gutters>
-            <v-col cols="3">
-              <v-menu ref="dateMenu" :close-on-content-click="false" :return-value.sync="eventDate" offset-y
-                min-width="290px">
-                <template v-slot:activator="{ on, attrs }">
-                  <v-text-field v-model="eventDate" label="Event date" prepend-icon="mdi-calendar" readonly
-                    v-bind="attrs" v-on="on"></v-text-field>
-                </template>
-                <v-date-picker v-model="date" no-title scrollable>
-                  <v-spacer></v-spacer>
-                  <v-btn text color="primary" @click="$refs.dateMenu.isActive = false">
-                    Cancel
-                  </v-btn>
-                  <v-btn text color="primary" @click="$refs.dateMenu.save(date)">
-                    OK
-                  </v-btn>
-                </v-date-picker>
-              </v-menu>
-            </v-col>
-
-            <v-col cols="3">
-              <!-- https://vuetifyjs.com/en/components/time-pickers/#misc -->
-              <v-dialog ref="dialog" v-model="modal2" :return-value.sync="eventTime" persistent width="290px">
-                <template v-slot:activator="{ on, attrs }">
-                  <v-text-field v-model="eventTime" label="Event time" prepend-icon="mdi-clock-time-four-outline"
-                    readonly v-bind="attrs" v-on="on"></v-text-field>
-                </template>
-                <v-time-picker v-if="modal2" v-model="eventTime" full-width>
-                  <v-spacer></v-spacer>
-                  <v-btn text color="primary" @click="modal2 = false">
-                    Cancel
-                  </v-btn>
-                  <v-btn text color="primary" @click="$refs.dialog.save(eventTime)">
-                    OK
-                  </v-btn>
-                </v-time-picker>
-              </v-dialog>
-            </v-col>
-          </v-row>
-        </v-expansion-panel-content>
-      </v-expansion-panel>
-    </v-expansion-panels>
-
-    <!-- UPLOAD IMAGE SECTION -->
-    <br>
-    <div v-if="!image">
-      <h2>Upload your cool event photo below!</h2>
-      <input type="file" @change="onFileChange" accept="image/jpeg">
-    </div>
-    <div v-else>
-      <img :src="image" style="border:2px solid black" />
-      <br>
-      <v-btn outlined v-if="!uploadURL" @click="removeImage">Remove image</v-btn>
-      <!-- <button v-if="!uploadURL" @click="uploadImage">Upload image</button> -->
-    </div>
-    <!-- <h2 v-if="uploadURL">Success! Image uploaded to bucket.</h2> -->
-
-
-
-    <br>
-    <v-btn x-large :disabled="!valid" color="success" class="mr-4" v-on:click="submitCreateEvent()">
-      Let's go!
-    </v-btn>
-    <!-- OVERLAY PROCESSING CREATE EVENT STARTS HERE -->
-    <v-overlay :value="processingCreateEvent">
-      <v-progress-circular
-        indeterminate
-        size="64"
-      ></v-progress-circular>
-    </v-overlay>
-    <!-- OVERLAY ONCE EVENT CREATED STARTS HERE -->
-    <v-overlay :value="createEventSuccess" :opacity="0.9">
-      <h1>
-        BUZZ BUZZ!
-        Your event has gone live 👍
+      <h1 class="px-5">
+        Fancy A New Event?
       </h1>
-      <br>
-      <v-btn color="success" @click="seeNewEvent()">
-        Take me to my event!
-        <v-icon right>
-          mdi-bee-flower
-        </v-icon>
-      </v-btn>>
+      <p style="color: grey;" class="px-10">
+        Create a cool name and tell event-goers why they should come!
+      </p>
 
-    </v-overlay>
-    <br><br>
-    <hr>
+      <v-form ref="form" v-model="valid" lazy-validation class="mx-16">
+        <v-text-field v-model="eventName" :counter="50" :rules="nameRules" label="Event Name" required></v-text-field>
+
+        <div v-if="xsBreakpoint()">
+          <v-textarea v-model="eventDescription" clearable clear-icon="mdi-close-circle" label="Event Description"
+            :rules="descriptionRules" required>
+          </v-textarea>
+        </div>
+        
+        <div v-else>
+          <p style="color: grey;" class="text-left">
+            Event Description
+          </p>
+          <tiptap-vuetify v-model="eventDescription" :extensions="extensions" />
+        </div>
+
+        <v-select v-model="selectedCategory" :items="category" :rules="categoryRules" label="Category" required>
+        </v-select>
+
+        <LocationSearchBar @locationSelected="onLocationSelected"></LocationSearchBar>
+
+        <br>
+
+        <v-text-field v-model="maxCapacity" label="Max Capacity" required></v-text-field>
+        <v-slider v-model="maxCapacity" color="orange" label="Fun Slider" hint="Be honest" min="0" max="1000" thumb-label>
+        </v-slider>
+
+        <!-- mobile view -->
+        <v-expansion-panels v-if="xsBreakpoint()">
+          <v-expansion-panel>
+            <v-expansion-panel-header v-slot="{ open }">
+              <v-row no-gutters>
+                <v-col cols="12">
+                  Event date and time
+                </v-col>
+              </v-row>
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <v-row justify="space-around" no-gutters>
+                <v-col cols="12">
+                  <v-menu ref="dateMenu" :close-on-content-click="false" :return-value.sync="eventDate" offset-y
+                    min-width="290px">
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field v-model="eventDate" label="Date" prepend-icon="mdi-calendar" readonly
+                        v-bind="attrs" v-on="on"></v-text-field>
+                    </template>
+                    <v-date-picker v-model="date" no-title scrollable>
+                      <v-spacer></v-spacer>
+                      <v-btn text color="primary" @click="$refs.dateMenu.isActive = false">
+                        Cancel
+                      </v-btn>
+                      <v-btn text color="primary" @click="$refs.dateMenu.save(date)">
+                        OK
+                      </v-btn>
+                    </v-date-picker>
+                  </v-menu>
+                </v-col>
+  
+                <v-col cols="12">
+                  <!-- https://vuetifyjs.com/en/components/time-pickers/#misc -->
+                  <v-dialog ref="dialog" v-model="modal2" :return-value.sync="eventTime" persistent width="290px">
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field v-model="eventTime" label="Time" prepend-icon="mdi-clock-time-four-outline"
+                        readonly v-bind="attrs" v-on="on"></v-text-field>
+                    </template>
+                    <v-time-picker v-if="modal2" v-model="eventTime" full-width>
+                      <v-spacer></v-spacer>
+                      <v-btn text color="primary" @click="modal2 = false">
+                        Cancel
+                      </v-btn>
+                      <v-btn text color="primary" @click="$refs.dialog.save(eventTime)">
+                        OK
+                      </v-btn>
+                    </v-time-picker>
+                  </v-dialog>
+                </v-col>
+              </v-row>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
+
+        <!-- desktop view -->
+        <v-expansion-panels v-else>
+          <v-expansion-panel>
+            <v-expansion-panel-header v-slot="{ open }">
+              <v-row no-gutters>
+                <v-col cols="4">
+                  Event date and time
+                </v-col>
+                <v-col cols="8" class="text--secondary">
+                  <v-fade-transition leave-absolute>
+                    <span v-if="open">When is your event going to be held?</span>
+                    <v-row v-else no-gutters style="width: 100%">
+                      <v-col cols="6">
+                        Event date: {{ eventDate || 'Not set' }}
+                      </v-col>
+                      <v-col cols="6">
+                        Event time: {{ eventTime || 'Not set' }}
+                      </v-col>
+                    </v-row>
+                  </v-fade-transition>
+                </v-col>
+              </v-row>
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <v-row justify="space-around" no-gutters>
+                <v-col cols="3">
+                  <v-menu ref="dateMenu" :close-on-content-click="false" :return-value.sync="eventDate" offset-y
+                    min-width="290px">
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field v-model="eventDate" label="Event date" prepend-icon="mdi-calendar" readonly
+                        v-bind="attrs" v-on="on"></v-text-field>
+                    </template>
+                    <v-date-picker v-model="date" no-title scrollable>
+                      <v-spacer></v-spacer>
+                      <v-btn text color="primary" @click="$refs.dateMenu.isActive = false">
+                        Cancel
+                      </v-btn>
+                      <v-btn text color="primary" @click="$refs.dateMenu.save(date)">
+                        OK
+                      </v-btn>
+                    </v-date-picker>
+                  </v-menu>
+                </v-col>
+  
+                <v-col cols="3">
+                  <!-- https://vuetifyjs.com/en/components/time-pickers/#misc -->
+                  <v-dialog ref="dialog" v-model="modal2" :return-value.sync="eventTime" persistent width="290px">
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field v-model="eventTime" label="Event time" prepend-icon="mdi-clock-time-four-outline"
+                        readonly v-bind="attrs" v-on="on"></v-text-field>
+                    </template>
+                    <v-time-picker v-if="modal2" v-model="eventTime" full-width>
+                      <v-spacer></v-spacer>
+                      <v-btn text color="primary" @click="modal2 = false">
+                        Cancel
+                      </v-btn>
+                      <v-btn text color="primary" @click="$refs.dialog.save(eventTime)">
+                        OK
+                      </v-btn>
+                    </v-time-picker>
+                  </v-dialog>
+                </v-col>
+              </v-row>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
+        
+        <!-- UPLOAD IMAGE SECTION -->
+        <br>
+        <div v-if="!image">
+          <h3>Upload cool photo below!</h3>
+          <!-- <input type="file" @change="onFileChange" accept="image/jpeg"> -->
+          <v-file-input @change="onFileChange()" accept="image/jpeg" class="text-center" label="Upload cool photo here!" prepend-icon="mdi-camera" v-model="uploadedImage"></v-file-input>
+        </div>
+        <div v-else>
+          <img :src="image" style="border:2px solid black" width="250" height=auto />
+          <br>
+          <v-btn outlined v-if="!uploadURL" @click="removeImage">Remove image</v-btn>
+        </div>
+
+        <!-- LET'S GO UPLOAD BUTTON -->
+        <br>
+        <v-btn x-large :disabled="!valid" color="success" v-on:click="submitCreateEvent()">
+          Let's go!
+        </v-btn>
+      </v-form>
+      <!-- <br> -->
+      <!-- Checking if the component is imported correctly, here is eventName: {{eventName}}<br>
+        Checking if the component is imported correctly, here is eventDescription: {{eventDescription}}<br>
+      Checking if the component is imported correctly, here is selectedCategory: {{selectedCategory}}<br>
+      Checking if the component is imported correctly, here is select: {{select}}<br>
+
+      Checking if the component is imported correctly, here is location: {{location}}<br>
+      Checking if the component is imported correctly, here is maxCapacity: {{maxCapacity}}<br>
+      Checking if the component is imported correctly, here is eventTime: {{eventTime}}<br>
+      Checking if the component is imported correctly, here is eventDate: {{eventDate}}<br> -->
+      <!-- <br> -->
+
+
+      <!-- OVERLAY PROCESSING CREATE EVENT STARTS HERE -->
+      <v-overlay :value="processingCreateEvent">
+        <v-progress-circular
+          indeterminate
+          size="64"
+        ></v-progress-circular>
+      </v-overlay>
+      <!-- OVERLAY ONCE EVENT CREATED STARTS HERE -->
+      <v-overlay :value="createEventSuccess" :opacity="0.9">
+        <h1>
+          BUZZ BUZZ!
+          Your event has gone live 👍
+        </h1>
+        <br>
+        <v-btn color="success" @click="toEvent()">
+          Take me to my event!
+          <v-icon right>
+            mdi-bee-flower
+          </v-icon>
+        </v-btn>
+      </v-overlay>
+    </v-card>
+    <!-- <hr>
     =========================== Search distance between 2 locations ===================
     <br><br>
     <LocationSearchBar @locationSelected="onLocationSelected1"></LocationSearchBar>
@@ -184,7 +245,7 @@
       Calculate Distance
     </v-btn>
     <br>
-    Distance between the 2 locations: {{ calculatedDistance }} KM
+    Distance between the 2 locations: {{ calculatedDistance }} KM -->
 
 
   </div>
@@ -228,13 +289,10 @@ export default {
         v => (v && v.length <= 50) || 'Name must be less than 50 characters',
       ],
 
-      eventDescription: `
-        <h1>Yay Headlines!</h1>
-        <p>All these <strong>cool tags</strong> are working now.</p>
-      `,
-      // descriptionRules: [
-      //   v => !!v || `Nobody is gonna come if you don't add fun details!`,
-      // ],
+      eventDescription: ``,
+      descriptionRules: [
+        v => !!v || `Nobody is gonna come if you don't add fun details!`,
+      ],
 
       // category: '',
       category: ['Sports', 'Arts', 'Music', 'Food', 'Pets', 'Games', 'Others'],
@@ -296,10 +354,27 @@ export default {
         HorizontalRule,
         Paragraph,
         HardBreak
-      ]
+      ],
+      newEventID: '',
+      uploadedImage: null
+    }
+  },
+  computed: {
+    width () {
+      switch(this.$vuetify.breakpoint.name) {
+        case 'xs': return 450
+        case 'sm': return 540
+        case 'md': return 720
+        case 'lg': return 960
+        case 'xl': return 1140
+      }
     }
   },
   methods: {
+    toEvent() {
+      this.$store.dispatch('getEvents')
+                this.$router.push("/event/?id=" + this.newEventID);
+            },
     submitCreateEvent: async function () {
       console.log('===== START OF CREATE EVENT =======')
       this.processingCreateEvent = true //loading screen
@@ -331,6 +406,7 @@ export default {
         .then(response => {
           console.log("id of newly created event below:");
           console.log(JSON.stringify(response.data));
+          this.newEventID = response.data;
           console.log('Event Successfuly Created')
           this.processingCreateEvent = false
           this.createEventSuccess = true
@@ -351,6 +427,9 @@ export default {
           console.log('===== END OF CREATE EVENT =======')
         });
     },
+    xsBreakpoint() {
+      return this.$vuetify.breakpoint.name == 'xs' 
+    },
     onLocationSelected: function (selectedLocation) {
       this.location = selectedLocation
     },
@@ -362,7 +441,7 @@ export default {
       this.location1_lat = this.location1.LATITUDE
       console.log(this.location1_lat)
       this.location1_long = this.location1.LONGITUDE
-      console.log(this.location1_lat)
+      console.log(this.location1_long)
     },
     onLocationSelected2: function (selectedLocation) {
       this.location2 = selectedLocation
@@ -370,7 +449,7 @@ export default {
       this.location2_lat = this.location2.LATITUDE
       console.log(this.location2_lat)
       this.location2_long = this.location2.LONGITUDE
-      console.log(this.location2_lat)
+      console.log(this.location2_long)
     },
 
     getDistanceFromLatLonInKm: function (lat1, lon1, lat2, lon2) {
@@ -394,9 +473,14 @@ export default {
     // SEARCH DISTANCE BETWEEN 2 LOCATIONS SECTION STOPS HERE
 
     onFileChange(e) {
-      let files = e.target.files || e.dataTransfer.files
-      if (!files.length) return
-      this.createImage(files[0])
+      console.log('======onfilechange fired========')
+      console.log(e)
+      console.log(this.uploadedImage)
+      let files = this.uploadedImage
+      // let files = e.target.files || e.dataTransfer.files
+      console.log(files)
+      if (files == null) return
+      this.createImage(files)
     },
     createImage(file) {
       // var image = new Image()
@@ -441,10 +525,7 @@ export default {
       // Final URL for the user doesn't need the query string params
       this.uploadURL = response.data.uploadURL.split('?')[0]
       console.log(`image url at ${result.url.split("?")[0]}`);
-    },
-    seeNewEvent() {
-      this.$router.push("/event"); //TODO: add the newly created id to this link
-    },
+    }
   }
 };
 

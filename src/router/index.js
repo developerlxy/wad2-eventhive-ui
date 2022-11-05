@@ -46,6 +46,16 @@ const routes = [
         component: () => import('@/views/FullEvents.vue'),
       },
       {
+        path: '/hostview',
+        name: 'HostProfile',
+        component: () => import('@/views/HostProfile.vue'),
+      },
+      {
+        path: '/hostmgmt',
+        name: 'HostManagement',
+        component: () => import('@/views/HostManagement.vue'),
+      },
+      {
         path: '/user/:eventType',
         name: 'user-events',
         component: () => import('../views/UserEvents.vue'),

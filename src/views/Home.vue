@@ -6,7 +6,7 @@
     <Categories></Categories>
     <WelcomeImage></WelcomeImage>
     <div v-if="xsBreakpoint" class="">
-      <div class="mb-2 mt-1 pt-6 pb-6" v-if="this.$store.state.user">
+      <div class="mb-2 pt-6 pb-6" v-if="this.$store.state.user">
         <h1 class="mb-3 font-weight-black carouselheader text-center"><a class="greenDark--text" @click="pushToForYou">Just For You</a></h1>
         <EventCarousel :allEvents="userForYou"></EventCarousel>
       </div>
