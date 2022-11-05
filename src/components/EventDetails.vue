@@ -329,7 +329,7 @@
             this.setup()
         },
         isRegistered() {
-            // console.log(this.host._id)
+            // console.log(this.host)
             if(this.acctUser.registeredEvents.includes(this.eventID)) {
                 this.registered = true
             }else if (this.specificEvent.attendees.includes(this.acctUser._id)){
