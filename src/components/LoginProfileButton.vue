@@ -1,7 +1,6 @@
 <template>
-  <div id="login-profile-btn">
     <v-btn text v-if="this.$store.state.user == null" 
-      class="login-btn" 
+      class="login-btn px-xs-1" 
       id="login-btn" 
       @click="login">
       Log In
@@ -39,7 +38,6 @@
         <v-list-item @click="logout"> Log Out </v-list-item>
       </v-list>
     </v-menu>
-  </div>
 </template>
 
 <script>
@@ -91,6 +89,7 @@ export default {
   #login-btn{
     color: rgb(107, 135, 107);
     font-weight: bold;
+    min-width: 0;
   }
   
   
