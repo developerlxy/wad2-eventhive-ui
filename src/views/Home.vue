@@ -4,22 +4,29 @@
   <div v-else>
     <NavBar></NavBar>
     <Categories></Categories>
-    <v-row class="mx-6">
-      <v-col class="d-flex align-content-center flex-wrap justify-end mx-6">
-        <h1 id="header" class="font-weight-black peachMid--text ml-14 pl-14 text-start">BEE there or BEE <span style="background-color: peachpuff;">square!</span></h1>
-      </v-col>
-      <v-col class="d-flex align-content-center justify-start mt-1 pr-16 mr-16">
-        <img src="../assets/images/graphics1.png" height="400px">
-      </v-col>
-    </v-row>
-    <div class="mb-2 mt-1 pa-6 ml-6" v-if="this.$store.state.user">
-      <h1 class="greenDark--text mb-3 font-weight-black carouselheader ml-16 pl-16 text-start">Just For You</h1>
-      <EventCarousel :allEvents="getAllUser(this.$store.state.events, this.$store.state.user)"></EventCarousel>
+    <WelcomeImage></WelcomeImage>
+    <div v-if="xsBreakpoint" class="">
+      <div class="mb-2 mt-1 pt-6 pb-6" v-if="this.$store.state.user">
+        <h1 class="mb-3 font-weight-black carouselheader text-center"><a class="greenDark--text" @click="pushToForYou">Just For You</a></h1>
+        <EventCarousel :allEvents="userForYou"></EventCarousel>
+      </div>
+      <div class="my-2 pt-6 pb-6">
+        <h1 class=" mb-3 font-weight-black carouselheader text-center"><a class="greenDark--text" @click="pushToBuzzing">Buzzing Now!</a></h1>
+        <EventCarousel :allEvents="buzzingEvents"></EventCarousel>
+      </div>
     </div>
-    <div class="my-2 pa-6 ml-6">
-      <h1 class="greenDark--text mb-3 font-weight-black carouselheader ml-16 pl-16 text-start">Buzzing Now!</h1>
-      <EventCarousel :allEvents="getAllBuzzing(this.$store.state.events)"></EventCarousel>
+
+    <div v-else>
+      <div class="mb-2 mt-1 pa-6 ml-6" v-if="this.$store.state.user">
+        <h1 class="mb-3 font-weight-black carouselheader ml-16 pl-16 text-start"><a class="greenDark--text" @click="pushToForYou">Just For You</a></h1>
+        <EventCarousel :allEvents="userForYou"></EventCarousel>
+      </div>
+      <div class="my-2 pa-6 ml-6">
+        <h1 class=" mb-3 font-weight-black carouselheader ml-16 pl-16 text-start"><a class="greenDark--text" @click="pushToBuzzing">Buzzing Now!</a></h1>
+        <EventCarousel :allEvents="buzzingEvents"></EventCarousel>
+      </div>
     </div>
+
     <RandomEventPrompt class="bottom-stick"></RandomEventPrompt>
   </div>
 </template>
@@ -30,15 +37,15 @@ import Categories from '@/components/Categories.vue';
 import NavBar from '@/components/NavBar.vue';
 import EventCarousel from '@/components/EventCarousel.vue';
 import RandomEventPrompt from '@/components/RandomEventPrompt.vue';
+import WelcomeImage from '@/components/WelcomeImage.vue';
 
 export default {
     name: "Home",
-    components: { LandingScreen, Categories, NavBar, EventCarousel, RandomEventPrompt},
+    components: { LandingScreen, Categories, NavBar, EventCarousel, RandomEventPrompt, WelcomeImage },
     mounted() {
       setTimeout(() => {
         this.isLoading = false;
       }, 2000);
-      this.$store.dispatch('getEvents')
       if (this.$store.state.user != null) {
         console.log(`current user: ${this.$store.state.user.userName}`)
       }
@@ -66,15 +73,40 @@ export default {
           }
         }
         return reccEvents
+      },
+      pushToBuzzing: function() {
+        this.$router.push( {
+          name: 'Buzzing',
+          params: {
+            events: this.buzzingEvents
+          }
+        })
+      },
+      pushToForYou: function() {
+        this.$router.push( {
+          name: 'For You',
+          params: {
+            events: this.userForYou
+          }
+        })
+      }
+    },
+    computed: {
+      userForYou() {
+        return this.getAllUser(this.$store.state.events, this.$store.state.user)
+      },
+      buzzingEvents() {
+        return this.getAllBuzzing(this.$store.state.events)
+      },
+      xsBreakpoint() {
+        return this.$vuetify.breakpoint.name == 'xs' 
       }
     }
 };
 </script>
 
 <style>
-#header{
-  font-size: 4em
-}
+
 
 .carouselheader{
   font-size: 3em

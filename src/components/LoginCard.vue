@@ -19,7 +19,7 @@
         label="E-mail"
         v-model="email"
         :rules="emailRules"
-        append-icon="mdi-map-marker"
+        append-icon="mdi-email"
         @keyup.enter="login"
       ></v-text-field>
 
