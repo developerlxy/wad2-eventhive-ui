@@ -372,6 +372,7 @@ export default {
   },
   methods: {
     toEvent() {
+      this.$store.dispatch('getEvents')
                 this.$router.push("/event/?id=" + this.newEventID);
             },
     submitCreateEvent: async function () {

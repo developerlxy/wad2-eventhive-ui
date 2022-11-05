@@ -45,6 +45,14 @@
           
         }
       },
+      watch: {
+    '$route.params': {
+        handler() {
+            this.eventID = this.$route.query.id
+        },
+        immediate: true,
+    }
+},
   };
   </script>
   
