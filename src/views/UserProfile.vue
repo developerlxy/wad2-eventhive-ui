@@ -225,25 +225,25 @@ export default {
     },
     updateProfile() {
       // update categoryPrefs
+      let reqBody = {};
+
       if (this.chips.length > 0) {
-        let prefReqBody = {};
-        prefReqBody["userEmail"] = this.email;
+        reqBody["userEmail"] = this.email;
         let newCategoryPrefs = [];
         for(let index of this.chips) {
           newCategoryPrefs.push(this.items[index]);
         }
-        prefReqBody["categoryPrefs"] = newCategoryPrefs;
+        reqBody["categoryPrefs"] = newCategoryPrefs;
         this.axios
         .patch(
           `https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users/prefs`,
-          prefReqBody
+          reqBody
         )
         .then((response) => {
         });
       }
 
       // update other details
-      let reqBody = {};
       if (this.userName != "") {
         reqBody["userName"] = this.userName;
       }
@@ -276,6 +276,8 @@ export default {
             this.setAlertTimeout();
           }
         });
+
+        this.$store.dispatch('getUser') // use this to get the current user after updating their particulars in db
       
     },
     setExistingPrefs() {
@@ -289,8 +291,6 @@ export default {
         this.chips = existingPrefs;
       }
     }
-  },
-  computed: {
   },
 };
 </script>
