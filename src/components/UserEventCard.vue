@@ -27,6 +27,17 @@
           View event details
           </v-btn>
         </v-col>
+        <v-col
+          v-else-if="this.eventType=='Hosted Events'"
+          class="text-left pt-0">
+            <v-btn 
+              class="text-none mb-2"
+              color="greenDark"
+              dark
+              >
+              Edit event details
+            </v-btn>
+        </v-col>
         <v-col class="text-left pt-0" v-else>
           <v-btn 
             block
@@ -65,13 +76,25 @@
           class="text-left pt-0"
         >
           <v-btn 
-          @click="toEvent"
           class="text-none mb-2"
           color="greenDark"
           dark
+          @click="redirectToEventPage"
           >
           View event details
           </v-btn>
+        </v-col>
+        <v-col
+          v-else-if="this.eventType=='Hosted Events'"
+          class="text-left pt-0">
+            <v-btn 
+            class="text-none mb-2"
+            color="greenDark"
+            dark
+            @click="editEvent"
+            >
+            Edit event details
+            </v-btn>
         </v-col>
         <v-col class="text-left pt-0" v-else>
           <v-btn 
@@ -126,8 +149,12 @@
               }
               this.eventDateString = eventDateList[2] + " " + eventDateList[1] + " " + eventDateList[3] + ', ' + formattedDay 
             },
-            toEvent () {
-              this.$router.push("/event/?id=" + this.eventObj["_id"]);
+            redirectToEventPage() {
+              this.$router.push({ path:`/event?id=${this.eventObj._id}`})
+            },
+            editEvent() {
+              console.log("going to ", this.eventObj._id)
+              this.$router.push({ path: `hostmgmt?id=${this.eventObj._id}` })
             }
         },
         computed: {
