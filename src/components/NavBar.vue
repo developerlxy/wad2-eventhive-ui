@@ -11,7 +11,7 @@
           @click="toHome()"
         />
         <v-spacer></v-spacer>
-        <v-btn color="greenDark" class="white--text col-xs-2" @click="createEvent()"
+        <v-btn color="greenDark" class="white--text col-xs-2" elevation="0" @click="createEvent()"
           >Create Event</v-btn
         >
         
@@ -31,7 +31,7 @@
           @click="toHome()"
         />
         <SearchBar class="col-7"></SearchBar>
-        <v-btn color="greenDark col-sm-2" class="white--text" @click="createEvent()"
+        <v-btn color="greenDark col-sm-2" class="white--text" elevation="0" @click="createEvent()"
           >Create Event</v-btn
         >
         <Google_button></Google_button>

@@ -1,10 +1,18 @@
 <template>
   <LoadingScreen v-if="isLoading"></LoadingScreen>
 
-  <div v-else>
+  <div v-else height="100%">
     <NavBar></NavBar>
     <Categories></Categories>
-    <v-container class="mb-4 mx-8" width="80%" fluid>
+    <v-container v-if="events.length==0">
+      <v-row class="justify-center mb-5">
+        <img src="../assets/images/flying-bee.gif">
+      </v-row>
+      <v-row class="justify-center">
+        <h2>Buzz off, there ain't any events for ya!</h2>
+      </v-row>
+    </v-container>
+    <v-container v-else class="mb-4 mx-8" width="80%" fluid>
       <v-row cols="2">
         <v-col>
           <v-row cols="12">
@@ -13,16 +21,19 @@
                 :key="event.name"
                 class="col-sm-12"
               >
-                <SecondaryEventCard :eventDetails="event" @mouseover.native="previewEvent(event)" onclick="goToEvent"></SecondaryEventCard>
+                <SecondaryEventCard :eventDetails="event" @mouseover.native="previewEvent(event)" @mouseout.native="eventPreview=false" onclick="goToEvent"></SecondaryEventCard>
             </v-col>
           </v-row>
         </v-col>
         <v-col col-sm-1>
-          <div v-if="eventPreview!=false" id="preview">
+          <div v-if="eventPreview!=false" id="preview" class="mt-2">
             <PreviewEventCard :eventDetails="this.eventPreview"></PreviewEventCard>
           </div>
           <div v-else>
-            <h4>Hover over to view!</h4>
+            <v-row class="justify-center my-5">
+              <img src="../assets/images/flying-bee.gif">
+            </v-row>
+            <h2>Hover over for a sneak peek!</h2>
           </div>
         </v-col>
       </v-row>
@@ -95,6 +106,7 @@ export default {
             let endDateSearch = this.$route.query.enddate
             console.log(endDateSearch)
             this.getAllSearchEvents(nameSearch, locationSearch, groupSizeSearch, startDateSearch, endDateSearch)
+            this.eventPreview = false
         },
         immediate: true,
     }

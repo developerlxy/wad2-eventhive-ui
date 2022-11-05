@@ -14,7 +14,7 @@
         
         <v-hover
         v-slot="{ hover }">
-        <v-card class="pa-md-4 mx-lg-auto" 
+        <v-card class="pa-sm-1 mx-lg-auto" 
         elevation=0
         :color="hover ? 'brownLight' : 'white'"
         >
