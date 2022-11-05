@@ -72,10 +72,11 @@ export default {
           )
         } else if (this.userEventType == 'Hosted Events') {
           console.log("here", this.$store.state.events)
-          allUserEvents.forEach(
+          console.log("userEvents", this.$store.state.user.createdEvents)
+          this.$store.state.user.createdEvents.forEach(
             (eventObj) => {
               console.log(eventObj)
-              if(eventObj.hostID == this.user._id){
+              if(eventObj.eventHost._id == this.user._id){
                 this.filteredEvents.push(eventObj)
               }
             }
