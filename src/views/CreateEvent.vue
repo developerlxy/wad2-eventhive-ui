@@ -303,7 +303,7 @@ export default {
     toEvent() {
                 this.$router.push("/event/?id=" + this.newEventID);
             },
-    submitCreateEvent: function () {
+    submitCreateEvent: async function () {
       console.log('===== START OF CREATE EVENT =======')
       this.processingCreateEvent = true
 

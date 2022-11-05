@@ -1,5 +1,9 @@
 <template>
-    <div class="event-card">
+    <div class="event-card brownDark py-10"
+    >
+        <v-card
+        class="mx-10 my-10"
+        >
         <v-container>
             <v-row>
                 <v-card
@@ -250,7 +254,8 @@
                         </v-row>
                     </v-container>
                     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
-    </div>
+                </v-card>
+                </div>
     
 </template>
 
@@ -398,12 +403,12 @@
  },
     mounted() {
         this.setup()
-        if(this.$store.state.user == null){
-            this.$router.push("/login")
-        }
-        else{
-            this.acctUser = this.$store.state.user
-        }
+        // if(this.$store.state.user == null){
+        //     this.$router.push("/login")
+        // }
+        // else{
+        //     this.acctUser = this.$store.state.user
+        // }
         setTimeout(() => {
       this.isLoading = false;
     },2000);
