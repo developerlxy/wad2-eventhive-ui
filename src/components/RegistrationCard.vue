@@ -105,7 +105,7 @@
           passwordRules: [
             v => !!v || 'Password is required',
             value => (value && value.length >= 6) || 'Minimum 8 characters',
-            v => v && /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/.test(v) || 'At least one number and one character',
+            v => v && /(?=.*?[0-9])(?=.*?[A-Za-z]).+/.test(v) || 'At least one number and one letter',
           ],
           confirmPasswordRules: [
             v => !!v || 'Please confirm password',
@@ -149,7 +149,7 @@
                 this.snackbarText = "User created. Taking you to login page..."
                 this.userCreated = true
                 this.isDisabled = false
-                createUserWithEmailAndPassword(firebaseAuth, email, password)
+                createUserWithEmailAndPassword(firebaseAuth, this.email, this.password)
                 .then((userCredential) => {
                   const user = userCredential.user
                 })
