@@ -1,6 +1,6 @@
 <template>
-  <v-container class="fluid">
-      <v-row dense>
+  <v-container class="fluid pb-4 px-0">
+      <v-row dense >
         <!-- onClick, redirect to Full Events page with Category filter placed on 
         
           potential: onHover, card increases in size
@@ -14,7 +14,7 @@
         
         <v-hover
         v-slot="{ hover }">
-        <v-card class="pa-sm-1 mx-lg-auto" 
+        <v-card class="pa-sm-1 mx-lg-auto " 
         elevation=0
         :color="hover ? 'brownLight' : 'white'"
         >
