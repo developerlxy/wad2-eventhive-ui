@@ -22,7 +22,7 @@
           <v-card-text>
             <v-row class="py-2 mx-1">
               <v-icon class="mx-1">place</v-icon>
-              {{eventDetails.eventLocation}}
+              {{eventDetails.eventLocation.SEARCHVAL}}
             </v-row>
             <v-row class="py-2 mx-1">
               <v-icon class="mx-1">event</v-icon>
@@ -30,14 +30,13 @@
             </v-row>
             <v-row class="pt-2 pb-3 mx-1">
               <v-icon class="mx-1">schedule</v-icon>
-              <!-- TODO: add time in the db -->
-              <!-- {{ getFormattedTime }} -->
+              {{ eventDetails.eventTime ? eventDetails.eventTime : "TBD" }}
             </v-row>
           </v-card-text>
         </div>
       </div>
       <div>
-        <v-card-subtitle v-text="eventDetails.eventDesc">
+        <v-card-subtitle v-html="eventDetails.eventDesc">
         </v-card-subtitle>
       </div>
     </v-card>

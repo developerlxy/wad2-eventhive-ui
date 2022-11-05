@@ -29,7 +29,7 @@
       <v-row class="pa-2 d-flex flex-nowrap">
         <v-icon class="mx-1">place</v-icon>
         <div class="text-truncate">
-          {{ eventDetails.eventLocation }}
+          {{eventDetails.eventLocation.SEARCHVAL}}
         </div>
       </v-row>
       <v-row class="pa-2 d-flex flex-nowrap">

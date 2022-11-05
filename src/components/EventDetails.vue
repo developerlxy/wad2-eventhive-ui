@@ -1,5 +1,9 @@
 <template>
-    <div class="event-card">
+    <div class="event-card brownDark py-10"
+    >
+        <v-card
+        class="mx-10 my-10"
+        >
         <v-container>
             <v-row>
                 <v-card
@@ -32,7 +36,7 @@
                             <h3 class="text-left">by
                             <v-btn
                             v-if="this.host"
-                            @click="hostProfile(this.specificEvent.eventHost)"
+                            @click="hostProfile()"
                             text
                             tile
                             color=""
@@ -250,7 +254,8 @@
                         </v-row>
                     </v-container>
                     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
-    </div>
+                </v-card>
+                </div>
     
 </template>
 
@@ -277,13 +282,15 @@
     },
     methods: {
         redirect() {
-            window.location.href = 'https://www.google.com/maps/search/' + this.specificEvent.eventLocation.POSTAL
+            window.location.href = 'https://www.google.com/maps/search/' + this.specificEvent.eventLocation.SEARCHVAL
         },
         pullHost() {
             this.axios.get("https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users")
             .then(response => {
           this.userlist = response.data;
-          this.host = this.userlist.find(user => user._id == this.specificEvent.eventHost);
+        //   console.log(this.userlist);
+          this.host = this.userlist.find(user => user._id == this.specificEvent.eventHost._id);
+        //   console.log(this.host);
         })
         .catch(function (error) {
           console.log(error);
@@ -305,8 +312,8 @@
             var test = new Date(inputDate)
             return(test.toDateString())
         },
-        hostProfile (HostID) {
-            this.$router.push("/host/" + HostID)
+        hostProfile () {
+            this.$router.push("/hostview/?id=" + this.eventID)
         },
         isBuzzing () {
             if (this.specificEvent.attendees.length > this.specificEvent.maxCapacity) {
@@ -315,19 +322,38 @@
         },
         intermediate () {
             this.dialog = false
+            this.noUser()
             this.eventPatch()
             this.userPatch()
             this.isRegistered()
             this.setup()
         },
         isRegistered() {
-            if (this.acctUser._id in this.specificEvent.attendees) {
+            // console.log(this.host._id)
+            if(this.acctUser.registeredEvents.includes(this.eventID)) {
+                this.registered = true
+            }else if (this.specificEvent.attendees.includes(this.acctUser._id)){
+                this.registered = true
+            }else if (this.host._id == this.acctUser._id){
                 this.registered = true
             }
             else {
                 this.registered = false
             }
         },
+        // isLoggedIn() {
+        //     if (this.$store.state.user == null) {
+        //         this.acctUser = this.$store.state.user
+        //     }
+        // },
+        noUser() {
+            if(this.$store.state.user == null){
+            this.$router.push("/login")
+        }
+        else{
+            this.acctUser = this.$store.state.user
+        }
+    },
         eventPatch () {
             if(this.$store.state.user == null){
                 this.$router.push("/login")
@@ -385,25 +411,18 @@
         },
         async setup() {
             await this.findCorrectEvent(),
+            await this.pullHost()
+            this.acctUser = this.$store.state.user,
             this.reviewDate(),
-            this.pullHost()
-            this.isRegistered()
             this.isBuzzing()
-            if(this.acctUser.registeredEvents.includes(this.eventID)) {
-                this.registered = true
-            }else if (this.specificEvent.attendees.includes(this.acctUser._id)){
-                this.registered = true
-        }
+
     }
  },
+
     mounted() {
         this.setup()
-        if(this.$store.state.user == null){
-            this.$router.push("/login")
-        }
-        else{
-            this.acctUser = this.$store.state.user
-        }
+        console.log(this.host)
+        this.isRegistered()
         setTimeout(() => {
       this.isLoading = false;
     },2000);
