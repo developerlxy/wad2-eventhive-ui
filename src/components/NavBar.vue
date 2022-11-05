@@ -48,11 +48,12 @@
 <script>
 import SearchBar from "./SearchBar.vue";
 import LoginProfileButton from "./LoginProfileButton.vue";
-import Google_button from '@/components/google_button.vue';
+import GoogleSignInButton from "./GoogleSignInButton.vue";
+
 // javascript
 export default {
   name: "NavBar",
-  components: { SearchBar, LoginProfileButton, Google_button },
+  components: { SearchBar, LoginProfileButton, GoogleSignInButton },
   props: {
     isLoggedIn: {
       type: Boolean,

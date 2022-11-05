@@ -87,6 +87,9 @@
    
   <script>
   import SignupSnackbar from "./SignupSnackbar.vue";
+  import {firebaseAuth} from '../utils/firebaseInit'
+  import {createUserWithEmailAndPassword} from 'firebase/auth'
+
   export default {
     components: {SignupSnackbar},
     name: "RegistrationCard",
@@ -146,6 +149,14 @@
                 this.snackbarText = "User created. Taking you to login page..."
                 this.userCreated = true
                 this.isDisabled = false
+                createUserWithEmailAndPassword(firebaseAuth, email, password)
+                .then((userCredential) => {
+                  const user = userCredential.user
+                })
+                .catch((error) => {
+                  const errorCode = error.code 
+                  const errorMessage = error.message
+                })
                 setTimeout(
                   ()=>{
                     this.$router.push({name: "login", params: {email: this.email}})
