@@ -149,7 +149,7 @@
                 this.snackbarText = "User created. Taking you to login page..."
                 this.userCreated = true
                 this.isDisabled = false
-                createUserWithEmailAndPassword(firebaseAuth, email, password)
+                createUserWithEmailAndPassword(firebaseAuth, this.email, this.password)
                 .then((userCredential) => {
                   const user = userCredential.user
                 })
@@ -157,6 +157,7 @@
                   const errorCode = error.code 
                   const errorMessage = error.message
                 })
+                console.log("should push to log in now")
                 setTimeout(
                   ()=>{
                     this.$router.push({name: "login", params: {email: this.email}})
