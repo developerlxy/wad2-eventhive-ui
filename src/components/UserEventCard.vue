@@ -13,7 +13,7 @@
       <div class="my-auto px-3">
         <p class="ml-4 mb-0 font-weight-medium text-left">{{eventDateString}}</p>
         <v-card-title class="text-h5 text-left mb-3 font-weight-bold brownDark--text">{{eventObj.eventName}}</v-card-title>
-        <v-card-subtitle class="text-left text-h6 font-weight-medium mb-1">{{eventObj.eventLocation}}</v-card-subtitle>
+        <v-card-subtitle class="text-left text-h6 font-weight-medium mb-1">{{eventObj.eventLocation.SEARCHVAL}}</v-card-subtitle>
         <v-col
           v-if="this.eventType=='Registered Events'"
           class="text-left pt-0"
@@ -26,6 +26,17 @@
           >
           View event details
           </v-btn>
+        </v-col>
+        <v-col
+          v-else-if="this.eventType=='Hosted Events'"
+          class="text-left pt-0">
+            <v-btn 
+              class="text-none mb-2"
+              color="greenDark"
+              dark
+              >
+              Edit event details
+            </v-btn>
         </v-col>
         <v-col class="text-left pt-0" v-else>
           <v-btn 
@@ -59,19 +70,31 @@
       <div class="my-auto">
         <p class="ml-4 mb-5 font-weight-medium text-left mt-3">{{eventDateString}}</p>
         <v-card-title class="text-h5 text-left mb-5 font-weight-bold brownDark--text">{{eventObj.eventName}}</v-card-title>
-        <v-card-subtitle class="text-left text-h6 font-weight-medium mb-5">{{eventObj.eventLocation}}</v-card-subtitle>
+        <v-card-subtitle class="text-left text-h6 font-weight-medium mb-5">{{eventObj.eventLocation.SEARCHVAL}}</v-card-subtitle>
         <v-col
           v-if="this.eventType=='Registered Events'"
           class="text-left pt-0"
         >
           <v-btn 
-          
           class="text-none mb-2"
           color="greenDark"
           dark
+          @click="redirectToEventPage"
           >
           View event details
           </v-btn>
+        </v-col>
+        <v-col
+          v-else-if="this.eventType=='Hosted Events'"
+          class="text-left pt-0">
+            <v-btn 
+            class="text-none mb-2"
+            color="greenDark"
+            dark
+            @click="editEvent"
+            >
+            Edit event details
+            </v-btn>
         </v-col>
         <v-col class="text-left pt-0" v-else>
           <v-btn 
@@ -127,7 +150,12 @@
               this.eventDateString = eventDateList[2] + " " + eventDateList[1] + " " + eventDateList[3] + ', ' + formattedDay 
             },
             redirectToEventPage() {
+              this.$router.push({ path:`/event?id=${this.eventObj._id}`})
             },
+            editEvent() {
+              console.log("going to ", this.eventObj._id)
+              this.$router.push({ path: `hostmgmt?id=${this.eventObj._id}` })
+            }
         },
         computed: {
           xsBreakpoint() {

@@ -35,6 +35,7 @@
         <v-list-item @click="myProfile"> My Profile </v-list-item>
         <v-list-item @click="registered"> Registered Events </v-list-item>
         <v-list-item @click="history"> Attended Events </v-list-item>
+        <v-list-item @click="hosted"> Hosted Events </v-list-item>
         <v-list-item @click="logout"> Log Out </v-list-item>
       </v-list>
     </v-menu>
@@ -75,12 +76,13 @@ export default {
       this.$router.push("/profile");
     },
     registered() {
-      // TODO: create pages & routes
       this.$router.push("/user/registered-events");
     },
     history() {
-      // TODO: create pages & routes
       this.$router.push("/user/attended-events");
+    },
+    hosted() {
+      this.$router.push("/user/hosted-events");
     },
   },
 };
