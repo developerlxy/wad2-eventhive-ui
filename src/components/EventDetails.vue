@@ -311,7 +311,7 @@
             return(test.toDateString())
         },
         hostProfile (HostID) {
-            this.$router.push("/host/" + HostID)
+            this.$router.push("/hostview/" + HostID)
         },
         isBuzzing () {
             if (this.specificEvent.attendees.length > this.specificEvent.maxCapacity) {

@@ -13,7 +13,7 @@
     import NavBar from '@/components/NavBar.vue';
     import LandingScreen from '@/components/LandingScreen.vue';
     import HostDetails from '@/components/HostDetails.vue';
-import EventDetails from '@/components/EventDetails.vue';
+    import EventDetails from '@/components/EventDetails.vue';
     
     export default {
     name: "Home",

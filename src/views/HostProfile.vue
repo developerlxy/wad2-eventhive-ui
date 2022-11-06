@@ -3,7 +3,7 @@
 
   <div v-else>
       <NavBar></NavBar>
-      <HostDetails v-bind:eventHost="host"></HostDetails>
+      <HostDetails :eventHost="host"></HostDetails>
   
 
 
@@ -40,8 +40,11 @@
       },
       computed: {
         host() {
-          
-          console.log(this.events)
+          for (let event of this.$store.state.events) {
+            if (event["_id"]=="636634167611b279e286e15b") {
+              return event["eventHost"]
+            }
+          }
           
         }
       },
