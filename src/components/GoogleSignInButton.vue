@@ -1,7 +1,5 @@
 <template>
-  <div class="pl-2 ml-0 pt-1">
-    <a><img src="../assets/images/google_signin_btn.png" v-on:click="googleSignIn" width="30" height=30/></a>
-  </div>
+  <a><img src="../assets/images/google_signin_btn.png" v-on:click="googleSignIn" width="30" height=30/></a>
 
 </template>
 

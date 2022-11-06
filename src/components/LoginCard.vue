@@ -33,7 +33,7 @@
         :type="show1 ? 'text' : 'password'"
         name="input-10-1"
         label="Password"
-        hint="At least 8 characters"
+        hint="At least 6 characters"
         @click:append="show1 = !show1"
         @keyup.enter="login"
       ></v-text-field>
@@ -174,7 +174,7 @@ export default {
               this.$router.push('/')
             } else {
               console.log("no google user found")
-              axios.post('https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users/register', 
+              this.axios.post('https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users/register', 
               {
                 userName: this.googleUser.email.split("@")[0],
                 userPassword: null,

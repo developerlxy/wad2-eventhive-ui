@@ -20,7 +20,7 @@
           label="Username"
           required
           hide-details
-          class="ma-2"
+          class="ma-2 col-sm"
         ></v-text-field>
 
         <v-text-field
@@ -30,7 +30,7 @@
           disabled
           hide-details
           label="Email"
-          class="ma-2"
+          class="ma-2 col-sm"
         ></v-text-field>
       </v-row>
 
@@ -42,7 +42,7 @@
           label="Gender"
           outlined
           hide-details
-          class="ma-2 col"
+          class="ma-2 col-sm"
         ></v-select>
         <v-text-field
           v-model="age"
@@ -50,7 +50,7 @@
           type="number"
           label="Age"
           hide-details
-          class="ma-2 col"
+          class="ma-2 col-sm"
         ></v-text-field>
       </v-row>
 
@@ -63,7 +63,7 @@
           label="New Password"
           hint="At least 8 characters"
           outlined
-          class="ma-2"
+          class="ma-2 col-sm"
           hide-details
           @click:append="showPass = !showPass"
         ></v-text-field>
@@ -75,11 +75,53 @@
           label="Confirm Password"
           hint="At least 8 characters"
           outlined
-          class="ma-2"
+          class="ma-2 col-sm"
           hide-details
           @click:append="showPass = !showPass"
         ></v-text-field>
       </v-row>
+
+      <v-row class="col-sm-6 col-xs-12 pa-0 ma-0">
+        <v-text-field
+        v-model="contact"
+        outlined
+        hide-details
+        label="Phone number"
+        class="ma-2"
+        ></v-text-field>
+      </v-row>
+      <hr class="my-4">
+
+      <div class="d-flex text-h5 brownDark--text font-weight-medium ma-4">
+        General Information
+      </div>
+
+      <div class="d-flex brownDark--text mx-4">
+        My Interests
+      </div>
+      <v-row class="col-12 pa-0 ma-0">
+      <v-chip-group
+          multiple
+          v-model="chips"
+          active-class="greenDark--text"
+          class="ma-2"
+          column
+        >
+          <v-chip
+            v-for="tag in items"
+            :key="tag"
+          >
+            {{ tag }}
+          </v-chip>
+        </v-chip-group>
+      </v-row>
+      <div class="d-flex brownDark--text mx-4">
+        About me
+      </div>
+      <v-row class="col-12 pa-0 ma-0">
+        <tiptap-vuetify class="ma-2" v-model="userDescription" :extensions="extensions" />
+      </v-row>
+
       <v-row>
         <v-btn
           color="greenDark"
@@ -101,14 +143,18 @@
 </template>
 <script>
 import LandingScreen from "../components/LandingScreen.vue";
+import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragraph, BulletList, OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History } from 'tiptap-vuetify'
 
 export default {
   name: "UserProfile",
-  components: { LandingScreen },
+  components: { LandingScreen, TiptapVuetify },
   mounted() {
     setTimeout(() => {
       this.isLoading = false;
     }, 2000);
+    this.setExistingPrefs();
+    // TODO: fix this - user profile still not updated in this.$store.state.user
+    this.$store.dispatch('getUser') // use this to get the current user after updating their particulars in db
   },
   data() {
     return {
@@ -141,6 +187,35 @@ export default {
         (v) => /^[a-zA-Z-']+$/.test(v) || "Name cannot have special characters",
       ],
       emailRules: [(v) => /.+@.+\..+/.test(v) || "E-mail must be valid"],
+
+      chips: [],
+      items: ['Sports', 'Arts', 'Music', 'Food', 'Pets', 'Games'],
+
+      contact: this.$store.state.user["userPhone"] == null ? "" : this.$store.state.user["userPhone"],
+      userDescription: this.$store.state.user["userDesc"] == null ? "" : this.$store.state.user["userDesc"],
+      
+      //FOR RICH TEXT
+      extensions: [
+        History,
+        Blockquote,
+        Link,
+        Underline,
+        Strike,
+        Italic,
+        ListItem,
+        BulletList,
+        OrderedList,
+        [Heading, {
+          options: {
+            levels: [1, 2, 3]
+          }
+        }],
+        Bold,
+        Code,
+        HorizontalRule,
+        Paragraph,
+        HardBreak
+      ],
     };
   },
   methods: {
@@ -150,15 +225,45 @@ export default {
       }, 2000);
     },
     updateProfile() {
+      // update categoryPrefs
       let reqBody = {};
+
+      if (this.chips.length > 0) {
+        reqBody["userEmail"] = this.email;
+        let newCategoryPrefs = [];
+        for(let index of this.chips) {
+          newCategoryPrefs.push(this.items[index]);
+        }
+        reqBody["categoryPrefs"] = newCategoryPrefs;
+        this.axios
+        .patch(
+          `https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users/prefs`,
+          reqBody
+        )
+        .then((response) => {
+        });
+      }
+
+      // update other details
+      if (this.userName != "") {
+        reqBody["userName"] = this.userName;
+      }
       if (this.password != "") {
         reqBody["userPassword"] = this.password;
+      } else {
+        reqBody["userPassword"] = this.$store.state.user["userPassword"];
       }
       if (this.age > 0) {
         reqBody["userAge"] = this.age;
       }
       if (this.gender != "") {
         reqBody["userGender"] = this.gender;
+      }
+      if (this.userDescription != "") {
+        reqBody["userDesc"] = this.userDescription;
+      }
+      if (this.contact != "") {
+        reqBody["userPhone"] = this.contact;
       }
 
       this.axios
@@ -172,7 +277,21 @@ export default {
             this.setAlertTimeout();
           }
         });
+
+        this.$store.dispatch('getUser') // use this to get the current user after updating their particulars in db
+      
     },
+    setExistingPrefs() {
+      if (this.$store.state.user["categoryPrefs"] == null) {
+        this.chips = [];
+      } else {
+        let existingPrefs = []
+        for (let category of this.$store.state.user["categoryPrefs"]) {
+          existingPrefs.push(this.items.indexOf(category));
+        }
+        this.chips = existingPrefs;
+      }
+    }
   },
 };
 </script>

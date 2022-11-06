@@ -14,24 +14,22 @@
 
         <div>
           <v-card-title>
-            <v-row class="py-2 mx-1 mt-1 mb-2">
+            <v-row class="py-2 mx-1 mt-1 mb-1 font-weight-bold">
               {{eventDetails.eventName}}
             </v-row>
           </v-card-title>
-
           <v-card-text>
-            <v-row class="py-2 mx-1">
-              <v-icon class="mx-1">place</v-icon>
-              {{eventDetails.eventLocation}}
+            <v-row class="py-2 mx-1 font-weight-medium">
+              <v-icon class="mx-1" color="greenDark">place</v-icon>
+              {{eventDetails.eventLocation.SEARCHVAL}}
             </v-row>
-            <v-row class="py-2 mx-1">
-              <v-icon class="mx-1">event</v-icon>
+            <v-row class="py-2 mx-1 font-weight-medium">
+              <v-icon class="mx-1" color="greenDark">event</v-icon>
               {{ getFormattedDate }}
             </v-row>
-            <v-row class="pt-2 pb-3 mx-1">
-              <v-icon class="mx-1">schedule</v-icon>
-              <!-- TODO: add time in the db -->
-              <!-- {{ getFormattedTime }} -->
+            <v-row class="pt-2 pb-3 mx-1 font-weight-medium">
+              <v-icon class="mx-1" color="greenDark">schedule</v-icon>
+              {{ eventDetails.eventTime ? getFormattedTime : "TBD" }}
             </v-row>
           </v-card-text>
         </div>
@@ -73,9 +71,11 @@
             return date.getDate() + " " + months[date.getMonth()] + ", " + date.getFullYear();
           },
           getFormattedTime() {
-            // TODO: add time in the db
-            // let date = new Date(this.eventDetails.eventDate);
-            // return date.getHours() + ":" + date.getMinutes();
+            const unformattedTime = this.eventDetails.eventTime
+            const unformattedTimeList = unformattedTime.split(":")
+            const hours = (unformattedTimeList[0] % 12) || 12
+            const suffix = unformattedTimeList[0] >= 12 ? 'PM' : 'AM'
+            return hours + '.' + unformattedTimeList[1] + " " + suffix
           }
         },
     }

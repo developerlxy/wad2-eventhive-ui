@@ -178,7 +178,7 @@ export default {
   },
   computed: {
     dateRangeText() {
-      console.log(this.dateSelected);
+      // console.log(this.dateSelected);
 
       // if no date selected, leave empty
       if (this.dateSelected == null || this.dateSelected == "") {
@@ -233,7 +233,7 @@ export default {
   },
   watch: {
     searchLocation(val) {
-      console.log("searchLocation" + val);
+      // console.log("searchLocation" + val);
       this.axios
         .get(
           `https://developers.onemap.sg/commonapi/search?searchVal=${val}&returnGeom=Y&getAddrDetails=Y&pageNum=1`

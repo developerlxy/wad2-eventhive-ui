@@ -43,7 +43,7 @@
         :type="show1 ? 'text' : 'password'"
         name="input-10-1"
         label="Password"
-        hint="At least 8 characters"
+        hint="At least 6 characters"
         @click:append="show1 = !show1"
         @keyup.enter="signup"
       ></v-text-field>
@@ -104,7 +104,7 @@
           snackbarText: '',
           passwordRules: [
             v => !!v || 'Password is required',
-            value => (value && value.length >= 6) || 'Minimum 8 characters',
+            value => (value && value.length >= 6) || 'Minimum 6 characters',
             v => v && /(?=.*?[0-9])(?=.*?[A-Za-z]).+/.test(v) || 'At least one number and one letter',
           ],
           confirmPasswordRules: [
