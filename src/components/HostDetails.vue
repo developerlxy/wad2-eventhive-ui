@@ -29,7 +29,7 @@
           Contact Info
         </div>
         <v-list-item class=""><br>
-          Email: {{ form.contactEmail }} <br><br>
+          Email: {{ eventHost["userEmail"] }} <br><br>
           Contact No.:
         </v-list-item>
 
@@ -67,7 +67,7 @@
           outlined
           tile
         >
-          <h1>Hey, I'm {{ form.firstName }}!</h1><br/>
+          <h1>Hey, I'm {{ eventHost["userName"] }}!</h1><br/>
           <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa vel, minus sunt blanditiis enim, quaerat nemo et, ducimus similique error aut? Magni dolores ex impedit asperiores itaque natus sint quos?</p>
 
           <h2>Rating & Reviews</h2><br>
@@ -101,15 +101,15 @@
 <script>
         export default {
         name: 'HostDetails',
-        props: ['eventHost'],
+        props: {
+          eventHost: {
+            type: Object,
+            required: true
+          }
+        },
         data: () => ({
-      benched: 0,
-      form: {
-                    firstName: 'Ding',
-                    lastName: 'Doe',
-                    contactEmail: 'gerald.ding.2021@scis.smu.edu.sg',
-                    contactNumber: 5678910,
-                }
+        benched: 0,
+        
     }),
     computed: {
       items () {
