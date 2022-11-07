@@ -418,7 +418,9 @@
 
     }
  },
-
+created() {
+    this.$store.dispatch('getEvents')
+},
     mounted() {
         this.setup()
         console.log(this.host)
