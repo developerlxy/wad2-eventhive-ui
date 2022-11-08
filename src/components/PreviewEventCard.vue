@@ -1,11 +1,10 @@
 <template>
     <v-card
       @click="toEvent()"
-      width="90%"
     >
-      <div class="d-flex flex-no-wrap justify-start">
+      <div class="d-flex flex-column flex-lg-row flex-no-wrap justify-sm-center align-center">
         <v-avatar
-          class="ma-3"
+          class="ma-3 mx-md-auto mx-sm-auto"
           size="300"
           tile>
           <v-img 
@@ -79,6 +78,9 @@
             const hours = (unformattedTimeList[0] % 12) || 12
             const suffix = unformattedTimeList[0] >= 12 ? 'PM' : 'AM'
             return hours + '.' + unformattedTimeList[1] + " " + suffix
+          },
+          mdBreakpoint() {
+            return this.$vuetify.breakpoint.mdAndDown
           }
         },
     }

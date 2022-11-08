@@ -26,7 +26,7 @@
       <v-slide-group
         class="p-4 align-center"
         center-active
-        show-arrows="desktop"
+        show-arrows="always"
       >
         <v-slide-item
           v-for="event in allEvents"

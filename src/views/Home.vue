@@ -56,7 +56,7 @@ export default {
       }
     },
     methods: {
-      getAllBuzzing: function (events){
+      getAllBuzzing (events){
         var buzzingEvents = [];
         for (let indiv of events){
           if (indiv.isBuzzing){

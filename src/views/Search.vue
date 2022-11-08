@@ -12,9 +12,9 @@
         <h2>Buzz off, there ain't any events for ya!</h2>
       </v-row>
     </v-container>
-    <v-container v-else-if="smBreakpoint" class="mb-4 mx-8" width="80%" fluid>
-      <v-row cols="2">
-        <v-col>
+    <v-container v-else class="mb-4 justify-sm-center justify-xs-center" fluid>
+      <v-row>
+        <v-col class="ml-sm-8 mx-6">
           <v-row cols="12">
             <v-col
                 v-for="event in events"
@@ -25,27 +25,12 @@
             </v-col>
           </v-row>
         </v-col>
-      </v-row>
-    </v-container>
-    <v-container v-else class="mb-4 mx-8" width="80%" fluid>
-      <v-row cols="2">
-        <v-col>
-          <v-row cols="12">
-            <v-col
-                v-for="event in events"
-                :key="event.name"
-                class="col-sm-12"
-              >
-                <SecondaryEventCard :eventDetails="event" @mouseover.native="previewEvent(event)" @mouseout.native="eventPreview=false" onclick="goToEvent"></SecondaryEventCard>
-            </v-col>
-          </v-row>
-        </v-col>
-        <v-col col-sm-1>
-          <div v-if="eventPreview!=false" id="preview" class="mt-2">
+        <v-col class="">
+          <div v-if="eventPreview!=false" class="mt-2 mr-8 preview">
             <PreviewEventCard :eventDetails="this.eventPreview"></PreviewEventCard>
-          </div>
-          <div v-else>
-            <v-row class="justify-center my-5">
+          </div>  
+          <div v-else class="preview mr-8">
+            <v-row class="justify-center my-5" >
               <img src="../assets/images/flying-bee.gif">
             </v-row>
             <h2>Hover over for a sneak peek!</h2>
@@ -88,9 +73,9 @@ export default {
         }
     },
     computed: {
-      smBreakpoint() {
-        return this.$vuetify.breakpoint.name == 'sm' 
-      }
+      mdBreakpoint() {
+        return this.$vuetify.breakpoint.mdAndUp
+      },
     },  
     methods: {
       gotoEvent: function (id){
@@ -228,10 +213,10 @@ export default {
 </script>
 
 <style>
-#preview{
+.preview{
   position: sticky; 
   z-index: 1;
-  top: 50px; 
+  top: 20px; 
   margin: auto;
 }
 </style>
