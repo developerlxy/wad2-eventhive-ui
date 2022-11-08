@@ -236,7 +236,7 @@ export default {
         }
         reqBody["categoryPrefs"] = newCategoryPrefs;
         this.axios
-        .patch(
+        .put(
           `https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users/prefs`,
           reqBody
         )
