@@ -1,6 +1,6 @@
 <template>
     <v-card
-      class="mx-auto px-10 pt-11 pb-9"
+      class="mx-auto px-10 py-8"
       :width="width"
       outlined
     >

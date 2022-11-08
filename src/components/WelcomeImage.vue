@@ -24,7 +24,7 @@
       <v-col class="d-flex align-content-center flex-wrap justify-end justify-sm-center mx-6">
         <h1 :id="headerID" class="font-weight-black peachMid--text ml-14 pl-14 text-start">BEE there or BEE <span style="background-color: peachpuff;">square!</span></h1>
       </v-col>
-      <v-col class="d-flex align-content-center justify-start mt-1 pr-16 mr-16">
+      <v-col class="d-flex align-content-center justify-center mt-1 pr-16 mr-16">
         <img src="../assets/images/graphics1.png" :height="mdBreakpoint ? 280: 350">
       </v-col>
     </v-row>

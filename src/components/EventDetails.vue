@@ -1,8 +1,9 @@
 <template>
-    <div class="event-card brownDark py-10"
+    <div class="event-card greenMid py-8 px-16"
     >
         <v-card
-        class="mx-10 my-10"
+        class="mx-auto mt-2 pt-4"
+        :width="cardWidth"
         >
         <v-container>
             <v-row>
@@ -12,10 +13,10 @@
                 outlined
                 color="transparent"
                 >
-            <img v-bind:src="this.specificEvent.eventPhotoURL"
-                aspect-ratio="16/9"
-                width="100%"
->
+                  <img v-bind:src="this.specificEvent.eventPhotoURL"
+                      aspect-ratio="16/9"
+                      width="100%"
+                  >
                 </v-card>
                 <v-card
                 class="mx-auto"
@@ -117,7 +118,7 @@
             </v-row>
             <v-row>
                 <v-card
-                class="mx-auto px-10 pt-8 pb-9"
+                class="mx-auto px-4 px-2 pt-8"
                 :width="width"
                 outlined
                 color="transparent"
@@ -128,12 +129,12 @@
                     </p>
                 </v-card>
                 <v-card
-                class="mx-auto px-10 pt-8 pb-9"
+                class="mx-auto px-4 pt-8 pb-9"
                 :width="width"
                 outlined
                 color="transparent"
                 >
-                    <div class="d-flex flex-column align-left ml-2">
+                    <div class="d-flex flex-column">
 
                             <v-card class="mb-4 pa-4">
                                 <v-container fill-height>
@@ -164,7 +165,7 @@
                         
                                 </v-container>
                     </v-card>
-                    <v-card class="pa-4 mt-4">
+                    <v-card class="pa-4 mt-4" :width="width">
                         <v-container fill-height>
                         <v-row class="justify-start">
                             <v-col>
@@ -445,6 +446,15 @@ computed: {
           case 'md': return 450
           case 'lg': return 500
           case 'xl': return 500
+        }
+      },
+      cardWidth() {
+        switch(this.$vuetify.breakpoint.name) {
+          case 'xs': return 500
+          case 'sm': return 760
+          case 'md': return 1000
+          case 'lg': return 1300
+          case 'xl': return 1500
         }
       }
     }
