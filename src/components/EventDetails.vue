@@ -377,7 +377,7 @@
 
             var config = {
             method: 'put',
-            url: 'https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/attendees',
+            url: 'https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users/registered',
             headers: { 
                 'Content-Type': 'application/json'
             },
@@ -387,7 +387,6 @@
             this.axios(config)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
-                this.$store.dispatch('getUser')
             })
             .catch(function (error) {
             console.log(error);
@@ -403,6 +402,7 @@
  },
 created() {
     this.$store.dispatch('getEvents')
+    this.$store.dispatch('getUser')
 },
     async mounted()  {
         await this.setup()
