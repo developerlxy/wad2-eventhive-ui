@@ -36,13 +36,13 @@
                             <span>
                             <h3 class="text-left">by
                             <v-btn
-                            v-if="this.host"
+                            v-if="this.specificEvent.eventHost"
                             @click="hostProfile()"
                             text
                             tile
                             color=""
                             class="pd"
-                            > {{this.host.userName}}</v-btn></h3> 
+                            > {{this.specificEvent.eventHost.userName}}</v-btn></h3> 
 
                         </span>
                         </v-col>
@@ -274,7 +274,6 @@
             reviews: null,
             desc: "",
             userlist: [],
-            host: null,
             acctUser: null,
             registered: false,
             dialog: false
@@ -284,19 +283,6 @@
     methods: {
         redirect() {
             window.location.href = 'https://www.google.com/maps/search/' + this.specificEvent.eventLocation.SEARCHVAL
-        },
-        pullHost() {
-            this.axios.get("https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users")
-            .then(response => {
-          this.userlist = response.data;
-        //   console.log(this.userlist);
-          this.host = this.userlist.find(user => user._id == this.specificEvent.eventHost._id);
-        //   console.log(this.host);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-
         },
 
         findCorrectEvent() {
@@ -332,11 +318,12 @@
         },
         isRegistered() {
             // console.log(this.host)
-            if(this.acctUser.registeredEvents.includes(this.eventID)) {
+            this.$store.dispatch('getUser')
+            console.log("user registered events" , this.acctUser.registeredEvents)
+            console.log("event attendees" , this.specificEvent.attendees)
+            if(this.acctUser.registeredEvents.includes(this.specificEvent._id) && this.specificEvent.attendees.includes(this.acctUser._id)){
                 this.registered = true
-            }else if (this.specificEvent.attendees.includes(this.acctUser._id)){
-                this.registered = true
-            }else if (this.host._id == this.acctUser._id){
+            }else if (this.specificEvent.eventHost._id == this.acctUser._id){
                 this.registered = true
             }
             else {
@@ -366,7 +353,7 @@
             eventList.push(this.$store.state.user._id)
             var data = JSON.stringify({
                 "_id": this.eventID,
-                "attendees": [eventList]
+                "attendees": eventList
                 });
 
             var config = {
@@ -390,13 +377,13 @@
             let regList = this.acctUser.registeredEvents
             regList.push(this.eventID)
             var data = JSON.stringify({
-                "_id": this.acctUser._id,
-                "registeredEvents": [regList]
+                "userEmail": this.acctUser.userEmail,
+                "registeredEvents": regList
                 });
 
             var config = {
             method: 'patch',
-            url: 'https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/attendees',
+            url: 'https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users/registered',
             headers: { 
                 'Content-Type': 'application/json'
             },
@@ -406,6 +393,7 @@
             this.axios(config)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
+                this.$store.dispatch('getUser')
             })
             .catch(function (error) {
             console.log(error);
@@ -413,7 +401,7 @@
         },
         async setup() {
             await this.findCorrectEvent(),
-            await this.pullHost()
+            // await this.pullHost()
             this.acctUser = this.$store.state.user,
             this.reviewDate(),
             this.isBuzzing()
@@ -425,8 +413,7 @@ created() {
 },
     async mounted()  {
         await this.setup()
-        console.log(this.host)
-        console.log(this.acctUser)
+        console.log(this.specificEvent)
         this.isRegistered()
         setTimeout(() => {
       this.isLoading = false;
