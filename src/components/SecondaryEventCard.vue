@@ -3,9 +3,9 @@
     <v-card
       @click="toEvent()"
     >
-      <div class="d-flex flex-no-wrap justify-start">
+      <div class="d-flex flex-column flex-md-row flex-no-wrap justify-md-start justify-sm-center align-center">
         <v-avatar
-          class="ma-3"
+          class="ma-3 mx-sm-auto mx-md-3"
           size="200"
           tile>
           <v-img 
