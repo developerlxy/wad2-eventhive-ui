@@ -235,13 +235,6 @@ export default {
           newCategoryPrefs.push(this.items[index]);
         }
         reqBody["categoryPrefs"] = newCategoryPrefs;
-        this.axios
-        .patch(
-          `https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users/prefs`,
-          reqBody
-        )
-        .then((response) => {
-        });
       }
 
       // update other details
