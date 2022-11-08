@@ -1,5 +1,4 @@
 <template>
-  <v-col>
     <v-card
       @click="toEvent()"
     >
@@ -35,7 +34,6 @@
         </div>
       </div>
     </v-card>
-  </v-col>
 
 </template>
 
