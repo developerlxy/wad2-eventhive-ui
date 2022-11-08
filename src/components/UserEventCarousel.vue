@@ -43,6 +43,7 @@ export default {
     },
     mounted() {
         this.allEvents = this.$store.state.events
+        this.$store.dispatch('getUser')
         // this.getFilteredEvents();
         console.log(this.user.registeredEvents)
     },
