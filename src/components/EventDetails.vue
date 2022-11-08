@@ -1,5 +1,5 @@
 <template>
-    <div class="event-card greenMid py-8 px-16"
+    <div class="event-card peachLight py-8 px-16"
     >
         <v-card
         class="mx-auto mt-2 pt-4"
@@ -36,19 +36,18 @@
                             <span>
                             <h3 class="text-left">by
                             <v-btn
-                            v-if="this.host"
+                            v-if="this.specificEvent.eventHost"
                             @click="hostProfile()"
                             text
                             tile
                             color=""
                             class="pd"
-                            > {{this.host.userName}}</v-btn></h3> 
+                            > {{this.specificEvent.eventHost.userName}}</v-btn></h3> 
 
                         </span>
                         </v-col>
-                    </v-row>
-                    <v-row class=" align-end justify-center">
-                        <template v-if="this.registered">
+                        <v-col class="text-left">
+                            <template v-if="this.registered">
                             
                             <v-btn
                                 brick
@@ -112,6 +111,10 @@
                         </v-dialog>
                         </div>
                         </template>
+                        </v-col>
+                    </v-row>
+                    <v-row class= "align-end justify-left">
+                        
                     </v-row>
                 </v-container>
                 </v-card>
@@ -138,19 +141,22 @@
 
                             <v-card class="mb-4 pa-4">
                                 <v-container fill-height>
-                                <v-row class="justify-start align-center">
-                            <v-col>
-                                <v-icon>mdi-calendar</v-icon>
-                            </v-col>
-
-                            <v-col cols="9">
-                                <h3 class="text-left">Date and Time</h3>
-                            </v-col>
- 
+                                <v-row class="justify-start align-center mb-1">
+                                    <v-col cols="1">
+                                        <v-icon>mdi-calendar</v-icon>
+                                    </v-col>
+                                    <v-col cols="11" >
+                                        <h3 class="text-left">Date and Time</h3>
+                                    </v-col>
+                                </v-row>
+                        <v-row align-center class="justify-start">
+                            <p class="text-left ml-3 overflow-auto">
+                                {{getFormattedDate}}
+                            </p>
                         </v-row>
                         <v-row align-center class="justify-start">
                             <p class="text-left ml-3 overflow-auto">
-                                {{reviewDate(this.specificEvent.eventDate)}}
+                                {{ this.specificEvent.eventTime ? getFormattedTime : "TBD" }}
                             </p>
                         </v-row>
                         <!-- <v-row class="justify-center">
@@ -162,21 +168,19 @@
                                 Add to My Calendar
                             </v-btn>
                         </v-row> -->
-                        
-                                </v-container>
+                        </v-container>
                     </v-card>
                     <v-card class="pa-4 mt-4" :width="width">
                         <v-container fill-height>
-                        <v-row class="justify-start">
-                            <v-col>
+                        <v-row class="justify-start  mb-1">
+                            <v-col cols="1">
                                 <v-icon>mdi-map-marker</v-icon>
                             </v-col>
-                            <v-col cols="9">
+                            <v-col cols="11">
                                 <h3 class="text-left align-center">Location</h3>
                             </v-col>
-
                         </v-row >
-                        <v-row class="justify-start my-4">
+                        <v-row class="justify-start my-3">
                             <p class="text-left ml-3">
                                 {{this.specificEvent.eventLocation.ADDRESS}}
                                 
@@ -193,16 +197,10 @@
                             </v-btn>
                         </v-row>
                     </v-container>
-                            </v-card>
+                    </v-card>
 
                     <br>
-
-
                     <br>
-
-
-
-
                     </div>
                     
 
@@ -274,7 +272,6 @@
             reviews: null,
             desc: "",
             userlist: [],
-            host: null,
             acctUser: null,
             registered: false,
             dialog: false
@@ -285,28 +282,11 @@
         redirect() {
             window.location.href = 'https://www.google.com/maps/search/' + this.specificEvent.eventLocation.SEARCHVAL
         },
-        pullHost() {
-            this.axios.get("https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users")
-            .then(response => {
-          this.userlist = response.data;
-        //   console.log(this.userlist);
-          this.host = this.userlist.find(user => user._id == this.specificEvent.eventHost._id);
-        //   console.log(this.host);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-
-        },
 
         findCorrectEvent() {
             this.specificEvent = this.events[0].find(event => event._id === this.eventID)
             this.reviews = this.specificEvent.eventReviews
             this.desc = this.specificEvent.eventDesc
-        },
-        reviewDate(ISODate) {
-            var test = new Date(ISODate)
-            return(test)
         },
 
         newDate(inputDate) {
@@ -332,11 +312,12 @@
         },
         isRegistered() {
             // console.log(this.host)
-            if(this.acctUser.registeredEvents.includes(this.eventID)) {
+            this.$store.dispatch('getUser')
+            console.log("user registered events" , this.acctUser.registeredEvents)
+            console.log("event attendees" , this.specificEvent.attendees)
+            if(this.acctUser.registeredEvents.includes(this.specificEvent._id) && this.specificEvent.attendees.includes(this.acctUser._id)){
                 this.registered = true
-            }else if (this.specificEvent.attendees.includes(this.acctUser._id)){
-                this.registered = true
-            }else if (this.host._id == this.acctUser._id){
+            }else if (this.specificEvent.eventHost._id == this.acctUser._id){
                 this.registered = true
             }
             else {
@@ -366,7 +347,7 @@
             eventList.push(this.$store.state.user._id)
             var data = JSON.stringify({
                 "_id": this.eventID,
-                "attendees": [eventList]
+                "attendees": eventList
                 });
 
             var config = {
@@ -390,8 +371,8 @@
             let regList = this.acctUser.registeredEvents
             regList.push(this.eventID)
             var data = JSON.stringify({
-                "_id": this.acctUser._id,
-                "registeredEvents": [regList]
+                "userEmail": this.acctUser.userEmail,
+                "registeredEvents": regList
                 });
 
             var config = {
@@ -406,6 +387,7 @@
             this.axios(config)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
+                this.$store.dispatch('getUser')
             })
             .catch(function (error) {
             console.log(error);
@@ -413,9 +395,8 @@
         },
         async setup() {
             await this.findCorrectEvent(),
-            await this.pullHost()
+            // await this.pullHost()
             this.acctUser = this.$store.state.user,
-            this.reviewDate(),
             this.isBuzzing()
 
     }
@@ -425,8 +406,7 @@ created() {
 },
     async mounted()  {
         await this.setup()
-        console.log(this.host)
-        console.log(this.acctUser)
+        console.log(this.specificEvent)
         this.isRegistered()
         setTimeout(() => {
       this.isLoading = false;
@@ -441,23 +421,35 @@ created() {
     }
 },
 computed: {
-      width () {
-        switch(this.$vuetify.breakpoint.name) {
-          case 'xs': return 360
-          case 'sm': return 450
-          case 'md': return 450
-          case 'lg': return 500
-          case 'xl': return 500
-        }
-      },
-      cardWidth() {
-        switch(this.$vuetify.breakpoint.name) {
-          case 'xs': return 500
-          case 'sm': return 760
-          case 'md': return 1000
-          case 'lg': return 1300
-          case 'xl': return 1500
-        }
+        getFormattedDate() {
+            const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            let date = new Date(this.specificEvent.eventDate);
+            return date.getDate() + " " + months[date.getMonth()] + ", " + date.getFullYear();
+          },
+        getFormattedTime() {
+            const unformattedTime = this.specificEvent.eventTime
+            const unformattedTimeList = unformattedTime.split(":")
+            const hours = (unformattedTimeList[0] % 12) || 12
+            const suffix = unformattedTimeList[0] >= 12 ? 'PM' : 'AM'
+            return hours + '.' + unformattedTimeList[1] + " " + suffix
+          },
+        width () {
+            switch(this.$vuetify.breakpoint.name) {
+            case 'xs': return 360
+            case 'sm': return 450
+            case 'md': return 450
+            case 'lg': return 500
+            case 'xl': return 500
+            }
+        },
+        cardWidth() {
+            switch(this.$vuetify.breakpoint.name) {
+            case 'xs': return 500
+            case 'sm': return 760
+            case 'md': return 1000
+            case 'lg': return 1300
+            case 'xl': return 1500
+            }
       }
     }
 }

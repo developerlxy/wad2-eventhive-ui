@@ -275,10 +275,10 @@ export default {
           if (response.data == "Update Success") {
             this.updateSuccess = true;
             this.setAlertTimeout();
+            this.$store.dispatch('getUser') // use this to get the current user after updating their particulars in db
           }
         });
 
-        this.$store.dispatch('getUser') // use this to get the current user after updating their particulars in db
       
     },
     setExistingPrefs() {

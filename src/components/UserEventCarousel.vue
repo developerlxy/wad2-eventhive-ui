@@ -77,11 +77,12 @@ export default {
           console.log("here", this.$store.state.events)
           console.log("userEvents", this.$store.state.user.createdEvents)
           this.$store.state.user.createdEvents.forEach(
-            (eventObj) => {
-              console.log(eventObj)
-              if(eventObj.eventHost._id == this.user._id){
-                this.filteredEvents.push(eventObj)
-              }
+            (eventID) => {
+              for (let existing in this.$store.state.events) {
+                if (this.$store.state.events[existing]._id == eventID) {
+                  this.filteredEvents.push(this.$store.state.events[existing])
+                }
+              }              
             }
           )
         }

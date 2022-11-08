@@ -183,6 +183,9 @@
         <v-btn x-large :disabled="!valid" color="success" v-on:click="submitCreateEvent()">
           Let's go!
         </v-btn>
+        <v-btn x-large :disabled="!valid" color="success" v-on:click="updateCreatedEvents()">
+          Test update created events
+        </v-btn>
       </v-form>
       <!-- <br> -->
       <!-- Checking if the component is imported correctly, here is eventName: {{eventName}}<br>
@@ -402,7 +405,7 @@ export default {
         data: data
       };
 
-      this.axios(config)
+      await this.axios(config)
         .then(response => {
           console.log("id of newly created event below:");
           console.log(JSON.stringify(response.data));
@@ -410,7 +413,6 @@ export default {
           console.log('Event Successfuly Created')
           this.processingCreateEvent = false
           this.createEventSuccess = true
-
           console.log('===== END OF CREATE EVENT =======')
         })
         // .then(function (response) {
@@ -426,51 +428,53 @@ export default {
           console.log('Event NOT created')
           console.log('===== END OF CREATE EVENT =======')
         });
+        
+      await this.updateCreatedEvents();
+      
+      
     },
+
+    updateCreatedEvents(){
+      console.log("======== updating host's createdEvents ===========")
+      // console.log(this.currentUser)
+      var userEmail = this.currentUser.userEmail
+      var newCreatedEvents = this.currentUser.createdEvents
+      console.log(userEmail)
+      var newEvent = this.newEventID
+      newCreatedEvents.push(newEvent)
+      console.log(newCreatedEvents)
+
+      var data = JSON.stringify({
+        "userEmail": userEmail,
+        "createdEvents": newCreatedEvents
+      });
+      
+      var config = {
+        method: 'patch',
+        url: 'https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users/created',
+        headers: { 
+          'Content-Type': 'application/json'
+        },
+        data : data
+      };
+
+      this.axios(config)
+        .then(function (response) {
+          console.log(JSON.stringify(response.data));
+          console.log("new event ID added to host's createdEvents field on database")
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+    },
+
     xsBreakpoint() {
       return this.$vuetify.breakpoint.name == 'xs' 
     },
     onLocationSelected: function (selectedLocation) {
       this.location = selectedLocation
     },
-
-    // SEARCH DISTANCE BETWEEN 2 LOCATIONS SECTION
-    onLocationSelected1: function (selectedLocation) {
-      this.location1 = selectedLocation
-      console.log(this.location1)
-      this.location1_lat = this.location1.LATITUDE
-      console.log(this.location1_lat)
-      this.location1_long = this.location1.LONGITUDE
-      console.log(this.location1_long)
-    },
-    onLocationSelected2: function (selectedLocation) {
-      this.location2 = selectedLocation
-      console.log(this.location2)
-      this.location2_lat = this.location2.LATITUDE
-      console.log(this.location2_lat)
-      this.location2_long = this.location2.LONGITUDE
-      console.log(this.location2_long)
-    },
-
-    getDistanceFromLatLonInKm: function (lat1, lon1, lat2, lon2) {
-      console.log('========== CALCULATING DISTANCE ============')
-      var R = 6371; // Radius of the earth in km
-      var dLat = this.deg2rad(lat2 - lat1);  // deg2rad below
-      var dLon = this.deg2rad(lon2 - lon1);
-      var a =
-        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) *
-        Math.sin(dLon / 2) * Math.sin(dLon / 2)
-        ;
-      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      var d = R * c; // Distance in km
-      this.calculatedDistance = d.toFixed(2); //round to 2 dp
-    },
-
-    deg2rad: function (deg) {
-      return deg * (Math.PI / 180)
-    },
-    // SEARCH DISTANCE BETWEEN 2 LOCATIONS SECTION STOPS HERE
 
     onFileChange(e) {
       console.log('======onfilechange fired========')
@@ -525,7 +529,45 @@ export default {
       // Final URL for the user doesn't need the query string params
       this.uploadURL = response.data.uploadURL.split('?')[0]
       console.log(`image url at ${result.url.split("?")[0]}`);
-    }
+    },
+    
+    // SEARCH DISTANCE BETWEEN 2 LOCATIONS SECTION
+    onLocationSelected1: function (selectedLocation) {
+      this.location1 = selectedLocation
+      console.log(this.location1)
+      this.location1_lat = this.location1.LATITUDE
+      console.log(this.location1_lat)
+      this.location1_long = this.location1.LONGITUDE
+      console.log(this.location1_long)
+    },
+    onLocationSelected2: function (selectedLocation) {
+      this.location2 = selectedLocation
+      console.log(this.location2)
+      this.location2_lat = this.location2.LATITUDE
+      console.log(this.location2_lat)
+      this.location2_long = this.location2.LONGITUDE
+      console.log(this.location2_long)
+    },
+
+    getDistanceFromLatLonInKm: function (lat1, lon1, lat2, lon2) {
+      console.log('========== CALCULATING DISTANCE ============')
+      var R = 6371; // Radius of the earth in km
+      var dLat = this.deg2rad(lat2 - lat1);  // deg2rad below
+      var dLon = this.deg2rad(lon2 - lon1);
+      var a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2)
+        ;
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      var d = R * c; // Distance in km
+      this.calculatedDistance = d.toFixed(2); //round to 2 dp
+    },
+
+    deg2rad: function (deg) {
+      return deg * (Math.PI / 180)
+    },
+    // SEARCH DISTANCE BETWEEN 2 LOCATIONS SECTION STOPS HERE
   }
 };
 

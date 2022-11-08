@@ -4,7 +4,7 @@
     >
       <div class="d-flex flex-column flex-lg-row flex-no-wrap justify-sm-center align-center">
         <v-avatar
-          class="ma-3 mx-md-auto mx-sm-auto"
+          class="ma-3"
           size="300"
           tile>
           <v-img 
@@ -12,8 +12,8 @@
         </v-avatar>
 
         <div>
-          <h1 class="mt-3 ml-3">
-            <v-row class="py-2 mx-1 mt-1 mb-2 font-weight-bold">
+          <h1 class="mt-3 ml-3 mr-2">
+            <v-row class="py-2 mx-1 mt-1 mb-2 font-weight-bold text-left">
               {{eventDetails.eventName}}
             </v-row>
           </h1>
@@ -34,7 +34,7 @@
           </v-card-text>
         </div>
       </div>
-      <div>
+      <div class="mt-2">
         <v-card-subtitle v-html="eventDetails.eventDesc">
         </v-card-subtitle>
       </div>
