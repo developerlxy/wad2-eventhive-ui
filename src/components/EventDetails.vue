@@ -370,7 +370,7 @@
                 });
 
             var config = {
-            method: 'patch',
+            method: 'put',
             url: 'https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/attendees',
             headers: { 
                 'Content-Type': 'application/json'
@@ -395,7 +395,7 @@
                 });
 
             var config = {
-            method: 'patch',
+            method: 'put',
             url: 'https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/attendees',
             headers: { 
                 'Content-Type': 'application/json'
