@@ -16,7 +16,7 @@
         <v-avatar size="150">
             <img :src="'/src/assets/images/test.png'">
         </v-avatar>
-        <v-rating></v-rating>
+        <v-rating value="averageStars"></v-rating>
         
         <v-card
     class="mx-auto"
@@ -118,6 +118,13 @@
       length () {
         return 20
       },
+      averageStars () {
+        let total = 0;
+        for (rating in this.eventHost.eventReviews){
+          total += rating.numStars
+        }
+        return total
+      }
     },
     }
 </script>
