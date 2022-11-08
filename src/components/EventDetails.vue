@@ -1,5 +1,5 @@
 <template>
-    <div class="event-card greenMid py-8 px-16"
+    <div class="event-card peachLight py-8 px-16"
     >
         <v-card
         class="mx-auto mt-2 pt-4"
@@ -46,9 +46,8 @@
 
                         </span>
                         </v-col>
-                    </v-row>
-                    <v-row class=" align-end justify-center">
-                        <template v-if="this.registered">
+                        <v-col class="text-left">
+                            <template v-if="this.registered">
                             
                             <v-btn
                                 brick
@@ -112,6 +111,10 @@
                         </v-dialog>
                         </div>
                         </template>
+                        </v-col>
+                    </v-row>
+                    <v-row class= "align-end justify-left">
+                        
                     </v-row>
                 </v-container>
                 </v-card>
@@ -138,19 +141,22 @@
 
                             <v-card class="mb-4 pa-4">
                                 <v-container fill-height>
-                                <v-row class="justify-start align-center">
-                            <v-col>
-                                <v-icon>mdi-calendar</v-icon>
-                            </v-col>
-
-                            <v-col cols="9">
-                                <h3 class="text-left">Date and Time</h3>
-                            </v-col>
- 
+                                <v-row class="justify-start align-center mb-1">
+                                    <v-col cols="1">
+                                        <v-icon>mdi-calendar</v-icon>
+                                    </v-col>
+                                    <v-col cols="11" >
+                                        <h3 class="text-left">Date and Time</h3>
+                                    </v-col>
+                                </v-row>
+                        <v-row align-center class="justify-start">
+                            <p class="text-left ml-3 overflow-auto">
+                                {{getFormattedDate}}
+                            </p>
                         </v-row>
                         <v-row align-center class="justify-start">
                             <p class="text-left ml-3 overflow-auto">
-                                {{reviewDate(this.specificEvent.eventDate)}}
+                                {{ this.specificEvent.eventTime ? getFormattedTime : "TBD" }}
                             </p>
                         </v-row>
                         <!-- <v-row class="justify-center">
@@ -162,21 +168,19 @@
                                 Add to My Calendar
                             </v-btn>
                         </v-row> -->
-                        
-                                </v-container>
+                        </v-container>
                     </v-card>
                     <v-card class="pa-4 mt-4" :width="width">
                         <v-container fill-height>
-                        <v-row class="justify-start">
-                            <v-col>
+                        <v-row class="justify-start  mb-1">
+                            <v-col cols="1">
                                 <v-icon>mdi-map-marker</v-icon>
                             </v-col>
-                            <v-col cols="9">
+                            <v-col cols="11">
                                 <h3 class="text-left align-center">Location</h3>
                             </v-col>
-
                         </v-row >
-                        <v-row class="justify-start my-4">
+                        <v-row class="justify-start my-3">
                             <p class="text-left ml-3">
                                 {{this.specificEvent.eventLocation.ADDRESS}}
                                 
@@ -193,16 +197,10 @@
                             </v-btn>
                         </v-row>
                     </v-container>
-                            </v-card>
+                    </v-card>
 
                     <br>
-
-
                     <br>
-
-
-
-
                     </div>
                     
 
@@ -289,10 +287,6 @@
             this.specificEvent = this.events[0].find(event => event._id === this.eventID)
             this.reviews = this.specificEvent.eventReviews
             this.desc = this.specificEvent.eventDesc
-        },
-        reviewDate(ISODate) {
-            var test = new Date(ISODate)
-            return(test)
         },
 
         newDate(inputDate) {
@@ -403,7 +397,6 @@
             await this.findCorrectEvent(),
             // await this.pullHost()
             this.acctUser = this.$store.state.user,
-            this.reviewDate(),
             this.isBuzzing()
 
     }
@@ -428,23 +421,35 @@ created() {
     }
 },
 computed: {
-      width () {
-        switch(this.$vuetify.breakpoint.name) {
-          case 'xs': return 360
-          case 'sm': return 450
-          case 'md': return 450
-          case 'lg': return 500
-          case 'xl': return 500
-        }
-      },
-      cardWidth() {
-        switch(this.$vuetify.breakpoint.name) {
-          case 'xs': return 500
-          case 'sm': return 760
-          case 'md': return 1000
-          case 'lg': return 1300
-          case 'xl': return 1500
-        }
+        getFormattedDate() {
+            const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            let date = new Date(this.specificEvent.eventDate);
+            return date.getDate() + " " + months[date.getMonth()] + ", " + date.getFullYear();
+          },
+        getFormattedTime() {
+            const unformattedTime = this.specificEvent.eventTime
+            const unformattedTimeList = unformattedTime.split(":")
+            const hours = (unformattedTimeList[0] % 12) || 12
+            const suffix = unformattedTimeList[0] >= 12 ? 'PM' : 'AM'
+            return hours + '.' + unformattedTimeList[1] + " " + suffix
+          },
+        width () {
+            switch(this.$vuetify.breakpoint.name) {
+            case 'xs': return 360
+            case 'sm': return 450
+            case 'md': return 450
+            case 'lg': return 500
+            case 'xl': return 500
+            }
+        },
+        cardWidth() {
+            switch(this.$vuetify.breakpoint.name) {
+            case 'xs': return 500
+            case 'sm': return 760
+            case 'md': return 1000
+            case 'lg': return 1300
+            case 'xl': return 1500
+            }
       }
     }
 }
