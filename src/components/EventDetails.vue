@@ -422,9 +422,10 @@
 created() {
     this.$store.dispatch('getEvents')
 },
-    mounted() {
-        this.setup()
+    async mounted()  {
+        await this.setup()
         console.log(this.host)
+        console.log(this.acctUser)
         this.isRegistered()
         setTimeout(() => {
       this.isLoading = false;
