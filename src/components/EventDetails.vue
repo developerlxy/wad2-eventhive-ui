@@ -327,6 +327,7 @@
             this.userPatch()
             this.isRegistered()
             this.setup()
+            this.$store.dispatch('getUser')
         },
         isRegistered() {
             // console.log(this.host)
