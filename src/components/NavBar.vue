@@ -75,7 +75,12 @@ export default {
       this.$router.push("/");
     },
     createEvent() {
-      this.$router.push("/events/create");
+      if (this.$store.state.user == null){
+        this.$router.push("/login");
+      }
+      else {
+        this.$router.push("/events/create");
+      }
     },
   },
 };
