@@ -15,8 +15,7 @@
         <v-btn color="greenDark" class="white--text mr-sm-4 mr-md-5 mr-2 px-1 my-auto" elevation="0" @click="createEvent()"
           >Create Event</v-btn
         >
-        <GoogleSignInButton class="my-auto"  v-if="this.$store.state.user==null"></GoogleSignInButton>
-        <LoginProfileButton class="pl-2 my-auto" ></LoginProfileButton>
+        <LoginProfileButton class="my-auto" ></LoginProfileButton>
       </v-col>
       <v-col order="2" class="pb-0 pt-1">
         <SearchBar class="d-block mt-0 mb-4"></SearchBar>
@@ -37,7 +36,6 @@
           >Create Event</v-btn
         >
         </div>
-        <GoogleSignInButton v-show="this.$store.state.user==null"></GoogleSignInButton>
         <LoginProfileButton ></LoginProfileButton>
         
         
