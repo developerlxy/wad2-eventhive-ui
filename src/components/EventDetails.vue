@@ -73,7 +73,7 @@
                             </v-card-title>
                             </v-card>
                         </template>
-                        <template v-else-if="this.specificEvent.eventHost._id == this.acctUser._id">
+                        <template v-else-if="!(this.$store.state.user == null) && (this.specificEvent.eventHost._id == this.$store.state.user._id)">
                             <v-card
                                 color="#779977"
                             >
@@ -294,7 +294,8 @@
             userlist: [],
             acctUser: null,
             registered: false,
-            dialog: false
+            dialog: false,
+            isHost: false,
             
         }
     },
@@ -342,7 +343,7 @@
                 this.registered = false
             }
         },
-        // isLoggedIn() {
+        // host() {
         //     if (this.$store.state.user == null) {
         //         this.acctUser = this.$store.state.user
         //     }
@@ -421,6 +422,7 @@
 created() {
     this.$store.dispatch('getEvents')
     this.$store.dispatch('getUser')
+    // this.acctUser = this.$store.state.user
 },
     async mounted()  {
         await this.setup()
