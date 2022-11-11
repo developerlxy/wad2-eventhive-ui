@@ -154,7 +154,7 @@
             },
             editEvent() {
               console.log("going to ", this.eventObj._id)
-              this.$router.push({ path: `hostmgmt?id=${this.eventObj._id}` })
+              this.$router.push({ path: `/hostmgmt?id=${this.eventObj._id}` })
             }
         },
         computed: {
