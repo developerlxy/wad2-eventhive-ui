@@ -3,6 +3,10 @@ import Vuetify from 'vuetify/lib/framework';
 import '../assets/styles/material-icons.css';
 import '@fortawesome/fontawesome-free/css/all.css'
 import '@mdi/font/css/materialdesignicons.css' // Ensure you are using css-loader
+import Buefy from 'buefy'
+import 'buefy/dist/buefy.css'
+
+Vue.use(Buefy)
 
 
 Vue.use(Vuetify);

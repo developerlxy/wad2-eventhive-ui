@@ -48,25 +48,44 @@
                         </v-col>
                         <v-col class="text-left">
                             <template v-if="this.registered">
-                            
-                            <v-btn
-                                brick
-                                disabled
-                                color="warning"
-                                class="justify-start white--text"
+                                <v-card
+                                color="#D3E0D7"
                             >
-                                Registered
-                            </v-btn>
+                            <v-card-title
+                            class="justify-center"
+                            >
+                            <v-icon>mdi-flower</v-icon>
+                            &nbsp; Registered! &nbsp;
+                                    <v-icon>mdi-flower</v-icon>
+                            </v-card-title>
+                            </v-card>
                         </template>
                         <template v-else-if="this.specificEvent.attendees.length >= this.specificEvent.maxCapacity">
-                            <v-btn
-                            brick
-                                disabled
-                                color="warning"
-                                class="justify-start white--text"
+                            <v-card
+                                color="#FF853F"
                             >
-                                Event full
-                            </v-btn>
+                            <v-card-title
+                            class="justify-center white--text"
+                            >
+                            <v-icon>mdi-beehive-off-outline</v-icon>
+                            &nbsp; Event full :( &nbsp;
+                                    <v-icon>mdi-beehive-off-outline</v-icon>
+                            </v-card-title>
+                            </v-card>
+                        </template>
+                        <template v-else-if="!(this.$store.state.user == null) && (this.specificEvent.eventHost._id == this.$store.state.user._id)">
+                            <v-card
+                                color="#779977"
+                            >
+                            <v-card-title
+                            class="justify-center white--text"
+                            >
+                            <v-icon> mdi-bee </v-icon>
+                                You are hosting!
+                                <v-icon> mdi-bee </v-icon>
+                            </v-card-title>
+                            
+                            </v-card>
                         </template>
                         <template v-else>
                             <div>
@@ -83,7 +102,8 @@
                                     v-on="on"
                                     
                                 >
-                                    Register your interest
+                                    Register your interest! 
+                                    <v-icon>mdi-bee-flower</v-icon>
                                 </v-btn>
                         </template>
                         <v-card>
@@ -274,7 +294,8 @@
             userlist: [],
             acctUser: null,
             registered: false,
-            dialog: false
+            dialog: false,
+            isHost: false,
             
         }
     },
@@ -317,14 +338,12 @@
             console.log("event attendees" , this.specificEvent.attendees)
             if(this.acctUser.registeredEvents.includes(this.specificEvent._id) && this.specificEvent.attendees.includes(this.acctUser._id)){
                 this.registered = true
-            }else if (this.specificEvent.eventHost._id == this.acctUser._id){
-                this.registered = true
             }
             else {
                 this.registered = false
             }
         },
-        // isLoggedIn() {
+        // host() {
         //     if (this.$store.state.user == null) {
         //         this.acctUser = this.$store.state.user
         //     }
@@ -377,7 +396,7 @@
 
             var config = {
             method: 'put',
-            url: 'https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/attendees',
+            url: 'https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users/registered',
             headers: { 
                 'Content-Type': 'application/json'
             },
@@ -387,7 +406,6 @@
             this.axios(config)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
-                this.$store.dispatch('getUser')
             })
             .catch(function (error) {
             console.log(error);
@@ -403,6 +421,8 @@
  },
 created() {
     this.$store.dispatch('getEvents')
+    this.$store.dispatch('getUser')
+    // this.acctUser = this.$store.state.user
 },
     async mounted()  {
         await this.setup()

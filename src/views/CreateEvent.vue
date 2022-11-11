@@ -41,7 +41,7 @@
         <br>
 
         <v-text-field v-model="maxCapacity" label="Max Capacity" required></v-text-field>
-        <v-slider v-model="maxCapacity" color="orange" label="Fun Slider" hint="Be honest" min="0" max="1000" thumb-label>
+        <v-slider v-model="maxCapacity" color="orange" label="Fun Slider" hint="Be honest" min="0" max="200" thumb-label>
         </v-slider>
 
         <!-- mobile view -->
@@ -183,9 +183,9 @@
         <v-btn x-large :disabled="!valid" color="success" v-on:click="submitCreateEvent()">
           Let's go!
         </v-btn>
-        <v-btn x-large :disabled="!valid" color="success" v-on:click="updateCreatedEvents()">
+        <!-- <v-btn x-large :disabled="!valid" color="success" v-on:click="updateCreatedEvents()">
           Test update created events
-        </v-btn>
+        </v-btn> -->
       </v-form>
       <!-- <br> -->
       <!-- Checking if the component is imported correctly, here is eventName: {{eventName}}<br>
@@ -450,7 +450,7 @@ export default {
       });
       
       var config = {
-        method: 'patch',
+        method: 'put',
         url: 'https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users/created',
         headers: { 
           'Content-Type': 'application/json'
