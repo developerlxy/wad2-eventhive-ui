@@ -35,6 +35,23 @@
       </v-row>
 
       <v-row class="col-12 pa-0 ma-0">
+        <v-text-field
+        v-model="contact"
+        outlined
+        hide-details
+        label="Phone number"
+        class="ma-2"
+        ></v-text-field>
+        <v-text-field
+        v-model="fullName"
+        outlined
+        hide-details
+        label="Full Name"
+        class="ma-2"
+        ></v-text-field>
+      </v-row>
+
+      <v-row class="col-12 pa-0 ma-0">
         <v-select
           v-model="gender"
           :items="['Male', 'Female']"
@@ -81,15 +98,6 @@
         ></v-text-field>
       </v-row>
 
-      <v-row class="col-sm-6 col-xs-12 pa-0 ma-0">
-        <v-text-field
-        v-model="contact"
-        outlined
-        hide-details
-        label="Phone number"
-        class="ma-2"
-        ></v-text-field>
-      </v-row>
       <hr class="my-4">
 
       <div class="d-flex text-h5 brownDark--text font-weight-medium ma-4">
@@ -174,7 +182,7 @@ export default {
           : this.$store.state.user["userGender"],
       age:
         this.$store.state.user["userAge"] == null
-          ? 0
+          ? ""
           : this.$store.state.user["userAge"],
       password: "",
       password2: "",
@@ -193,7 +201,8 @@ export default {
 
       contact: this.$store.state.user["userPhone"] == null ? "" : this.$store.state.user["userPhone"],
       userDescription: this.$store.state.user["userDesc"] == null ? "" : this.$store.state.user["userDesc"],
-      
+      fullName: this.$store.state.user["userFullName"] == null ? "" : this.$store.state.user["userFullName"],
+
       //FOR RICH TEXT
       extensions: [
         History,
@@ -257,6 +266,9 @@ export default {
       }
       if (this.contact != "") {
         reqBody["userPhone"] = this.contact;
+      }
+      if (this.fullName != "") {
+        reqBody["userFullName"] = this.fullName;
       }
 
       this.axios
