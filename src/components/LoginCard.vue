@@ -54,7 +54,7 @@
         block
         @click="googleSignIn"
       >
-        Continue with Google&nbsp
+        Continue with&nbsp&nbsp
         <img src="../assets/images/google_signin_btn.png" width="18" height="18" alt=""
         
         >
