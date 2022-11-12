@@ -50,7 +50,7 @@
     >
       delete event
     </v-btn>
-
+{{ getFormattedDate }}
     
     <v-btn color="primary"
     @click="changeDate"
@@ -115,15 +115,18 @@
       setTimeout(() => {
         this.isLoading = false;
       }, 2000);
+      this.setPicker();
+      this.getCapacity()
       },
       data() {
         return {
-          picker: this.getFormattedDate,
           landscape: true,
           reactive: true,
           showSlider:false,
           isLoading: true,
           eventID:'',
+          picker:'',
+          capacity:0,
         }
       },
       computed: {
@@ -134,16 +137,9 @@
             }
           }
         },
-        capacity() {
-          return this.eventObj["maxCapacity"]
-        },
         attendees() {
           return this.eventObj["attendees"]
-        },
-        getFormattedDate() {
-          let thearray = this.eventObj["eventDate"].split("T"); 
-            return thearray[0]
-          }
+        }
       },
       watch: {
     '$route.params': {
@@ -157,16 +153,26 @@ methods: {
   deleteEvent() {
     if (confirm("Are you sure you want to delete this event?")) {
       this.axios.delete(`https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/delete/${this.eventID}`);
-      this.$router.push('Home') 
+      this.$store.dispatch('getEvents')
+      this.$router.push('/') 
   }
   },
   increasePax() {
-    this.axios.put(`https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/${this.eventID}`,{'maxCapacity':this.capacity})
-
+    console.log(typeof this.capacity)
+    this.axios.put(`https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/capacity`,{'_id':this.eventID, 'maxCapacity':parseInt(this.capacity)})
+    this.$store.dispatch('getEvents')
   },
   changeDate() {
-    this.axios.put(`https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/${this.eventID}`,{'eventDate':this.picker})
+    this.axios.put(`https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/date`,{'_id':this.eventID, 'eventDate':this.picker})
+    this.$store.dispatch('getEvents')
   },
+  setPicker() {
+          let thearray = this.eventObj["eventDate"].split("T"); 
+            this.picker = thearray[0]
+          },
+  getCapacity() {
+    this.capacity = this.eventObj["maxCapacity"]
+  }
   
   }
 }
