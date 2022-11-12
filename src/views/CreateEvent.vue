@@ -2,7 +2,6 @@
   <LoadingScreen v-if="isLoading"></LoadingScreen>
 
   <div v-else class="fill-height peachLight">
-    <NavBar> </NavBar>
     <!-- class="mx-auto px-10 pt-8 pb-9" -->
     <v-card
       class="mx-auto my-10 px-0 pt-8 pb-9"
@@ -264,8 +263,6 @@
 
 <script>
 import LoadingScreen from '../components/LoadingScreen.vue';
-import Categories from '@/components/Categories.vue';
-import NavBar from '@/components/NavBar.vue';
 import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragraph, BulletList, OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History } from 'tiptap-vuetify'
 
 // variables to upload image
@@ -278,7 +275,7 @@ const API_ENDPOINT = 'https://xt96j6drmd.execute-api.ap-southeast-1.amazonaws.co
 
 export default {
   name: "createEvent",
-  components: { LoadingScreen, Categories, NavBar, TiptapVuetify },
+  components: { LoadingScreen, TiptapVuetify },
   mounted() {
     console.log('======== retrieving all stored events ========'),
     console.log(this.allStoredEvents[0]),
@@ -487,7 +484,7 @@ export default {
     },
 
     xsBreakpoint() {
-      return this.$vuetify.breakpoint.name == 'xs' 
+        return this.$vuetify.breakpoint.width <= 700
     },
     onLocationSelected: function (selectedLocation) {
       this.location = selectedLocation

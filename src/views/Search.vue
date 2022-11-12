@@ -2,8 +2,6 @@
   <LoadingScreen v-if="isLoading"></LoadingScreen>
 
   <div v-else height="100%">
-    <NavBar></NavBar>
-    <Categories></Categories>
     <v-container v-if="events.length==0">
       <v-row class="justify-center mb-5">
         <img src="../assets/images/flying-bee.gif">
@@ -43,15 +41,13 @@
 
 <script>
 import LoadingScreen from '../components/LoadingScreen.vue';
-import Categories from '@/components/Categories.vue';
-import NavBar from '@/components/NavBar.vue';
 import SecondaryEventCard from '@/components/SecondaryEventCard.vue';
 import PreviewEventCard from '@/components/PreviewEventCard.vue';
 
 
 export default {
     name: "Home",
-    components: { LoadingScreen, NavBar, Categories, SecondaryEventCard, PreviewEventCard },
+    components: { LoadingScreen, SecondaryEventCard, PreviewEventCard },
     mounted() {
     setTimeout(() => {
       this.isLoading = false;

@@ -173,13 +173,12 @@
   
   <script>
   import LoadingScreen from '../components/LoadingScreen.vue';
-  import NavBar from '@/components/NavBar.vue';
   import HostEventReview from '@/components/HostEventReview.vue';
   
   
   export default {
       name: "Home",
-      components: { LoadingScreen, NavBar, HostEventReview },
+      components: { LoadingScreen, HostEventReview },
       mounted() {
       this.axios.get('https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users').
       then(result=>{

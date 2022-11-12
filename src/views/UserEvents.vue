@@ -2,8 +2,6 @@
   <LoadingScreen v-if="isLoading"></LoadingScreen>
 
   <div v-else>
-    <!-- navbar component -->
-    <NavBar></NavBar>
     <UserEventCarousel :user-event-type="getUserEventType"></UserEventCarousel>      
 
   </div>
@@ -12,12 +10,11 @@
 <script>
   import LoadingScreen from '../components/LoadingScreen.vue';
   import SearchBar from '@/components/SearchBar.vue';
-  import NavBar from '@/components/NavBar.vue';
   import UserEventCarousel from '@/components/UserEventCarousel.vue'
 
   export default {
     name: "UserEvents",
-    components: { LoadingScreen, SearchBar, NavBar, UserEventCarousel},
+    components: { LoadingScreen, SearchBar, UserEventCarousel},
     mounted() {
       setTimeout(() => {
         this.isLoading = false;

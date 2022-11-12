@@ -2,7 +2,7 @@
   <div v-if="xsBreakpoint">
     <v-row class="mx-5 align-center mt-1">
       <v-col class="pa-0 ma-0">
-        <h1 data-aos="fade-right" :id='headerID' class="font-weight-black brownDark--text text-start">BEE there or BEE <span class="brownMid">square!</span></h1>
+        <h1 data-aos="fade-right" :id='headerID' class="font-weight-black brownDark--text text-start mr-0">BEE there or BEE <span class="brownMid">square!</span></h1>
       </v-col>
       <v-col class="pa-0 ma-0 pl-4 justify-start">
         <img  src="../assets/images/graphics1.png" width="140" data-aos="fade-left">
@@ -10,7 +10,7 @@
     </v-row>
   </div>
   <div v-else-if="smBreakpoint">
-    <v-row class="">
+    <v-row >
       <v-col class="d-flex align-content-center flex-wrap justify-end justify-sm-center">
         <h1 data-aos="fade-right" :id="headerID" class="font-weight-black brownDark--text ml-14 text-start">BEE there or BEE <span class="brownMid">square!</span></h1>
       </v-col>
@@ -25,7 +25,7 @@
         <h1 data-aos="fade-right" :id="headerID" class="font-weight-black brownDark--text ml-14 pl-14 text-start">BEE there or BEE <span class="brownMid">square!</span></h1>
       </v-col>
       <v-col class="d-flex align-content-center justify-center pr-16 mr-16">
-        <img src="../assets/images/graphics1.png" width="380" data-aos="fade-left">
+        <img src="../assets/images/graphics1.png" width="500" data-aos="fade-left">
       </v-col>
     </v-row>
   </div>
@@ -39,7 +39,7 @@ export default {
   name: "WelcomeImage",
   computed: {
     xsBreakpoint() {
-      return this.$vuetify.breakpoint.name == 'xs' 
+        return this.$vuetify.breakpoint.width <= 700
     },
     mdBreakpoint() {
       return this.$vuetify.breakpoint.name == 'md' 
@@ -50,6 +50,7 @@ export default {
     headerID() {
       switch(this.$vuetify.breakpoint.name) {
         case 'xs' : return 'header-xs'
+        case 'sm' : return 'header-xs'
         case 'md' : return 'header-md'
         case 'lg' : return 'header'
         case 'xl' : return 'header'
@@ -68,7 +69,7 @@ export default {
 
 <style>
 #header{
-  font-size: 4em
+  font-size: 5em
 }
 
 #header-md {
