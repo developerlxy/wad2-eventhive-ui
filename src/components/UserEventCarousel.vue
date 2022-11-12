@@ -71,6 +71,9 @@ export default {
           allUserEvents.forEach(
             (eventId) => {
               let eventObj = this.allEvents.find((event) => event._id == eventId)
+              if (eventObj == undefined) {
+                return
+              }
               let eventDate = new Date(eventObj.eventDate)
               if(this.isAfterToday(eventDate)){
                 this.filteredEvents.push(eventObj) 
@@ -87,7 +90,9 @@ export default {
           allUserEvents.forEach(
             (eventId) => {
               let eventObj = this.allEvents.find((event) => event._id == eventId)
-              console.log(eventObj)
+              if (eventObj == undefined) {
+                return
+              }
               let eventDate = new Date(eventObj.eventDate)
               if(!this.isAfterToday(eventDate)){
                 this.filteredEvents.push(eventObj) 
