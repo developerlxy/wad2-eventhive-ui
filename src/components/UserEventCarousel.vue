@@ -22,19 +22,16 @@
 
 </template>
 
-
-
 <script>
 import UserEventCard from "./UserEventCard.vue";
 
 export default {
-    name: 'UserEventCarousel',
-    components: { UserEventCard},
-    props: {
-        userEventType: {
-            type: String,
-            default: 'Registered Events'
-        }
+  name: "UserEventCarousel",
+  components: { UserEventCard },
+  props: {
+    userEventType: {
+      type: String,
+      default: "Registered Events",
     },
     
     data() {    
@@ -126,7 +123,4 @@ export default {
 
 </script>
 
-<style>
-
-</style>
-
+<style></style>

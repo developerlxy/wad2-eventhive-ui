@@ -1,6 +1,6 @@
 <template>
     <v-btn text v-if="this.$store.state.user == null" 
-      class="login-btn px-xs-1" 
+      class="login-btn px-xs-1 greenDark--text font-weight-bold" 
       id="login-btn" 
       @click="login">
       Log In
@@ -87,12 +87,4 @@ export default {
   },
 };
 </script>
-<style>
-  #login-btn{
-    color: rgb(107, 135, 107);
-    font-weight: bold;
-  }
-  
-  
-  </style>
-  
+

@@ -1,6 +1,6 @@
 <template>
   <LandingScreen v-if="isLoading"></LandingScreen>
-  <div v-else class="fill-height peachLight">
+  <div v-else class="fill-height brownLight">
     <NavBar></NavBar>
     <div class="my-12">
       <LoginCard></LoginCard>
