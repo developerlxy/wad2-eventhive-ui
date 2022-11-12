@@ -1,12 +1,13 @@
 <template>
   <LoadingScreen v-if="isLoading"></LoadingScreen>
 
-  <div v-else class="fill-height peachLight">
+  <div v-else class="fill-height peachLight py-4">
     <!-- class="mx-auto px-10 pt-8 pb-9" -->
     <v-card
-      class="mx-auto my-10 px-0 pt-8 pb-9"
+      class="mx-auto my-8 px-0 pt-6 pb-6"
       :width="width"
       outlined
+      data-aos="zoom-in"
     >
       <br>
       <h1 class="px-5">
@@ -264,6 +265,7 @@
 <script>
 import LoadingScreen from '../components/LoadingScreen.vue';
 import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragraph, BulletList, OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History } from 'tiptap-vuetify'
+import AOS from 'aos'
 
 // variables to upload image
 const MAX_IMAGE_SIZE = 10000000
@@ -277,6 +279,9 @@ export default {
   name: "createEvent",
   components: { LoadingScreen, TiptapVuetify },
   mounted() {
+    AOS.init({
+      duration: 800
+    })
     console.log('======== retrieving all stored events ========'),
     console.log(this.allStoredEvents[0]),
     console.log('======== all stored events retrieved. if null, navigate to homepage first then try again ========'),
