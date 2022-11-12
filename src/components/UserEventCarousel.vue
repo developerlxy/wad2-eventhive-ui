@@ -25,6 +25,8 @@
 
 <script>
 import UserEventCard from "./UserEventCard.vue";
+import AOS from 'aos'
+
 
 export default {
   name: "UserEventCarousel",
