@@ -90,7 +90,7 @@
             </v-btn>
         </v-col>
         <v-col class="text-left pt-0" v-else>
-          <Review></Review>
+          <Review :event="this.eventObj"></Review>
         </v-col>
         
       </div>
