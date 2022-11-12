@@ -226,21 +226,25 @@
 
                     <v-card
                         elevation="0"
-                        max-width="400"
-                        class="mx-auto"
+                        max-width="500"
+                        class="mx-auto text-start"
                         border="1px solid"
                     >
                         <h2 class="my-4">Reviews</h2>
                         <v-virtual-scroll
-                        :items="this.reviews"
+                        :items="this.specificEvent.eventReviews"
 
-                        height="250"
-                        item-height="125"
+                        height="400"
+                        item-height="400"
                         >
                         <template v-slot:default="{ item }">
                             <v-list-item :key="item">
-                            <v-list-item-action >
-                            <v-card-text>
+
+                
+                            <v-list-item-content>
+                                <v-list-item-title class="d-flex flex-wrap flex-grow-1">
+                                <p><strong class="mb-2">{{item.userName}}</strong></p>
+                                <v-spacer></v-spacer>
                                 <v-rating
                                 :value="item.numStars"
                                 color="amber"
@@ -249,19 +253,14 @@
                                 readonly
                                 size="14"
                                 ></v-rating>
-                                <!-- review.numStars -->
-                            </v-card-text>
-                            </v-list-item-action>
-                
-                            <v-list-item-content>
-                                <v-list-item-title class="d-flex flex-wrap flex-grow-1">
-                                <strong class="mb-2">{{item.userName}}</strong>
-                                <br>
-                                <p size="0.75rem" class="overflow-visible">{{reviewDate(item.dateReviewed)}}</p>
+                            </v-list-item-title>
+                            <v-list-item-subtitle class="d-flex flex-wrap flex-grow-1">
+                                <p size="0.75rem" class="">{{item.dateReviewed}}</p>
+                            </v-list-item-subtitle>
                                 <!-- review.UserName -->
-                                <p>{{item.reviewText}}  </p>
+                                {{item.reviewText}}
                                 <!-- review.reviewText -->
-                                </v-list-item-title>
+                                
                             </v-list-item-content>
                             </v-list-item>
                 
