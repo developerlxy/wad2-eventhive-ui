@@ -56,7 +56,7 @@ const routes = [
         component: () => import('@/views/HostManagement.vue'),
       },
       {
-        path: '/user/:eventType',
+        path: '/user/',
         name: 'user-events',
         component: () => import('../views/UserEvents.vue'),
       },
