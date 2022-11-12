@@ -85,7 +85,15 @@
           rounded
           placeholder="Anywhere"
           color="greenDark"
-        ></v-autocomplete>
+        >
+          <template v-slot:no-data>
+            <v-list-item>
+              <v-list-item-title>
+                Search for a location
+              </v-list-item-title>
+            </v-list-item>
+          </template>
+        </v-autocomplete>
 
         <!-- check capacity of event -->
         <v-select
@@ -93,6 +101,7 @@
           :menu-props="{ bottom: true, offsetY: true }"
           v-model="groupSizeSelected"
           rounded
+          hide-no-data
           hide-details
           clearable
           dense

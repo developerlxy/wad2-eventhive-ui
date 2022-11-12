@@ -33,7 +33,7 @@
             <v-row class="justify-center my-5" >
               <img src="../assets/images/flying-bee.gif">
             </v-row>
-            <h2>Hover over for a sneak peek!</h2>
+            <h2>Hover over the event for a sneak peek!</h2>
           </div>
         </v-col>
       </v-row>

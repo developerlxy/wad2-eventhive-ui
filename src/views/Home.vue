@@ -6,24 +6,27 @@
     <Categories></Categories>
     <WelcomeImage></WelcomeImage>
     <div v-if="xsBreakpoint">
-      <div class="mb-2 pt-6 pb-6" v-if="this.$store.state.user">
-        <h1 class="mb-3 font-weight-black carouselheader text-center"><a class="greenDark--text" @click="pushToForYou">Just For You</a></h1>
-        <EventCarousel :allEvents="userForYou"></EventCarousel>
-      </div>
       <div class="my-2 pt-6 pb-6">
-        <h1 class=" mb-3 font-weight-black carouselheader text-center"><a class="greenDark--text" @click="pushToBuzzing">Buzzing Now!</a></h1>
+        <h1 class=" mb-3 font-weight-black carouselheader text-center"><a class="greenDark--text" @click="pushToBuzzing">BUZZING NOW</a></h1>
         <EventCarousel :allEvents="buzzingEvents"></EventCarousel>
+      </div>
+      <div class="mb-2 pt-6 pb-6" v-if="this.$store.state.user">
+        <h1 class="mb-3 font-weight-black carouselheader text-center"><a class="greenDark--text" @click="pushToForYou">JUST FOR YOU</a></h1>
+        <EventCarousel :allEvents="userForYou"></EventCarousel>
       </div>
     </div>
 
     <div v-else>
-      <div class="mb-2 mt-1 pa-6 ml-6" v-if="this.$store.state.user">
-        <h1 class="mb-3 font-weight-black carouselheader ml-16 pl-16 text-start"><a class="greenDark--text" @click="pushToForYou">Just For You</a></h1>
+      <div class="mb-2 mt-10 pt-6 px-10 pb-16 greenLight">
+        <h1 class=" mb-3 font-weight-black carouselheader ml-16 pl-16 text-start"><a class="greenDark--text" @click="pushToBuzzing">BUZZING NOW</a></h1>
+        <EventCarousel :allEvents="buzzingEvents"></EventCarousel>
+      </div>
+      <div class="mb-2 mt-10 pt-6 px-10 pb-16" v-if="this.$store.state.user">
+        <h1 class="font-weight-black carouselheader ml-16 pl-16 text-start"><a class="greenDark--text" @click="pushToForYou">JUST FOR YOU</a></h1>
         <EventCarousel :allEvents="userForYou"></EventCarousel>
       </div>
-      <div class="my-2 pa-6 ml-6">
-        <h1 class=" mb-3 font-weight-black carouselheader ml-16 pl-16 text-start"><a class="greenDark--text" @click="pushToBuzzing">Buzzing Now!</a></h1>
-        <EventCarousel :allEvents="buzzingEvents"></EventCarousel>
+      <div class="mb-2 mt-10 pt-6 px-10 pb-16">
+        <h1>Don't buzz off by yourself... Join EventHive and BEE happy!</h1>
       </div>
     </div>
     <RandomEventPrompt class="bottom-stick"></RandomEventPrompt>
