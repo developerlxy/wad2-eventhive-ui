@@ -11,40 +11,41 @@
       <v-col
         cols="7"
         class="text-left flex-grow-0 flex-shrink-0">
-        <h1>Event: Board Games Night</h1>
-            <img :src="'/src/assets/images/boardgame.jpg'">
+        <h1>Event: {{ eventObj["eventName"] }}</h1>
+            <img :src="eventObj['eventPhotoURL']">
             <div>
-    <v-layout row wrap>
-      <v-flex xs12 sm3>
-        <v-checkbox v-model="landscape" hide-details></v-checkbox>
-      </v-flex>
-      <v-flex xs12 sm3>
-        <v-checkbox v-model="reactive" hide-details></v-checkbox>
-      </v-flex>
-    </v-layout>
 
-    <v-date-picker v-model="picker" :landscape="landscape" :reactive="reactive"></v-date-picker>
+              <v-row
+      no-gutters
+      style="flex-wrap: nowrap;"
+    >
+    <v-col
+        cols="7"
+        class="text-left"> 
+        <v-date-picker v-model="picker" :landscape=true :reactive=true></v-date-picker>
+    </v-col>
+    <v-col>
+      <v-btn
+      class="ma-2"
+      color="success"
+      @click="increasePax"
+    >
+      increase pax
+    </v-btn>
+      <v-slider v-model="maxCapacity" label="Set capacity" hint="Be honest" min="0" max="200" thumb-label>
+        </v-slider>
+    </v-col>
+  </v-row>
+    
     <v-btn
       class="ma-2"
-      :loading="loading"
-      :disabled="loading"
       color="error"
-      @click="loader = 'loading'"
+      @click="deleteEvent"
     >
       cancel event
     </v-btn>
-    <v-btn
-      class="ma-2"
-      :loading="loading2"
-      :disabled="loading2"
-      color="success"
-      @click="loader = 'loading2'"
-    >
-      increase pax
-      <template v-slot:loader>
-        <span>Loading...</span>
-      </template>
-    </v-btn>
+
+    
     <v-btn color="primary">
       change event date
     </v-btn>
@@ -81,10 +82,6 @@
         label="Search for person"
       ></v-text-field>
 
-
-      <v-btn icon>
-        <v-icon>mdi-crosshairs-gps</v-icon>
-      </v-btn>
 
       <v-btn icon>
         <v-icon>mdi-dots-vertical</v-icon>
@@ -285,8 +282,7 @@
     </v-btn>
 
     <v-btn
-      :loading="loading3"
-      :disabled="loading3"
+
       color="blue-grey"
       class="ma-2 white--text"
       @click="loader = 'loading3'"
@@ -328,7 +324,7 @@
   
   
   export default {
-      name: "Home",
+      name: "HostManagement",
       components: { LoadingScreen, NavBar },
       mounted() {
       setTimeout(() => {
@@ -337,17 +333,44 @@
       },
       data() {
         return {
-            picker: new Date().toISOString().substr(0, 10),
-        landscape: true,
-        reactive: true,
+          picker: new Date().toISOString().substr(0, 10),
+          landscape: true,
+          reactive: true,
+          showSlider:false,
           isLoading: true,
-          form: {
-                    firstName: 'John',
-                    lastName: 'Doe',
-                    contactEmail: 'john@doe.com',
-                    contactNumber: 5678910,
-                }
+          eventID:''
         }
       },
-  };
+      computed: {
+        eventObj() {
+          for (let event of this.$store.state.events) {
+            if (event["_id"]==this.eventID) {
+              return event
+            }
+          }
+        }
+      },
+      watch: {
+    '$route.params': {
+        handler() {
+            this.eventID = this.$route.query.id
+        },
+        immediate: true,
+    }
+},
+methods: {
+  deleteEvent() {
+    if (confirm("Are you sure you want to delete this event?")) {
+      this.axios.delete(`https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/${this.eventID}`);
+      this.$router.push('Home') 
+  }
+  },
+  increasePax() {
+    this.showSlider=true;
+
+  }
+  }
+}
+
+  
   </script>

@@ -30,11 +30,12 @@
     },
     computed: {
       getUserEventType() {
-        if (this.$route.params.eventType == 'registered-events'){
+        console.log("userevents view", this.$route.query.type)
+      if (this.$route.query.type == 'registered'){
         return'Registered Events'
-      } else if (this.$route.params.eventType == 'attended-events') {
+      } else if (this.$route.query.type == 'attended') {
         return 'Attended Events'
-      } else if (this.$route.params.eventType == 'hosted-events') {
+      } else if (this.$route.query.type == 'hosted') {
         return 'Hosted Events'
       }
       }
