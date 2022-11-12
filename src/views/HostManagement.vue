@@ -94,7 +94,7 @@
   <v-divider></v-divider>
         <v-card>
             <div>
-                <v-card-title><v-avatar><img :src="'/src/assets/images/test.png'"></v-avatar>&nbsp;  Sam Anderson</v-card-title>
+                <v-card-title><v-avatar><img :src="'/src/assets/images/test.jpg'"></v-avatar>&nbsp;  Sam Anderson</v-card-title>
                 <v-card-subtitle></v-card-subtitle>
                 <v-card-actions>
                     <div class="text-center">
@@ -138,7 +138,7 @@
         </v-card><br/>
         <v-card>
             <div>
-                <v-card-title><v-avatar><img :src="'/src/assets/images/test.png'"></v-avatar>&nbsp;  Lyle Green</v-card-title>
+                <v-card-title><v-avatar><img :src="'/src/assets/images/test.jpg'"></v-avatar>&nbsp;  Lyle Green</v-card-title>
                 <v-card-subtitle></v-card-subtitle>
                 <v-card-actions>
                     <div class="text-center">
@@ -182,7 +182,7 @@
         </v-card><br/>
         <v-card>
             <div>
-                <v-card-title><v-avatar><img :src="'/src/assets/images/test.png'"></v-avatar>&nbsp;  Peter Parker</v-card-title>
+                <v-card-title><v-avatar><img :src="'/src/assets/images/test.jpg'"></v-avatar>&nbsp;  Peter Parker</v-card-title>
                 <v-card-subtitle></v-card-subtitle>
                 <v-card-actions>
                     <div class="text-center">
@@ -226,7 +226,7 @@
         </v-card><br/>
         <v-card>
             <div>
-                <v-card-title><v-avatar><img :src="'/src/assets/images/test.png'"></v-avatar>&nbsp;  Ah Beng</v-card-title>
+                <v-card-title><v-avatar><img :src="'/src/assets/images/test.jpg'"></v-avatar>&nbsp;  Ah Beng</v-card-title>
                 <v-card-subtitle></v-card-subtitle>
                 <v-card-actions>
                     <div class="text-center">
@@ -270,7 +270,7 @@
         </v-card><br/>
         <v-card>
             <div>
-                <v-card-title><v-avatar><img :src="'/src/assets/images/test.png'"></v-avatar>&nbsp;  Jesus</v-card-title>
+                <v-card-title><v-avatar><img :src="'/src/assets/images/test.jpg'"></v-avatar>&nbsp;  Jesus</v-card-title>
                 <v-card-subtitle></v-card-subtitle>
                 <v-card-actions>
                     <div class="text-center">

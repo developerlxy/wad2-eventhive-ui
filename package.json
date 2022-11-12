@@ -22,6 +22,8 @@
     "vite-plugin-vue2": "^1.4.0",
     "vue": "^2.6.12",
     "vue-axios": "^3.4.1",
+    "vue-file-agent": "^1.7.3",
+    "vue-photo-upload": "^1.0.4",
     "vue-router": "^3.5.2",
     "vuetify": "^2.5.8",
     "vuex": "^3.6.2",

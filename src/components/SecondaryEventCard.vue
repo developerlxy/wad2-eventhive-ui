@@ -18,7 +18,7 @@
             </v-row>
           </v-card-title>
           <v-card-text>
-            <v-row class="py-2 mx-1 font-weight-medium">
+            <v-row class="py-2 mx-1 font-weight-mediumz">
               <v-icon class="mx-1" color="greenDark">place</v-icon>
               {{eventDetails.eventLocation.SEARCHVAL}}
             </v-row>

@@ -13,6 +13,12 @@
       <div class="d-flex text-h5 brownDark--text font-weight-medium ma-4">
         My Profile
       </div>
+      <ProfilePhotoUpload
+        :photoDefault="this.image"
+        :enableEdits="true"
+        @photo-submit="photo_submit">
+      </ProfilePhotoUpload>
+
       <v-row class="col-12 pa-0 ma-0">
         <v-text-field
           v-model="userName"
@@ -155,7 +161,7 @@ import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragrap
 
 export default {
   name: "UserProfile",
-  components: { LandingScreen, TiptapVuetify },
+  components: { LandingScreen, TiptapVuetify},
   mounted() {
     setTimeout(() => {
       this.isLoading = false;
@@ -203,6 +209,7 @@ export default {
       userDescription: this.$store.state.user["userDesc"] == null ? "" : this.$store.state.user["userDesc"],
       fullName: this.$store.state.user["userFullName"] == null ? "" : this.$store.state.user["userFullName"],
 
+      image: this.$store.state.user["userImage"] == null ? "/src/assets/images/test.jpg" : this.$store.state.user["userImage"],
       //FOR RICH TEXT
       extensions: [
         History,
@@ -296,6 +303,39 @@ export default {
         }
         this.chips = existingPrefs;
       }
+    },
+    photo_submit (e) {
+      console.log("test", e)
+      // console.log(e.target.result)
+      // // variables to upload image
+      // // const MAX_IMAGE_SIZE = 1000000
+      // const API_ENDPOINT = 'https://xt96j6drmd.execute-api.ap-southeast-1.amazonaws.com/uploads' // e.g. https://ab1234ab123.execute-api.us-east-1.amazonaws.com/uploads
+
+      // // s3 code
+      // // Get the presigned URL
+      // console.log("")
+      // const response = this.axios({
+      //   method: 'GET',
+      //   url: API_ENDPOINT
+      // })
+      // console.log('Response: ', response)
+      // console.log('Uploading: ', this.image)
+      // let binary = atob(this.image.split(',')[1])
+      // let array = []
+      // for (var i = 0; i < binary.length; i++) {
+      //   array.push(binary.charCodeAt(i))
+      // }
+      // let blobData = new Blob([new Uint8Array(array)], { type: 'image/jpeg' })
+      // console.log('Uploading to: ', response.data.uploadURL)
+      // const result = fetch(response.data.uploadURL, {
+      //   method: 'PUT',
+      //   body: blobData
+      // })
+      // console.log('Result: ', result)
+      // // Final URL for the user doesn't need the query string params
+      // this.uploadURL = response.data.uploadURL.split('?')[0]
+      // console.log(`image url at ${result.url.split("?")[0]}`);
+
     }
   },
 };

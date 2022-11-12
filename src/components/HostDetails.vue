@@ -14,7 +14,7 @@
           tile
         >
         <v-avatar size="150">
-            <img :src="'/src/assets/images/test.png'">
+            <img :src="'/src/assets/images/test.jpg'">
         </v-avatar>
         <v-rating value="averageStars"></v-rating>
         
@@ -74,21 +74,21 @@
         <v-card>
             <div>
                 <v-card-title>| Amazing Event</v-card-title>
-                <v-card-subtitle><v-avatar><img :src="'/src/assets/images/test.png'"></v-avatar>  Sam Anderson</v-card-subtitle>
+                <v-card-subtitle><v-avatar><img :src="'/src/assets/images/test.jpg'"></v-avatar>  Sam Anderson</v-card-subtitle>
                 <v-card-text>As you know, the world of work is evolving, which caught many leaders between stakeholders and employees. We know this isn’t happening in every case, but the majority. So, my team and I felt this conference prioritized sharing new best practices for leaders and providing some tools for them to move in a more contemporary direction. We wanted to host workshops that offered vital insights into leaders’ changes and ways to make that happen. One of our major takeaways was the receptive embrace of the DEI, you know, diversity, equity, and inclusion, strategies leaders can incorporate in their business. Wow, did we get a warm response to that!</v-card-text>
             </div>
         </v-card><br/>
         <v-card>
             <div>
                 <v-card-title>| Loved the Vibes</v-card-title>
-                <v-card-subtitle><v-avatar><img :src="'/src/assets/images/test.png'"></v-avatar>  Peter Parker</v-card-subtitle>
+                <v-card-subtitle><v-avatar><img :src="'/src/assets/images/test.jpg'"></v-avatar>  Peter Parker</v-card-subtitle>
                 <v-card-text>This was a fantastic event. I particularly enjoyed the breakout meetings. They were informative, and the speakers made it so exciting to participate. My key takeaway, I’d have to say, is the confidence it provided to take some bold steps in managing my business differently to plan for the future. I would want to look at my leadership skills and make changes that support my team. The second thing that was a key takeaway for me was the review of the different types of strategies to incorporate more diversity into my organization. And last, it’s entertaining. I’m having a blast meeting new people and seeing old friends. </v-card-text>
             </div>
         </v-card><br/>
         <v-card>
             <div>
                 <v-card-title>| Will come back again!</v-card-title>
-                <v-card-subtitle><v-avatar><img :src="'/src/assets/images/test.png'"></v-avatar>  Lyle Green</v-card-subtitle>
+                <v-card-subtitle><v-avatar><img :src="'/src/assets/images/test.jpg'"></v-avatar>  Lyle Green</v-card-subtitle>
                 <v-card-text>As you know, the world of work is evolving, which caught many leaders between stakeholders and employees. We know this isn’t happening in every case, but the majority. So, my team and I felt this conference prioritized sharing new best practices for leaders and providing some tools for them to move in a more contemporary direction. We wanted to host workshops that offered vital insights into leaders’ changes and ways to make that happen. One of our major takeaways was the receptive embrace of the DEI, you know, diversity, equity, and inclusion, strategies leaders can incorporate in their business. Wow, did we get a warm response to that!</v-card-text>
             </div>
         </v-card>
