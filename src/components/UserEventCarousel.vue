@@ -25,13 +25,16 @@
 
 <script>
 import UserEventCard from "./UserEventCard.vue";
+import AOS from 'aos'
+
 
 export default {
   name: "UserEventCarousel",
   components: { UserEventCard },
   props: {
     userEventType: {
-      type: String
+      type: String,
+      default: "Registered Events"
     },
   },
     
@@ -76,6 +79,8 @@ export default {
           )
           if (this.filteredEvents.length == 0) {
             this.message = "No registered events. What are you waiting for?"
+          } else {
+            this.message = ""
           }
         } else if (userEventType == 'attended') {
           this.title = "Attended Events"
@@ -91,6 +96,8 @@ export default {
           )
           if (this.filteredEvents.length == 0) {
             this.message = "You haven't attended any events yet..."
+          } else {
+            this.message = ""
           }
         } else if (userEventType == 'hosted') {
           console.log("here", this.$store.state.events)
@@ -107,6 +114,8 @@ export default {
           )
           if (this.filteredEvents.length == 0) {
             this.message = "You haven't hosted any events yet. Why don't you give it a shot?"
+          } else {
+            this.message = ""
           }
         }
         console.log("filteredEvents:", this.filteredEvents)

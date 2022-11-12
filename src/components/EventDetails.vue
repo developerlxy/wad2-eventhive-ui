@@ -380,7 +380,7 @@
             else{
             let eventList = this.specificEvent.attendees
             // console.log(eventList)
-            eventList.push(this.$store.state.user._id)
+            eventList.push(this.$store.state.user)
             var data = JSON.stringify({
                 "_id": this.eventID,
                 "attendees": eventList

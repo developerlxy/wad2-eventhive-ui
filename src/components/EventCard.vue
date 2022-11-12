@@ -49,48 +49,45 @@
 
 <script>
 import AOS from 'aos'
-    export default {
-        name: 'EventCard',
-        mounted() {
-          AOS.init({
-            duration: 1200
-          })
-        },
-        props: {
-            eventDetails: {
-                type: Object,
-                required: true
+export default {
+    name: 'EventCard',
+    mounted() {
+      AOS.init()
+    },
+    props: {
+        eventDetails: {
+            type: Object,
+            required: true
+        }
+    },
+    methods: {
+        toEvent() {
+            this.$router.push("/event?id=" + this.eventDetails["_id"]);
+        }
+    },
+    computed: {
+      getAvgRating() {
+        let sum = 0;
+            if (this.eventDetails.eventReviews.length == 0) {
+              return "-";
             }
-        },
-        methods: {
-            toEvent() {
-                this.$router.push("/event?id=" + this.eventDetails["_id"]);
+            for (let i = 0; i < this.eventDetails.eventReviews.length; i++) {
+                sum += this.eventDetails.eventReviews[i].numStars;
             }
-        },
-        computed: {
-          getAvgRating() {
-            let sum = 0;
-                if (this.eventDetails.eventReviews.length == 0) {
-                  return "-";
-                }
-                for (let i = 0; i < this.eventDetails.eventReviews.length; i++) {
-                    sum += this.eventDetails.eventReviews[i].numStars;
-                }
-                 
-                return (sum / this.eventDetails.eventReviews.length).toPrecision();
-          },
-          getFormattedDate() {
-            const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-            let date = new Date(this.eventDetails.eventDate);
-            return date.getDate() + " " + months[date.getMonth()] + ", " + date.getFullYear();
-          },
-          getFormattedTime() {
-            // TODO: add time in the db
-            let date = new Date(this.eventDetails.eventDate);
-            return date.getHours() + ":" + date.getMinutes();
-          }
-        },
-
-    }
+              
+            return (sum / this.eventDetails.eventReviews.length).toPrecision();
+      },
+      getFormattedDate() {
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        let date = new Date(this.eventDetails.eventDate);
+        return date.getDate() + " " + months[date.getMonth()] + ", " + date.getFullYear();
+      },
+      getFormattedTime() {
+        // TODO: add time in the db
+        let date = new Date(this.eventDetails.eventDate);
+        return date.getHours() + ":" + date.getMinutes();
+      }
+    },
+}
 
 </script>
