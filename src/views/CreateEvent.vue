@@ -41,7 +41,7 @@
         <br>
 
         <v-text-field v-model="maxCapacity" label="Max Capacity" required></v-text-field>
-        <v-slider v-model="maxCapacity" color="orange" label="Fun Slider" hint="Be honest" min="0" max="1000" thumb-label>
+        <v-slider v-model="maxCapacity" color="orange" label="Fun Slider" hint="Be honest" min="0" max="200" thumb-label>
         </v-slider>
 
         <!-- mobile view -->
