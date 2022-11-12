@@ -27,21 +27,29 @@
         </div>
         
         <div v-else>
-          <p style="color: grey;" class="text-left">
+          <p v-if="descriptionEmpty()" style="color: #bd5959; margin-top: 10px" class="text-left">
             Event Description
           </p>
-          <tiptap-vuetify v-model="eventDescription" :extensions="extensions" />
+          <p v-else style="color: grey; margin-top: 10px" class="text-left">
+            Event Description
+          </p>
+          <tiptap-vuetify v-model="eventDescription" :extensions="extensions"/>
+          <p v-if="descriptionEmpty()" style="font-size: 12px; color: #bd5959; text-align: left; margin-top: 5px; margin-bottom: 10px;">
+            Nobody is gonna come if you don't add fun details!
+          </p>
+          <!-- {{ eventDescription }} -->
         </div>
 
         <v-select v-model="selectedCategory" :items="category" :rules="categoryRules" label="Category" required>
         </v-select>
 
-        <LocationSearchBar @locationSelected="onLocationSelected"></LocationSearchBar>
+        <LocationSearchBar @locationSelected="onLocationSelected" style="margin-top: 10px"></LocationSearchBar>
+        <!-- {{ location }} -->
 
         <br>
 
-        <v-text-field v-model="maxCapacity" label="Max Capacity" required></v-text-field>
-        <v-slider v-model="maxCapacity" color="orange" label="Fun Slider" hint="Be honest" min="0" max="1000" thumb-label>
+        <v-text-field v-model="maxCapacity" :rules="capacityRules" label="Max Capacity" required></v-text-field>
+        <v-slider v-model="maxCapacity" color="orange" label="Fun Slider" hint="Be honest" min="0" max="200" thumb-label>
         </v-slider>
 
         <!-- mobile view -->
@@ -63,7 +71,7 @@
                       <v-text-field v-model="eventDate" label="Date" prepend-icon="mdi-calendar" readonly
                         v-bind="attrs" v-on="on"></v-text-field>
                     </template>
-                    <v-date-picker v-model="date" no-title scrollable>
+                    <v-date-picker v-model="date" no-title scrollable :min="new Date().toISOString().substr(0, 10)">
                       <v-spacer></v-spacer>
                       <v-btn text color="primary" @click="$refs.dateMenu.isActive = false">
                         Cancel
@@ -130,7 +138,7 @@
                       <v-text-field v-model="eventDate" label="Event date" prepend-icon="mdi-calendar" readonly
                         v-bind="attrs" v-on="on"></v-text-field>
                     </template>
-                    <v-date-picker v-model="date" no-title scrollable>
+                    <v-date-picker v-model="date" no-title scrollable :min="new Date().toISOString().substr(0, 10)">
                       <v-spacer></v-spacer>
                       <v-btn text color="primary" @click="$refs.dateMenu.isActive = false">
                         Cancel
@@ -170,7 +178,7 @@
         <div v-if="!image">
           <h3>Upload cool photo below!</h3>
           <!-- <input type="file" @change="onFileChange" accept="image/jpeg"> -->
-          <v-file-input @change="onFileChange()" accept="image/jpeg" class="text-center" label="Upload cool photo here!" prepend-icon="mdi-camera" v-model="uploadedImage"></v-file-input>
+          <v-file-input @change="onFileChange()" accept="image/jpeg,image/png" class="text-center" label="Upload cool photo here!" prepend-icon="mdi-camera" v-model="uploadedImage"></v-file-input>
         </div>
         <div v-else>
           <img :src="image" style="border:2px solid black" width="250" height=auto />
@@ -183,6 +191,9 @@
         <v-btn x-large :disabled="!valid" color="success" v-on:click="submitCreateEvent()">
           Let's go!
         </v-btn>
+        <!-- <v-btn x-large :disabled="!valid" color="success" v-on:click="updateCreatedEvents()">
+          Test update created events
+        </v-btn> -->
       </v-form>
       <!-- <br> -->
       <!-- Checking if the component is imported correctly, here is eventName: {{eventName}}<br>
@@ -258,7 +269,7 @@ import NavBar from '@/components/NavBar.vue';
 import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragraph, BulletList, OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History } from 'tiptap-vuetify'
 
 // variables to upload image
-const MAX_IMAGE_SIZE = 1000000
+const MAX_IMAGE_SIZE = 10000000
 
 /* ENTER YOUR ENDPOINT HERE */
 
@@ -292,6 +303,7 @@ export default {
       eventDescription: ``,
       descriptionRules: [
         v => !!v || `Nobody is gonna come if you don't add fun details!`,
+        v => v == !'<p></p>' || `Nobody is gonna come if you don't add fun details!`,
       ],
 
       // category: '',
@@ -308,6 +320,9 @@ export default {
       //   v => !!v || 'Please tell us where is your event located at',
       // ],
       maxCapacity: null,
+      capacityRules: [
+        v => v != 0 || "I don't believe you!",
+      ],
 
       eventDate: null,
       eventTime: null,
@@ -402,7 +417,7 @@ export default {
         data: data
       };
 
-      this.axios(config)
+      await this.axios(config)
         .then(response => {
           console.log("id of newly created event below:");
           console.log(JSON.stringify(response.data));
@@ -410,7 +425,6 @@ export default {
           console.log('Event Successfuly Created')
           this.processingCreateEvent = false
           this.createEventSuccess = true
-
           console.log('===== END OF CREATE EVENT =======')
         })
         // .then(function (response) {
@@ -426,51 +440,53 @@ export default {
           console.log('Event NOT created')
           console.log('===== END OF CREATE EVENT =======')
         });
+        
+      await this.updateCreatedEvents();
+      
+      
     },
+
+    updateCreatedEvents(){
+      console.log("======== updating host's createdEvents ===========")
+      // console.log(this.currentUser)
+      var userEmail = this.currentUser.userEmail
+      var newCreatedEvents = this.currentUser.createdEvents
+      console.log(userEmail)
+      var newEvent = this.newEventID
+      newCreatedEvents.push(newEvent)
+      console.log(newCreatedEvents)
+
+      var data = JSON.stringify({
+        "userEmail": userEmail,
+        "createdEvents": newCreatedEvents
+      });
+      
+      var config = {
+        method: 'put',
+        url: 'https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users/created',
+        headers: { 
+          'Content-Type': 'application/json'
+        },
+        data : data
+      };
+
+      this.axios(config)
+        .then(function (response) {
+          console.log(JSON.stringify(response.data));
+          console.log("new event ID added to host's createdEvents field on database")
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+    },
+
     xsBreakpoint() {
       return this.$vuetify.breakpoint.name == 'xs' 
     },
     onLocationSelected: function (selectedLocation) {
       this.location = selectedLocation
     },
-
-    // SEARCH DISTANCE BETWEEN 2 LOCATIONS SECTION
-    onLocationSelected1: function (selectedLocation) {
-      this.location1 = selectedLocation
-      console.log(this.location1)
-      this.location1_lat = this.location1.LATITUDE
-      console.log(this.location1_lat)
-      this.location1_long = this.location1.LONGITUDE
-      console.log(this.location1_long)
-    },
-    onLocationSelected2: function (selectedLocation) {
-      this.location2 = selectedLocation
-      console.log(this.location2)
-      this.location2_lat = this.location2.LATITUDE
-      console.log(this.location2_lat)
-      this.location2_long = this.location2.LONGITUDE
-      console.log(this.location2_long)
-    },
-
-    getDistanceFromLatLonInKm: function (lat1, lon1, lat2, lon2) {
-      console.log('========== CALCULATING DISTANCE ============')
-      var R = 6371; // Radius of the earth in km
-      var dLat = this.deg2rad(lat2 - lat1);  // deg2rad below
-      var dLon = this.deg2rad(lon2 - lon1);
-      var a =
-        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) *
-        Math.sin(dLon / 2) * Math.sin(dLon / 2)
-        ;
-      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      var d = R * c; // Distance in km
-      this.calculatedDistance = d.toFixed(2); //round to 2 dp
-    },
-
-    deg2rad: function (deg) {
-      return deg * (Math.PI / 180)
-    },
-    // SEARCH DISTANCE BETWEEN 2 LOCATIONS SECTION STOPS HERE
 
     onFileChange(e) {
       console.log('======onfilechange fired========')
@@ -487,9 +503,6 @@ export default {
       let reader = new FileReader()
       reader.onload = (e) => {
         console.log('length: ', e.target.result.includes('data:image/jpeg'))
-        if (!e.target.result.includes('data:image/jpeg')) {
-          return alert('Wrong file type - JPG only.')
-        }
         if (e.target.result.length > MAX_IMAGE_SIZE) {
           return alert('Image is loo large.')
         }
@@ -525,6 +538,11 @@ export default {
       // Final URL for the user doesn't need the query string params
       this.uploadURL = response.data.uploadURL.split('?')[0]
       console.log(`image url at ${result.url.split("?")[0]}`);
+    },
+    descriptionEmpty() {
+      if (this.eventDescription == '<p></p>'){
+        return true
+      }
     }
   }
 };

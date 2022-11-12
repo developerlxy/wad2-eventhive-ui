@@ -1,5 +1,6 @@
 <template>
     <v-card
+    data-aos="slide-up"
     width="300px"
     @click="toEvent()"
     class="mx-auto"
@@ -47,8 +48,12 @@
 </template>
 
 <script>
+import AOS from 'aos'
     export default {
         name: 'EventCard',
+        mounted() {
+          AOS.init()
+        },
         props: {
             eventDetails: {
                 type: Object,
@@ -83,6 +88,7 @@
             return date.getHours() + ":" + date.getMinutes();
           }
         },
+
     }
 
 </script>

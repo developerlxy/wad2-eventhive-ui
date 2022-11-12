@@ -2,7 +2,7 @@
     <LandingScreen v-if="isLoading"></LandingScreen>
     <div v-else>
         <NavBar></NavBar>
-        <hr>
+        <br>
 
             <EventDetails></EventDetails>
 

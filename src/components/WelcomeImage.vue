@@ -2,30 +2,30 @@
   <div v-if="xsBreakpoint">
     <v-row class="mx-5 align-center mt-1">
       <v-col class="pa-0 ma-0">
-        <img src="../assets/images/graphics1.png" height="100px">
+        <h1 data-aos="fade-right" :id='headerID' class="font-weight-black brownDark--text text-start">BEE there or BEE <span class="brownMid">square!</span></h1>
       </v-col>
-      <v-col class="pa-0 ma-0">
-        <h1 :id='headerID' class="font-weight-black peachMid--text text-start">BEE there or BEE <span style="background-color: peachpuff;">square!</span></h1>
+      <v-col class="pa-0 ma-0 pl-4 justify-start">
+        <img  src="../assets/images/graphics1.png" width="140" data-aos="fade-left">
       </v-col>
     </v-row>
   </div>
   <div v-else-if="smBreakpoint">
     <v-row class="">
       <v-col class="d-flex align-content-center flex-wrap justify-end justify-sm-center">
-        <h1 :id="headerID" class="font-weight-black peachMid--text ml-14 text-start">BEE there or BEE <span style="background-color: peachpuff;">square!</span></h1>
+        <h1 data-aos="fade-right" :id="headerID" class="font-weight-black brownDark--text ml-14 text-start">BEE there or BEE <span class="brownMid">square!</span></h1>
       </v-col>
       <v-col class="d-flex align-content-center justify-start">
-        <img src="../assets/images/graphics1.png" height="200">
+        <img class="ml-8" src="../assets/images/graphics1.png" width="280" data-aos="fade-left">
       </v-col>
     </v-row>
   </div>
   <div v-else>
-    <v-row class="mx-6">
-      <v-col class="d-flex align-content-center flex-wrap justify-end justify-sm-center mx-6">
-        <h1 :id="headerID" class="font-weight-black peachMid--text ml-14 pl-14 text-start">BEE there or BEE <span style="background-color: peachpuff;">square!</span></h1>
+    <v-row class="mx-6 my-0 py-0">
+      <v-col class="d-flex align-content-center flex-wrap justify-center ml-2 my-0 py-0">
+        <h1 data-aos="fade-right" :id="headerID" class="font-weight-black brownDark--text ml-14 pl-14 text-start">BEE there or BEE <span class="brownMid">square!</span></h1>
       </v-col>
-      <v-col class="d-flex align-content-center justify-start mt-1 pr-16 mr-16">
-        <img src="../assets/images/graphics1.png" :height="mdBreakpoint ? 280: 350">
+      <v-col class="d-flex align-content-center justify-center pr-16 mr-16">
+        <img src="../assets/images/graphics1.png" width="380" data-aos="fade-left">
       </v-col>
     </v-row>
   </div>
@@ -53,6 +53,13 @@ export default {
         case 'xl' : return 'header'
       }
     }
+  },
+  mounted() {
+    AOS.init(
+      {
+      duration: 800
+    }
+    )
   },
 }
 </script>
