@@ -3,6 +3,7 @@
       class="mx-auto px-10 py-6"
       :width="width"
       outlined
+      data-aos="zoom-in"
     >
       <img
           class="img pa-3"
@@ -100,10 +101,13 @@
   import SignupSnackbar from "./SignupSnackbar.vue";
   import {firebaseAuth} from '../utils/firebaseInit'
   import {createUserWithEmailAndPassword} from 'firebase/auth'
-
+  import AOS from 'aos'
   export default {
     components: {SignupSnackbar},
     name: "RegistrationCard",
+    mounted() {
+      AOS.init()
+    },
       data () {
         return {
           isDisabled: false,

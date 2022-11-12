@@ -3,6 +3,7 @@
       class="mx-auto px-10 pt-8 pb-6"
       :width="width"
       outlined
+      data-aos="zoom-in"
     >
     <SignupSnackbar :show-snackbar="showSnackbar" :text="snackbarText"></SignupSnackbar>
       <img
@@ -78,9 +79,13 @@ import SignupSnackbar from "./SignupSnackbar.vue";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { firebaseAuth } from "../utils/firebaseInit"
 import { googleAuthProvider } from '../utils/auth_google_provider_create'
+import AOS from 'aos'
 export default {
   components: {SignupSnackbar},
   name: "LoginCard",
+    mounted() {
+      AOS.init()
+    },
     data () {
       return {
         wrongPassword: false,
