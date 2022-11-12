@@ -31,7 +31,7 @@
                                 ></v-rating>
         
         <v-card
-    class="mx-auto"
+    class="mx-auto d-flex flex-wrap"
     max-width="344"
     outlined
   >
@@ -40,10 +40,17 @@
         <div style="background-color:lightgray;padding:10px;text-align:left;font-weight:bold;">
           Contact Info
         </div>
-        <v-list-item style="text-align:left"><br>
-          Email: {{ host["userEmail"] }} <br><br>
-          Contact No.: {{ avgRating }}
-        </v-list-item>
+        <v-list-item-content style="text-align:left"><br>
+          
+            Email: eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee <br>
+
+        </v-list-item-content>
+        <v-list-item-content style="text-align:left"><br>
+          
+          <div v-if="host['userPhone']!=null">
+          Mobile No.: {{ host["userPhone"] }}
+        </div>
+      </v-list-item-content>
 
       </v-list-item-content>
 

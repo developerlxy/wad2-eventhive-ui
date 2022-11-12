@@ -33,8 +33,12 @@
       increase pax
     </v-btn>
 
-      <v-slider v-model="capacity" label="Set capacity" hint="Be honest" min="0" max="200" thumb-label>
-        </v-slider>
+    <v-text-field
+  v-model="capacity"
+  hide-details
+  single-line
+  type="number"
+/>
     </v-col>
   </v-row>
     
@@ -155,11 +159,11 @@ methods: {
   }
   },
   increasePax() {
-    this.axios.put(`https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users/${this.eventID}`,{'maxCapacity':this.capacity})
+    this.axios.put(`https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/${this.eventID}`,{'maxCapacity':this.capacity})
 
   },
   changeDate() {
-    this.axios.put(`https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users/${this.eventID}`,{'eventDate':this.picker})
+    this.axios.put(`https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/${this.eventID}`,{'eventDate':this.picker})
   }
   }
 }
