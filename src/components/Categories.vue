@@ -16,11 +16,11 @@
         v-slot="{ hover }">
         <v-card class="pa-sm-1 mx-lg-auto " 
         elevation=0
-        :color="hover ? 'brownLight' : 'white'"
+        :color="hover ? '#f2f5f2' : 'white'"
         >
 
           <font-awesome-icon :icon="category.src" color="#779977"/>
-          <div v-text="category.title"></div>
+          <div class="greenDark--text font-weight-medium">{{category.title.toUpperCase()}}</div>
           
         </v-card>
         </v-hover>

@@ -1,6 +1,6 @@
 <template>
     <v-btn text v-if="this.$store.state.user == null" 
-      class="login-btn px-xs-1" 
+      class="login-btn px-xs-1 greenDark--text font-weight-bold" 
       id="login-btn" 
       @click="login">
       Log In
@@ -76,23 +76,15 @@ export default {
       this.$router.push("/profile");
     },
     registered() {
-      this.$router.push("/user/registered-events");
+      this.$router.push("/user?type=registered");
     },
     history() {
-      this.$router.push("/user/attended-events");
+      this.$router.push("/user?type=attended");
     },
     hosted() {
-      this.$router.push("/user/hosted-events");
+      this.$router.push("/user?type=hosted");
     },
   },
 };
 </script>
-<style>
-  #login-btn{
-    color: rgb(107, 135, 107);
-    font-weight: bold;
-  }
-  
-  
-  </style>
-  
+

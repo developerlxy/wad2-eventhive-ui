@@ -56,7 +56,7 @@ const routes = [
         component: () => import('@/views/HostManagement.vue'),
       },
       {
-        path: '/user/:eventType',
+        path: '/user/',
         name: 'user-events',
         component: () => import('../views/UserEvents.vue'),
       },
@@ -85,6 +85,12 @@ const routes = [
         path: '/for-you',
         name: 'For You',
         component: () => import('@/views/BuzzingForYou.vue'),
+        props: true
+      },
+      {
+        path: '/gmaps',
+        name: 'Gmaps Test',
+        component: () => import('@/views/GoogleMap.vue'),
         props: true
       },
     ],
