@@ -72,6 +72,7 @@ export default {
     },
     addReview() {
       console.log("add review");
+      console.log(this.event)
       let today = new Date();
       let reviews = this.$store.state.events[0].eventReviews;
       reviews.push({

@@ -39,14 +39,7 @@
             </v-btn>
         </v-col>
         <v-col class="text-left pt-0" v-else>
-          <v-btn 
-            block
-            class="text-none align-left"
-            color="greenDark"
-            dark
-          >
-            Review event
-          </v-btn>
+          <Review></Review>
         </v-col>
         
       </div>
@@ -97,13 +90,7 @@
             </v-btn>
         </v-col>
         <v-col class="text-left pt-0" v-else>
-          <v-btn 
-            class="text-none align-left"
-            color="greenDark"
-            dark
-          >
-            Review event
-          </v-btn>
+          <Review :event="this.eventObj"></Review>
         </v-col>
         
       </div>
@@ -115,63 +102,66 @@
 </template>
 
 <script>
+import Review from './Review.vue'
+
     export default {
-        name: "UserEventCard",
-        props: {
-          eventObj: {
+    name: "UserEventCard",
+    props: {
+        eventObj: {
             type: Object
-          },
-          eventType: {
+        },
+        eventType: {
             type: String
-          }
-        },
-        methods: {
-            getFormattedDate() {
-              const eventDate = new Date(this.eventObj.eventDate).toString()
-              const eventDateList = eventDate.split(" ")
-              const day = eventDateList[0]
-              var formattedDay = ""
-              switch(day){
-                case 'Mon':
-                  formattedDay = 'Monday'
-                case 'Tue':
-                  formattedDay = 'Tuesday'
-                case 'Wed':
-                  formattedDay = 'Wednesday'
-                case 'Thu':
-                  formattedDay = 'Thursday'
-                case 'Fri':
-                  formattedDay = 'Friday'   
-                case 'Sat':
-                  formattedDay = 'Saturday'
-                case 'Sun':
-                  formattedDay = 'Sunday'
-              }
-              this.eventDateString = eventDateList[2] + " " + eventDateList[1] + " " + eventDateList[3] + ', ' + formattedDay 
-            },
-            redirectToEventPage() {
-              this.$router.push({ path:`/event?id=${this.eventObj._id}`})
-            },
-            editEvent() {
-              console.log("going to ", this.eventObj._id)
-              this.$router.push({ path: `/hostmgmt?id=${this.eventObj._id}` })
-            }
-        },
-        computed: {
-          xsBreakpoint() {
-            return this.$vuetify.breakpoint.name == 'xs' 
-          }
-        },
-        data() {
-          return {
-            eventDateString: null
-          }
-        },
-        mounted() {
-          this.getFormattedDate()
-          console.log(this.eventType)
         }
-    }
+    },
+    methods: {
+        getFormattedDate() {
+            const eventDate = new Date(this.eventObj.eventDate).toString();
+            const eventDateList = eventDate.split(" ");
+            const day = eventDateList[0];
+            var formattedDay = "";
+            switch (day) {
+                case "Mon":
+                    formattedDay = "Monday";
+                case "Tue":
+                    formattedDay = "Tuesday";
+                case "Wed":
+                    formattedDay = "Wednesday";
+                case "Thu":
+                    formattedDay = "Thursday";
+                case "Fri":
+                    formattedDay = "Friday";
+                case "Sat":
+                    formattedDay = "Saturday";
+                case "Sun":
+                    formattedDay = "Sunday";
+            }
+            this.eventDateString = eventDateList[2] + " " + eventDateList[1] + " " + eventDateList[3] + ", " + formattedDay;
+        },
+        redirectToEventPage() {
+            this.$router.push({ path: `/event?id=${this.eventObj._id}` });
+        },
+        editEvent() {
+            console.log("going to ", this.eventObj._id);
+            this.$router.push({ path: `/hostmgmt?id=${this.eventObj._id}` });
+        }
+    },
+    computed: {
+        xsBreakpoint() {
+            return this.$vuetify.breakpoint.name == "xs";
+        }
+    },
+    data() {
+        return {
+            eventDateString: null
+        };
+    },
+    mounted() {
+        this.getFormattedDate();
+        console.log(this.eventType);
+    },
+    components: { Review }
+}
 </script>
 
 <style>

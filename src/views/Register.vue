@@ -10,10 +10,12 @@
 
 <script>
 import RegistrationCard from "../components/RegistrationCard.vue";
+import LandingScreen from '../components/LandingScreen.vue';
+
 
 export default {
   name: "Register",
-  components: { RegistrationCard},
+  components: {LandingScreen, RegistrationCard},
   mounted() {
     setTimeout(() => {
       this.isLoading = false;

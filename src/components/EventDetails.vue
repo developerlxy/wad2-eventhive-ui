@@ -353,7 +353,7 @@
             this.$store.dispatch('getUser')
             console.log("user registered events" , this.acctUser.registeredEvents)
             console.log("event attendees" , this.specificEvent.attendees)
-            if(this.acctUser.registeredEvents.includes(this.specificEvent._id) && this.specificEvent.attendees.includes(this.acctUser._id)){
+            if(this.acctUser.registeredEvents.includes(this.specificEvent._id) && this.specificEvent.attendees.includes(this.acctUser)){
                 this.registered = true
             }
             else {
