@@ -113,7 +113,7 @@ export default {
         return this.getAllBuzzing(this.$store.state.events)
       },
       xsBreakpoint() {
-        return this.$vuetify.breakpoint.name == 'xs' 
+        return this.$vuetify.breakpoint.width <= 750
       }
     }
 };

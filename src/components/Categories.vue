@@ -60,7 +60,7 @@
     }),
     computed: {
       xsBreakpoint() {
-        return this.$vuetify.breakpoint.name == 'xs' 
+        return this.$vuetify.breakpoint.width <= 700
       }
     },
     methods:{
