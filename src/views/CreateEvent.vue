@@ -178,7 +178,7 @@
         <div v-if="!image">
           <h3>Upload cool photo below!</h3>
           <!-- <input type="file" @change="onFileChange" accept="image/jpeg"> -->
-          <v-file-input @change="onFileChange()" accept="image/jpeg" class="text-center" label="Upload cool photo here!" prepend-icon="mdi-camera" v-model="uploadedImage"></v-file-input>
+          <v-file-input @change="onFileChange()" accept="image/jpeg,image/png" class="text-center" label="Upload cool photo here!" prepend-icon="mdi-camera" v-model="uploadedImage"></v-file-input>
         </div>
         <div v-else>
           <img :src="image" style="border:2px solid black" width="250" height=auto />
@@ -269,7 +269,7 @@ import NavBar from '@/components/NavBar.vue';
 import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragraph, BulletList, OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History } from 'tiptap-vuetify'
 
 // variables to upload image
-const MAX_IMAGE_SIZE = 1000000
+const MAX_IMAGE_SIZE = 10000000
 
 /* ENTER YOUR ENDPOINT HERE */
 
@@ -503,9 +503,6 @@ export default {
       let reader = new FileReader()
       reader.onload = (e) => {
         console.log('length: ', e.target.result.includes('data:image/jpeg'))
-        if (!e.target.result.includes('data:image/jpeg')) {
-          return alert('Wrong file type - JPG only.')
-        }
         if (e.target.result.length > MAX_IMAGE_SIZE) {
           return alert('Image is loo large.')
         }

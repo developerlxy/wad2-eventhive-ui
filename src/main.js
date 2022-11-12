@@ -17,7 +17,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import GmapVue from 'gmap-vue'
 
-import AOS from 'aos'
+
 import 'aos/dist/aos.css'
 
 library.add(fas)

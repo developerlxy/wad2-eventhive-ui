@@ -1,6 +1,6 @@
 <template>
     <v-card
-    
+    data-aos="slide-up"
     width="300px"
     @click="toEvent()"
     class="mx-auto"
@@ -51,18 +51,14 @@
 import AOS from 'aos'
     export default {
         name: 'EventCard',
+        mounted() {
+          AOS.init()
+        },
         props: {
             eventDetails: {
                 type: Object,
                 required: true
             }
-        },
-        mounted() {
-          AOS.init(
-            {
-            duration: 800
-          }
-          )
         },
         methods: {
             toEvent() {

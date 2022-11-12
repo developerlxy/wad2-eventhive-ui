@@ -46,6 +46,7 @@
 
 <script>
 import EventCard from '@/components/EventCard.vue';
+import AOS from 'aos'
 
   export default {
     name: 'EventCarousel',
@@ -55,9 +56,11 @@ import EventCard from '@/components/EventCard.vue';
               required: true
           }
     },
-    data: () => ({
-      
-    }),
+    mounted() {
+      AOS.init({
+        duration: 800
+      })
+    },
     computed: {
       xsBreakpoint() {
         return this.$vuetify.breakpoint.name == 'xs' 
