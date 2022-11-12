@@ -35,7 +35,7 @@
           </p>
           <tiptap-vuetify v-model="eventDescription" :extensions="extensions"/>
           <p v-if="descriptionEmpty()" style="font-size: 12px; color: #bd5959; text-align: left; margin-top: 5px; margin-bottom: 10px;">
-            Nobody is gonna come if you don't add fun details!
+            Nobody is gonna come if you don't add fun details! manual lmao
           </p>
           <!-- {{ eventDescription }} -->
         </div>
@@ -69,7 +69,7 @@
                     min-width="290px">
                     <template v-slot:activator="{ on, attrs }">
                       <v-text-field v-model="eventDate" label="Date" prepend-icon="mdi-calendar" readonly
-                        v-bind="attrs" v-on="on"></v-text-field>
+                        v-bind="attrs" v-on="on" :rules="dateRules"></v-text-field>
                     </template>
                     <v-date-picker v-model="date" no-title scrollable :min="new Date().toISOString().substr(0, 10)">
                       <v-spacer></v-spacer>
@@ -88,7 +88,7 @@
                   <v-dialog ref="dialog" v-model="modal2" :return-value.sync="eventTime" persistent width="290px">
                     <template v-slot:activator="{ on, attrs }">
                       <v-text-field v-model="eventTime" label="Time" prepend-icon="mdi-clock-time-four-outline"
-                        readonly v-bind="attrs" v-on="on"></v-text-field>
+                        readonly v-bind="attrs" v-on="on" :rules="timeRules"></v-text-field>
                     </template>
                     <v-time-picker v-if="modal2" v-model="eventTime" full-width>
                       <v-spacer></v-spacer>
@@ -136,7 +136,7 @@
                     min-width="290px">
                     <template v-slot:activator="{ on, attrs }">
                       <v-text-field v-model="eventDate" label="Event date" prepend-icon="mdi-calendar" readonly
-                        v-bind="attrs" v-on="on"></v-text-field>
+                        v-bind="attrs" v-on="on" :rules="dateRules"></v-text-field>
                     </template>
                     <v-date-picker v-model="date" no-title scrollable :min="new Date().toISOString().substr(0, 10)">
                       <v-spacer></v-spacer>
@@ -155,7 +155,7 @@
                   <v-dialog ref="dialog" v-model="modal2" :return-value.sync="eventTime" persistent width="290px">
                     <template v-slot:activator="{ on, attrs }">
                       <v-text-field v-model="eventTime" label="Event time" prepend-icon="mdi-clock-time-four-outline"
-                        readonly v-bind="attrs" v-on="on"></v-text-field>
+                        readonly v-bind="attrs" v-on="on" :rules="timeRules"></v-text-field>
                     </template>
                     <v-time-picker v-if="modal2" v-model="eventTime" full-width>
                       <v-spacer></v-spacer>
@@ -303,7 +303,6 @@ export default {
       eventDescription: ``,
       descriptionRules: [
         v => !!v || `Nobody is gonna come if you don't add fun details!`,
-        v => v == !'<p></p>' || `Nobody is gonna come if you don't add fun details!`,
       ],
 
       // category: '',
@@ -325,7 +324,13 @@ export default {
       ],
 
       eventDate: null,
+      dateRules: [
+        v => !!v || "Is it today? In the future? Must we time travel back?",
+      ],
       eventTime: null,
+      timeRules: [
+        v => !!v || 'We need to know so we can plan our nap time!',
+      ],
       modal2: false,
       date: null,
 
