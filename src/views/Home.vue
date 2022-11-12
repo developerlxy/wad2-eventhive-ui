@@ -2,8 +2,8 @@
   <LandingScreen v-if="isLoading"></LandingScreen>
 
   <div v-else>
-    <NavBar></NavBar>
-    <Categories></Categories>
+    <NavBar @drawerShown="showDrawer"></NavBar>
+    <Categories v-if="!xsBreakpoint"></Categories>
     <WelcomeImage></WelcomeImage>
     <div v-if="xsBreakpoint">
       <div class="my-2 pt-6 pb-6">
@@ -14,10 +14,31 @@
         <h1 class="mb-3 font-weight-black carouselheader text-center"><a class="greenDark--text" @click="pushToForYou">JUST FOR YOU</a></h1>
         <EventCarousel :allEvents="userForYou"></EventCarousel>
       </div>
+      <v-navigation-drawer
+          v-model="drawer"
+          absolute
+          bottom
+          temporary
+        >
+          <v-list
+            nav
+            dense
+          >
+            <v-list-item class="d-flex justify-center my-5">
+              <h1 class="brownDark--text">CATEGORIES</h1>
+            </v-list-item>
+            <v-list-item class="mb-5">
+              <Categories></Categories>
+            </v-list-item>
+            <v-list-item class="d-flex justify-center my-5">
+              <v-btn x-large class="d-flex brownDark font-weight-bold white--text" elevation="0" @click="createEvent()">Create Event</v-btn>
+            </v-list-item>
+          </v-list>
+        </v-navigation-drawer>
     </div>
 
     <div v-else>
-      <div class="mb-2 mt-10 pt-6 px-10 pb-16 greenLight">
+      <div class="mb-2 mt-10 pt-6 px-sm-3 px-md-6 px-lg-10 pb-16 greenLight">
         <h1 class=" mb-3 font-weight-black carouselheader ml-16 pl-16 text-start"><a class="greenDark--text" @click="pushToBuzzing">BUZZING NOW</a></h1>
         <EventCarousel :allEvents="buzzingEvents"></EventCarousel>
       </div>
@@ -27,6 +48,9 @@
       </div>
       <div class="mb-2 mt-10 pt-6 px-10 pb-16">
         <h1>Don't buzz off by yourself... Join EventHive and BEE happy!</h1>
+        <p>Find friends through casual and chill events</p>
+        <p>Host events for other like-minded fellas to join</p>
+        <p>There will be something for everyone!</p>
       </div>
     </div>
     <RandomEventPrompt class="bottom-stick"></RandomEventPrompt>
@@ -55,10 +79,14 @@ export default {
     },
     data() {
       return {
+        drawer: false,
         isLoading: true
       }
     },
     methods: {
+      showDrawer(){
+        this.drawer = true
+      },
       getAllBuzzing (events){
         var buzzingEvents = [];
         for (let indiv of events){
@@ -92,7 +120,15 @@ export default {
             events: this.userForYou
           }
         })
-      }
+      },
+      createEvent() {
+        if (this.$store.state.user == null){
+          this.$router.push("/login");
+        }
+        else {
+          this.$router.push("/events/create");
+        }
+      },
     },
     computed: {
       userForYou() {
@@ -119,6 +155,10 @@ export default {
   z-index: 999;
   position: fixed;
   bottom: 0;
+}
+
+p{
+  font-size: 2em
 }
 
 </style>

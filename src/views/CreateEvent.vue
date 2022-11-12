@@ -1,5 +1,5 @@
 <template>
-  <LandingScreen v-if="isLoading"></LandingScreen>
+  <LoadingScreen v-if="isLoading"></LoadingScreen>
 
   <div v-else class="fill-height peachLight">
     <NavBar> </NavBar>
@@ -263,7 +263,7 @@
 </template>
 
 <script>
-import LandingScreen from '../components/LandingScreen.vue';
+import LoadingScreen from '../components/LoadingScreen.vue';
 import Categories from '@/components/Categories.vue';
 import NavBar from '@/components/NavBar.vue';
 import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragraph, BulletList, OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History } from 'tiptap-vuetify'
@@ -278,7 +278,7 @@ const API_ENDPOINT = 'https://xt96j6drmd.execute-api.ap-southeast-1.amazonaws.co
 
 export default {
   name: "createEvent",
-  components: { LandingScreen, Categories, NavBar, TiptapVuetify },
+  components: { LoadingScreen, Categories, NavBar, TiptapVuetify },
   mounted() {
     console.log('======== retrieving all stored events ========'),
     console.log(this.allStoredEvents[0]),
