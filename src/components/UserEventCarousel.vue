@@ -1,15 +1,16 @@
 <template>
     <div class="user-event-carousel mx-lg-12 mx-sm-10 mx-6 mt-2">
       <p class="d-flex text-h4 brownDark--text font-weight-bold  ml-4 mt-6">
-        {{title}}
+        {{this.title}}
       </p>
       <p class="text-h6 mt-6 font-weight-medium">
-        {{message}}
+        {{this.message}}
       </p>
       <v-row
-          v-for="event in filteredEvents"
+          v-for="event in this.filteredEvents"
           :key="event._id"
           class="my-4"
+          data-aos="fade-left"
       >
         <v-col>
           <UserEventCard :event-obj="event" :event-type="userEventType" ></UserEventCard>
@@ -33,6 +34,7 @@ export default {
       type: String,
       default: "Registered Events",
     },
+  },
     
     data() {    
         return {
@@ -46,6 +48,10 @@ export default {
     mounted() {
         this.allEvents = this.$store.state.events
         this.$store.dispatch('getUser')
+        AOS.init(
+          {duration: 1000}
+        )
+        
     },
     methods: {
       isAfterToday(date) {
@@ -118,7 +124,6 @@ export default {
         immediate: true,
     }
   }
-}
 }
 
 
