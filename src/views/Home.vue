@@ -15,7 +15,7 @@
     </div>
 
     <div v-else>
-      <div class="mb-2 mt-10 pt-6 px-sm-3 px-md-6 px-lg-10 pb-16 greenLight">
+      <div class="mb-2 mt-10 pt-6 px-sm-3 px-md-6 px-lg-10 pb-10 greenLight">
         <h1 class=" mb-3 font-weight-black carouselheader ml-16 pl-16 text-start"><a class="greenDark--text" @click="pushToBuzzing">BUZZING NOW</a></h1>
         <EventCarousel :allEvents="buzzingEvents"></EventCarousel>
       </div>
