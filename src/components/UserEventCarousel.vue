@@ -31,7 +31,8 @@ export default {
   components: { UserEventCard },
   props: {
     userEventType: {
-      type: String
+      type: String,
+      default: "Registered Events"
     },
   },
     
