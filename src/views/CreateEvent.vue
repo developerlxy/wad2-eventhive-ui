@@ -44,7 +44,7 @@
         </v-select>
 
         <LocationSearchBar @locationSelected="onLocationSelected" style="margin-top: 10px"></LocationSearchBar>
-        <!-- {{ location }} -->
+        <!-- location: {{ location }} -->
 
         <br>
 
@@ -176,7 +176,7 @@
         <!-- UPLOAD IMAGE SECTION -->
         <br>
         <div v-if="!image">
-          <h3>Upload cool photo below!</h3>
+          <!-- <h3>Upload cool photo below!</h3> -->
           <!-- <input type="file" @change="onFileChange" accept="image/jpeg"> -->
           <v-file-input @change="onFileChange()" accept="image/jpeg,image/png" class="text-center" label="Upload cool photo here!" prepend-icon="mdi-camera" v-model="uploadedImage"></v-file-input>
         </div>
