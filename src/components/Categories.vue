@@ -11,7 +11,7 @@
           :key="category.title"
 
           @click="handleClick(category.filter)"
-          class="col-3"
+          class="col-6"
         >
         
         <v-hover
@@ -60,7 +60,7 @@
     }),
     computed: {
       xsBreakpoint() {
-        return this.$vuetify.breakpoint.name == 'xs' 
+        return this.$vuetify.breakpoint.width <= 700
       }
     },
     methods:{

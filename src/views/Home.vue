@@ -2,8 +2,6 @@
   <LandingScreen v-if="isLoading"></LandingScreen>
 
   <div v-else>
-    <NavBar @drawerShown="showDrawer"></NavBar>
-    <Categories v-if="!xsBreakpoint"></Categories>
     <WelcomeImage></WelcomeImage>
     <div v-if="xsBreakpoint">
       <div class="my-2 pt-6 pb-6">
@@ -14,27 +12,6 @@
         <h1 class="mb-3 font-weight-black carouselheader text-center"><a class="greenDark--text" @click="pushToForYou">JUST FOR YOU</a></h1>
         <EventCarousel :allEvents="userForYou"></EventCarousel>
       </div>
-      <v-navigation-drawer
-          v-model="drawer"
-          absolute
-          bottom
-          temporary
-        >
-          <v-list
-            nav
-            dense
-          >
-            <v-list-item class="d-flex justify-center my-5">
-              <h1 class="brownDark--text">CATEGORIES</h1>
-            </v-list-item>
-            <v-list-item class="mb-5">
-              <Categories></Categories>
-            </v-list-item>
-            <v-list-item class="d-flex justify-center my-5">
-              <v-btn x-large class="d-flex brownDark font-weight-bold white--text" elevation="0" @click="createEvent()">Create Event</v-btn>
-            </v-list-item>
-          </v-list>
-        </v-navigation-drawer>
     </div>
 
     <div v-else>
@@ -60,15 +37,13 @@
 
 <script>
 import LandingScreen from '../components/LandingScreen.vue';
-import Categories from '@/components/Categories.vue';
-import NavBar from '@/components/NavBar.vue';
 import EventCarousel from '@/components/EventCarousel.vue';
 import RandomEventPrompt from '@/components/RandomEventPrompt.vue';
 import WelcomeImage from '@/components/WelcomeImage.vue';
 
 export default {
     name: "Home",
-    components: { LandingScreen, Categories, NavBar, EventCarousel, RandomEventPrompt, WelcomeImage },
+    components: { LandingScreen, EventCarousel, RandomEventPrompt, WelcomeImage },
     mounted() {
       setTimeout(() => {
         this.isLoading = false;
@@ -138,7 +113,7 @@ export default {
         return this.getAllBuzzing(this.$store.state.events)
       },
       xsBreakpoint() {
-        return this.$vuetify.breakpoint.name == 'xs' 
+        return this.$vuetify.breakpoint.width <= 750
       }
     }
 };

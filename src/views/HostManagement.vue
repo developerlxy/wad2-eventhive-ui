@@ -2,7 +2,6 @@
     <LoadingScreen v-if="isLoading"></LoadingScreen>
   
     <div v-else>
-        <NavBar></NavBar>
         <v-container fluid>
     <v-row
       no-gutters
@@ -101,14 +100,12 @@
 </template>
 
 <script>
-  import LoadingScreen from '../components/LoadingScreen.vue';
-  import NavBar from '@/components/NavBar.vue';
-  
+  import LoadingScreen from '../components/LoadingScreen.vue';  
   
   
   export default {
       name: "HostManagement",
-      components: { LoadingScreen, NavBar },
+      components: { LoadingScreen },
       mounted() {
       setTimeout(() => {
         this.isLoading = false;
