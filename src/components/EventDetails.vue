@@ -34,21 +34,22 @@
                     <v-container class="fill-height">
                     <v-row class="d-flex flex-column">
                         <v-col>
-                            <h3 class="text-left">{{this.newDate(this.specificEvent.eventDate)}}</h3>
+                            <h2 class="text-left font-weight-medium">{{this.newDate(this.specificEvent.eventDate)}}</h2>
                         </v-col>
                         <v-col>
                             <h1 class="text-left"> {{this.specificEvent.eventName}} </h1>
                         </v-col>
                         <v-col class="justify-start">
                             <span>
-                            <h3 class="text-left">by
+                            <h3 class="text-left font-weight-medium">by
                             <v-btn
                             v-if="this.specificEvent.eventHost"
                             @click="hostProfile()"
                             text
                             tile
                             color=""
-                            class="pd"
+                            class="pd ml-2"
+                            x-large
                             > {{this.specificEvent.eventHost.userName}}</v-btn></h3> 
 
                         </span>
@@ -156,8 +157,7 @@
                 data-aos="flip-up"
                 data-aos-duration="1000"
                 >
-                    <h3 class="text-left">Description</h3>
-                    <br>
+                    <h2 class="text-left font-weight-medium mb-12">Description</h2>
                     <span v-html="desc" class="text-left">
                     </span>
                 </v-card>
@@ -176,7 +176,7 @@
                                         <v-icon>mdi-calendar</v-icon>
                                     </v-col>
                                     <v-col cols="11" >
-                                        <h3 class="text-left">Date and Time</h3>
+                                        <h2 class="text-left font-weight-medium">Date and Time</h2>
                                     </v-col>
                                 </v-row>
                         <v-row align-center class="justify-start">
@@ -197,12 +197,12 @@
                       data-aos="flip-up"
                       data-aos-duration="1000">
                         <v-container fill-height>
-                        <v-row class="justify-start  mb-1">
+                        <v-row class="justify-start align-center mb-1">
                             <v-col cols="1">
                                 <v-icon>mdi-map-marker</v-icon>
                             </v-col>
                             <v-col cols="11">
-                                <h3 class="text-left align-center">Location</h3>
+                                <h2 class="text-left align-center font-weight-medium">Location</h2>
                             </v-col>
                         </v-row >
                         <v-row class="justify-start my-3">
@@ -243,7 +243,7 @@
                         data-aos="flip-up"
                         data-aos-duration="1000"
                     >
-                        <h2 class="my-4">Reviews</h2>
+                        <h2 class="my-4 font-weight-medium">Reviews</h2>
                         <div v-if="this.specificEvent.eventReviews.length > 0">
                         <v-virtual-scroll
                         :items="this.specificEvent.eventReviews"

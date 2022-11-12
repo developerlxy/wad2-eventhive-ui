@@ -1,5 +1,5 @@
 <template>
-  <v-container class="fluid pb-4 px-0">
+  <v-container class="fluid mt-0 pb-4 px-0">
       <v-row class="d-flex justify-space-around">
         <!-- onClick, redirect to Full Events page with Category filter placed on 
         
