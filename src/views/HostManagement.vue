@@ -13,6 +13,7 @@
         class="text-left">
         <h1>Event: {{ eventObj["eventName"] }}</h1>
             <img :src="eventObj['eventPhotoURL']">
+          
             <div>
 
               <v-row
@@ -78,7 +79,6 @@
     flat
     height="100px"
   >
- 
   </v-card>
   <v-divider></v-divider>
         <v-card>
@@ -90,7 +90,6 @@
               </div>
     
   </div>
-
         </v-card><br/>
         <br/>
        <br/>
@@ -109,7 +108,6 @@
   import NavBar from '@/components/NavBar.vue';
   
   
-  
   export default {
       name: "HostManagement",
       components: { LoadingScreen, NavBar },
@@ -120,7 +118,7 @@
       },
       data() {
         return {
-          picker: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+          picker: this.getFormattedDate,
           landscape: true,
           reactive: true,
           showSlider:false,
@@ -141,7 +139,11 @@
         },
         attendees() {
           return this.eventObj["attendees"]
-        }
+        },
+        getFormattedDate() {
+          let thearray = this.eventObj["eventDate"].split("T"); 
+            return thearray[0]
+          }
       },
       watch: {
     '$route.params': {
@@ -164,7 +166,8 @@ methods: {
   },
   changeDate() {
     this.axios.put(`https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/${this.eventID}`,{'eventDate':this.picker})
-  }
+  },
+  
   }
 }
 
