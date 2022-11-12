@@ -11,6 +11,17 @@
           width="100%"
         />
     <v-form ref="form">
+      <v-text-field
+        color="#000000"
+        dense
+        outlined
+        label="Name"
+        :rules="nameRules"
+        append-icon="mdi-account"
+        v-model="actualName"
+      required
+      ></v-text-field>
+
     <v-text-field
         color="#000000"
         dense
@@ -102,6 +113,7 @@
           password: '',
           showSnackbar: false,
           snackbarText: '',
+          actualName: '',
           passwordRules: [
             v => !!v || 'Password is required',
             value => (value && value.length >= 6) || 'Minimum 6 characters',
@@ -117,7 +129,10 @@
           ],
           usernameRules: [
           v => !!v || 'Username is required',
-        ]
+        ],
+          nameRules: [
+          v => !!v || 'Name is required', 
+          ]
         }
       },
       computed: {
@@ -143,6 +158,7 @@
                       userName: this.userName,
                       userPassword: this.password,
                       userEmail: this.email,
+                      actualName: this.actualName
                   }
               ).then(response => {
                 this.showSnackbar = true
