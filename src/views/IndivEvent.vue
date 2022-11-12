@@ -12,12 +12,11 @@
     // import SearchBar from '@/components/SearchBar.vue';
     import NavBar from '@/components/NavBar.vue';
     import LoadingScreen from '@/components/LoadingScreen.vue';
-    import HostDetails from '@/components/HostDetails.vue';
     import EventDetails from '@/components/EventDetails.vue';
     
     export default {
     name: "Home",
-    components: { LoadingScreen, NavBar, HostDetails, EventDetails },
+    components: { LoadingScreen, NavBar, EventDetails },
 
     create() {
         window.addEventListener("load", this.onWindowLoad);
