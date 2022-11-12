@@ -153,8 +153,8 @@
                 >
                     <h3 class="text-left">Description</h3>
                     <br>
-                    <p v-html="desc" class="text-left">
-                    </p>
+                    <span v-html="desc" class="text-left">
+                    </span>
                 </v-card>
                 <v-card
                 class="mx-auto px-4 pt-8 pb-9"
@@ -451,14 +451,14 @@ computed: {
             const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             let date = new Date(this.specificEvent.eventDate);
             return date.getDate() + " " + months[date.getMonth()] + ", " + date.getFullYear();
-          },
+        },
         getFormattedTime() {
             const unformattedTime = this.specificEvent.eventTime
             const unformattedTimeList = unformattedTime.split(":")
             const hours = (unformattedTimeList[0] % 12) || 12
             const suffix = unformattedTimeList[0] >= 12 ? 'PM' : 'AM'
             return hours + '.' + unformattedTimeList[1] + " " + suffix
-          },
+        },
         width () {
             switch(this.$vuetify.breakpoint.name) {
             case 'xs': return 360
@@ -476,7 +476,7 @@ computed: {
             case 'lg': return 1300
             case 'xl': return 1500
             }
-      }
+    }
     }
 }
     
