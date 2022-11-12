@@ -72,9 +72,8 @@ export default {
     },
     addReview() {
       console.log("add review");
-      console.log(this.event)
       let today = new Date();
-      let reviews = this.$store.state.events[0].eventReviews;
+      let reviews = this.event.eventReviews;
       reviews.push({
         userName: this.$store.state.user.userName,
         dateReviewed: today.toLocaleDateString("en-GB", {
@@ -89,7 +88,6 @@ export default {
         _id: this.event["_id"],
         eventReviews: reviews,
       };
-      console.log(reqBody);
       this.axios
         .put(
           `https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/reviews`,
