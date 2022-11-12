@@ -5,7 +5,7 @@
       class="img"
       src="../assets/images/bee-dancing.gif"
       alt="landing..."
-      width=80%
+      max-width=80%
     />
     </v-row>
   </v-container>
