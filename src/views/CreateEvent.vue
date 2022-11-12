@@ -27,20 +27,28 @@
         </div>
         
         <div v-else>
-          <p style="color: grey;" class="text-left">
+          <p v-if="descriptionEmpty()" style="color: #bd5959; margin-top: 10px" class="text-left">
             Event Description
           </p>
-          <tiptap-vuetify v-model="eventDescription" :extensions="extensions" />
+          <p v-else style="color: grey; margin-top: 10px" class="text-left">
+            Event Description
+          </p>
+          <tiptap-vuetify v-model="eventDescription" :extensions="extensions"/>
+          <p v-if="descriptionEmpty()" style="font-size: 12px; color: #bd5959; text-align: left; margin-top: 5px; margin-bottom: 10px;">
+            Nobody is gonna come if you don't add fun details!
+          </p>
+          <!-- {{ eventDescription }} -->
         </div>
 
         <v-select v-model="selectedCategory" :items="category" :rules="categoryRules" label="Category" required>
         </v-select>
 
-        <LocationSearchBar @locationSelected="onLocationSelected"></LocationSearchBar>
+        <LocationSearchBar @locationSelected="onLocationSelected" style="margin-top: 10px"></LocationSearchBar>
+        <!-- {{ location }} -->
 
         <br>
 
-        <v-text-field v-model="maxCapacity" label="Max Capacity" required></v-text-field>
+        <v-text-field v-model="maxCapacity" :rules="capacityRules" label="Max Capacity" required></v-text-field>
         <v-slider v-model="maxCapacity" color="orange" label="Fun Slider" hint="Be honest" min="0" max="200" thumb-label>
         </v-slider>
 
@@ -63,7 +71,7 @@
                       <v-text-field v-model="eventDate" label="Date" prepend-icon="mdi-calendar" readonly
                         v-bind="attrs" v-on="on"></v-text-field>
                     </template>
-                    <v-date-picker v-model="date" no-title scrollable>
+                    <v-date-picker v-model="date" no-title scrollable :min="new Date().toISOString().substr(0, 10)">
                       <v-spacer></v-spacer>
                       <v-btn text color="primary" @click="$refs.dateMenu.isActive = false">
                         Cancel
@@ -130,7 +138,7 @@
                       <v-text-field v-model="eventDate" label="Event date" prepend-icon="mdi-calendar" readonly
                         v-bind="attrs" v-on="on"></v-text-field>
                     </template>
-                    <v-date-picker v-model="date" no-title scrollable>
+                    <v-date-picker v-model="date" no-title scrollable :min="new Date().toISOString().substr(0, 10)">
                       <v-spacer></v-spacer>
                       <v-btn text color="primary" @click="$refs.dateMenu.isActive = false">
                         Cancel
@@ -295,6 +303,7 @@ export default {
       eventDescription: ``,
       descriptionRules: [
         v => !!v || `Nobody is gonna come if you don't add fun details!`,
+        v => v == !'<p></p>' || `Nobody is gonna come if you don't add fun details!`,
       ],
 
       // category: '',
@@ -311,6 +320,9 @@ export default {
       //   v => !!v || 'Please tell us where is your event located at',
       // ],
       maxCapacity: null,
+      capacityRules: [
+        v => v != 0 || "I don't believe you!",
+      ],
 
       eventDate: null,
       eventTime: null,
@@ -530,44 +542,11 @@ export default {
       this.uploadURL = response.data.uploadURL.split('?')[0]
       console.log(`image url at ${result.url.split("?")[0]}`);
     },
-    
-    // SEARCH DISTANCE BETWEEN 2 LOCATIONS SECTION
-    onLocationSelected1: function (selectedLocation) {
-      this.location1 = selectedLocation
-      console.log(this.location1)
-      this.location1_lat = this.location1.LATITUDE
-      console.log(this.location1_lat)
-      this.location1_long = this.location1.LONGITUDE
-      console.log(this.location1_long)
-    },
-    onLocationSelected2: function (selectedLocation) {
-      this.location2 = selectedLocation
-      console.log(this.location2)
-      this.location2_lat = this.location2.LATITUDE
-      console.log(this.location2_lat)
-      this.location2_long = this.location2.LONGITUDE
-      console.log(this.location2_long)
-    },
-
-    getDistanceFromLatLonInKm: function (lat1, lon1, lat2, lon2) {
-      console.log('========== CALCULATING DISTANCE ============')
-      var R = 6371; // Radius of the earth in km
-      var dLat = this.deg2rad(lat2 - lat1);  // deg2rad below
-      var dLon = this.deg2rad(lon2 - lon1);
-      var a =
-        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) *
-        Math.sin(dLon / 2) * Math.sin(dLon / 2)
-        ;
-      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      var d = R * c; // Distance in km
-      this.calculatedDistance = d.toFixed(2); //round to 2 dp
-    },
-
-    deg2rad: function (deg) {
-      return deg * (Math.PI / 180)
-    },
-    // SEARCH DISTANCE BETWEEN 2 LOCATIONS SECTION STOPS HERE
+    descriptionEmpty() {
+      if (this.eventDescription == '<p></p>'){
+        return true
+      }
+    }
   }
 };
 
