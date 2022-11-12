@@ -2,8 +2,6 @@
   <LandingScreen v-if="isLoading"></LandingScreen>
 
   <div v-else>
-    <NavBar></NavBar>
-    <Categories></Categories>
     <WelcomeImage></WelcomeImage>
     <div v-if="xsBreakpoint">
       <div class="my-2 pt-6 pb-6">
@@ -17,7 +15,7 @@
     </div>
 
     <div v-else>
-      <div class="mb-2 mt-10 pt-6 px-10 pb-16 greenLight">
+      <div class="mb-2 mt-10 pt-6 px-sm-3 px-md-6 px-lg-10 pb-16 greenLight">
         <h1 class=" mb-3 font-weight-black carouselheader ml-16 pl-16 text-start"><a class="greenDark--text" @click="pushToBuzzing">BUZZING NOW</a></h1>
         <EventCarousel :allEvents="buzzingEvents"></EventCarousel>
       </div>
@@ -27,6 +25,9 @@
       </div>
       <div class="mb-2 mt-10 pt-6 px-10 pb-16">
         <h1>Don't buzz off by yourself... Join EventHive and BEE happy!</h1>
+        <p>Find friends through casual and chill events</p>
+        <p>Host events for other like-minded fellas to join</p>
+        <p>There will be something for everyone!</p>
       </div>
     </div>
     <RandomEventPrompt class="bottom-stick"></RandomEventPrompt>
@@ -36,15 +37,13 @@
 
 <script>
 import LandingScreen from '../components/LandingScreen.vue';
-import Categories from '@/components/Categories.vue';
-import NavBar from '@/components/NavBar.vue';
 import EventCarousel from '@/components/EventCarousel.vue';
 import RandomEventPrompt from '@/components/RandomEventPrompt.vue';
 import WelcomeImage from '@/components/WelcomeImage.vue';
 
 export default {
     name: "Home",
-    components: { LandingScreen, Categories, NavBar, EventCarousel, RandomEventPrompt, WelcomeImage },
+    components: { LandingScreen, EventCarousel, RandomEventPrompt, WelcomeImage },
     mounted() {
       setTimeout(() => {
         this.isLoading = false;
@@ -55,10 +54,14 @@ export default {
     },
     data() {
       return {
+        drawer: false,
         isLoading: true
       }
     },
     methods: {
+      showDrawer(){
+        this.drawer = true
+      },
       getAllBuzzing (events){
         var buzzingEvents = [];
         for (let indiv of events){
@@ -92,7 +95,15 @@ export default {
             events: this.userForYou
           }
         })
-      }
+      },
+      createEvent() {
+        if (this.$store.state.user == null){
+          this.$router.push("/login");
+        }
+        else {
+          this.$router.push("/events/create");
+        }
+      },
     },
     computed: {
       userForYou() {
@@ -102,7 +113,7 @@ export default {
         return this.getAllBuzzing(this.$store.state.events)
       },
       xsBreakpoint() {
-        return this.$vuetify.breakpoint.name == 'xs' 
+        return this.$vuetify.breakpoint.width <= 750
       }
     }
 };
@@ -119,6 +130,10 @@ export default {
   z-index: 999;
   position: fixed;
   bottom: 0;
+}
+
+p{
+  font-size: 2em
 }
 
 </style>
