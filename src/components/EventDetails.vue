@@ -1,5 +1,5 @@
 <template>
-    <div class="event-card peachLight py-8 px-16"
+    <div class="event-card brownLight py-8 px-16"
     >
         <v-card
         class="mx-auto mt-2 pt-4"
