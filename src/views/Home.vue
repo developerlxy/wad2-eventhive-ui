@@ -48,6 +48,9 @@
       </div>
       <div class="mb-2 mt-10 pt-6 px-10 pb-16">
         <h1>Don't buzz off by yourself... Join EventHive and BEE happy!</h1>
+        <p>Find friends through casual and chill events</p>
+        <p>Host events for other like-minded fellas to join</p>
+        <p>There will be something for everyone!</p>
       </div>
     </div>
     <RandomEventPrompt class="bottom-stick"></RandomEventPrompt>
@@ -152,6 +155,10 @@ export default {
   z-index: 999;
   position: fixed;
   bottom: 0;
+}
+
+p{
+  font-size: 2em
 }
 
 </style>
