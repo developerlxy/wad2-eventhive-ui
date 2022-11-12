@@ -11,7 +11,7 @@
           :key="category.title"
 
           @click="handleClick(category.filter)"
-          class="col-3"
+          class="col-6"
         >
         
         <v-hover
