@@ -2,36 +2,44 @@
     <v-card
       @click="toEvent()"
     >
-      <div class="d-flex flex-column flex-md-row flex-no-wrap justify-md-start justify-sm-center align-center">
-        <v-avatar
-          class="ma-3 mx-sm-auto mx-md-3"
-          size="200"
-          tile>
-          <v-img 
-          :src="eventDetails.eventPhotoURL"></v-img>
-        </v-avatar>
-
-        <div>
-          <v-card-title>
-            <v-row class="py-2 mx-1 mt-1 mb-1 font-weight-bold">
-              {{eventDetails.eventName}}
-            </v-row>
-          </v-card-title>
-          <v-card-text>
-            <v-row class="py-2 mx-1 font-weight-mediumz">
-              <v-icon class="mx-1" color="greenDark">place</v-icon>
-              {{eventDetails.eventLocation.SEARCHVAL}}
-            </v-row>
-            <v-row class="py-2 mx-1 font-weight-medium">
-              <v-icon class="mx-1" color="greenDark">event</v-icon>
-              {{ getFormattedDate }}
-            </v-row>
-            <v-row class="pt-2 pb-3 mx-1 font-weight-medium">
-              <v-icon class="mx-1" color="greenDark">schedule</v-icon>
-              {{ eventDetails.eventTime ? getFormattedTime : "TBD" }}
-            </v-row>
-          </v-card-text>
-        </div>
+      <div class="justify-md-start justify-sm-center align-center">
+        <v-row>
+          <v-col>
+            <v-avatar
+              class="ma-3 mx-sm-auto mx-md-3"
+              size="200"
+              tile>
+              <v-img 
+              :src="eventDetails.eventPhotoURL"></v-img>
+            </v-avatar>
+          </v-col>
+          
+          <v-col>
+            <div>
+              <v-card-title>
+                <v-row class="py-2 mx-1 mt-1 mb-1 font-weight-bold">
+                  {{eventDetails.eventName}}
+                </v-row>
+              </v-card-title>
+              <v-card-text class="d-block">
+                <v-row class="py-2 mx-1 font-weight-medium d-flex flex-nowrap">
+                  <v-icon class="mx-1" color="greenDark">place</v-icon>
+                  <div class="text-truncate">
+                    {{eventDetails.eventLocation.SEARCHVAL}}
+                  </div>
+                </v-row>
+                <v-row class="py-2 mx-1 font-weight-medium">
+                  <v-icon class="mx-1" color="greenDark">event</v-icon>
+                  {{ getFormattedDate }}
+                </v-row>
+                <v-row class="pt-2 pb-3 mx-1 font-weight-medium">
+                  <v-icon class="mx-1" color="greenDark">schedule</v-icon>
+                  {{ eventDetails.eventTime ? getFormattedTime : "TBD" }}
+                </v-row>
+              </v-card-text>
+            </div>
+          </v-col>
+        </v-row>
       </div>
     </v-card>
 
