@@ -1,5 +1,5 @@
 <template>
-    <div class="event-card brownLight py-lg-8 px-lg-16"
+    <div class="event-card brownLight py-4 py-lg-8 px-lg-16"
     >
         <v-card
         class="mx-auto mt-2 pt-4"
@@ -54,35 +54,35 @@
                             <v-card-title
                             class="justify-center"
                             >
-                            <v-icon>mdi-flower</v-icon>
-                            &nbsp; Registered! &nbsp;
-                                    <v-icon>mdi-flower</v-icon>
+                            <v-icon color="#FFFFFF" class="mr-10">mdi-flower</v-icon>
+                            Registered!
+                            <v-icon color="#FFFFFF" class="ml-10">mdi-flower</v-icon>
                             </v-card-title>
                             </v-card>
                         </template>
                         <template v-else-if="this.specificEvent.attendees.length >= this.specificEvent.maxCapacity">
                             <v-card
-                                color="#FF853F"
+                                class="peachDark"
                             >
                             <v-card-title
                             class="justify-center white--text"
                             >
-                            <v-icon>mdi-beehive-off-outline</v-icon>
-                            &nbsp; Event full :( &nbsp;
-                                    <v-icon>mdi-beehive-off-outline</v-icon>
+                            <v-icon color="#FFFFFF" class="mr-10">mdi-beehive-off-outline</v-icon>
+                            Event Full
+                            <v-icon color="#FFFFFF" class="ml-10">mdi-beehive-off-outline</v-icon>
                             </v-card-title>
                             </v-card>
                         </template>
                         <template v-else-if="!(this.$store.state.user == null) && (this.specificEvent.eventHost._id == this.$store.state.user._id)">
                             <v-card
-                                color="#779977"
+                                class="greenDark"
                             >
                             <v-card-title
                             class="justify-center white--text"
                             >
-                            <v-icon> mdi-bee </v-icon>
+                            <v-icon color="#FFFFFF" class="mr-10"> mdi-bee </v-icon>
                                 You are hosting!
-                                <v-icon> mdi-bee </v-icon>
+                            <v-icon color="#FFFFFF" class="ml-10"> mdi-bee </v-icon>
                             </v-card-title>
                             
                             </v-card>
@@ -102,13 +102,9 @@
                                     v-on="on"
                                     
                                 >
-                                <v-icon>mdi-bee-flower</v-icon>
-                                &nbsp;
-                                <span class="text-wrap">
+                                <v-icon color="#FFFFFF" class="mr-10">mdi-bee-flower</v-icon>
                                     Register
-                                </span> &nbsp;
-                                    <v-icon>mdi-bee-flower</v-icon>
-                                
+                                <v-icon color="#FFFFFF" class="ml-10">mdi-bee-flower</v-icon>
                                 </v-btn>
                         </template>
                         <v-card>
@@ -461,7 +457,7 @@ computed: {
         },
         width () {
             switch(this.$vuetify.breakpoint.name) {
-            case 'xs': return 360
+            case 'xs': return 450
             case 'sm': return 450
             case 'md': return 450
             case 'lg': return 500
