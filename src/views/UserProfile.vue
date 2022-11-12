@@ -1,5 +1,5 @@
 <template>
-  <LandingScreen v-if="isLoading"></LandingScreen>
+  <LoadingScreen v-if="isLoading"></LoadingScreen>
   <div v-else-if="this.$store.state.user == null">
     <NavBar></NavBar>
     <v-alert class="brownLight ma-2">
@@ -150,12 +150,12 @@
   </div>
 </template>
 <script>
-import LandingScreen from "../components/LandingScreen.vue";
+import LoadingScreen from "../components/LoadingScreen.vue";
 import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragraph, BulletList, OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History } from 'tiptap-vuetify'
 
 export default {
   name: "UserProfile",
-  components: { LandingScreen, TiptapVuetify },
+  components: { LoadingScreen, TiptapVuetify },
   mounted() {
     setTimeout(() => {
       this.isLoading = false;

@@ -1,5 +1,5 @@
 <template>
-  <LandingScreen v-if="isLoading"></LandingScreen>
+  <LoadingScreen v-if="isLoading"></LoadingScreen>
 
   <div v-else>
     <!-- navbar component -->
@@ -10,14 +10,14 @@
 </template>
   
 <script>
-  import LandingScreen from '../components/LandingScreen.vue';
+  import LoadingScreen from '../components/LoadingScreen.vue';
   import SearchBar from '@/components/SearchBar.vue';
   import NavBar from '@/components/NavBar.vue';
   import UserEventCarousel from '@/components/UserEventCarousel.vue'
 
   export default {
     name: "UserEvents",
-    components: { LandingScreen, SearchBar, NavBar, UserEventCarousel},
+    components: { LoadingScreen, SearchBar, NavBar, UserEventCarousel},
     mounted() {
       setTimeout(() => {
         this.isLoading = false;

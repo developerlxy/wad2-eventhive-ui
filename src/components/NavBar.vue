@@ -12,10 +12,8 @@
           @click="toHome()"
         />
         <v-spacer></v-spacer>
-        <v-btn color="greenDark" class="white--text mr-sm-4 mr-md-5 mr-2 px-1 my-auto" elevation="0" @click="createEvent()"
-          >Create Event</v-btn
-        >
         <LoginProfileButton class="my-auto" ></LoginProfileButton>
+        <v-app-bar-nav-icon class="my-auto" @click="showDrawer"></v-app-bar-nav-icon>
       </v-col>
       <v-col order="2" class="pb-0 pt-1">
         <SearchBar class="d-block mt-0 mb-4"></SearchBar>
@@ -65,6 +63,11 @@ export default {
       default: "../src/assets/images/test.png",
     },
   },
+  data(){
+    return {
+      drawer: false
+    }
+  },
   computed: {
     smBreakpoint() {
       return this.$vuetify.breakpoint.name == 'xs' || this.$vuetify.breakpoint.name == 'sm' 
@@ -82,6 +85,9 @@ export default {
         this.$router.push("/events/create");
       }
     },
+    showDrawer(){
+      this.$emit('drawerShown', true)
+    }
   },
 };
 </script>

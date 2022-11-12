@@ -11,10 +11,12 @@
 <script>
 import LoginCard from "../components/LoginCard.vue";
 import NavBar from "@/components/NavBar.vue";
+import LandingScreen from '../components/LandingScreen.vue';
+
 
 export default {
   name: "Login",
-  components: { LoginCard, NavBar },
+  components: {LandingScreen, LoginCard, NavBar },
   mounted() {
     setTimeout(() => {
       this.isLoading = false;
