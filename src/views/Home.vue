@@ -132,8 +132,8 @@ export default {
   bottom: 0;
 }
 
-p{
+/* p{
   font-size: 2em
-}
+} */
 
 </style>
