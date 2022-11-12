@@ -152,7 +152,7 @@
           tile
         >
           <h1>Hey, I'm {{ host["userName"] }}!</h1><br/>
-          <p>Descripion here...</p>
+          <p v-html="host['userDesc']"></p>
           <h2>Rating & Reviews</h2><br>
           <div v-if="reviews.length==0">
           <p>No reviews yet...</p>
@@ -181,6 +181,10 @@
       name: "Home",
       components: { LoadingScreen, NavBar, HostEventReview },
       mounted() {
+      this.axios.get('https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users').
+      then(result=>{
+        this.allUsers = result.data
+      })
       setTimeout(() => {
         this.isLoading = false;
       }, 2000);
@@ -192,16 +196,24 @@
           eventDetails: {
                 type: Object,
                 required: true    
-            }
+            },
+          allUsers: null
         }
       },
       computed: {
         host() {
+          var eventHost
           for (let event of this.$store.state.events) {
             if (event["_id"]==this.eventID) {
-              return event["eventHost"]
+              eventHost = event["eventHost"]
             }
           }
+          for (let user of this.allUsers) {
+            if (user['_id'] == eventHost['_id']) {
+              return user
+            }
+          }
+
         },
         reviews() {
           let returnArray = []
