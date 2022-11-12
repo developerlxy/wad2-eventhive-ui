@@ -5,14 +5,14 @@
         <img src="../assets/images/graphics1.png" height="100px">
       </v-col>
       <v-col class="pa-0 ma-0">
-        <h1 :id='headerID' class="font-weight-black peachMid--text text-start">BEE there or BEE <span style="background-color: peachpuff;">square!</span></h1>
+        <h1 :id='headerID' class="font-weight-black brownDark--text text-start">BEE there or BEE <span class="brownMid">square!</span></h1>
       </v-col>
     </v-row>
   </div>
   <div v-else-if="smBreakpoint">
     <v-row class="">
       <v-col class="d-flex align-content-center flex-wrap justify-end justify-sm-center">
-        <h1 :id="headerID" class="font-weight-black peachMid--text ml-14 text-start">BEE there or BEE <span style="background-color: peachpuff;">square!</span></h1>
+        <h1 :id="headerID" class="font-weight-black brownDark--text ml-14 text-start">BEE there or BEE <span class="brownMid">square!</span></h1>
       </v-col>
       <v-col class="d-flex align-content-center justify-start">
         <img src="../assets/images/graphics1.png" height="200">
@@ -22,10 +22,10 @@
   <div v-else>
     <v-row class="mx-6">
       <v-col class="d-flex align-content-center flex-wrap justify-end justify-sm-center mx-6">
-        <h1 :id="headerID" class="font-weight-black peachMid--text ml-14 pl-14 text-start">BEE there or BEE <span style="background-color: peachpuff;">square!</span></h1>
+        <h1 :id="headerID" class="font-weight-black brownDark--text ml-14 pl-14 text-start">BEE there or BEE <span class="brownMid">square!</span></h1>
       </v-col>
       <v-col class="d-flex align-content-center justify-center mt-1 pr-16 mr-16">
-        <img src="../assets/images/graphics1.png" :height="mdBreakpoint ? 280: 350">
+        <img src="../assets/images/graphics1.png" :height="mdBreakpoint ? 300: 400">
       </v-col>
     </v-row>
   </div>

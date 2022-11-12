@@ -1,7 +1,7 @@
 <template>
 <footer>
   <div>
-    <v-footer color="greenLight">
+    <v-footer color="brownMid">
       <v-container >
         <v-row justify="end" dense >
           <v-col>

@@ -20,7 +20,8 @@
   </div>
   <div v-else>
     <v-sheet
-      class="mx-auto"
+      class="mx-auto pa-4 rounded-lg"
+      color="rgb(0, 0, 0, 0)"
       width="90%"
     >
       <v-slide-group
