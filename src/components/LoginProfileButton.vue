@@ -76,13 +76,13 @@ export default {
       this.$router.push("/profile");
     },
     registered() {
-      this.$router.push("/user/registered-events");
+      this.$router.push("/user?type=registered");
     },
     history() {
-      this.$router.push("/user/attended-events");
+      this.$router.push("/user?type=attended");
     },
     hosted() {
-      this.$router.push("/user/hosted-events");
+      this.$router.push("/user?type=hosted");
     },
   },
 };
