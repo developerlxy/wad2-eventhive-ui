@@ -94,17 +94,24 @@
                             width="500"
                             >
                             <template v-slot:activator="{ on, attrs }">
+                                <!-- <v-card><v-card-actions> -->
                                 <v-btn
-                                    brick
+                                    block
                                     color="greenDark"
-                                    class="justify-start white--text"
+                                    class="white--text no-text-transform btn-multiline"
                                     v-bind="attrs"
                                     v-on="on"
                                     
                                 >
-                                    Register your interest! 
+                                <v-icon>mdi-bee-flower</v-icon>
+                                &nbsp;
+                                <span class="text-wrap">
+                                    Register
+                                </span> &nbsp;
                                     <v-icon>mdi-bee-flower</v-icon>
+                                
                                 </v-btn>
+                            <!-- </v-card-actions></v-card> -->
                         </template>
                         <v-card>
                             <v-card-title class="text-h5 grey lighten-2">
