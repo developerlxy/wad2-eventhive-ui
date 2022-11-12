@@ -2,8 +2,7 @@
     <v-card
       @click="toEvent()"
     >
-      <div class="justify-md-start justify-sm-center align-center">
-        <v-row>
+        <v-row class="ma-0">
           <v-col>
             <v-avatar
               class="ma-3 mx-sm-auto mx-md-3"
@@ -21,12 +20,11 @@
                   {{eventDetails.eventName}}
                 </v-row>
               </v-card-title>
-              <v-card-text class="d-block">
+              <v-card-text>
                 <v-row class="py-2 mx-1 font-weight-medium d-flex flex-nowrap">
                   <v-icon class="mx-1" color="greenDark">place</v-icon>
-                  <div class="text-truncate">
-                    {{eventDetails.eventLocation.SEARCHVAL}}
-                  </div>
+                  <div class="text-truncate">{{eventDetails.eventLocation.SEARCHVAL}}</div>
+                    <!-- {{eventDetails.eventLocation.SEARCHVAL}} -->
                 </v-row>
                 <v-row class="py-2 mx-1 font-weight-medium">
                   <v-icon class="mx-1" color="greenDark">event</v-icon>
@@ -40,7 +38,6 @@
             </div>
           </v-col>
         </v-row>
-      </div>
     </v-card>
 
 </template>

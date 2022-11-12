@@ -2,10 +2,11 @@
     <v-card
       @click="toEvent()"
     >
-      <div class="d-flex flex-column flex-lg-row flex-no-wrap justify-sm-center align-center">
+      <div class="justify-sm-center align-center d-block">
         <v-avatar
           class="ma-3"
-          size="300"
+          max-width="300"
+          size="70%"
           tile>
           <v-img 
           :src="eventDetails.eventPhotoURL"></v-img>
@@ -18,10 +19,10 @@
             </v-row>
           </h1>
 
-          <v-card-text>
-            <v-row class="py-2 mx-1 font-weight-medium">
-              <v-icon class="mx-1" color="greenDark">place</v-icon>
-              {{eventDetails.eventLocation.SEARCHVAL}}
+          <v-card-text class="d-block">
+            <v-row class="py-2 mx-1 font-weight-medium d-flex flex-nowrap">
+              <v-icon class="mx-1 d-inline" color="greenDark">place</v-icon>
+              <div class="text-truncate">{{eventDetails.eventLocation.SEARCHVAL}}</div>
             </v-row>
             <v-row class="py-2 mx-1 font-weight-medium">
               <v-icon class="mx-1" color="greenDark">event</v-icon>
