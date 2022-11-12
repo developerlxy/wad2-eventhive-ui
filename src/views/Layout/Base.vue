@@ -55,7 +55,7 @@ export default {
     },
     computed: {
       xsBreakpoint() {
-        return this.$vuetify.breakpoint.width <= 600
+        return this.$vuetify.breakpoint.width <= 700
       }
     }
 };
