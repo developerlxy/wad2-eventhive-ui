@@ -33,6 +33,8 @@
 </template>
 
 <script>
+import AOS from 'aos'
+
 export default {
   name: "WelcomeImage",
   computed: {
