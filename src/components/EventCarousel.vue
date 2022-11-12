@@ -58,7 +58,7 @@ import AOS from 'aos'
     },
     mounted() {
       AOS.init({
-        duration: 800
+        duration: 1200
       })
     },
     computed: {

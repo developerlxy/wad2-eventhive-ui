@@ -52,7 +52,9 @@ import AOS from 'aos'
     export default {
         name: 'EventCard',
         mounted() {
-          AOS.init()
+          AOS.init({
+            duration: 1200
+          })
         },
         props: {
             eventDetails: {
