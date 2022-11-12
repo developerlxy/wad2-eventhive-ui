@@ -22,14 +22,13 @@
             <img :src="'/src/assets/images/test.png'">
         </v-avatar>
         <v-rating
-  empty-icon="$mdiStarOutline"
-  full-icon="$mdiStar"
-  half-icon="$mdiStarHalfFull"
-  length="5"
-  readonly
-  size="64"
-  value="avgRating"
-></v-rating>
+                                :value="avgRating"
+                                color="amber"
+                                dense
+                                half-increments
+                                readonly
+                                size="14"
+                                ></v-rating>
         
         <v-card
     class="mx-auto"
