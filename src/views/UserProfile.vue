@@ -1,9 +1,11 @@
 <template>
   <LoadingScreen v-if="isLoading"></LoadingScreen>
-  <div v-else-if="this.$store.state.user == null">
-    <v-alert class="brownLight ma-2">
+  <div v-else-if="this.$store.state.user == null" class="my-16 py-16">
+    <div class="py-16">
+      <v-alert class="brownLight ma-2 my-16">
       You are not logged in. Please login to view your profile.
     </v-alert>
+    </div>
   </div>
   <div v-else>
     <v-container>
