@@ -3,7 +3,6 @@
   <LoadingScreen v-if="isLoading"></LoadingScreen>
 
   <div v-else>
-      <NavBar></NavBar>
 
     <div v-if="xsBreakpoint">
       <v-container fluid class="peachLight">
@@ -20,6 +19,7 @@
               class="pt-4"
               outlined
               tile
+              data-aos="flip-up"
             >
             <v-avatar size="150" class="mt-2">
                 <img :src="'/src/assets/images/test.png'">
@@ -71,6 +71,7 @@
               class="pa-2 text-left px-8 pt-4"
               outlined
               tile
+              data-aos="flip-up"
             >
               <h1>Hey, I'm {{ host["userName"] }}!</h1><br/>
               <p>Descripion here...</p>
@@ -86,7 +87,7 @@
       </v-container>
     </div>
     <div v-else>
-      <v-container fluid class="peachLight pb-16">
+      <v-container fluid class="peachLight pb-16 pt-8">
     <v-row
       no-gutters
       style="flex-wrap: nowrap;"
@@ -100,6 +101,8 @@
           class="pt-2 mr-4"
           outlined
           tile
+          data-aos="flip-up"
+          data-aos-duration="1000"
         >
         <v-avatar size="150" class="mt-2">
             <img :src="'/src/assets/images/test.png'">
@@ -150,6 +153,8 @@
           class="pa-2 text-left px-8 pt-4"
           outlined
           tile
+          data-aos="flip-up"
+          data-aos-duration="1000"
         >
           <h1>Hey, I'm {{ host["userName"] }}!</h1><br/>
           <p v-html="host['userDesc']"></p>
@@ -174,6 +179,7 @@
   <script>
   import LoadingScreen from '../components/LoadingScreen.vue';
   import HostEventReview from '@/components/HostEventReview.vue';
+  import AOS from 'aos'
   
   
   export default {
@@ -184,6 +190,7 @@
       then(result=>{
         this.allUsers = result.data
       })
+      AOS.init()
       setTimeout(() => {
         this.isLoading = false;
       }, 2000);

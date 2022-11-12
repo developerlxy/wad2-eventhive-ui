@@ -2,7 +2,7 @@
   <LoadingScreen v-if="isLoading"></LoadingScreen>
 
   <div v-else height="100%">
-    <v-container v-if="events.length==0">
+    <v-container v-if="events.length==0" class="my-16 py-16">
       <v-row class="justify-center mb-5">
         <img src="../assets/images/flying-bee.gif">
       </v-row>

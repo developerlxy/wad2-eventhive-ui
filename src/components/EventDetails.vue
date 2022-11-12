@@ -4,6 +4,9 @@
         <v-card
         class="mx-auto mt-2 pt-4"
         :width="cardWidth"
+        data-aos="zoom-in"
+        data-aos-duration="800"
+
         >
         <v-container>
             <v-row>
@@ -12,6 +15,8 @@
                 :width="width"
                 outlined
                 color="transparent"
+                data-aos="flip-up"
+                data-aos-duration="1200"
                 >
                   <img v-bind:src="this.specificEvent.eventPhotoURL"
                       aspect-ratio="16/9"
@@ -23,6 +28,8 @@
                 :width="width"
                 outlined
                 color="transparent"
+                data-aos="flip-up"
+                data-aos-duration="1200"
                 >
                     <v-container class="fill-height">
                     <v-row class="d-flex flex-column">
@@ -125,7 +132,7 @@
                                 text
                                 @click="intermediate"
                                 >
-                                I accept
+                                Confirm
                                 </v-btn>
                             </v-card-actions>
                         </v-card>
@@ -146,6 +153,8 @@
                 :width="width"
                 outlined
                 color="transparent"
+                data-aos="flip-up"
+                data-aos-duration="1000"
                 >
                     <h3 class="text-left">Description</h3>
                     <br>
@@ -160,7 +169,7 @@
                 >
                     <div class="d-flex flex-column">
 
-                            <v-card class="mb-4 pa-4">
+                            <v-card class="mb-4 pa-4" data-aos="flip-up" data-aos-duration="1000">
                                 <v-container fill-height>
                                 <v-row class="justify-start align-center mb-1">
                                     <v-col cols="1">
@@ -182,7 +191,11 @@
                         </v-row>
                         </v-container>
                     </v-card>
-                    <v-card class="pa-4 mt-4" :width="width">
+                    <v-card 
+                      class="pa-4 mt-4" 
+                      :width="width"
+                      data-aos="flip-up"
+                      data-aos-duration="1000">
                         <v-container fill-height>
                         <v-row class="justify-start  mb-1">
                             <v-col cols="1">
@@ -227,6 +240,8 @@
                         max-width="500"
                         class="mx-auto text-start"
                         border="1px solid"
+                        data-aos="flip-up"
+                        data-aos-duration="1000"
                     >
                         <h2 class="my-4">Reviews</h2>
                         <div v-if="this.specificEvent.eventReviews.length > 0">
@@ -285,6 +300,7 @@
 
 <script>
   import GoogleMap from "@/components/GoogleMap.vue"
+  import AOS from 'aos'
     export default {
         name: 'EventDetails',
 
@@ -427,6 +443,7 @@ created() {
     this.$store.dispatch('getUser')
 },
     async mounted()  {
+        AOS.init()
         await this.setup()
         console.log(this.specificEvent)
         this.isRegistered()
