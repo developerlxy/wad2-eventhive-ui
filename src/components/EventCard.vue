@@ -1,5 +1,6 @@
 <template>
     <v-card
+    
     width="300px"
     @click="toEvent()"
     class="mx-auto"
@@ -47,6 +48,7 @@
 </template>
 
 <script>
+import AOS from 'aos'
     export default {
         name: 'EventCard',
         props: {
@@ -54,6 +56,13 @@
                 type: Object,
                 required: true
             }
+        },
+        mounted() {
+          AOS.init(
+            {
+            duration: 800
+          }
+          )
         },
         methods: {
             toEvent() {
@@ -83,6 +92,7 @@
             return date.getHours() + ":" + date.getMinutes();
           }
         },
+
     }
 
 </script>

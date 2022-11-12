@@ -87,6 +87,12 @@ const routes = [
         component: () => import('@/views/BuzzingForYou.vue'),
         props: true
       },
+      {
+        path: '/gmaps',
+        name: 'Gmaps Test',
+        component: () => import('@/views/GoogleMap.vue'),
+        props: true
+      },
     ],
   },
 ];

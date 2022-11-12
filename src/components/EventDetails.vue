@@ -207,6 +207,13 @@
                             </p>
                         </v-row>
                         <v-row class="justify-center">
+                          <GoogleMap 
+                            :long="this.specificEvent.eventLocation.LONGITUDE" 
+                            :lat="this.specificEvent.eventLocation.LATITUDE"
+                            :locationName="this.specificEvent.eventLocation.SEARCHVAL"
+                          >
+                          </GoogleMap>
+
                             <v-btn
                                 block
                                 color="greenDark"
@@ -279,6 +286,7 @@
 </template>
 
 <script>
+  import GoogleMap from "@/components/GoogleMap.vue"
     export default {
         name: 'EventDetails',
 
@@ -298,6 +306,9 @@
             isHost: false,
             
         }
+    },
+    props: {
+      GoogleMap,
     },
     methods: {
         redirect() {

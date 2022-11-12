@@ -2,7 +2,7 @@
   <div v-if="xsBreakpoint">
     <v-carousel
     cycle
-    height="500"
+    height="420"
     hide-delimiters
     >
       <v-carousel-item 
@@ -10,7 +10,7 @@
         :key="event.name"
         >
         <v-row align="center" justify="center">
-          <div class="mt-14">
+          <div class="mt-8 mt-xs-14">
             <EventCard :eventDetails="event" ></EventCard>
           </div>
         </v-row>
@@ -22,11 +22,13 @@
     <v-sheet
       class="mx-auto"
       width="90%"
+      data-aos="slide-up"
     >
       <v-slide-group
         class="p-4 align-center"
         center-active
         show-arrows="always"
+        
       >
         <v-slide-item
           v-for="event in allEvents"

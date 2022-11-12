@@ -15,6 +15,11 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+import GmapVue from 'gmap-vue'
+
+import AOS from 'aos'
+import 'aos/dist/aos.css'
+
 library.add(fas)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(VueAxios, axios)
@@ -24,6 +29,18 @@ Vue.use(TiptapVuetifyPlugin, {
   vuetify, // same as "vuetify: vuetify"
   // optional, default to 'md' (default vuetify icons before v2.0.0)
   iconsGroup: 'md'
+})
+
+Vue.use(GmapVue, {
+  load: {
+    key: import.meta.env.VITE_GOOGLE_API_KEY,
+    libraries: 'places',
+    v: '3.26',
+    customCallback: 'MyCustomCallback',
+  },
+  autoBindAllEvents: false,
+  installComponents: true,
+  dynamicLoad: false,
 })
 
 new Vue({

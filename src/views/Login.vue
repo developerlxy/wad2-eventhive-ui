@@ -2,7 +2,7 @@
   <LandingScreen v-if="isLoading"></LandingScreen>
   <div v-else class="fill-height peachLight">
     <NavBar></NavBar>
-    <div class="my-8">
+    <div class="my-12">
       <LoginCard></LoginCard>
     </div>
   </div>
