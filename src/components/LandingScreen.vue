@@ -1,11 +1,11 @@
 <template>
-  <v-container id="loading" fill-height fluid>
-    <v-row class="align-center">
+  <v-container id="loading" fill-height>
+    <v-row>
       <img
-      class="img"
+      class="mx-auto"
       src="../assets/images/landing.gif"
       alt="landing..."
-      width=100%
+      width=80%
     />
     </v-row>
   </v-container>

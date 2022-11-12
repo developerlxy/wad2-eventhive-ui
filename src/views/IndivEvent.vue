@@ -1,7 +1,6 @@
 <template>
     <LoadingScreen v-if="isLoading"></LoadingScreen>
     <div v-else>
-        <br>
       <EventDetails></EventDetails>
       </div>
 </template>

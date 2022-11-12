@@ -1,6 +1,6 @@
 <template>
     <v-btn text v-if="this.$store.state.user == null" 
-      class="login-btn px-xs-1 greenDark--text font-weight-bold" 
+      class="login-btn px-xs-1 greenDark--text font-weight-medium" 
       id="login-btn" 
       @click="login">
       Log In
