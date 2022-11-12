@@ -47,7 +47,7 @@
       color="error"
       @click="deleteEvent"
     >
-      cancel event
+      delete event
     </v-btn>
 
     

@@ -35,7 +35,7 @@
     max-width="344"
     outlined
   >
-    <v-list-item three-line>
+        <v-card-text>
       <v-list-item-content>
         <div style="background-color:lightgray;padding:10px;text-align:left;font-weight:bold;">
           Contact Info
@@ -54,7 +54,7 @@
 
       </v-list-item-content>
 
-    </v-list-item>
+    </v-card-text>
   </v-card>
   <v-card
     class="mx-auto"
@@ -75,7 +75,7 @@
           outlined
           tile
         >
-          <h1>Hey, I'm {{ host["userName"] }}!</h1><br/>
+          <h1>Hey, I'm {{ host["userFullName"] }}!</h1><br/>
           <p>Descripion here...</p>
           <h2>Rating & Reviews</h2><br>
           <div v-if="reviews.length==0">
