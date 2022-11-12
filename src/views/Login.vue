@@ -1,20 +1,18 @@
 <template>
   <LandingScreen v-if="isLoading"></LandingScreen>
-  <div v-else class="fill-height brownLight">
-    <NavBar></NavBar>
-    <div class="my-12">
+  <div v-else class="fill-height brownLight py-10">
       <LoginCard></LoginCard>
-    </div>
   </div>
 </template>
 
 <script>
 import LoginCard from "../components/LoginCard.vue";
-import NavBar from "@/components/NavBar.vue";
+import LandingScreen from '../components/LandingScreen.vue';
+
 
 export default {
   name: "Login",
-  components: { LoginCard, NavBar },
+  components: {LandingScreen, LoginCard },
   mounted() {
     setTimeout(() => {
       this.isLoading = false;

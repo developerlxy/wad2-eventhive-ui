@@ -4,13 +4,12 @@
       :loading="loading"
       :items="dropdownItems"
       :search-input.sync="search"
+      :rules="locationRules"
       cache-items
-      class="mx-4"
       flat
       hide-no-data
       hide-details
-      label="Search for location here"
-      solo-inverted
+      label="Location"
     ></v-autocomplete>
 </template>
 
@@ -24,7 +23,10 @@
         select: null,
         results: [],
         dropdownItems: [],
-        selectedLocation: null
+        selectedLocation: null,
+        locationRules: [
+          v => !!v || "We wouldn't know where to go!",
+        ],
       }
     },
     watch: {

@@ -1,19 +1,18 @@
 <template>
   <LandingScreen v-if="isLoading"></LandingScreen>
-  <div v-else fluid class="peachLight fill-height">
-    <NavBar></NavBar>
-    <div class="my-8">
+  <div v-else fluid class="peachLight fill-height py-8">
       <RegistrationCard></RegistrationCard>
-    </div>
   </div>
 </template>
 
 <script>
 import RegistrationCard from "../components/RegistrationCard.vue";
+import LandingScreen from '../components/LandingScreen.vue';
+
 
 export default {
   name: "Register",
-  components: { RegistrationCard},
+  components: {LandingScreen, RegistrationCard},
   mounted() {
     setTimeout(() => {
       this.isLoading = false;

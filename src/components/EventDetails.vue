@@ -1,9 +1,12 @@
 <template>
-    <div class="event-card brownLight py-8 px-16"
+    <div class="event-card brownLight py-4 py-lg-8 px-lg-16"
     >
         <v-card
         class="mx-auto mt-2 pt-4"
         :width="cardWidth"
+        data-aos="zoom-in"
+        data-aos-duration="800"
+
         >
         <v-container>
             <v-row>
@@ -12,6 +15,8 @@
                 :width="width"
                 outlined
                 color="transparent"
+                data-aos="flip-up"
+                data-aos-duration="1200"
                 >
                   <img v-bind:src="this.specificEvent.eventPhotoURL"
                       aspect-ratio="16/9"
@@ -23,6 +28,8 @@
                 :width="width"
                 outlined
                 color="transparent"
+                data-aos="flip-up"
+                data-aos-duration="1200"
                 >
                     <v-container class="fill-height">
                     <v-row class="d-flex flex-column">
@@ -54,35 +61,35 @@
                             <v-card-title
                             class="justify-center"
                             >
-                            <v-icon>mdi-flower</v-icon>
-                            &nbsp; Registered! &nbsp;
-                                    <v-icon>mdi-flower</v-icon>
+                            <v-icon color="#FFFFFF" class="mr-10">mdi-flower</v-icon>
+                            Registered!
+                            <v-icon color="#FFFFFF" class="ml-10">mdi-flower</v-icon>
                             </v-card-title>
                             </v-card>
                         </template>
                         <template v-else-if="this.specificEvent.attendees.length >= this.specificEvent.maxCapacity">
                             <v-card
-                                color="#FF853F"
+                                class="peachDark"
                             >
                             <v-card-title
                             class="justify-center white--text"
                             >
-                            <v-icon>mdi-beehive-off-outline</v-icon>
-                            &nbsp; Event full :( &nbsp;
-                                    <v-icon>mdi-beehive-off-outline</v-icon>
+                            <v-icon color="#FFFFFF" class="mr-10">mdi-beehive-off-outline</v-icon>
+                            Event Full
+                            <v-icon color="#FFFFFF" class="ml-10">mdi-beehive-off-outline</v-icon>
                             </v-card-title>
                             </v-card>
                         </template>
                         <template v-else-if="!(this.$store.state.user == null) && (this.specificEvent.eventHost._id == this.$store.state.user._id)">
                             <v-card
-                                color="#779977"
+                                class="greenDark"
                             >
                             <v-card-title
                             class="justify-center white--text"
                             >
-                            <v-icon> mdi-bee </v-icon>
+                            <v-icon color="#FFFFFF" class="mr-10"> mdi-bee </v-icon>
                                 You are hosting!
-                                <v-icon> mdi-bee </v-icon>
+                            <v-icon color="#FFFFFF" class="ml-10"> mdi-bee </v-icon>
                             </v-card-title>
                             
                             </v-card>
@@ -94,7 +101,6 @@
                             width="500"
                             >
                             <template v-slot:activator="{ on, attrs }">
-                                <!-- <v-card><v-card-actions> -->
                                 <v-btn
                                     block
                                     color="greenDark"
@@ -103,15 +109,10 @@
                                     v-on="on"
                                     
                                 >
-                                <v-icon>mdi-bee-flower</v-icon>
-                                &nbsp;
-                                <span class="text-wrap">
+                                <v-icon color="#FFFFFF" class="mr-10">mdi-bee-flower</v-icon>
                                     Register
-                                </span> &nbsp;
-                                    <v-icon>mdi-bee-flower</v-icon>
-                                
+                                <v-icon color="#FFFFFF" class="ml-10">mdi-bee-flower</v-icon>
                                 </v-btn>
-                            <!-- </v-card-actions></v-card> -->
                         </template>
                         <v-card>
                             <v-card-title class="text-h5 grey lighten-2">
@@ -131,7 +132,7 @@
                                 text
                                 @click="intermediate"
                                 >
-                                I accept
+                                Confirm
                                 </v-btn>
                             </v-card-actions>
                         </v-card>
@@ -152,11 +153,13 @@
                 :width="width"
                 outlined
                 color="transparent"
+                data-aos="flip-up"
+                data-aos-duration="1000"
                 >
                     <h3 class="text-left">Description</h3>
                     <br>
-                    <p v-html="desc" class="text-left">
-                    </p>
+                    <span v-html="desc" class="text-left">
+                    </span>
                 </v-card>
                 <v-card
                 class="mx-auto px-4 pt-8 pb-9"
@@ -166,7 +169,7 @@
                 >
                     <div class="d-flex flex-column">
 
-                            <v-card class="mb-4 pa-4">
+                            <v-card class="mb-4 pa-4" data-aos="flip-up" data-aos-duration="1000">
                                 <v-container fill-height>
                                 <v-row class="justify-start align-center mb-1">
                                     <v-col cols="1">
@@ -186,18 +189,13 @@
                                 {{ this.specificEvent.eventTime ? getFormattedTime : "TBD" }}
                             </p>
                         </v-row>
-                        <!-- <v-row class="justify-center">
-                            <v-btn
-                                block
-                                color="greenDark"
-                                class="white--text"
-                            >
-                                Add to My Calendar
-                            </v-btn>
-                        </v-row> -->
                         </v-container>
                     </v-card>
-                    <v-card class="pa-4 mt-4" :width="width">
+                    <v-card 
+                      class="pa-4 mt-4" 
+                      :width="width"
+                      data-aos="flip-up"
+                      data-aos-duration="1000">
                         <v-container fill-height>
                         <v-row class="justify-start  mb-1">
                             <v-col cols="1">
@@ -237,19 +235,21 @@
                     <br>
                     </div>
                     
-
                     <v-card
                         elevation="0"
                         max-width="500"
                         class="mx-auto text-start"
                         border="1px solid"
+                        data-aos="flip-up"
+                        data-aos-duration="1000"
                     >
                         <h2 class="my-4">Reviews</h2>
+                        <div v-if="this.specificEvent.eventReviews.length > 0">
                         <v-virtual-scroll
                         :items="this.specificEvent.eventReviews"
 
                         height="400"
-                        item-height="400"
+                        item-height="200"
                         >
                         <template v-slot:default="{ item }">
                             <v-list-item :key="item">
@@ -271,9 +271,7 @@
                             <v-list-item-subtitle class="d-flex flex-wrap flex-grow-1">
                                 <p size="0.75rem" class="">{{item.dateReviewed}}</p>
                             </v-list-item-subtitle>
-                                <!-- review.UserName -->
                                 {{item.reviewText}}
-                                <!-- review.reviewText -->
                                 
                             </v-list-item-content>
                             </v-list-item>
@@ -281,18 +279,28 @@
 
                         </template>
                         </v-virtual-scroll>
+                    </div>
+                    <div v-else>
+                        <p>No reviews yet!</p>
+                    </div>
                 </v-card>
+
                             </v-card>
                         </v-row>
+                        
                     </v-container>
+                    
                     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+                    
                 </v-card>
+                
                 </div>
     
 </template>
 
 <script>
   import GoogleMap from "@/components/GoogleMap.vue"
+  import AOS from 'aos'
     export default {
         name: 'EventDetails',
 
@@ -318,7 +326,7 @@
     },
     methods: {
         redirect() {
-            window.location.href = 'https://www.google.com/maps/search/' + this.specificEvent.eventLocation.SEARCHVAL
+            window.open('https://www.google.com/maps/search/' + this.specificEvent.eventLocation.SEARCHVAL, '_blank');
         },
 
         findCorrectEvent() {
@@ -353,18 +361,13 @@
             this.$store.dispatch('getUser')
             console.log("user registered events" , this.acctUser.registeredEvents)
             console.log("event attendees" , this.specificEvent.attendees)
-            if(this.acctUser.registeredEvents.includes(this.specificEvent._id) && this.specificEvent.attendees.includes(this.acctUser._id)){
+            if(this.acctUser.registeredEvents.includes(this.specificEvent._id) && this.specificEvent.attendees.includes(this.acctUser)){
                 this.registered = true
             }
             else {
                 this.registered = false
             }
         },
-        // host() {
-        //     if (this.$store.state.user == null) {
-        //         this.acctUser = this.$store.state.user
-        //     }
-        // },
         noUser() {
             if(this.$store.state.user == null){
             this.$router.push("/login")
@@ -380,7 +383,7 @@
             else{
             let eventList = this.specificEvent.attendees
             // console.log(eventList)
-            eventList.push(this.$store.state.user._id)
+            eventList.push(this.$store.state.user)
             var data = JSON.stringify({
                 "_id": this.eventID,
                 "attendees": eventList
@@ -430,7 +433,6 @@
         },
         async setup() {
             await this.findCorrectEvent(),
-            // await this.pullHost()
             this.acctUser = this.$store.state.user,
             this.isBuzzing()
 
@@ -439,9 +441,9 @@
 created() {
     this.$store.dispatch('getEvents')
     this.$store.dispatch('getUser')
-    // this.acctUser = this.$store.state.user
 },
     async mounted()  {
+        AOS.init()
         await this.setup()
         console.log(this.specificEvent)
         this.isRegistered()
@@ -462,17 +464,17 @@ computed: {
             const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             let date = new Date(this.specificEvent.eventDate);
             return date.getDate() + " " + months[date.getMonth()] + ", " + date.getFullYear();
-          },
+        },
         getFormattedTime() {
             const unformattedTime = this.specificEvent.eventTime
             const unformattedTimeList = unformattedTime.split(":")
             const hours = (unformattedTimeList[0] % 12) || 12
             const suffix = unformattedTimeList[0] >= 12 ? 'PM' : 'AM'
             return hours + '.' + unformattedTimeList[1] + " " + suffix
-          },
+        },
         width () {
             switch(this.$vuetify.breakpoint.name) {
-            case 'xs': return 360
+            case 'xs': return 450
             case 'sm': return 450
             case 'md': return 450
             case 'lg': return 500
@@ -487,7 +489,7 @@ computed: {
             case 'lg': return 1300
             case 'xl': return 1500
             }
-      }
+    }
     }
 }
     

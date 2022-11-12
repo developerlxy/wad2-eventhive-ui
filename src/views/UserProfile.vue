@@ -1,23 +1,21 @@
 <template>
-  <LandingScreen v-if="isLoading"></LandingScreen>
+  <LoadingScreen v-if="isLoading"></LoadingScreen>
   <div v-else-if="this.$store.state.user == null">
-    <NavBar></NavBar>
     <v-alert class="brownLight ma-2">
       You are not logged in. Please login to view your profile.
     </v-alert>
   </div>
   <div v-else>
-    <NavBar></NavBar>
     <v-container>
       <br />
       <div class="d-flex text-h5 brownDark--text font-weight-medium ma-4">
         My Profile
       </div>
-      <ProfilePhotoUpload
+      <!-- <ProfilePhotoUpload
         :photoDefault="this.image"
         :enableEdits="true"
         @photo-submit="photo_submit">
-      </ProfilePhotoUpload>
+      </ProfilePhotoUpload> -->
 
       <v-row class="col-12 pa-0 ma-0">
         <v-text-field
@@ -156,18 +154,17 @@
   </div>
 </template>
 <script>
-import LandingScreen from "../components/LandingScreen.vue";
+import LoadingScreen from "../components/LoadingScreen.vue";
 import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragraph, BulletList, OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History } from 'tiptap-vuetify'
 
 export default {
   name: "UserProfile",
-  components: { LandingScreen, TiptapVuetify},
+  components: { LoadingScreen, TiptapVuetify},
   mounted() {
     setTimeout(() => {
       this.isLoading = false;
     }, 2000);
     this.setExistingPrefs();
-    // TODO: fix this - user profile still not updated in this.$store.state.user
     this.$store.dispatch('getUser') // use this to get the current user after updating their particulars in db
   },
   data() {

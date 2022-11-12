@@ -2,8 +2,6 @@
   <LoadingScreen v-if="isLoading"></LoadingScreen>
 
   <div v-else>
-    <NavBar></NavBar>
-    <Categories></Categories>
     <v-container class="mb-4 align-center">
     <v-row>
       <v-col
@@ -20,14 +18,12 @@
 
 <script>
 import LoadingScreen from '../components/LoadingScreen.vue';
-import Categories from '@/components/Categories.vue';
-import NavBar from '@/components/NavBar.vue';
 import EventCard from '@/components/EventCard.vue';
 
 
 export default {
     name: "BuzzingForYou",
-    components: { LoadingScreen, NavBar, Categories, EventCard },
+    components: { LoadingScreen, EventCard },
     props: ['events'],
     mounted() {
     setTimeout(() => {

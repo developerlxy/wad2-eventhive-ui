@@ -1,23 +1,18 @@
 <template>
-    <LandingScreen v-if="isLoading"></LandingScreen>
+    <LoadingScreen v-if="isLoading"></LoadingScreen>
     <div v-else>
-        <NavBar></NavBar>
         <br>
-
-            <EventDetails></EventDetails>
-
+      <EventDetails></EventDetails>
       </div>
 </template>
 <script>
     // import SearchBar from '@/components/SearchBar.vue';
-    import NavBar from '@/components/NavBar.vue';
-    import LandingScreen from '@/components/LandingScreen.vue';
-    import HostDetails from '@/components/HostDetails.vue';
+    import LoadingScreen from '@/components/LoadingScreen.vue';
     import EventDetails from '@/components/EventDetails.vue';
     
     export default {
     name: "Home",
-    components: { LandingScreen, NavBar, HostDetails, EventDetails },
+    components: { LoadingScreen, EventDetails },
 
     create() {
         window.addEventListener("load", this.onWindowLoad);

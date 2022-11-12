@@ -1,23 +1,20 @@
 <template>
-  <LandingScreen v-if="isLoading"></LandingScreen>
+  <LoadingScreen v-if="isLoading"></LoadingScreen>
 
   <div v-else>
-    <!-- navbar component -->
-    <NavBar></NavBar>
     <UserEventCarousel :user-event-type="getUserEventType"></UserEventCarousel>      
 
   </div>
 </template>
   
 <script>
-  import LandingScreen from '../components/LandingScreen.vue';
+  import LoadingScreen from '../components/LoadingScreen.vue';
   import SearchBar from '@/components/SearchBar.vue';
-  import NavBar from '@/components/NavBar.vue';
   import UserEventCarousel from '@/components/UserEventCarousel.vue'
 
   export default {
     name: "UserEvents",
-    components: { LandingScreen, SearchBar, NavBar, UserEventCarousel},
+    components: { LoadingScreen, SearchBar, UserEventCarousel},
     mounted() {
       setTimeout(() => {
         this.isLoading = false;
@@ -30,11 +27,12 @@
     },
     computed: {
       getUserEventType() {
-        if (this.$route.params.eventType == 'registered-events'){
+        console.log("userevents view", this.$route.query.type)
+      if (this.$route.query.type == 'registered'){
         return'Registered Events'
-      } else if (this.$route.params.eventType == 'attended-events') {
+      } else if (this.$route.query.type == 'attended') {
         return 'Attended Events'
-      } else if (this.$route.params.eventType == 'hosted-events') {
+      } else if (this.$route.query.type == 'hosted') {
         return 'Hosted Events'
       }
       }

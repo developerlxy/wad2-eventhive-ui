@@ -1,13 +1,13 @@
 <template>
-  <LandingScreen v-if="isLoading"></LandingScreen>
+  <LoadingScreen v-if="isLoading"></LoadingScreen>
 
-  <div v-else class="fill-height peachLight">
-    <NavBar> </NavBar>
+  <div v-else class="fill-height peachLight py-4">
     <!-- class="mx-auto px-10 pt-8 pb-9" -->
     <v-card
-      class="mx-auto my-10 px-0 pt-8 pb-9"
+      class="mx-auto my-8 px-0 pt-6 pb-6"
       :width="width"
       outlined
+      data-aos="zoom-in"
     >
       <br>
       <h1 class="px-5">
@@ -35,7 +35,7 @@
           </p>
           <tiptap-vuetify v-model="eventDescription" :extensions="extensions"/>
           <p v-if="descriptionEmpty()" style="font-size: 12px; color: #bd5959; text-align: left; margin-top: 5px; margin-bottom: 10px;">
-            Nobody is gonna come if you don't add fun details!
+            Nobody is gonna come if you don't add fun details! manual lmao
           </p>
           <!-- {{ eventDescription }} -->
         </div>
@@ -44,7 +44,7 @@
         </v-select>
 
         <LocationSearchBar @locationSelected="onLocationSelected" style="margin-top: 10px"></LocationSearchBar>
-        <!-- {{ location }} -->
+        <!-- location: {{ location }} -->
 
         <br>
 
@@ -69,7 +69,7 @@
                     min-width="290px">
                     <template v-slot:activator="{ on, attrs }">
                       <v-text-field v-model="eventDate" label="Date" prepend-icon="mdi-calendar" readonly
-                        v-bind="attrs" v-on="on"></v-text-field>
+                        v-bind="attrs" v-on="on" :rules="dateRules"></v-text-field>
                     </template>
                     <v-date-picker v-model="date" no-title scrollable :min="new Date().toISOString().substr(0, 10)">
                       <v-spacer></v-spacer>
@@ -88,7 +88,7 @@
                   <v-dialog ref="dialog" v-model="modal2" :return-value.sync="eventTime" persistent width="290px">
                     <template v-slot:activator="{ on, attrs }">
                       <v-text-field v-model="eventTime" label="Time" prepend-icon="mdi-clock-time-four-outline"
-                        readonly v-bind="attrs" v-on="on"></v-text-field>
+                        readonly v-bind="attrs" v-on="on" :rules="timeRules"></v-text-field>
                     </template>
                     <v-time-picker v-if="modal2" v-model="eventTime" full-width>
                       <v-spacer></v-spacer>
@@ -136,7 +136,7 @@
                     min-width="290px">
                     <template v-slot:activator="{ on, attrs }">
                       <v-text-field v-model="eventDate" label="Event date" prepend-icon="mdi-calendar" readonly
-                        v-bind="attrs" v-on="on"></v-text-field>
+                        v-bind="attrs" v-on="on" :rules="dateRules"></v-text-field>
                     </template>
                     <v-date-picker v-model="date" no-title scrollable :min="new Date().toISOString().substr(0, 10)">
                       <v-spacer></v-spacer>
@@ -155,7 +155,7 @@
                   <v-dialog ref="dialog" v-model="modal2" :return-value.sync="eventTime" persistent width="290px">
                     <template v-slot:activator="{ on, attrs }">
                       <v-text-field v-model="eventTime" label="Event time" prepend-icon="mdi-clock-time-four-outline"
-                        readonly v-bind="attrs" v-on="on"></v-text-field>
+                        readonly v-bind="attrs" v-on="on" :rules="timeRules"></v-text-field>
                     </template>
                     <v-time-picker v-if="modal2" v-model="eventTime" full-width>
                       <v-spacer></v-spacer>
@@ -176,7 +176,7 @@
         <!-- UPLOAD IMAGE SECTION -->
         <br>
         <div v-if="!image">
-          <h3>Upload cool photo below!</h3>
+          <!-- <h3>Upload cool photo below!</h3> -->
           <!-- <input type="file" @change="onFileChange" accept="image/jpeg"> -->
           <v-file-input @change="onFileChange()" accept="image/jpeg,image/png" class="text-center" label="Upload cool photo here!" prepend-icon="mdi-camera" v-model="uploadedImage"></v-file-input>
         </div>
@@ -263,10 +263,9 @@
 </template>
 
 <script>
-import LandingScreen from '../components/LandingScreen.vue';
-import Categories from '@/components/Categories.vue';
-import NavBar from '@/components/NavBar.vue';
+import LoadingScreen from '../components/LoadingScreen.vue';
 import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragraph, BulletList, OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History } from 'tiptap-vuetify'
+import AOS from 'aos'
 
 // variables to upload image
 const MAX_IMAGE_SIZE = 10000000
@@ -278,8 +277,11 @@ const API_ENDPOINT = 'https://xt96j6drmd.execute-api.ap-southeast-1.amazonaws.co
 
 export default {
   name: "createEvent",
-  components: { LandingScreen, Categories, NavBar, TiptapVuetify },
+  components: { LoadingScreen, TiptapVuetify },
   mounted() {
+    AOS.init({
+      duration: 800
+    })
     console.log('======== retrieving all stored events ========'),
     console.log(this.allStoredEvents[0]),
     console.log('======== all stored events retrieved. if null, navigate to homepage first then try again ========'),
@@ -303,7 +305,6 @@ export default {
       eventDescription: ``,
       descriptionRules: [
         v => !!v || `Nobody is gonna come if you don't add fun details!`,
-        v => v == !'<p></p>' || `Nobody is gonna come if you don't add fun details!`,
       ],
 
       // category: '',
@@ -325,7 +326,13 @@ export default {
       ],
 
       eventDate: null,
+      dateRules: [
+        v => !!v || "Is it today? In the future? Must we time travel back?",
+      ],
       eventTime: null,
+      timeRules: [
+        v => !!v || 'We need to know so we can plan our nap time!',
+      ],
       modal2: false,
       date: null,
 
@@ -482,7 +489,7 @@ export default {
     },
 
     xsBreakpoint() {
-      return this.$vuetify.breakpoint.name == 'xs' 
+        return this.$vuetify.breakpoint.width <= 700
     },
     onLocationSelected: function (selectedLocation) {
       this.location = selectedLocation

@@ -1,11 +1,13 @@
 <template>
-    <div class="user-event-carousel mx-lg-12 mx-sm-10 mx-6 mt-2">
+    <div class="user-event-carousel mx-lg-12 mx-sm-10 mx-6 mt-2 mb-16 pb-16">
       <p class="d-flex text-h4 brownDark--text font-weight-bold  ml-4 mt-6">
         {{this.title}}
       </p>
-      <p class="text-h6 mt-6 font-weight-medium">
-        {{this.message}}
-      </p>
+      <div v-if="message!=''" class="pt-10">
+        <p class="text-h6 mt-6 font-weight-medium my-16 py-16">
+          {{this.message}}
+        </p>
+      </div>
       <v-row
           v-for="event in this.filteredEvents"
           :key="event._id"
@@ -25,6 +27,8 @@
 
 <script>
 import UserEventCard from "./UserEventCard.vue";
+import AOS from 'aos'
+
 
 export default {
   name: "UserEventCarousel",
@@ -32,7 +36,7 @@ export default {
   props: {
     userEventType: {
       type: String,
-      default: "Registered Events",
+      default: "Registered Events"
     },
   },
     
@@ -69,6 +73,9 @@ export default {
           allUserEvents.forEach(
             (eventId) => {
               let eventObj = this.allEvents.find((event) => event._id == eventId)
+              if (eventObj == undefined) {
+                return
+              }
               let eventDate = new Date(eventObj.eventDate)
               if(this.isAfterToday(eventDate)){
                 this.filteredEvents.push(eventObj) 
@@ -77,13 +84,17 @@ export default {
           )
           if (this.filteredEvents.length == 0) {
             this.message = "No registered events. What are you waiting for?"
+          } else {
+            this.message = ""
           }
         } else if (userEventType == 'attended') {
           this.title = "Attended Events"
           allUserEvents.forEach(
             (eventId) => {
               let eventObj = this.allEvents.find((event) => event._id == eventId)
-              console.log(eventObj)
+              if (eventObj == undefined) {
+                return
+              }
               let eventDate = new Date(eventObj.eventDate)
               if(!this.isAfterToday(eventDate)){
                 this.filteredEvents.push(eventObj) 
@@ -92,6 +103,8 @@ export default {
           )
           if (this.filteredEvents.length == 0) {
             this.message = "You haven't attended any events yet..."
+          } else {
+            this.message = ""
           }
         } else if (userEventType == 'hosted') {
           console.log("here", this.$store.state.events)
@@ -108,6 +121,8 @@ export default {
           )
           if (this.filteredEvents.length == 0) {
             this.message = "You haven't hosted any events yet. Why don't you give it a shot?"
+          } else {
+            this.message = ""
           }
         }
         console.log("filteredEvents:", this.filteredEvents)
