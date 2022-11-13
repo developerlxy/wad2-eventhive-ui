@@ -181,7 +181,7 @@
           <v-file-input @change="onFileChange()" accept="image/jpeg,image/png" class="text-center" label="Upload cool photo here!" prepend-icon="mdi-camera" v-model="uploadedImage"></v-file-input>
         </div>
         <div v-else>
-          <img :src="image" style="border:2px solid black" width="250" height=auto />
+          <img :src="image" style="border:2px grey" width="250" height=auto />
           <br>
           <v-btn outlined v-if="!uploadURL" @click="removeImage">Remove image</v-btn>
         </div>
