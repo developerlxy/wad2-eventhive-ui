@@ -243,9 +243,15 @@ export default {
         reqBody["userEmail"] = this.email;
         let newCategoryPrefs = [];
         for(let index of this.chips) {
-          newCategoryPrefs.push(this.items[index]);
+          if (this.items[index] != null) {
+            newCategoryPrefs.push(this.items[index]);
+          }
         }
-        reqBody["categoryPrefs"] = newCategoryPrefs;
+        if (newCategoryPrefs.length == 0) {
+          reqBody["categoryPrefs"] = ["Others"];
+        } else {
+          reqBody["categoryPrefs"] = newCategoryPrefs;
+        }
       }
 
       // update other details
