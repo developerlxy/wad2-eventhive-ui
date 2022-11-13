@@ -2,8 +2,8 @@
   <LandingScreen v-if="isLoading"></LandingScreen>
 
   <div v-else>
-    <img class="mt-3" src="../assets/images/graphics1.png" width="70%" data-aos="fade-left">
     <div v-if="xsBreakpoint">
+      <img class="mt-3" src="../assets/images/graphics1.png" width="70%" data-aos="fade-left"></img>
       <div class="mt-6 mb-2 pt-6 pb-6 greenLight">
         <h1 class="mb-3 font-weight-bold text-center"><a class="greenDark--text" @click="pushToBuzzing">BUZZING NOW</a></h1>
         <EventCarousel :allEvents="buzzingEvents"></EventCarousel>
@@ -20,6 +20,7 @@
     </div>
 
     <div v-else>
+      <WelcomeImage></WelcomeImage>
       <div class="mb-2 mt-3 pt-6 px-sm-3 px-md-6 px-lg-10 pb-10 greenLight">
         <h1 class="mb-0 mt-1 font-weight-bold carouselheader ml-16 pl-16 text-start"><a class="greenDark--text" @click="pushToBuzzing">BUZZING NOW</a></h1>
         <EventCarousel :allEvents="buzzingEvents"></EventCarousel>
