@@ -1,188 +1,89 @@
 <template>
-  <div>
   <LoadingScreen v-if="isLoading"></LoadingScreen>
 
   <div v-else>
-
-    <div v-if="xsBreakpoint">
-      <v-container fluid class="peachLight">
+    <div>
+      <v-container fluid class="brownLight pb-16 pt-8">
         <v-row
-          no-gutters
-          style="flex-wrap: nowrap;"
-          class="mx-4"
+          class="mx-4 mb-16"
         >
           <v-col
-            cols="12"
-            class="flex-grow-0 flex-shrink-0"
+            class="col-12 col-md-3"
           >
             <v-card
-              class="pt-4"
-              outlined
-              tile
+              class="py-4 px-3 mr-4 rounded-lg"
               data-aos="flip-up"
+              data-aos-duration="1000"
+              elevation="0"
             >
             <v-avatar size="150" class="mt-2">
                 <img :src="'/src/assets/images/test.jpg'">
             </v-avatar>
             <v-rating
               :value="avgRating"
-              color="amber"
+              color="greenDark"
+              background-color="greenMid"
               dense
               half-increments
               readonly
-              size="14"
+              size="20"
+              class="mt-4 mb-2"
               ></v-rating>
             
-            <v-card
-              class="mx-auto py-4"
-              outlined
-            >
-        <v-list-item three-line >
-          <v-list-item-content>
-            <div style="background-color:lightgray;padding:10px;text-align:left;font-weight:bold;">
-              Contact Info
-            </div>
-            <v-list-item style="text-align:left" class=""><br>
-              Email: {{ host["userEmail"] }} <br><br>
-              Contact No.: {{ host['userPhone'] }}
-            </v-list-item>
-          </v-list-item-content>
-        </v-list-item>
-      </v-card>
-      
-
-      <v-card
-        class="mx-auto"
-        max-width="344"
-        outlined
-      >
-    
-      </v-card>
-            </v-card>
-          
-          </v-col>
-        </v-row>
-          <v-col
-            cols="2"
-            style="min-width: 100px; max-width: 100%;"
-            class="flex-grow-1 flex-shrink-0"
-          >
-            <v-card
-              class="pa-2 text-left px-8 pt-4"
-              outlined
-              tile
-              data-aos="flip-up"
-            >
-              <h1>Hey, I'm {{ host["userName"] }}!</h1><br/>
-              <p v-if="host['userDesc']!==null" v-html="host['userDesc']"></p>
-              <p v-else>No description yet...</p>
-              <h2>Rating & Reviews</h2><br>
-              <div v-if="reviews.length==0">
-              <p>No reviews yet...</p>
-            </div>
-              <div v-else>
-              <HostEventReview  v-for="review of reviews" :eventReview="review"></HostEventReview>
+              <div class="rounded greenDark px-4 py-3 mx-4 my-4 white--text font-weight-medium">
+                <h3>Contact Info</h3>
+              </div>
+              <h3 class="mb-1 peachDark--text text-decoration-underline">
+                Email
+              </h3>
+              <div class="mx-2 text-truncate">
+                {{ host["userEmail"] }}
+              </div>
+              <h3 class="mb-1 mt-5 peachDark--text text-decoration-underline">
+                Phone No.
+              </h3>
+              <div >
+                {{ host['userPhone'] ? host['userPhone'] : "N.A."}}
               </div>
             </v-card>
           </v-col>
+          <v-col
+            style="min-width: 100px; max-width: 100%;"
+            class="col-12 col-md-9"
+          >
+            <v-card
+              class="pa-2 text-left px-8 pt-4 rounded-lg"
+              data-aos="flip-up"
+              data-aos-duration="1000"
+              elevation="0"
+            >
+              <h1 class="mb-5 mt-2 greenDark--text">Hey, I'm {{ host["userName"] }}!</h1>
+              <hr>
+              <h1 class="mb-6 mt-5 peachDark--text">About Me</h1>
+              <p v-html="host['userDesc']" class="mb-10"></p>
+              <hr>
+              <h1 class="mb-6 mt-5 peachDark--text">Rating & Reviews</h1>
+              
+              <div v-if="reviews.length==0">
+                <p>No reviews yet...</p>
+              </div>
+              <div v-else>
+                <HostEventReview  v-for="review of reviews" :eventReview="review"></HostEventReview>
+              </div>
+            </v-card>
+          </v-col>
+        </v-row>
       </v-container>
     </div>
-    <div v-else>
-      <v-container fluid class="peachLight pb-16 pt-8">
-    <v-row
-      no-gutters
-      style="flex-wrap: nowrap;"
-      class="mx-4 mb-16"
-    >
-      <v-col
-        cols="3"
-        class="flex-grow-0 flex-shrink-0"
-      >
-        <v-card
-          class="pt-2 mr-4"
-          outlined
-          tile
-          data-aos="flip-up"
-          data-aos-duration="1000"
-        >
-        <v-avatar size="150" class="mt-2">
-            <img :src="'/src/assets/images/test.jpg'">
-        </v-avatar>
-        <v-rating
-          :value="avgRating"
-          color="amber"
-          dense
-          half-increments
-          readonly
-          size="14"
-          ></v-rating>
-        
-        <v-card
-          class="mx-auto pb-4"
-          outlined
-        >
-
-    <v-list-item three-line>
-      <v-list-item-content>
-        <div style="background-color:lightgray;padding:10px;text-align:left;font-weight:bold;">
-          Contact Info
-        </div>
-         <v-list-item style="text-align:left;word-wrap: break-word;" class="px-2"><br>
-          Email: {{ host["userEmail"] }} 
-          <br><br>
-          Contact No.: {{ host['userPhone'] }}
-      </v-list-item>
-      </v-list-item-content>
-    </v-list-item>
-   
-  </v-card>
-  <v-card
-    class="mx-auto"
-    max-width="344"
-    outlined
-  >
-
-  </v-card>
-        </v-card>
-      </v-col>
-      <v-col
-        cols="1"
-        style="min-width: 100px; max-width: 100%;"
-        class="flex-grow-1 flex-shrink-0"
-      >
-        <v-card
-          class="pa-2 text-left px-8 pt-4"
-          outlined
-          tile
-          data-aos="flip-up"
-          data-aos-duration="1000"
-        >
-          <h1>Hey, I'm {{ host["userName"] }}!</h1><br/>
-          <p v-html="host['userDesc']"></p>
-          <h2>Rating & Reviews</h2><br>
-          <div v-if="reviews.length==0">
-          <p>No reviews yet...</p>
-        </div>
-          <div v-else>
-          <HostEventReview  v-for="review of reviews" :eventReview="review"></HostEventReview>
-          </div>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
-    </div>
-      
-      
-    </div>
   </div>
-  </template>
-  
-  <script>
+</template>
+
+<script>
   import LoadingScreen from '../components/LoadingScreen.vue';
   import HostEventReview from '@/components/HostEventReview.vue';
   import AOS from 'aos'
-  
-  
+
+
   export default {
       name: "Home",
       components: { LoadingScreen, HostEventReview },
@@ -250,8 +151,8 @@
             this.eventID = this.$route.query.id
         },
         immediate: true,
-    }
-},
+      }
+    },
   }
-  </script>
+</script>
   
