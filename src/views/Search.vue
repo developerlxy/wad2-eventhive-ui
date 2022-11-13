@@ -17,17 +17,17 @@
             <v-col
                 v-for="event in events"
                 :key="event.name"
-                class="col-sm-12"
+                class="col-sm-12 "
               >
                 <SecondaryEventCard :eventDetails="event" @mouseover.native="previewEvent(event)" @mouseout.native="eventPreview=false" onclick="goToEvent"></SecondaryEventCard>
             </v-col>
           </v-row>
         </v-col>
-        <v-col class="">
-          <div v-if="eventPreview!=false" class="mt-2 mr-8 preview">
+        <v-col class="col-5">
+          <div v-if="eventPreview!=false && mdBreakpoint" class="mt-2 mr-8 preview">
             <PreviewEventCard :eventDetails="this.eventPreview"></PreviewEventCard>
           </div>  
-          <div v-else class="preview mr-8">
+          <div v-else-if="mdBreakpoint" class="preview mr-8">
             <v-row class="justify-center my-5" >
               <img src="../assets/images/flying-bee.gif">
             </v-row>

@@ -1,6 +1,6 @@
 # EventHive 🐝
 
-## About the EventHive
+## About EventHive
 EventHive is a centralised platform for grassroot events. We allow organisers of small-scale events to list their events publicly so that more people can find their events and participate in them.
 
 ## About the code
@@ -22,7 +22,7 @@ npm run dev # runs the application
 
 ### Yarn:
 ```bash
-yarn install # install required dependencies in node_modules
+yarn install --ignore-engines # install required dependencies in node_modules
 yarn dev # runs the application
 ```
 Once successful, you may view the application at http://localhost:8080/
