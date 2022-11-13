@@ -68,6 +68,20 @@
                             </v-card-title>
                             </v-card>
                         </template>
+                        <template v-else-if="!(this.$store.state.user == null) && (this.specificEvent.eventHost._id == this.$store.state.user._id)">
+                            <v-card
+                                class="greenDark"
+                            >
+                            <v-card-title
+                            class="justify-center white--text"
+                            >
+                            <v-icon color="#FFFFFF" class="mr-10"> mdi-bee </v-icon>
+                                You are hosting!
+                            <v-icon color="#FFFFFF" class="ml-10"> mdi-bee </v-icon>
+                            </v-card-title>
+                            
+                            </v-card>
+                        </template>
                         <template v-else-if="this.specificEvent.attendees.length >= this.specificEvent.maxCapacity">
                             <v-card
                                 class="peachDark"
@@ -81,18 +95,17 @@
                             </v-card-title>
                             </v-card>
                         </template>
-                        <template v-else-if="!(this.$store.state.user == null) && (this.specificEvent.eventHost._id == this.$store.state.user._id)">
+                        <template v-else-if="this.specificEvent.eventDate < this.today">
                             <v-card
-                                class="greenDark"
+                                color="#90A4AE"
                             >
                             <v-card-title
                             class="justify-center white--text"
                             >
-                            <v-icon color="#FFFFFF" class="mr-10"> mdi-bee </v-icon>
-                                You are hosting!
-                            <v-icon color="#FFFFFF" class="ml-10"> mdi-bee </v-icon>
+                            <v-icon color="#FFFFFF" class="mr-10">mdi-beehive-off-outline</v-icon>
+                            Event passed
+                            <v-icon color="#FFFFFF" class="ml-10">mdi-beehive-off-outline</v-icon>
                             </v-card-title>
-                            
                             </v-card>
                         </template>
                         <template v-else>
@@ -318,6 +331,7 @@
             registered: false,
             dialog: false,
             isHost: false,
+            today: new Date().toISOString(),
             
         }
     },
@@ -445,7 +459,7 @@ created() {
     async mounted()  {
         AOS.init()
         await this.setup()
-        console.log(this.specificEvent)
+        console.log(this.specificEvent.eventDate)
         this.isRegistered()
         setTimeout(() => {
       this.isLoading = false;
