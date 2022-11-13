@@ -12,10 +12,7 @@
                   size="14"
                   >
                   </v-rating>
-                  <v-avatar class="mt-2">
-                    <img :src="'/src/assets/images/test.jpg'">
-                  </v-avatar>  
-                  <p class="font-weight-medium">{{ eventReview["userName"] }}  </p>
+                  <p class="mt-2 mb-0 font-weight-medium">{{ eventReview["userName"] }}  </p>
 
                 </v-card-subtitle>
                 <v-card-text>  {{ eventReview["reviewText"] }}</v-card-text>

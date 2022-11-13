@@ -40,7 +40,7 @@ export default {
     data() {
       return {
         isLoading: true,
-        events:[],
+        events:[]
       }
     },
     methods: {
@@ -60,7 +60,6 @@ export default {
           },
           data : data
         };
-
         this.axios(config)
         .then(function (response) {
           self.events = []
