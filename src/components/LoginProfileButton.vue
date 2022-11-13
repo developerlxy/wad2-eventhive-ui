@@ -22,12 +22,13 @@
           <v-avatar
             class="white--text ml-4"
             id="profile-btn"
-            color="peachDark"
             size="36"
+            color="brownDark"
             v-bind="attrs"
             v-on="on"
           >
-            {{ initials }}
+            <img v-if="$store.state.user.userPhotoURL" :src="$store.state.user.userPhotoURL"> 
+            <img v-else src="/src/assets/images/test.jpg">
           </v-avatar>
         </button>
       </template>
