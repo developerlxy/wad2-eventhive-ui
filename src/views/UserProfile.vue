@@ -98,6 +98,26 @@
         ></v-text-field>
       </v-row>
 
+      <!-- <ProfilePhotoUpload
+        :photoDefault="this.image"
+        :enableEdits="true"
+        @photo-submit="photo_submit">
+      </ProfilePhotoUpload> -->
+
+      <!-- upload image section -->
+      <v-row class="col-12 pt-3 ma-0">
+        <div v-if="!image">
+          <!-- <h3>Upload cool photo below!</h3> -->
+          <!-- <input type="file" @change="onFileChange" accept="image/jpeg"> -->
+          <v-file-input outlined dense @change="onFileChange()" accept="image/jpeg,image/png" label="Upload here!" prepend-icon="mdi-camera" v-model="uploadedImage"></v-file-input>
+        </div>
+        <div v-else>
+          <img :src="image" style="border:1px grey; border-radius: 3%;" width="250" height=auto />
+          <br>
+          <v-btn outlined @click="removeImage">Change your picture?</v-btn>
+        </div>
+      </v-row>
+
       <hr class="my-12">
 
       <h1 class="d-flex brownDark--text font-weight-bold ma-4">
@@ -155,13 +175,18 @@
 import LoadingScreen from "../components/LoadingScreen.vue";
 import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragraph, BulletList, OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History } from 'tiptap-vuetify'
 
+// variables to upload image
+const MAX_IMAGE_SIZE = 10000000
+const API_ENDPOINT = 'https://xt96j6drmd.execute-api.ap-southeast-1.amazonaws.com/uploads' // e.g. https://ab1234ab123.execute-api.us-east-1.amazonaws.com/uploads
+
+
 export default {
   name: "UserProfile",
   components: { LoadingScreen, TiptapVuetify},
   mounted() {
     setTimeout(() => {
       this.isLoading = false;
-    }, 2000);
+    }, 1500);
     this.setExistingPrefs();
     this.$store.dispatch('getUser') // use this to get the current user after updating their particulars in db
   },
@@ -204,7 +229,13 @@ export default {
       userDescription: this.$store.state.user["userDesc"] == null ? "" : this.$store.state.user["userDesc"],
       fullName: this.$store.state.user["userFullName"] == null ? "" : this.$store.state.user["userFullName"],
 
-      image: this.$store.state.user["userImage"] == null ? "/src/assets/images/test.jpg" : this.$store.state.user["userImage"],
+      // image: this.$store.state.user["userImage"] == null ? "/src/assets/images/test.jpg" : this.$store.state.user["userImage"],
+
+      // FOR UPLOADING IMAGE
+      image: this.$store.state.user["userPhotoURL"] == null ? '/src/assets/images/test.jpg': this.$store.state.user["userPhotoURL"],
+      uploadURL : '',
+      uploadedImage: null,
+
       //FOR RICH TEXT
       extensions: [
         History,
@@ -235,10 +266,15 @@ export default {
         this.updateSuccess = false;
       }, 2000);
     },
-    updateProfile() {
-      // update categoryPrefs
+    updateProfile: async function () {
       let reqBody = {};
-
+      
+      // UPLOAD IMAGE
+      await this.uploadImage()
+      console.log(this.uploadURL)
+      reqBody['userPhotoURL'] = this.uploadURL;
+      
+      // update categoryPrefs
       if (this.chips.length > 0) {
         reqBody["userEmail"] = this.email;
         let newCategoryPrefs = [];
@@ -337,7 +373,60 @@ export default {
       // this.uploadURL = response.data.uploadURL.split('?')[0]
       // console.log(`image url at ${result.url.split("?")[0]}`);
 
-    }
+    },
+
+    // UPLOAD IMAGE FUNCTIONS
+    onFileChange(e) {
+      console.log('======onfilechange fired========')
+      console.log(e)
+      console.log(this.uploadedImage)
+      let files = this.uploadedImage
+      // let files = e.target.files || e.dataTransfer.files
+      console.log(files)
+      if (files == null) return
+      this.createImage(files)
+    },
+    createImage(file) {
+      // var image = new Image()
+      let reader = new FileReader()
+      reader.onload = (e) => {
+        console.log('length: ', e.target.result.includes('data:image/jpeg'))
+        if (e.target.result.length > MAX_IMAGE_SIZE) {
+          return alert('Image is loo large.')
+        }
+        this.image = e.target.result
+      }
+      reader.readAsDataURL(file)
+    },
+    removeImage: function (e) {
+      console.log('Remove clicked')
+      this.image = ''
+    },
+    uploadImage: async function (e) {
+      console.log('Upload clicked')
+      // Get the presigned URL
+      const response = await this.axios({
+        method: 'GET',
+        url: API_ENDPOINT
+      })
+      console.log('Response: ', response)
+      console.log('Uploading: ', this.image)
+      let binary = atob(this.image.split(',')[1])
+      let array = []
+      for (var i = 0; i < binary.length; i++) {
+        array.push(binary.charCodeAt(i))
+      }
+      let blobData = new Blob([new Uint8Array(array)], { type: 'image/jpeg' })
+      console.log('Uploading to: ', response.data.uploadURL)
+      const result = await fetch(response.data.uploadURL, {
+        method: 'PUT',
+        body: blobData
+      })
+      console.log('Result: ', result)
+      // Final URL for the user doesn't need the query string params
+      this.uploadURL = response.data.uploadURL.split('?')[0]
+      console.log(`image url at ${result.url.split("?")[0]}`);
+    },
   },
 };
 </script>

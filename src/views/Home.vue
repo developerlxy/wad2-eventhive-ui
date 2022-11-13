@@ -30,12 +30,12 @@
         <EventCarousel :allEvents="userForYou"></EventCarousel>
       </div>
       <div class="mt-2 pt-6 px-10 pb-16">
-        <h1 id="headerDesc" class="mb-6 brownDark--text">Don't buzz off by yourself...</h1>
+        <h1 id="headerDesc" class="mb-6 brownDark--text" data-aos="zoom-in" data-aos-duration="1200">Don't buzz off by yourself...</h1>
         <div class="d-flex">
-          <img src="../assets/images/homepage-1.png" width="60%" class="mt-4 ml-16 pl-16"/>
+          <img src="../assets/images/homepage-1.png" width="60%" class="mt-4 ml-16 pl-16" data-aos="fade-right" data-aos-duration="1200"/>
         </div>
         <div class="d-flex justify-end">
-          <img src="../assets/images/homepage-2.png" width="60%" class="mb-4 mr-16 pr-16"/>
+          <img src="../assets/images/homepage-2.png" width="60%" class="mb-4 mr-16 pr-16" data-aos="fade-left" data-aos-duration="1200"/>
         </div>      
       </div>
     </div>
@@ -49,6 +49,7 @@ import LandingScreen from '../components/LandingScreen.vue';
 import EventCarousel from '@/components/EventCarousel.vue';
 import RandomEventPrompt from '@/components/RandomEventPrompt.vue';
 import WelcomeImage from '@/components/WelcomeImage.vue';
+import AOS from 'aos'
 
 export default {
     name: "Home",
@@ -56,7 +57,9 @@ export default {
     mounted() {
       setTimeout(() => {
         this.isLoading = false;
-      }, 2000);
+      }, 1500);
+      AOS.init()
+
       if (this.$store.state.user != null) {
         console.log(`current user: ${this.$store.state.user.userName}`)
       }
