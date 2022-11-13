@@ -25,4 +25,4 @@ npm run dev # runs the application
 yarn install --ignore-engines # install required dependencies in node_modules
 yarn dev # runs the application
 ```
-Once successful, you may view the application at http://localhost:8080/
+Once successful, you may view the application at http://localhost:8080/, else you can also see the deployed application at https://event-hive.netlify.app/
