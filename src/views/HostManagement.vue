@@ -103,6 +103,7 @@ export default {
       for (let event of this.$store.state.events) {
         if (event["_id"] == this.eventID) {
           return event;
+
         }
       }
     },

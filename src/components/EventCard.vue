@@ -7,7 +7,7 @@
   >
     <v-img
       :src="eventDetails.eventPhotoURL"
-      lazy-src="../src/assets/images/no-image-placeholder.jpg"
+      lazy-src="../assets/images/no-image-placeholder.jpg"
       height="200px"
     ></v-img>
 

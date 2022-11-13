@@ -1,7 +1,7 @@
 <template>
   <LoadingScreen v-if="isLoading"></LoadingScreen>
 
-  <div v-else>
+  <div v-else-if="events.length > 0">
     <v-container class="mb-4">
     <v-row justify-xs="center">
       <v-col
@@ -14,6 +14,14 @@
     </v-row>
   </v-container>
   </div>
+  <v-container v-else class="">
+      <v-row class="justify-center mb-5">
+        <img src="../assets/images/flying-bee.gif">
+      </v-row>
+      <v-row class="justify-center">
+        <h2>Buzz off, there ain't any events for ya!</h2>
+      </v-row>
+    </v-container>
 </template>
 
 <script>
@@ -27,7 +35,7 @@ export default {
     mounted() {
     setTimeout(() => {
       this.isLoading = false;
-    }, 2000);
+    }, 1500);
     },
     data() {
       return {
@@ -55,7 +63,12 @@ export default {
 
         this.axios(config)
         .then(function (response) {
-          self.events = response.data;
+          for (let indiv of response.data) {
+            console.log(indiv.eventDate)
+            if (indiv.eventDate >= new Date().toISOString()){
+              self.events.push(indiv)
+            }
+          }
         })
         .catch(function (error) {
           console.log(error);

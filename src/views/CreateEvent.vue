@@ -178,10 +178,10 @@
         <div v-if="!image">
           <!-- <h3>Upload cool photo below!</h3> -->
           <!-- <input type="file" @change="onFileChange" accept="image/jpeg"> -->
-          <v-file-input @change="onFileChange()" accept="image/jpeg,image/png" class="text-center" label="Upload cool photo here!" prepend-icon="mdi-camera" v-model="uploadedImage"></v-file-input>
+          <v-file-input :rules="imageRules" @change="onFileChange()" accept="image/jpeg,image/png" class="text-center" label="Upload cool photo here!" prepend-icon="mdi-camera" v-model="uploadedImage"></v-file-input>
         </div>
         <div v-else>
-          <img :src="image" style="border:2px solid black" width="250" height=auto />
+          <img :src="image" style="border:2px grey" width="250" height=auto />
           <br>
           <v-btn outlined v-if="!uploadURL" @click="removeImage">Remove image</v-btn>
         </div>
@@ -290,7 +290,7 @@ export default {
     console.log('======== current user retrieved ========'),
     setTimeout(() => {
       this.isLoading = false;
-    }, 2000);
+    }, 1500);
   },
   data() {
     return {
@@ -338,7 +338,9 @@ export default {
 
       image: '',
       uploadURL: '',
-
+      imageRules: [
+        v => !!v || 'An image speaks a thousand BZZZZs!',
+      ],
       
       currentUser: this.$store.state.user,
 
@@ -398,59 +400,59 @@ export default {
                 this.$router.push("/event/?id=" + this.newEventID);
             },
     submitCreateEvent: async function () {
-      console.log('===== START OF CREATE EVENT =======')
-      this.processingCreateEvent = true //loading screen
-      await this.uploadImage()
-
-      var self = this;
-      var data = JSON.stringify({
-        "eventName": self.eventName,
-        "eventDesc": self.eventDescription,
-        "eventLocation": self.location,
-        "maxCapacity": self.maxCapacity,
-        "eventDate": self.eventDate,
-        "eventCategory": self.selectedCategory,
-        "eventTime": self.eventTime, 
-        "eventPhotoURL": self.uploadURL,
-        "eventHost": this.currentUser
-      });
-
-      var config = {
-        method: 'post',
-        url: 'https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        data: data
-      };
-
-      await this.axios(config)
-        .then(response => {
-          console.log("id of newly created event below:");
-          console.log(JSON.stringify(response.data));
-          this.newEventID = response.data;
-          console.log('Event Successfuly Created')
-          this.processingCreateEvent = false
-          this.createEventSuccess = true
-          console.log('===== END OF CREATE EVENT =======')
-        })
-        // .then(function (response) {
-        //   console.log(JSON.stringify(response.data));
-        //   console.log('Event Successfuly Created')
-        //   this.processingCreateEvent = false
-
-        //   console.log('===== END OF CREATE EVENT =======')
-
-        // })
-        .catch(function (error) {
-          console.log(error);
-          console.log('Event NOT created')
-          console.log('===== END OF CREATE EVENT =======')
+      if(this.$refs.form.validate()) {
+        console.log('===== START OF CREATE EVENT =======')
+        this.processingCreateEvent = true //loading screen
+        await this.uploadImage()
+  
+        var self = this;
+        var data = JSON.stringify({
+          "eventName": self.eventName,
+          "eventDesc": self.eventDescription,
+          "eventLocation": self.location,
+          "maxCapacity": self.maxCapacity,
+          "eventDate": self.eventDate,
+          "eventCategory": self.selectedCategory,
+          "eventTime": self.eventTime, 
+          "eventPhotoURL": self.uploadURL,
+          "eventHost": this.currentUser
         });
-        
-      await this.updateCreatedEvents();
-      
-      
+  
+        var config = {
+          method: 'post',
+          url: 'https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data: data
+        };
+  
+        await this.axios(config)
+          .then(response => {
+            console.log("id of newly created event below:");
+            console.log(JSON.stringify(response.data));
+            this.newEventID = response.data;
+            console.log('Event Successfuly Created')
+            this.processingCreateEvent = false
+            this.createEventSuccess = true
+            console.log('===== END OF CREATE EVENT =======')
+          })
+          // .then(function (response) {
+          //   console.log(JSON.stringify(response.data));
+          //   console.log('Event Successfuly Created')
+          //   this.processingCreateEvent = false
+  
+          //   console.log('===== END OF CREATE EVENT =======')
+  
+          // })
+          .catch(function (error) {
+            console.log(error);
+            console.log('Event NOT created')
+            console.log('===== END OF CREATE EVENT =======')
+          });
+          
+        await this.updateCreatedEvents();
+      }      
     },
 
     updateCreatedEvents(){

@@ -3,7 +3,7 @@
 
   <div v-else>
     <div v-if="xsBreakpoint">
-      <img class="mt-3" src="../assets/images/graphics1.png" width="70%" data-aos="fade-left"></img>
+      <img class="mt-3" src="../assets/images/graphics1.png" width="70%" data-aos="fade-left">
       <div class="mt-6 mb-2 pt-6 pb-6 greenLight">
         <h1 class="mb-3 font-weight-bold text-center"><a class="greenDark--text" @click="pushToBuzzing">BUZZING NOW</a></h1>
         <EventCarousel :allEvents="buzzingEvents"></EventCarousel>
@@ -30,12 +30,12 @@
         <EventCarousel :allEvents="userForYou"></EventCarousel>
       </div>
       <div class="mt-2 pt-6 px-10 pb-16">
-        <h1 id="headerDesc" class="mb-6 brownDark--text">Don't buzz off by yourself...</h1>
+        <h1 id="headerDesc" class="mb-6 brownDark--text" data-aos="zoom-in" data-aos-duration="1200">Don't buzz off by yourself...</h1>
         <div class="d-flex">
-          <img src="../assets/images/homepage-1.png" width="60%" class="mt-4 ml-16 pl-16"/>
+          <img src="../assets/images/homepage-1.png" width="60%" class="mt-4 ml-16 pl-16" data-aos="fade-right" data-aos-duration="1200"/>
         </div>
         <div class="d-flex justify-end">
-          <img src="../assets/images/homepage-2.png" width="60%" class="mb-4 mr-16 pr-16"/>
+          <img src="../assets/images/homepage-2.png" width="60%" class="mb-4 mr-16 pr-16" data-aos="fade-left" data-aos-duration="1200"/>
         </div>      
       </div>
     </div>
@@ -49,6 +49,7 @@ import LandingScreen from '../components/LandingScreen.vue';
 import EventCarousel from '@/components/EventCarousel.vue';
 import RandomEventPrompt from '@/components/RandomEventPrompt.vue';
 import WelcomeImage from '@/components/WelcomeImage.vue';
+import AOS from 'aos'
 
 export default {
     name: "Home",
@@ -56,7 +57,9 @@ export default {
     mounted() {
       setTimeout(() => {
         this.isLoading = false;
-      }, 2000);
+      }, 1500);
+      AOS.init()
+
       if (this.$store.state.user != null) {
         console.log(`current user: ${this.$store.state.user.userName}`)
       }
@@ -74,7 +77,7 @@ export default {
       getAllBuzzing (events){
         var buzzingEvents = [];
         for (let indiv of events){
-          if (indiv.isBuzzing){
+          if (indiv.isBuzzing && (indiv.eventDate >= new Date().toISOString())){
             buzzingEvents.push(indiv)
           }
         }
@@ -83,7 +86,7 @@ export default {
       getAllUser: function (events, user){
         var reccEvents = [];
         for (let indiv of events){
-          if (user.categoryPrefs.includes(indiv.eventCategory)){
+          if (user.categoryPrefs.includes(indiv.eventCategory) && (indiv.eventDate >= new Date().toISOString())){
             reccEvents.push(indiv)
           }
         }

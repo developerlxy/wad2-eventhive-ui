@@ -31,8 +31,16 @@
           v-else-if="this.eventType=='Hosted Events'"
           class="text-left pt-0">
             <v-btn 
-              class="text-none mb-2"
+              class="text-none mb-2 mr-2"
               color="greenDark"
+              dark
+              @click="redirectToEventPage"
+            >
+            View event details
+            </v-btn>
+            <v-btn 
+              class="text-none mb-2"
+              color="brownDark"
               dark
               >
               Edit event details
@@ -81,8 +89,16 @@
           v-else-if="this.eventType=='Hosted Events'"
           class="text-left pt-0">
             <v-btn 
+              class="text-none mb-2 mr-2"
+              color="greenDark"
+              dark
+              @click="redirectToEventPage"
+              >
+              View event details
+            </v-btn>
+            <v-btn 
             class="text-none mb-2"
-            color="greenDark"
+            color="brownDark"
             dark
             @click="editEvent"
             >
