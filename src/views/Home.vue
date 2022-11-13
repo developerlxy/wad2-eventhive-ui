@@ -74,7 +74,7 @@ export default {
       getAllBuzzing (events){
         var buzzingEvents = [];
         for (let indiv of events){
-          if (indiv.isBuzzing){
+          if (indiv.isBuzzing && (indiv.eventDate >= new Date().toISOString())){
             buzzingEvents.push(indiv)
           }
         }
@@ -83,7 +83,7 @@ export default {
       getAllUser: function (events, user){
         var reccEvents = [];
         for (let indiv of events){
-          if (user.categoryPrefs.includes(indiv.eventCategory)){
+          if (user.categoryPrefs.includes(indiv.eventCategory) && (indiv.eventDate >= new Date().toISOString())){
             reccEvents.push(indiv)
           }
         }
