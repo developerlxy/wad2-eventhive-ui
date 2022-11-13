@@ -115,7 +115,7 @@
                             width="500"
                             >
                             <template v-slot:activator="{ on, attrs }">
-                                <v-btn
+                                <v-card
                                     block
                                     color="greenDark"
                                     class="white--text no-text-transform btn-multiline"
@@ -123,10 +123,14 @@
                                     v-on="on"
                                     
                                 >
+                                <v-card-title
+                                class="justify-center"
+                                >
                                 <v-icon color="#FFFFFF" class="mr-10">mdi-bee-flower</v-icon>
                                     Register
                                 <v-icon color="#FFFFFF" class="ml-10">mdi-bee-flower</v-icon>
-                                </v-btn>
+                            </v-card-title>
+                                </v-card>
                         </template>
                         <v-card>
                             <v-card-title class="text-h5 grey lighten-2">
