@@ -57,20 +57,20 @@
                         <v-col class="text-left">
                             <template v-if="this.registered">
                                 <v-card
-                                color="#D3E0D7"
+                                color="greenLight"
                             >
                             <v-card-title
-                            class="justify-center"
+                            class="justify-center greenDark--text"
                             >
-                            <v-icon color="#FFFFFF" class="mr-10">mdi-flower</v-icon>
+                            <v-icon color="greenDark" class="mr-10">mdi-flower</v-icon>
                             Registered!
-                            <v-icon color="#FFFFFF" class="ml-10">mdi-flower</v-icon>
+                            <v-icon color="greenDark" class="ml-10">mdi-flower</v-icon>
                             </v-card-title>
                             </v-card>
                         </template>
                         <template v-else-if="!(this.$store.state.user == null) && (this.specificEvent.eventHost._id == this.$store.state.user._id)">
                             <v-card
-                                class="greenDark"
+                                class="peachDark"
                             >
                             <v-card-title
                             class="justify-center white--text"

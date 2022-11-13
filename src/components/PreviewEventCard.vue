@@ -15,7 +15,7 @@
         <div>
           <h1 class="mt-3 ml-3 mr-2">
             <v-row class="py-2 mx-1 mt-1 mb-2 font-weight-bold text-left">
-              {{eventDetails.eventName}}
+              <h3 class="font-weight-medium">{{eventDetails.eventName}}</h3>
             </v-row>
           </h1>
 
