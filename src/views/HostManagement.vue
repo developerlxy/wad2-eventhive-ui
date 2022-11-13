@@ -20,25 +20,25 @@
               <v-row class="d-flex flex-column">
                 <v-col>
                   <h1 class="text-left">{{ eventObj["eventName"] }}</h1>
-                  {{eventObj["eventLocation"].ADDRESS}}
+                  <p class="text-left"> <span><v-icon>mdi-map-marker</v-icon></span> {{eventObj["eventLocation"].ADDRESS}}</p>
                 </v-col>
                 <v-col class="justify-start text-left"> </v-col>
               </v-row>
               <v-row class="align-end justify-left">
                 <v-card
-                  class="mx-auto px-4 pt-8 pb-9"
+                  class="mx-auto px-4 pb-9"
                   :width="width"
                   outlined
                   color="transparent"
                 >
                   <div class="d-flex flex-column">
-                    <v-card class="pa-4 mt-4" :width="width">
+                    <v-card class="pa-4" :width="width">
                       <h2 class="my-4 font-weight-medium">Attendees</h2>
                       <div v-if="eventObj.attendees.length > 0">
                         <v-virtual-scroll
                           :items="eventObj.attendees"
-                          height="100"
-                          item-height="50"
+                          height="200"
+                          item-height="30"
                         >
                           <template v-slot:default="{ item }">
                             <v-list-item :key="item">
