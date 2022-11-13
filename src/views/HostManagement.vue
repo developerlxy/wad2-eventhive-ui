@@ -149,16 +149,5 @@ export default {
       immediate: true,
     },
   },
-  methods: {
-    deleteEvent() {
-      if (confirm("Are you sure you want to delete this event?")) {
-        this.axios.delete(
-          `https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/delete/${this.eventID}`
-        );
-        this.$store.dispatch("getEvents");
-        this.$router.push("/");
-      }
-    }
-  },
 };
 </script>

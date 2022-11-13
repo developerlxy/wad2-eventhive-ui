@@ -298,71 +298,29 @@
         >
           Edit Event
         </v-btn>
-        <!-- <v-btn x-large :disabled="!valid" color="success" v-on:click="updateCreatedEvents()">
-            Test update created events
-          </v-btn> -->
-      </v-form>
-      <!-- <br> -->
-      <!-- Checking if the component is imported correctly, here is eventName: {{eventName}}<br>
-          Checking if the component is imported correctly, here is eventDescription: {{eventDescription}}<br>
-        Checking if the component is imported correctly, here is selectedCategory: {{selectedCategory}}<br>
-        Checking if the component is imported correctly, here is select: {{select}}<br>
-  
-        Checking if the component is imported correctly, here is location: {{location}}<br>
-        Checking if the component is imported correctly, here is maxCapacity: {{maxCapacity}}<br>
-        Checking if the component is imported correctly, here is eventTime: {{eventTime}}<br>
-        Checking if the component is imported correctly, here is eventDate: {{eventDate}}<br> -->
-      <!-- <br> -->
-
-      <!-- OVERLAY PROCESSING CREATE EVENT STARTS HERE -->
-    </v-card>
-    <!-- <v-overlay :value="processingCreateEvent">
-        <v-progress-circular
-          indeterminate
-          size="64"
-        ></v-progress-circular>
-      </v-overlay> -->
-    <!-- OVERLAY ONCE EVENT CREATED STARTS HERE -->
-    <!-- <v-overlay :value="createEventSuccess" :opacity="0.9">
-        <h1>
-          BUZZ BUZZ!
-          Your event has gone live 👍
-        </h1>
-        <br>
-        <v-btn color="success" @click="toEvent()">
-          Take me to my event!
-          <v-icon right>
-            mdi-bee-flower
-          </v-icon>
+        <v-btn class="ma-2" x-large color="error" @click="clickDelete">
+          delete event
         </v-btn>
-      </v-overlay> -->
-    <!-- <hr>
-      =========================== Search distance between 2 locations ===================
-      <br><br>
-      <LocationSearchBar @locationSelected="onLocationSelected1"></LocationSearchBar>
-  
-      <br>
-      selected location 1: {{ location1 }}
-      <br>
-      location 1 lat: {{ location1_lat }}
-      <br>
-      location 1 long: {{ location1_long }}
-  
-      <LocationSearchBar @locationSelected="onLocationSelected2"></LocationSearchBar>
-  
-      <br>
-      selected location 2: {{ location2 }}
-      <br>
-      location 2 lat: {{ location2_lat }}
-      <br>
-      location 2 long: {{ location2_long }}
-      <br>
-      <v-btn color="success" class="mr-4"
-        v-on:click="getDistanceFromLatLonInKm(location1_lat, location1_long, location2_lat, location2_long)">
-        Calculate Distance
-      </v-btn>
-      <br>
-      Distance between the 2 locations: {{ calculatedDistance }} KM -->
+        <div v-if="alert">
+        <v-alert
+      prominent
+      type="error"
+    >
+      <v-row align="center">
+        <v-col class="grow">
+          Are you sure you want to delete this event?
+        </v-col>
+        <v-col class="shrink">
+          <v-btn color="white" class="error--text" @click="deleteEvent">Confirm</v-btn>
+        </v-col>
+      </v-row>
+    </v-alert>
+  </div>
+
+      </v-form>
+
+    </v-card>
+   
   </div>
 </template>
 
@@ -422,6 +380,7 @@ export default {
   },
   data() {
     return {
+      alert: false,
       isLoading: true,
       valid: true,
       eventName: this.eventobject.eventName,
@@ -589,6 +548,20 @@ export default {
         return true;
       }
     },
+    deleteEvent() {
+
+          this.axios.delete(
+            `https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/delete/${this.eventobject["_id"]}`
+          );
+          console.log("Delete success")
+          this.alert=false;
+          this.$store.dispatch("getEvents");
+          this.$router.push("/");
+          
+      },
+      clickDelete() {
+        this.alert=true;
+      }
   },
 };
 </script>
