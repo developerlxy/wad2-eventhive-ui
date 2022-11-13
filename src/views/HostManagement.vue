@@ -80,7 +80,7 @@
           <div v-if="attendees.length==0">No attendees yet...</div>
             <div v-else>
               <div v-for="attendee of attendees">
-                <v-card-title><v-avatar><img :src="'/src/assets/images/test.png'"></v-avatar>&nbsp;  {{attendee["userName"]}}</v-card-title>
+                <v-card-title><v-avatar><img :src="'/src/assets/images/test.jpg'"></v-avatar>&nbsp;  {{attendee["userName"]}}</v-card-title>
                 <v-card-subtitle></v-card-subtitle>
               </div>
     
@@ -89,7 +89,7 @@
         </v-card><br/>
         <v-card>
             <div>
-                <v-card-title><v-avatar><img :src="'/src/assets/images/test.png'"></v-avatar>&nbsp;  Ah Beng</v-card-title>
+                <v-card-title><v-avatar><img :src="'/src/assets/images/test.jpg'"></v-avatar>&nbsp;  Ah Beng</v-card-title>
                 <v-card-subtitle></v-card-subtitle>
                 <v-card-actions>
                     <div class="text-center">
@@ -133,7 +133,7 @@
         </v-card><br/>
         <v-card>
             <div>
-                <v-card-title><v-avatar><img :src="'/src/assets/images/test.png'"></v-avatar>&nbsp;  Jesus</v-card-title>
+                <v-card-title><v-avatar><img :src="'/src/assets/images/test.jpg'"></v-avatar>&nbsp;  Jesus</v-card-title>
                 <v-card-subtitle></v-card-subtitle>
                 <v-card-actions>
                     <div class="text-center">

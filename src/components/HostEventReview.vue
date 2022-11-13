@@ -13,7 +13,7 @@
                   >
                   </v-rating>
                   <v-avatar class="mt-2">
-                    <img :src="'/src/assets/images/test.png'">
+                    <img :src="'/src/assets/images/test.jpg'">
                   </v-avatar>  
                   <p class="font-weight-medium">{{ eventReview["userName"] }}  </p>
 
