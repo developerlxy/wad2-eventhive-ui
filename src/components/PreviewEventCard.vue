@@ -13,8 +13,8 @@
           </v-row>
         </h1>
 
-        <v-card-text>
-          <v-row class="py-2 mx-1 font-weight-medium">
+        <v-card-text class="">
+          <v-row class="py-2 mx-1 font-weight-medium d-flex flex-nowrap">
             <v-icon class="mx-1" color="greenDark">place</v-icon>
             {{ eventDetails.eventLocation.SEARCHVAL }}
           </v-row>

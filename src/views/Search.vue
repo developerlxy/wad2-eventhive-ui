@@ -22,7 +22,7 @@
               <SecondaryEventCard
                 :eventDetails="event"
                 @mouseover.native="previewEvent(event)"
-                @mouseout.native="eventPreview = false"
+                @mouseout.native="eventPreview = true"
                 onclick="goToEvent"
               ></SecondaryEventCard>
             </v-col>
