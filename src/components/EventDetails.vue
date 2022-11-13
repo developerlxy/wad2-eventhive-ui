@@ -57,15 +57,29 @@
                         <v-col class="text-left">
                             <template v-if="this.registered">
                                 <v-card
-                                color="#D3E0D7"
+                                color="greenLight"
                             >
                             <v-card-title
-                            class="justify-center"
+                            class="justify-center greenDark--text"
                             >
-                            <v-icon color="#FFFFFF" class="mr-10">mdi-flower</v-icon>
+                            <v-icon color="greenDark" class="mr-10">mdi-flower</v-icon>
                             Registered!
-                            <v-icon color="#FFFFFF" class="ml-10">mdi-flower</v-icon>
+                            <v-icon color="greenDark" class="ml-10">mdi-flower</v-icon>
                             </v-card-title>
+                            </v-card>
+                        </template>
+                        <template v-else-if="!(this.$store.state.user == null) && (this.specificEvent.eventHost._id == this.$store.state.user._id)">
+                            <v-card
+                                class="peachDark"
+                            >
+                            <v-card-title
+                            class="justify-center white--text"
+                            >
+                            <v-icon color="#FFFFFF" class="mr-10"> mdi-bee </v-icon>
+                                You are hosting!
+                            <v-icon color="#FFFFFF" class="ml-10"> mdi-bee </v-icon>
+                            </v-card-title>
+                            
                             </v-card>
                         </template>
                         <template v-else-if="this.specificEvent.attendees.length >= this.specificEvent.maxCapacity">
@@ -81,18 +95,17 @@
                             </v-card-title>
                             </v-card>
                         </template>
-                        <template v-else-if="!(this.$store.state.user == null) && (this.specificEvent.eventHost._id == this.$store.state.user._id)">
+                        <template v-else-if="this.specificEvent.eventDate < this.today">
                             <v-card
-                                class="greenDark"
+                                color="#90A4AE"
                             >
                             <v-card-title
                             class="justify-center white--text"
                             >
-                            <v-icon color="#FFFFFF" class="mr-10"> mdi-bee </v-icon>
-                                You are hosting!
-                            <v-icon color="#FFFFFF" class="ml-10"> mdi-bee </v-icon>
+                            <v-icon color="#FFFFFF" class="mr-10">mdi-beehive-off-outline</v-icon>
+                            Event passed
+                            <v-icon color="#FFFFFF" class="ml-10">mdi-beehive-off-outline</v-icon>
                             </v-card-title>
-                            
                             </v-card>
                         </template>
                         <template v-else>
@@ -102,7 +115,7 @@
                             width="500"
                             >
                             <template v-slot:activator="{ on, attrs }">
-                                <v-btn
+                                <v-card
                                     block
                                     color="greenDark"
                                     class="white--text no-text-transform btn-multiline"
@@ -110,10 +123,14 @@
                                     v-on="on"
                                     
                                 >
+                                <v-card-title
+                                class="justify-center"
+                                >
                                 <v-icon color="#FFFFFF" class="mr-10">mdi-bee-flower</v-icon>
                                     Register
                                 <v-icon color="#FFFFFF" class="ml-10">mdi-bee-flower</v-icon>
-                                </v-btn>
+                            </v-card-title>
+                                </v-card>
                         </template>
                         <v-card>
                             <v-card-title class="text-h5 grey lighten-2">
@@ -318,6 +335,7 @@
             registered: false,
             dialog: false,
             isHost: false,
+            today: new Date().toISOString(),
             
         }
     },
@@ -361,8 +379,9 @@
             this.$store.dispatch('getUser')
             console.log("user registered events" , this.acctUser.registeredEvents)
             console.log("event attendees" , this.specificEvent.attendees)
-            if(this.acctUser.registeredEvents.includes(this.specificEvent._id) && this.specificEvent.attendees.includes(this.acctUser)){
+            if(this.acctUser.registeredEvents.includes(this.specificEvent._id)){
                 this.registered = true
+                console.log('event registered already')
             }
             else {
                 this.registered = false
@@ -445,7 +464,7 @@ created() {
     async mounted()  {
         AOS.init()
         await this.setup()
-        console.log(this.specificEvent)
+        console.log(this.specificEvent.eventDate)
         this.isRegistered()
         setTimeout(() => {
       this.isLoading = false;
