@@ -3,7 +3,7 @@
 
   <div v-else>
     <div v-if="xsBreakpoint">
-      <img class="mt-3" src="../assets/images/graphics1.png" width="70%" data-aos="fade-left"></img>
+      <img class="mt-3" src="../assets/images/graphics1.png" width="70%" data-aos="fade-left">
       <div class="mt-6 mb-2 pt-6 pb-6 greenLight">
         <h1 class="mb-3 font-weight-bold text-center"><a class="greenDark--text" @click="pushToBuzzing">BUZZING NOW</a></h1>
         <EventCarousel :allEvents="buzzingEvents"></EventCarousel>
