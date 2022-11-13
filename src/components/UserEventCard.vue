@@ -82,16 +82,42 @@
           dark
           @click="redirectToEventPage"
           >
-          View event details
+          View event details 
           </v-btn>
-          <v-btn 
-            class="text-none mb-2"
-            color="error"
-            dark
-            @click="unregister"
-            >
-            Unregister from event
-          </v-btn>
+          <v-dialog
+            v-model="dialog"
+            width="500"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn 
+                class="text-none mb-2"
+                color="error"
+                dark
+                v-bind="attrs"
+                v-on="on"
+                >
+                Buzz off from event
+              </v-btn>
+            </template>
+            <v-card>
+              <v-card-title class="peachMid brownDark--text" color="#735019"><strong>
+                  Confirmation
+              </strong></v-card-title>
+              <v-card-text class="pt-3">
+                  You are unregistering from the event: <strong>{{this.eventObj.eventName}}</strong>.
+              </v-card-text>
+              <v-divider></v-divider>
+              <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                  color="greenDark darken-1 white--text"
+                  @click="unregister"
+                  >
+                  Confirm
+                  </v-btn>
+              </v-card-actions>
+          </v-card>
+          </v-dialog>
         </v-col>
         <v-col
           v-else-if="this.eventType=='Hosted Events'"
@@ -130,6 +156,12 @@ import Review from './Review.vue'
 
     export default {
     name: "UserEventCard",
+    data() {
+      return {
+        registeredEventsList: [],
+        dialog: false,
+      }
+    },
     props: {
         eventObj: {
             type: Object
@@ -169,24 +201,40 @@ import Review from './Review.vue'
             console.log("going to ", this.eventObj._id);
             this.$router.push({ path: `/hostmgmt?id=${this.eventObj._id}` });
         },
-        unregister(){
+        async unregister(){
+          this.dialog=false
+          var newAttendees = []
+          var newUserRegisteredList = []
           for (let x in this.eventObj.attendees){
-            console.log(this.eventObj, this.eventObj.attendees, this.$store.state.user.registeredEvents, 123213)
-            if(this.eventObj.attendees[x]._id == this.$store.state.user._id){
-              this.eventObj.attendees.splice(x,1)
-              
-              const index = this.$store.state.user.registeredEvents.indexOf(this.eventObj.attendees[x]._id)
-              this.$store.state.user.registeredEvents.splice(index,1)
-
-              this.axios.put(`https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/attendees`,{'_id':this.eventObj._id, 'attendees':this.eventObj.attendees})
-              this.axios.put(`https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users/registered`,{'userEmail':this.$store.state.user.userEmail, 'attendees':this.$store.state.user.registeredEvents})
-              
-              this.$store.dispatch('getEvents')
-              this.$store.dispatch('getUser')
-              console.log("found remove", this.eventObj.attendees, this.$store.state.user.registeredEvents)
-
+            if (this.eventObj.attendees[x]._id !== this.$store.state.user._id){
+              newAttendees.push(this.eventObj.attendees[x])
+            }
           }
-        }
+          for (let x in this.registeredEventsList) {
+            if (this.registeredEventsList[x] !== this.eventObj._id) {
+              newUserRegisteredList.push(this.registeredEventsList[x])
+            }
+          }
+          this.axios.put(`https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/attendees`,
+            {
+              '_id': this.eventObj._id, 
+              'attendees': newAttendees
+            })
+          .then(()=> {
+            this.axios.put(`https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users/registered`,
+            {
+              'userEmail': this.$store.state.user.userEmail, 
+              'registeredEvents': newUserRegisteredList
+            })
+            .then(() => {
+              this.$emit('unregistered', newUserRegisteredList)
+              
+              this.$store.dispatch('getUser')
+              this.$store.dispatch('getEvents')
+              .then(()=> {
+              })
+            })
+          })
       }
     },
     computed: {
@@ -200,8 +248,11 @@ import Review from './Review.vue'
         };
     },
     mounted() {
+        this.$store.dispatch('getUser')
+        .then(() => {
+          this.registeredEventsList = this.$store.state.user.registeredEvents
+        })
         this.getFormattedDate();
-        console.log(this.eventType);
     },
     components: { Review }
 }

@@ -3,10 +3,9 @@
       <h1 class="d-flex brownDark--text font-weight-bold  ml-4 mt-6" data-aos="fade-up">
         {{this.title}}
       </h1>
-      <div v-if="message!=''" class="pt-10 my-auto">
+      <div v-if="filteredEvents.length==0" class="pt-10 my-auto">
         <img src="../assets/images/flying-bee.gif"/>
         <h3 class="mt-6 font-weight-medium" data-aos="zoom-out">
-          
           {{this.message}}
         </h3>
       </div>
@@ -17,7 +16,7 @@
           data-aos="fade-left"
       >
         <v-col>
-          <UserEventCard :event-obj="event" :event-type="userEventType" ></UserEventCard>
+          <UserEventCard :event-obj="event" :event-type="userEventType" @unregistered="unregistered"></UserEventCard>
         </v-col>
           
       </v-row>
@@ -53,15 +52,34 @@ export default {
     },
     mounted() {
         this.$store.dispatch('getUser')
+        .then(()=> {
+          this.user = this.$store.state.user
+        })
         this.$store.dispatch('getEvents')
         .then(()=> {
           this.allEvents = this.$store.state.events
         })
-        this.user = this.$store.state.user
+        
         AOS.init()
         
     },
     methods: {
+      unregistered(newUserRegisteredList) {
+        console.log(newUserRegisteredList)
+        this.$store.dispatch('getUser')
+        .then(()=> {
+          this.filteredEvents = []
+          for (let eventObj of this.$store.state.events) {
+            if (newUserRegisteredList.includes(eventObj._id))
+            this.filteredEvents.push(eventObj)
+          }
+          if (this.filteredEvents.length == 0) {
+            this.message = "No registered events. What are you waiting for?"
+          } else {
+            this.message = ""
+          }
+        })
+      },
       isAfterToday(date) {
         const today = new Date();
 
