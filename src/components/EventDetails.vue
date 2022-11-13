@@ -57,7 +57,7 @@
                         <v-col class="text-left">
                             <template v-if="this.registered">
                                 <v-card
-                                color="greenLight"
+                                color="#D3E0D7"
                             >
                             <v-card-title
                             class="justify-center"
@@ -84,7 +84,7 @@
                         </template>
                         <template v-else-if="this.specificEvent.attendees.length >= this.specificEvent.maxCapacity">
                             <v-card
-                                color="warning"
+                                class="peachDark"
                             >
                             <v-card-title
                             class="justify-center white--text"
@@ -115,7 +115,7 @@
                             width="500"
                             >
                             <template v-slot:activator="{ on, attrs }">
-                                <v-card
+                                <v-btn
                                     block
                                     color="greenDark"
                                     class="white--text no-text-transform btn-multiline"
@@ -127,25 +127,14 @@
                                     Register
                                 <v-icon color="#FFFFFF" class="ml-10">mdi-bee-flower</v-icon>
                                 </v-btn>
-                                
-                                <v-card-title class="text-wrap justify-center">
-                                    <v-icon>mdi-bee-flower</v-icon>
-                                &nbsp; Register &nbsp;
-                                    <v-icon>mdi-bee-flower</v-icon>
-                                </v-card-title> 
-                                
-                                </v-card>
                         </template>
-                        <v-card
-                        color="peachLight"
-                        >
-                            <v-card-title class="text-h5 yellow darken-2">
+                        <v-card>
+                            <v-card-title class="text-h5 grey lighten-2">
                                 Confirmation
                             </v-card-title>
 
                             <v-card-text>
-                                <br>You are signing up for the event: 
-                                <strong>{{this.specificEvent.eventName}}</strong>.
+                                You are signing up for the event: {{this.specificEvent.eventName}}.
                             </v-card-text>
 
                             <v-divider></v-divider>
@@ -153,7 +142,7 @@
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn
-                                color="success"
+                                color="primary"
                                 text
                                 @click="intermediate"
                                 >
