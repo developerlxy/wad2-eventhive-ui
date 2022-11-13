@@ -1,7 +1,6 @@
 <template>
-  <v-app>
+  <v-app class="d-flex align-start">
     <NavBar @drawerShown="showDrawer"></NavBar>
-    <div v-if="!xsBreakpoint"><Categories></Categories></div>
     <v-main>
       <router-view />
     </v-main>
@@ -16,6 +15,7 @@
       <v-list
         nav
         dense
+        class="mt-6"
       >
         <v-list-item class="d-flex justify-center my-5">
           <h1 class="brownDark--text">CATEGORIES</h1>
@@ -24,24 +24,23 @@
           <Categories></Categories>
         </v-list-item>
         <v-list-item class="d-flex justify-center my-5">
-          <v-btn x-large class="d-flex brownDark font-weight-bold white--text" elevation="0" @click="createEvent()">Create Event</v-btn>
+          <v-btn x-large class="px-auto brownDark font-weight-medium white--text mt-8" elevation="0" @click="createEvent()">Create Event</v-btn>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
     </div>
-    <main-footer />
+    <MainFooter/>
   </v-app>
 </template>
 
 <script>
 import MainFooter from '@/components/MainFooter.vue';
 import Navbar from '@/components/NavBar.vue'
-import Categories from '@/components/Categories.vue'
 
 export default {
   name: 'Base',
   components: {
-    MainFooter, Navbar, Categories
+    MainFooter, Navbar
   },
   data() {
       return {
@@ -51,6 +50,14 @@ export default {
     methods: {
       showDrawer(){
         this.drawer = true
+      },
+      createEvent() {
+        if (this.$store.state.user == null){
+          this.$router.push("/login");
+        }
+        else {
+          this.$router.push("/events/create");
+        }
       },
     },
     computed: {

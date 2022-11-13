@@ -2,32 +2,41 @@
   <LandingScreen v-if="isLoading"></LandingScreen>
 
   <div v-else>
-    <WelcomeImage></WelcomeImage>
     <div v-if="xsBreakpoint">
-      <div class="my-2 pt-6 pb-6">
-        <h1 class=" mb-3 font-weight-black carouselheader text-center"><a class="greenDark--text" @click="pushToBuzzing">BUZZING NOW</a></h1>
+      <img class="mt-3" src="../assets/images/graphics1.png" width="70%" data-aos="fade-left"></img>
+      <div class="mt-6 mb-2 pt-6 pb-6 greenLight">
+        <h1 class="mb-3 font-weight-bold text-center"><a class="greenDark--text" @click="pushToBuzzing">BUZZING NOW</a></h1>
         <EventCarousel :allEvents="buzzingEvents"></EventCarousel>
       </div>
       <div class="mb-2 pt-6 pb-6" v-if="this.$store.state.user">
-        <h1 class="mb-3 font-weight-black carouselheader text-center"><a class="greenDark--text" @click="pushToForYou">JUST FOR YOU</a></h1>
+        <h1 class="mb-3 font-weight-bold text-center"><a class="greenDark--text" @click="pushToForYou">JUST FOR YOU</a></h1>
         <EventCarousel :allEvents="userForYou"></EventCarousel>
+      </div>
+      <div class="mt-2 pt-6 pb-16">
+        <h2 class="mb-6 brownDark--text">Don't buzz off by yourself...</h2>
+        <img src="../assets/images/homepage-1.png" width="80%" class="mt-2 mb-6 mx-auto"/>
+        <img src="../assets/images/homepage-2.png" width="80%" class="mb-4 mx-auto"/>
       </div>
     </div>
 
     <div v-else>
-      <div class="mb-2 mt-10 pt-6 px-sm-3 px-md-6 px-lg-10 pb-10 greenLight">
-        <h1 class=" mb-3 font-weight-black carouselheader ml-16 pl-16 text-start"><a class="greenDark--text" @click="pushToBuzzing">BUZZING NOW</a></h1>
+      <WelcomeImage></WelcomeImage>
+      <div class="mb-2 mt-3 pt-6 px-sm-3 px-md-6 px-lg-10 pb-10 greenLight">
+        <h1 class="mb-0 mt-1 font-weight-bold carouselheader ml-16 pl-16 text-start"><a class="greenDark--text" @click="pushToBuzzing">BUZZING NOW</a></h1>
         <EventCarousel :allEvents="buzzingEvents"></EventCarousel>
       </div>
       <div class="mb-2 mt-10 pt-6 px-10 pb-16" v-if="this.$store.state.user">
-        <h1 class="font-weight-black carouselheader ml-16 pl-16 text-start"><a class="greenDark--text" @click="pushToForYou">JUST FOR YOU</a></h1>
+        <h1 class="font-weight-bold carouselheader ml-16 pl-16 text-start mb-2"><a class="greenDark--text" @click="pushToForYou">JUST FOR YOU</a></h1>
         <EventCarousel :allEvents="userForYou"></EventCarousel>
       </div>
-      <div class="mb-2 mt-10 pt-6 px-10 pb-16">
-        <h1>Don't buzz off by yourself... Join EventHive and BEE happy!</h1>
-        <p>Find friends through casual and chill events</p>
-        <p>Host events for other like-minded fellas to join</p>
-        <p>There will be something for everyone!</p>
+      <div class="mt-2 pt-6 px-10 pb-16">
+        <h1 id="headerDesc" class="mb-6 brownDark--text">Don't buzz off by yourself...</h1>
+        <div class="d-flex">
+          <img src="../assets/images/homepage-1.png" width="60%" class="mt-4 ml-16 pl-16"/>
+        </div>
+        <div class="d-flex justify-end">
+          <img src="../assets/images/homepage-2.png" width="60%" class="mb-4 mr-16 pr-16"/>
+        </div>      
       </div>
     </div>
     <RandomEventPrompt class="bottom-stick"></RandomEventPrompt>
@@ -132,8 +141,8 @@ export default {
   bottom: 0;
 }
 
-/* p{
-  font-size: 2em
-} */
+#headerDesc{
+  font-size: 4em
+}
 
 </style>

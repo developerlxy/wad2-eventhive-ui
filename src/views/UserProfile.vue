@@ -1,22 +1,18 @@
 <template>
   <LoadingScreen v-if="isLoading"></LoadingScreen>
-  <div v-else-if="this.$store.state.user == null">
-    <v-alert class="brownLight ma-2">
+  <div v-else-if="this.$store.state.user == null" class="my-16 py-16">
+    <div class="py-16">
+      <v-alert class="brownLight ma-2 my-16">
       You are not logged in. Please login to view your profile.
     </v-alert>
+    </div>
   </div>
   <div v-else>
     <v-container>
       <br />
-      <div class="d-flex text-h5 brownDark--text font-weight-medium ma-4">
+      <h1 class="d-flex brownDark--text font-weight-bold ma-4 mb-6">
         My Profile
-      </div>
-      <!-- <ProfilePhotoUpload
-        :photoDefault="this.image"
-        :enableEdits="true"
-        @photo-submit="photo_submit">
-      </ProfilePhotoUpload> -->
-
+      </h1>
       <v-row class="col-12 pa-0 ma-0">
         <v-text-field
           v-model="userName"
@@ -102,15 +98,15 @@
         ></v-text-field>
       </v-row>
 
-      <hr class="my-4">
+      <hr class="my-12">
 
-      <div class="d-flex text-h5 brownDark--text font-weight-medium ma-4">
+      <h1 class="d-flex brownDark--text font-weight-bold ma-4">
         General Information
-      </div>
+      </h1>
 
-      <div class="d-flex brownDark--text mx-4">
+      <h3 class="d-flex brownDark--text mx-4 mt-6 font-weight-medium">
         My Interests
-      </div>
+      </h3>
       <v-row class="col-12 pa-0 ma-0">
       <v-chip-group
           multiple
@@ -127,18 +123,20 @@
           </v-chip>
         </v-chip-group>
       </v-row>
-      <div class="d-flex brownDark--text mx-4">
+      <h3 class="d-flex brownDark--text mx-4 mt-6 font-weight-medium">
         About me
-      </div>
+      </h3>
       <v-row class="col-12 pa-0 ma-0">
         <tiptap-vuetify class="ma-2" v-model="userDescription" :extensions="extensions" />
       </v-row>
 
-      <v-row>
+      <v-row class="d-flex align-center mb-12 mt-8">
         <v-btn
           color="greenDark"
-          class="white--text ma-4 pa-1"
+          class="white--text ma-4 pa-1 px-3"
           @click="updateProfile()"
+          elevation="0"
+          large
           >Update Profile</v-btn
         >
         <v-icon

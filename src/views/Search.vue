@@ -10,9 +10,9 @@
         <h2>Buzz off, there ain't any events for ya!</h2>
       </v-row>
     </v-container>
-    <v-container v-else class="mb-4 justify-sm-center justify-xs-center" fluid>
-      <v-row>
-        <v-col class="ml-sm-8 mx-6">
+    <v-container v-else class="justify-sm-center justify-xs-center pb-16 mb-16" fluid>
+      <v-row class="mb-12">
+        <v-col class="ml-sm-8 mx-6 mb-16 pb-16">
           <v-row cols="12">
             <v-col
                 v-for="event in events"

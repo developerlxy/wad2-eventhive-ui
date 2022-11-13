@@ -22,10 +22,10 @@
   <div v-else>
     <v-row class="mx-6 my-0 py-0">
       <v-col class="d-flex align-content-center flex-wrap justify-center ml-2 my-0 py-0">
-        <h1 data-aos="fade-right" :id="headerID" class="font-weight-black brownDark--text ml-14 pl-14 text-start">BEE there or BEE <span class="brownMid">square!</span></h1>
+        <h1 data-aos="fade-right" :id="headerID" class="font-weight-bold brownDark--text ml-14 pl-14 text-start">BEE there or BEE <span class="brownMid">square!</span></h1>
       </v-col>
       <v-col class="d-flex align-content-center justify-center pr-16 mr-16">
-        <img src="../assets/images/graphics1.png" width="500" data-aos="fade-left">
+        <img src="../assets/images/graphics1.png" width="550" data-aos="fade-left">
       </v-col>
     </v-row>
   </div>
