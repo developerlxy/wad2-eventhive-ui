@@ -24,10 +24,10 @@
           </v-row>
         </v-col>
         <v-col class="col-5">
-          <div v-if="eventPreview!=false" class="mt-2 mr-8 preview">
+          <div v-if="eventPreview!=false && mdBreakpoint" class="mt-2 mr-8 preview">
             <PreviewEventCard :eventDetails="this.eventPreview"></PreviewEventCard>
           </div>  
-          <div v-else class="preview mr-8">
+          <div v-else-if="mdBreakpoint" class="preview mr-8">
             <v-row class="justify-center my-5" >
               <img src="../assets/images/flying-bee.gif">
             </v-row>

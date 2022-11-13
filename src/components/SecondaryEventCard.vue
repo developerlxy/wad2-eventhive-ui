@@ -3,7 +3,6 @@
       @click="toEvent()"
     >
         <v-row class="ma-0">
-          <v-col>
             <v-avatar
               class="ma-3 mx-sm-auto mx-md-3"
               size="200"
@@ -11,7 +10,6 @@
               <v-img 
               :src="eventDetails.eventPhotoURL"></v-img>
             </v-avatar>
-          </v-col>
           
           <v-col>
             <div>
@@ -24,7 +22,6 @@
                 <v-row class="py-2 mx-1 font-weight-medium d-flex flex-nowrap">
                   <v-icon class="mx-1" color="greenDark">place</v-icon>
                   <div class="text-truncate">{{eventDetails.eventLocation.SEARCHVAL}}</div>
-                    <!-- {{eventDetails.eventLocation.SEARCHVAL}} -->
                 </v-row>
                 <v-row class="py-2 mx-1 font-weight-medium">
                   <v-icon class="mx-1" color="greenDark">event</v-icon>
