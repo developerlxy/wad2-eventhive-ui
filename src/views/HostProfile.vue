@@ -17,7 +17,7 @@
               elevation="0"
             >
             <v-avatar size="150" class="mt-2">
-                <img :src="'/src/assets/images/test.jpg'">
+                <img :src="host['userPhotoURL']">
             </v-avatar>
             <v-rating
               :value="avgRating"
