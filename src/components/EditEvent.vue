@@ -410,7 +410,7 @@ export default {
       maxCapacity: this.eventobject.maxCapacity,
       capacityRules: [(v) => v != 0 || "I don't believe you!"],
 
-      eventDate: this.eventobject.eventDate,
+      eventDate: this.eventobject.eventDate.split("T")[0],
       dateRules: [
         (v) => !!v || "Is it today? In the future? Must we time travel back?",
       ],
