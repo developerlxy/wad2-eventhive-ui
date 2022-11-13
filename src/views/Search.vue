@@ -1,12 +1,12 @@
 <template>
   <LoadingScreen v-if="isLoading"></LoadingScreen>
 
-  <div v-else height="100%">
-    <v-container v-if="events.length == 0" class="my-16 py-16">
-      <v-row class="justify-center mb-5">
+  <div v-else fill-height class="d-flex">
+    <v-container v-if="events.length == 0" class="align-center">
+      <v-row class="justify-center align-center mb-5">
         <img src="../assets/images/flying-bee.gif" />
       </v-row>
-      <v-row class="justify-center">
+      <v-row class="justify-center align-center">
         <h2>Buzz off, there ain't any events for ya!</h2>
       </v-row>
     </v-container>
@@ -22,7 +22,7 @@
               <SecondaryEventCard
                 :eventDetails="event"
                 @mouseover.native="previewEvent(event)"
-                @mouseout.native="eventPreview = true"
+                @mouseout.native="eventPreview = false"
                 onclick="goToEvent"
               ></SecondaryEventCard>
             </v-col>
