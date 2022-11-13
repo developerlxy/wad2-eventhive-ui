@@ -73,7 +73,6 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
-        this.events=[]
       },
       gotoEvent: function (id){
         this.$router.push({ path:`/event?id=${id}`})
