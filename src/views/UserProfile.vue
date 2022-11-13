@@ -21,7 +21,7 @@
           <v-file-input outlined dense @change="onFileChange()" accept="image/jpeg,image/png" label="Upload here!" prepend-icon="mdi-camera" v-model="uploadedImage"></v-file-input>
         </div>
         <div v-else>
-          <img :src="image" style="border:1px grey; border-radius: 3%;" width="250" height=auto lazy-src="./assets/images/test.jpg"/>
+          <img :src="image" style="border:1px grey; border-radius: 3%;" width="250" height=auto />
           <br>
           <v-btn outlined @click="removeImage">Choose another picture?</v-btn>
         </div>
@@ -224,7 +224,7 @@ export default {
       fullName: this.$store.state.user["userFullName"] == null ? "" : this.$store.state.user["userFullName"],
 
       // FOR UPLOADING IMAGE
-      image: this.$store.state.user["userPhotoURL"] == null ? '../src/assets/images/test.jpg': this.$store.state.user["userPhotoURL"],
+      image: this.$store.state.user["userPhotoURL"] == null ? "": this.$store.state.user["userPhotoURL"],
       uploadURL : '',
       uploadedImage: null,
 
