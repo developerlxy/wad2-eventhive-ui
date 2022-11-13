@@ -1,8 +1,8 @@
 <template>
   <div class="flex">
     <!-- class="mx-auto px-10 pt-8 pb-9" -->
-    <v-card class="mx-auto my-8 px-0 pt-6 pb-6" width="100%" outlined>
-      <br />
+    <v-container class="mx-auto my-8 px-0 pt-6 pb-6" width="100%" >
+      <br>
       <v-form ref="form" v-model="valid" lazy-validation class="mx-16">
         <v-text-field
           v-model="eventName"
@@ -57,6 +57,7 @@
           :rules="categoryRules"
           label="Category"
           required
+          class="mt-8"
         >
         </v-select>
 
@@ -319,7 +320,7 @@
 
       </v-form>
 
-    </v-card>
+    </v-container>
    
   </div>
 </template>

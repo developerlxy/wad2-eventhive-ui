@@ -15,25 +15,26 @@
               width="100%"
             />
           </v-card>
-          <v-card class="mx-auto" :width="width" outlined color="transparent">
+          <v-card class="mx-auto mt-5 fill-height" :width="width" outlined
+            color="transparent">
             <v-container class="fill-height">
               <v-row class="d-flex flex-column">
                 <v-col>
-                  <h1 class="text-left">{{ eventObj["eventName"] }}</h1>
-                  <p class="text-left"> <span><v-icon>mdi-map-marker</v-icon></span> {{eventObj["eventLocation"].ADDRESS}}</p>
+                  <h1 class="text-left mb-8">{{ eventObj["eventName"] }}</h1>
+                  <h3 class="text-left font-weight-regular"> <span><v-icon>mdi-map-marker</v-icon></span> {{eventObj["eventLocation"].ADDRESS}}</h3>
                 </v-col>
                 <v-col class="justify-start text-left"> </v-col>
               </v-row>
               <v-row class="align-end justify-left">
                 <v-card
-                  class="mx-auto px-4 pb-9"
+                  class="mx-auto px-4"
                   :width="width"
                   outlined
                   color="transparent"
                 >
                   <div class="d-flex flex-column">
                     <v-card class="pa-4" :width="width">
-                      <h2 class="my-4 font-weight-medium">Attendees</h2>
+                      <h2 class="font-weight-medium greenDark rounded-lg white--text py-3 mb-5">Attendees</h2>
                       <div v-if="eventObj.attendees.length > 0">
                         <v-virtual-scroll
                           :items="eventObj.attendees"
