@@ -449,7 +449,7 @@ created() {
         this.isRegistered()
         setTimeout(() => {
       this.isLoading = false;
-    },2000);
+    },1500);
     },
     watch: {
     '$route.params': {

@@ -56,7 +56,7 @@ export default {
     mounted() {
       setTimeout(() => {
         this.isLoading = false;
-      }, 2000);
+      }, 1500);
       if (this.$store.state.user != null) {
         console.log(`current user: ${this.$store.state.user.userName}`)
       }
