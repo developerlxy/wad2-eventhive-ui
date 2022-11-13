@@ -1,10 +1,10 @@
 <template>
     <div class="user-event-carousel mx-lg-12 mx-sm-10 mx-6 mt-2 mb-16 pb-16">
-      <p class="d-flex text-h4 brownDark--text font-weight-bold  ml-4 mt-6">
+      <p class="d-flex text-h4 brownDark--text font-weight-bold  ml-4 mt-6" data-aos="fade-up">
         {{this.title}}
       </p>
       <div v-if="message!=''" class="pt-10">
-        <p class="text-h6 mt-6 font-weight-medium my-16 py-16">
+        <p class="text-h6 mt-6 font-weight-medium my-16 py-16" data-aos="zoom-out">
           {{this.message}}
         </p>
       </div>
@@ -52,9 +52,7 @@ export default {
     mounted() {
         this.allEvents = this.$store.state.events
         this.$store.dispatch('getUser')
-        AOS.init(
-          {duration: 1000}
-        )
+        AOS.init()
         
     },
     methods: {

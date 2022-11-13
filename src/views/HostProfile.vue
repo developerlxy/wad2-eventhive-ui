@@ -74,7 +74,8 @@
               data-aos="flip-up"
             >
               <h1>Hey, I'm {{ host["userName"] }}!</h1><br/>
-              <p>Descripion here...</p>
+              <p v-if="host['userDesc']!==null" v-html="host['userDesc']"></p>
+              <p v-else>No description yet...</p>
               <h2>Rating & Reviews</h2><br>
               <div v-if="reviews.length==0">
               <p>No reviews yet...</p>
