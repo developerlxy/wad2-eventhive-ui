@@ -229,8 +229,6 @@ export default {
       userDescription: this.$store.state.user["userDesc"] == null ? "" : this.$store.state.user["userDesc"],
       fullName: this.$store.state.user["userFullName"] == null ? "" : this.$store.state.user["userFullName"],
 
-      // image: this.$store.state.user["userImage"] == null ? "/src/assets/images/test.jpg" : this.$store.state.user["userImage"],
-
       // FOR UPLOADING IMAGE
       image: this.$store.state.user["userPhotoURL"] == null ? '/src/assets/images/test.jpg': this.$store.state.user["userPhotoURL"],
       uploadURL : '',
