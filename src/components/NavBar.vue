@@ -8,7 +8,7 @@
           class="my-4 mx-0"
           max-height="100px"
           max-width="80px"
-          src="../src/assets/images/logo.png"
+          :src="require('../assets/images/logo.png')"
           @click="toHome()"
         />
         <v-spacer></v-spacer>
@@ -24,7 +24,7 @@
           class="logo mr-3 mt-5"
           max-height="100px"
           max-width="100px"
-          src="../src/assets/images/logo.png"
+          :src="require('../assets/images/logo.png')"
           contain
           @click="toHome()"
         />
@@ -58,7 +58,7 @@ export default {
     },
     imageURL: {
       type: String,
-      default: "../src/assets/images/test.jpg",
+      default: "../assets/images/test.jpg",
     },
   },
   data(){

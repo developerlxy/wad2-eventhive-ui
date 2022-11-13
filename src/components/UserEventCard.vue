@@ -32,7 +32,7 @@
           class="text-left pt-0">
             <v-btn 
               class="text-none mb-2 mr-2"
-              color="brownDark"
+              color="greenDark"
               dark
               @click="redirectToEventPage"
             >
@@ -40,7 +40,7 @@
             </v-btn>
             <v-btn 
               class="text-none mb-2"
-              color="greenDark"
+              color="brownDark"
               dark
               >
               Edit event details
@@ -78,7 +78,7 @@
         >
           <v-btn 
           class="text-none mb-2"
-          color="brownDark"
+          color="greenDark"
           dark
           @click="redirectToEventPage"
           >
@@ -90,7 +90,7 @@
           class="text-left pt-0">
             <v-btn 
               class="text-none mb-2 mr-2"
-              color="brownDark"
+              color="greenDark"
               dark
               @click="redirectToEventPage"
               >
@@ -98,7 +98,7 @@
             </v-btn>
             <v-btn 
             class="text-none mb-2"
-            color="greenDark"
+            color="brownDark"
             dark
             @click="editEvent"
             >
