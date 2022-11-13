@@ -209,27 +209,27 @@
 
 
       <!-- OVERLAY PROCESSING CREATE EVENT STARTS HERE -->
-      <v-overlay :value="processingCreateEvent">
-        <v-progress-circular
-          indeterminate
-          size="64"
-        ></v-progress-circular>
-      </v-overlay>
-      <!-- OVERLAY ONCE EVENT CREATED STARTS HERE -->
-      <v-overlay :value="createEventSuccess" :opacity="0.9">
-        <h1>
-          BUZZ BUZZ!
-          Your event has gone live 👍
-        </h1>
-        <br>
-        <v-btn color="success" @click="toEvent()">
-          Take me to my event!
-          <v-icon right>
-            mdi-bee-flower
-          </v-icon>
-        </v-btn>
-      </v-overlay>
     </v-card>
+    <v-overlay :value="processingCreateEvent">
+      <v-progress-circular
+        indeterminate
+        size="64"
+      ></v-progress-circular>
+    </v-overlay>
+    <!-- OVERLAY ONCE EVENT CREATED STARTS HERE -->
+    <v-overlay :value="createEventSuccess" :opacity="0.9">
+      <h1>
+        BUZZ BUZZ!
+        Your event has gone live 👍
+      </h1>
+      <br>
+      <v-btn color="success" @click="toEvent()">
+        Take me to my event!
+        <v-icon right>
+          mdi-bee-flower
+        </v-icon>
+      </v-btn>
+    </v-overlay>
     <!-- <hr>
     =========================== Search distance between 2 locations ===================
     <br><br>
