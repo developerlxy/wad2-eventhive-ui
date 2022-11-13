@@ -13,8 +13,8 @@
 
         <div>
           <v-card-title>
-            <v-row class="py-2 mx-1 mt-1 mb-1 font-weight-bold">
-              {{eventDetails.eventName}}
+            <v-row class="py-2 mx-1 mt-1 mb-1">
+              <h3 class="font-weight-medium">{{eventDetails.eventName}}</h3>
             </v-row>
           </v-card-title>
           <v-card-text>
