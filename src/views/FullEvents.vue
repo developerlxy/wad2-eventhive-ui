@@ -63,8 +63,9 @@ export default {
 
         this.axios(config)
         .then(function (response) {
+          self.events = []
           for (let indiv of response.data) {
-            console.log(indiv.eventDate)
+            // console.log(indiv.eventDate)
             if (indiv.eventDate >= new Date().toISOString()){
               self.events.push(indiv)
             }
