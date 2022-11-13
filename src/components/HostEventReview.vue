@@ -32,6 +32,7 @@
           eventReview: {
             type: Object,
             required: true
+            
           }
         },
         data: () => ({
