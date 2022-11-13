@@ -69,20 +69,28 @@
         </v-img>
       </v-avatar>
       <div class="my-auto flex">
-        <p class="ml-4 mb-5 font-weight-medium text-left mt-3">{{eventDateString}}</p>
-        <v-card-title class="text-h5 text-left mb-5 font-weight-bold ">{{eventObj.eventName}}</v-card-title>
-        <v-card-subtitle class="text-left text-h6 font-weight-medium mb-5"><v-icon class="mx-1" color="greenDark">place</v-icon>{{eventObj.eventLocation.SEARCHVAL}}</v-card-subtitle>
+        <h3 class="ml-4 mb-5 font-weight-medium text-left mt-3">{{eventDateString}}</h3>
+        <v-card-title class="text-left mb-5"><h3>{{eventObj.eventName}}</h3></v-card-title>
+        <v-card-subtitle class="text-left mb-5"><h3 class="font-weight-medium"><v-icon class="mx-1" color="greenDark">place</v-icon>{{eventObj.eventLocation.SEARCHVAL}}</h3></v-card-subtitle>
         <v-col
           v-if="this.eventType=='Registered Events'"
           class="text-left pt-0"
         >
           <v-btn 
-          class="text-none mb-2"
+          class="text-none mb-2 mr-2"
           color="greenDark"
           dark
           @click="redirectToEventPage"
           >
           View event details
+          </v-btn>
+          <v-btn 
+            class="text-none mb-2"
+            color="error"
+            dark
+            @click="unregister"
+            >
+            Unregister from event
           </v-btn>
         </v-col>
         <v-col
@@ -160,7 +168,26 @@ import Review from './Review.vue'
         editEvent() {
             console.log("going to ", this.eventObj._id);
             this.$router.push({ path: `/hostmgmt?id=${this.eventObj._id}` });
+        },
+        unregister(){
+          for (let x in this.eventObj.attendees){
+            console.log(this.eventObj, this.eventObj.attendees, this.$store.state.user.registeredEvents, 123213)
+            if(this.eventObj.attendees[x]._id == this.$store.state.user._id){
+              this.eventObj.attendees.splice(x,1)
+              
+              const index = this.$store.state.user.registeredEvents.indexOf(this.eventObj.attendees[x]._id)
+              this.$store.state.user.registeredEvents.splice(index,1)
+
+              this.axios.put(`https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/attendees`,{'_id':this.eventObj._id, 'attendees':this.eventObj.attendees})
+              this.axios.put(`https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users/registered`,{'userEmail':this.$store.state.user.userEmail, 'attendees':this.$store.state.user.registeredEvents})
+              
+              this.$store.dispatch('getEvents')
+              this.$store.dispatch('getUser')
+              console.log("found remove", this.eventObj.attendees, this.$store.state.user.registeredEvents)
+
+          }
         }
+      }
     },
     computed: {
         xsBreakpoint() {

@@ -1,12 +1,14 @@
 <template>
     <div class="user-event-carousel mx-lg-12 mx-sm-10 mx-6 mt-2 mb-16 pb-16">
-      <p class="d-flex text-h4 brownDark--text font-weight-bold  ml-4 mt-6" data-aos="fade-up">
+      <h1 class="d-flex brownDark--text font-weight-bold  ml-4 mt-6" data-aos="fade-up">
         {{this.title}}
-      </p>
-      <div v-if="message!=''" class="pt-10">
-        <p class="text-h6 mt-6 font-weight-medium my-16 py-16" data-aos="zoom-out">
+      </h1>
+      <div v-if="message!=''" class="pt-10 my-auto">
+        <img src="../assets/images/flying-bee.gif"/>
+        <h3 class="mt-6 font-weight-medium" data-aos="zoom-out">
+          
           {{this.message}}
-        </p>
+        </h3>
       </div>
       <v-row
           v-for="event in this.filteredEvents"
@@ -50,8 +52,11 @@ export default {
         }
     },
     mounted() {
-        this.allEvents = this.$store.state.events
         this.$store.dispatch('getUser')
+        this.$store.dispatch('getEvents')
+        .then(()=> {
+          this.allEvents = this.$store.state.events
+        })
         this.user = this.$store.state.user
         AOS.init()
         
