@@ -1,13 +1,13 @@
 <template>
   <LoadingScreen v-if="isLoading"></LoadingScreen>
 
-  <div v-else class="fill-height peachLight">
-    <NavBar> </NavBar>
+  <div v-else class="fill-height peachLight py-4">
     <!-- class="mx-auto px-10 pt-8 pb-9" -->
     <v-card
-      class="mx-auto my-10 px-0 pt-8 pb-9"
+      class="mx-auto my-8 px-0 pt-6 pb-6"
       :width="width"
       outlined
+      data-aos="zoom-in"
     >
       <br>
       <h1 class="px-5">
@@ -209,27 +209,27 @@
 
 
       <!-- OVERLAY PROCESSING CREATE EVENT STARTS HERE -->
-      <v-overlay :value="processingCreateEvent">
-        <v-progress-circular
-          indeterminate
-          size="64"
-        ></v-progress-circular>
-      </v-overlay>
-      <!-- OVERLAY ONCE EVENT CREATED STARTS HERE -->
-      <v-overlay :value="createEventSuccess" :opacity="0.9">
-        <h1>
-          BUZZ BUZZ!
-          Your event has gone live 👍
-        </h1>
-        <br>
-        <v-btn color="success" @click="toEvent()">
-          Take me to my event!
-          <v-icon right>
-            mdi-bee-flower
-          </v-icon>
-        </v-btn>
-      </v-overlay>
     </v-card>
+    <v-overlay :value="processingCreateEvent">
+      <v-progress-circular
+        indeterminate
+        size="64"
+      ></v-progress-circular>
+    </v-overlay>
+    <!-- OVERLAY ONCE EVENT CREATED STARTS HERE -->
+    <v-overlay :value="createEventSuccess" :opacity="0.9">
+      <h1>
+        BUZZ BUZZ!
+        Your event has gone live 👍
+      </h1>
+      <br>
+      <v-btn color="success" @click="toEvent()">
+        Take me to my event!
+        <v-icon right>
+          mdi-bee-flower
+        </v-icon>
+      </v-btn>
+    </v-overlay>
     <!-- <hr>
     =========================== Search distance between 2 locations ===================
     <br><br>
@@ -264,9 +264,8 @@
 
 <script>
 import LoadingScreen from '../components/LoadingScreen.vue';
-import Categories from '@/components/Categories.vue';
-import NavBar from '@/components/NavBar.vue';
 import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragraph, BulletList, OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History } from 'tiptap-vuetify'
+import AOS from 'aos'
 
 // variables to upload image
 const MAX_IMAGE_SIZE = 10000000
@@ -278,8 +277,11 @@ const API_ENDPOINT = 'https://xt96j6drmd.execute-api.ap-southeast-1.amazonaws.co
 
 export default {
   name: "createEvent",
-  components: { LoadingScreen, Categories, NavBar, TiptapVuetify },
+  components: { LoadingScreen, TiptapVuetify },
   mounted() {
+    AOS.init({
+      duration: 800
+    })
     console.log('======== retrieving all stored events ========'),
     console.log(this.allStoredEvents[0]),
     console.log('======== all stored events retrieved. if null, navigate to homepage first then try again ========'),
@@ -487,7 +489,7 @@ export default {
     },
 
     xsBreakpoint() {
-      return this.$vuetify.breakpoint.name == 'xs' 
+        return this.$vuetify.breakpoint.width <= 700
     },
     onLocationSelected: function (selectedLocation) {
       this.location = selectedLocation

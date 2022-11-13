@@ -1,9 +1,12 @@
 <template>
-    <div class="event-card brownLight py-lg-8 px-lg-16"
+    <div class="event-card brownLight py-4 py-lg-8 px-lg-16"
     >
         <v-card
         class="mx-auto mt-2 pt-4"
         :width="cardWidth"
+        data-aos="zoom-in"
+        data-aos-duration="800"
+
         >
         <v-container>
             <v-row>
@@ -12,6 +15,8 @@
                 :width="width"
                 outlined
                 color="transparent"
+                data-aos="flip-up"
+                data-aos-duration="1200"
                 >
                   <img v-bind:src="this.specificEvent.eventPhotoURL"
                       aspect-ratio="16/9"
@@ -23,25 +28,28 @@
                 :width="width"
                 outlined
                 color="transparent"
+                data-aos="flip-up"
+                data-aos-duration="1200"
                 >
                     <v-container class="fill-height">
                     <v-row class="d-flex flex-column">
                         <v-col>
-                            <h3 class="text-left">{{this.newDate(this.specificEvent.eventDate)}}</h3>
+                            <h2 class="text-left font-weight-medium">{{this.newDate(this.specificEvent.eventDate)}}</h2>
                         </v-col>
                         <v-col>
                             <h1 class="text-left"> {{this.specificEvent.eventName}} </h1>
                         </v-col>
                         <v-col class="justify-start">
                             <span>
-                            <h3 class="text-left">by
+                            <h3 class="text-left font-weight-medium">by
                             <v-btn
                             v-if="this.specificEvent.eventHost"
                             @click="hostProfile()"
                             text
                             tile
                             color=""
-                            class="pd"
+                            class="pd ml-2"
+                            x-large
                             > {{this.specificEvent.eventHost.userName}}</v-btn></h3> 
 
                         </span>
@@ -49,42 +57,55 @@
                         <v-col class="text-left">
                             <template v-if="this.registered">
                                 <v-card
-                                color="#D3E0D7"
+                                color="greenLight"
                             >
                             <v-card-title
                             class="justify-center"
                             >
-                            <v-icon>mdi-flower</v-icon>
-                            &nbsp; Registered! &nbsp;
-                                    <v-icon>mdi-flower</v-icon>
-                            </v-card-title>
-                            </v-card>
-                        </template>
-                        <template v-else-if="this.specificEvent.attendees.length >= this.specificEvent.maxCapacity">
-                            <v-card
-                                color="#FF853F"
-                            >
-                            <v-card-title
-                            class="justify-center white--text"
-                            >
-                            <v-icon>mdi-beehive-off-outline</v-icon>
-                            &nbsp; Event full :( &nbsp;
-                                    <v-icon>mdi-beehive-off-outline</v-icon>
+                            <v-icon color="#FFFFFF" class="mr-10">mdi-flower</v-icon>
+                            Registered!
+                            <v-icon color="#FFFFFF" class="ml-10">mdi-flower</v-icon>
                             </v-card-title>
                             </v-card>
                         </template>
                         <template v-else-if="!(this.$store.state.user == null) && (this.specificEvent.eventHost._id == this.$store.state.user._id)">
                             <v-card
-                                color="#779977"
+                                class="greenDark"
                             >
                             <v-card-title
                             class="justify-center white--text"
                             >
-                            <v-icon> mdi-bee </v-icon>
+                            <v-icon color="#FFFFFF" class="mr-10"> mdi-bee </v-icon>
                                 You are hosting!
-                                <v-icon> mdi-bee </v-icon>
+                            <v-icon color="#FFFFFF" class="ml-10"> mdi-bee </v-icon>
                             </v-card-title>
                             
+                            </v-card>
+                        </template>
+                        <template v-else-if="this.specificEvent.attendees.length >= this.specificEvent.maxCapacity">
+                            <v-card
+                                color="warning"
+                            >
+                            <v-card-title
+                            class="justify-center white--text"
+                            >
+                            <v-icon color="#FFFFFF" class="mr-10">mdi-beehive-off-outline</v-icon>
+                            Event Full
+                            <v-icon color="#FFFFFF" class="ml-10">mdi-beehive-off-outline</v-icon>
+                            </v-card-title>
+                            </v-card>
+                        </template>
+                        <template v-else-if="this.specificEvent.eventDate < this.today">
+                            <v-card
+                                color="#90A4AE"
+                            >
+                            <v-card-title
+                            class="justify-center white--text"
+                            >
+                            <v-icon color="#FFFFFF" class="mr-10">mdi-beehive-off-outline</v-icon>
+                            Event passed
+                            <v-icon color="#FFFFFF" class="ml-10">mdi-beehive-off-outline</v-icon>
+                            </v-card-title>
                             </v-card>
                         </template>
                         <template v-else>
@@ -94,7 +115,7 @@
                             width="500"
                             >
                             <template v-slot:activator="{ on, attrs }">
-                                <v-btn
+                                <v-card
                                     block
                                     color="greenDark"
                                     class="white--text no-text-transform btn-multiline"
@@ -102,22 +123,29 @@
                                     v-on="on"
                                     
                                 >
-                                <v-icon>mdi-bee-flower</v-icon>
-                                &nbsp;
-                                <span class="text-wrap">
+                                <v-icon color="#FFFFFF" class="mr-10">mdi-bee-flower</v-icon>
                                     Register
-                                </span> &nbsp;
-                                    <v-icon>mdi-bee-flower</v-icon>
+                                <v-icon color="#FFFFFF" class="ml-10">mdi-bee-flower</v-icon>
+                                </v-card>
                                 
-                                </v-btn>
+                                <v-card-title class="text-wrap justify-center">
+                                    <v-icon>mdi-bee-flower</v-icon>
+                                &nbsp; Register &nbsp;
+                                    <v-icon>mdi-bee-flower</v-icon>
+                                </v-card-title> 
+                                
+                                </v-card>
                         </template>
-                        <v-card>
-                            <v-card-title class="text-h5 grey lighten-2">
+                        <v-card
+                        color="peachLight"
+                        >
+                            <v-card-title class="text-h5 yellow darken-2">
                                 Confirmation
                             </v-card-title>
 
                             <v-card-text>
-                                You are signing up for the event: {{this.specificEvent.eventName}}.
+                                <br>You are signing up for the event: 
+                                <strong>{{this.specificEvent.eventName}}</strong>.
                             </v-card-text>
 
                             <v-divider></v-divider>
@@ -125,11 +153,11 @@
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn
-                                color="primary"
+                                color="success"
                                 text
                                 @click="intermediate"
                                 >
-                                I accept
+                                Confirm
                                 </v-btn>
                             </v-card-actions>
                         </v-card>
@@ -150,11 +178,12 @@
                 :width="width"
                 outlined
                 color="transparent"
+                data-aos="flip-up"
+                data-aos-duration="1000"
                 >
-                    <h3 class="text-left">Description</h3>
-                    <br>
-                    <p v-html="desc" class="text-left">
-                    </p>
+                    <h2 class="text-left font-weight-medium mb-12">Description</h2>
+                    <span v-html="desc" class="text-left">
+                    </span>
                 </v-card>
                 <v-card
                 class="mx-auto px-4 pt-8 pb-9"
@@ -164,14 +193,14 @@
                 >
                     <div class="d-flex flex-column">
 
-                            <v-card class="mb-4 pa-4">
+                            <v-card class="mb-4 pa-4" data-aos="flip-up" data-aos-duration="1000">
                                 <v-container fill-height>
                                 <v-row class="justify-start align-center mb-1">
                                     <v-col cols="1">
                                         <v-icon>mdi-calendar</v-icon>
                                     </v-col>
                                     <v-col cols="11" >
-                                        <h3 class="text-left">Date and Time</h3>
+                                        <h2 class="text-left font-weight-medium">Date and Time</h2>
                                     </v-col>
                                 </v-row>
                         <v-row align-center class="justify-start">
@@ -186,14 +215,18 @@
                         </v-row>
                         </v-container>
                     </v-card>
-                    <v-card class="pa-4 mt-4" :width="width">
+                    <v-card 
+                      class="pa-4 mt-4" 
+                      :width="width"
+                      data-aos="flip-up"
+                      data-aos-duration="1000">
                         <v-container fill-height>
-                        <v-row class="justify-start  mb-1">
+                        <v-row class="justify-start align-center mb-1">
                             <v-col cols="1">
                                 <v-icon>mdi-map-marker</v-icon>
                             </v-col>
                             <v-col cols="11">
-                                <h3 class="text-left align-center">Location</h3>
+                                <h2 class="text-left align-center font-weight-medium">Location</h2>
                             </v-col>
                         </v-row >
                         <v-row class="justify-start my-3">
@@ -231,8 +264,10 @@
                         max-width="500"
                         class="mx-auto text-start"
                         border="1px solid"
+                        data-aos="flip-up"
+                        data-aos-duration="1000"
                     >
-                        <h2 class="my-4">Reviews</h2>
+                        <h2 class="my-4 font-weight-medium">Reviews</h2>
                         <div v-if="this.specificEvent.eventReviews.length > 0">
                         <v-virtual-scroll
                         :items="this.specificEvent.eventReviews"
@@ -289,6 +324,7 @@
 
 <script>
   import GoogleMap from "@/components/GoogleMap.vue"
+  import AOS from 'aos'
     export default {
         name: 'EventDetails',
 
@@ -306,6 +342,7 @@
             registered: false,
             dialog: false,
             isHost: false,
+            today: new Date().toISOString(),
             
         }
     },
@@ -431,8 +468,9 @@ created() {
     this.$store.dispatch('getUser')
 },
     async mounted()  {
+        AOS.init()
         await this.setup()
-        console.log(this.specificEvent)
+        console.log(this.specificEvent.eventDate)
         this.isRegistered()
         setTimeout(() => {
       this.isLoading = false;
@@ -451,17 +489,17 @@ computed: {
             const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             let date = new Date(this.specificEvent.eventDate);
             return date.getDate() + " " + months[date.getMonth()] + ", " + date.getFullYear();
-          },
+        },
         getFormattedTime() {
             const unformattedTime = this.specificEvent.eventTime
             const unformattedTimeList = unformattedTime.split(":")
             const hours = (unformattedTimeList[0] % 12) || 12
             const suffix = unformattedTimeList[0] >= 12 ? 'PM' : 'AM'
             return hours + '.' + unformattedTimeList[1] + " " + suffix
-          },
+        },
         width () {
             switch(this.$vuetify.breakpoint.name) {
-            case 'xs': return 360
+            case 'xs': return 450
             case 'sm': return 450
             case 'md': return 450
             case 'lg': return 500
@@ -476,7 +514,7 @@ computed: {
             case 'lg': return 1300
             case 'xl': return 1500
             }
-      }
+    }
     }
 }
     

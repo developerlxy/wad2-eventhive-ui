@@ -2,9 +2,7 @@
   <LoadingScreen v-if="isLoading"></LoadingScreen>
 
   <div v-else height="100%">
-    <NavBar></NavBar>
-    <Categories></Categories>
-    <v-container v-if="events.length==0">
+    <v-container v-if="events.length==0" class="my-16 py-16">
       <v-row class="justify-center mb-5">
         <img src="../assets/images/flying-bee.gif">
       </v-row>
@@ -12,24 +10,24 @@
         <h2>Buzz off, there ain't any events for ya!</h2>
       </v-row>
     </v-container>
-    <v-container v-else class="mb-4 justify-sm-center justify-xs-center" fluid>
-      <v-row>
-        <v-col class="ml-sm-8 mx-6">
+    <v-container v-else class="justify-sm-center justify-xs-center pb-16 mb-16" fluid>
+      <v-row class="mb-12">
+        <v-col class="ml-sm-8 mx-6 mb-16 pb-16">
           <v-row cols="12">
             <v-col
                 v-for="event in events"
                 :key="event.name"
-                class="col-sm-12"
+                class="col-sm-12 "
               >
                 <SecondaryEventCard :eventDetails="event" @mouseover.native="previewEvent(event)" @mouseout.native="eventPreview=false" onclick="goToEvent"></SecondaryEventCard>
             </v-col>
           </v-row>
         </v-col>
-        <v-col class="">
-          <div v-if="eventPreview!=false" class="mt-2 mr-8 preview">
+        <v-col class="col-5">
+          <div v-if="eventPreview!=false && mdBreakpoint" class="mt-2 mr-8 preview">
             <PreviewEventCard :eventDetails="this.eventPreview"></PreviewEventCard>
           </div>  
-          <div v-else class="preview mr-8">
+          <div v-else-if="mdBreakpoint" class="preview mr-8">
             <v-row class="justify-center my-5" >
               <img src="../assets/images/flying-bee.gif">
             </v-row>
@@ -43,15 +41,13 @@
 
 <script>
 import LoadingScreen from '../components/LoadingScreen.vue';
-import Categories from '@/components/Categories.vue';
-import NavBar from '@/components/NavBar.vue';
 import SecondaryEventCard from '@/components/SecondaryEventCard.vue';
 import PreviewEventCard from '@/components/PreviewEventCard.vue';
 
 
 export default {
     name: "Home",
-    components: { LoadingScreen, NavBar, Categories, SecondaryEventCard, PreviewEventCard },
+    components: { LoadingScreen, SecondaryEventCard, PreviewEventCard },
     mounted() {
     setTimeout(() => {
       this.isLoading = false;

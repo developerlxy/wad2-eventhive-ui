@@ -2,7 +2,6 @@
     <LoadingScreen v-if="isLoading"></LoadingScreen>
   
     <div v-else>
-        <NavBar></NavBar>
         <v-container fluid>
     <v-row
       no-gutters
@@ -81,16 +80,13 @@
           <div v-if="attendees.length==0">No attendees yet...</div>
             <div v-else>
               <div v-for="attendee of attendees">
-                <v-card-title><v-avatar><img :src="'/src/assets/images/test.png'"></v-avatar>&nbsp;  {{attendee["userName"]}}</v-card-title>
+                <v-card-title><v-avatar><img :src="'/src/assets/images/test.jpg'"></v-avatar>&nbsp;  {{attendee["userName"]}}</v-card-title>
                 <v-card-subtitle></v-card-subtitle>
               </div>
     
   </div>
 
         </v-card><br/>
-        <br/>
-       <br/>
-        <br/>
         </v-card>
       </v-col>
     </v-row>
@@ -101,14 +97,12 @@
 </template>
 
 <script>
-  import LoadingScreen from '../components/LoadingScreen.vue';
-  import NavBar from '@/components/NavBar.vue';
-  
+  import LoadingScreen from '../components/LoadingScreen.vue';  
   
   
   export default {
       name: "HostManagement",
-      components: { LoadingScreen, NavBar },
+      components: { LoadingScreen },
       mounted() {
       setTimeout(() => {
         this.isLoading = false;

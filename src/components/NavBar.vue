@@ -1,6 +1,6 @@
 <template>
   <!-- html -->
-  <v-app-bar height="min-height" color="white" class="navbar mb-0 mt-2" elevation="0">
+  <v-app-bar height="min-height" color="white" class="navbar mb-2 mt-2" elevation="0">
     <v-row class="align-start justify-start mx-1" v-if="smBreakpoint">  
       <v-col order="1" class="col-12 d-flex pt-2 pb-0">
         <v-img
@@ -13,7 +13,7 @@
         />
         <v-spacer></v-spacer>
         <LoginProfileButton class="my-auto" ></LoginProfileButton>
-        <v-app-bar-nav-icon class="my-auto" @click="showDrawer"></v-app-bar-nav-icon>
+        <v-app-bar-nav-icon class="my-auto justify-end" @click="showDrawer" color="greenDark"></v-app-bar-nav-icon>
       </v-col>
       <v-col order="2" class="pb-0 pt-1">
         <SearchBar class="d-block mt-0 mb-4"></SearchBar>
@@ -21,25 +21,21 @@
     </v-row>
     <v-row  v-else class='align-center justify-center mx-4'>
       <v-img
-          class="my-4 logo mr-3"
+          class="logo mr-3 mt-5"
           max-height="100px"
           max-width="100px"
           src="../src/assets/images/logo.png"
           contain
           @click="toHome()"
         />
-        <SearchBar class="col-md-7"></SearchBar>
-        <div class="col-sm-2 col-md-2 text-right mr-2 ml-0 pl-0">
-          <v-btn color="greenDark" class="white--text" elevation="0" @click="createEvent()"
+        <SearchBar class="col-md-7 mt-6"></SearchBar>
+        <div class="col-sm-2 col-md-2 text-right mr-2 ml-0 pl-0 mt-1">
+          <v-btn color="greenDark" class="white--text font-weight-medium" elevation="0" @click="createEvent()"
           >Create Event</v-btn
         >
         </div>
-        <LoginProfileButton ></LoginProfileButton>
-        
-        
-        <!-- <v-row class="ma-0"> -->
-        
-        
+        <LoginProfileButton class="mt-1"></LoginProfileButton>
+        <Categories></Categories>
     </v-row>
   </v-app-bar>
 </template>
@@ -48,11 +44,13 @@
 import SearchBar from "./SearchBar.vue";
 import LoginProfileButton from "./LoginProfileButton.vue";
 import GoogleSignInButton from "./GoogleSignInButton.vue";
+import Categories from '@/components/Categories.vue'
+
 
 // javascript
 export default {
   name: "NavBar",
-  components: { SearchBar, LoginProfileButton, GoogleSignInButton },
+  components: { SearchBar, LoginProfileButton, GoogleSignInButton, Categories },
   props: {
     isLoggedIn: {
       type: Boolean,
@@ -60,7 +58,7 @@ export default {
     },
     imageURL: {
       type: String,
-      default: "../src/assets/images/test.png",
+      default: "../src/assets/images/test.jpg",
     },
   },
   data(){

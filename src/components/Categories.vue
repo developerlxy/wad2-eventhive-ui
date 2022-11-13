@@ -1,5 +1,5 @@
 <template>
-  <v-container class="fluid pb-4 px-0">
+  <v-container class="fluid mt-0 pb-4 px-0">
       <v-row class="d-flex justify-space-around">
         <!-- onClick, redirect to Full Events page with Category filter placed on 
         
@@ -11,7 +11,7 @@
           :key="category.title"
 
           @click="handleClick(category.filter)"
-          class="col-3"
+          class="col-6"
         >
         
         <v-hover
@@ -60,7 +60,7 @@
     }),
     computed: {
       xsBreakpoint() {
-        return this.$vuetify.breakpoint.name == 'xs' 
+        return this.$vuetify.breakpoint.width <= 700
       }
     },
     methods:{

@@ -2,7 +2,7 @@
   <!-- html -->
   <v-hover v-slot="{ hover }">
     <v-container
-      class="px-0 my-6"
+      class="px-0 mb-3"
       flat
       v-click-outside="hide"
       @click="isAdvanced = true"
