@@ -21,7 +21,7 @@
           <v-file-input outlined dense @change="onFileChange()" accept="image/jpeg,image/png" label="Upload here!" prepend-icon="mdi-camera" v-model="uploadedImage"></v-file-input>
         </div>
         <div v-else>
-          <img :src="image" style="border:1px grey; border-radius: 3%;" width="250" height=auto />
+          <img :src="image" style="border:1px grey; border-radius: 3%;" width="250" height=auto lazy-src="./assets/images/test.jpg"/>
           <br>
           <v-btn outlined @click="removeImage">Choose another picture?</v-btn>
         </div>
