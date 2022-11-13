@@ -1,16 +1,18 @@
 <template>
   <LoadingScreen v-if="isLoading"></LoadingScreen>
-  <div v-else-if="this.$store.state.user == null">
-    <v-alert class="brownLight ma-2">
+  <div v-else-if="this.$store.state.user == null" class="my-16 py-16">
+    <div class="py-16">
+      <v-alert class="brownLight ma-2 my-16">
       You are not logged in. Please login to view your profile.
     </v-alert>
+    </div>
   </div>
   <div v-else>
     <v-container>
       <br />
-      <div class="d-flex text-h5 brownDark--text font-weight-medium ma-4">
+      <h1 class="d-flex brownDark--text font-weight-bold ma-4 mb-6">
         My Profile
-      </div>
+      </h1>
       <v-row class="col-12 pa-0 ma-0">
         <v-text-field
           v-model="userName"
@@ -96,15 +98,15 @@
         ></v-text-field>
       </v-row>
 
-      <hr class="my-4">
+      <hr class="my-12">
 
-      <div class="d-flex text-h5 brownDark--text font-weight-medium ma-4">
+      <h1 class="d-flex brownDark--text font-weight-bold ma-4">
         General Information
-      </div>
+      </h1>
 
-      <div class="d-flex brownDark--text mx-4">
+      <h3 class="d-flex brownDark--text mx-4 mt-6 font-weight-medium">
         My Interests
-      </div>
+      </h3>
       <v-row class="col-12 pa-0 ma-0">
       <v-chip-group
           multiple
@@ -121,18 +123,20 @@
           </v-chip>
         </v-chip-group>
       </v-row>
-      <div class="d-flex brownDark--text mx-4">
+      <h3 class="d-flex brownDark--text mx-4 mt-6 font-weight-medium">
         About me
-      </div>
+      </h3>
       <v-row class="col-12 pa-0 ma-0">
         <tiptap-vuetify class="ma-2" v-model="userDescription" :extensions="extensions" />
       </v-row>
 
-      <v-row>
+      <v-row class="d-flex align-center mb-12 mt-8">
         <v-btn
           color="greenDark"
-          class="white--text ma-4 pa-1"
+          class="white--text ma-4 pa-1 px-3"
           @click="updateProfile()"
+          elevation="0"
+          large
           >Update Profile</v-btn
         >
         <v-icon
@@ -153,13 +157,12 @@ import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragrap
 
 export default {
   name: "UserProfile",
-  components: { LoadingScreen, TiptapVuetify },
+  components: { LoadingScreen, TiptapVuetify},
   mounted() {
     setTimeout(() => {
       this.isLoading = false;
     }, 2000);
     this.setExistingPrefs();
-    // TODO: fix this - user profile still not updated in this.$store.state.user
     this.$store.dispatch('getUser') // use this to get the current user after updating their particulars in db
   },
   data() {
@@ -201,6 +204,7 @@ export default {
       userDescription: this.$store.state.user["userDesc"] == null ? "" : this.$store.state.user["userDesc"],
       fullName: this.$store.state.user["userFullName"] == null ? "" : this.$store.state.user["userFullName"],
 
+      image: this.$store.state.user["userImage"] == null ? "/src/assets/images/test.jpg" : this.$store.state.user["userImage"],
       //FOR RICH TEXT
       extensions: [
         History,
@@ -239,9 +243,15 @@ export default {
         reqBody["userEmail"] = this.email;
         let newCategoryPrefs = [];
         for(let index of this.chips) {
-          newCategoryPrefs.push(this.items[index]);
+          if (this.items[index] != null) {
+            newCategoryPrefs.push(this.items[index]);
+          }
         }
-        reqBody["categoryPrefs"] = newCategoryPrefs;
+        if (newCategoryPrefs.length == 0) {
+          reqBody["categoryPrefs"] = ["Others"];
+        } else {
+          reqBody["categoryPrefs"] = newCategoryPrefs;
+        }
       }
 
       // update other details
@@ -294,6 +304,39 @@ export default {
         }
         this.chips = existingPrefs;
       }
+    },
+    photo_submit (e) {
+      console.log("test", e)
+      // console.log(e.target.result)
+      // // variables to upload image
+      // // const MAX_IMAGE_SIZE = 1000000
+      // const API_ENDPOINT = 'https://xt96j6drmd.execute-api.ap-southeast-1.amazonaws.com/uploads' // e.g. https://ab1234ab123.execute-api.us-east-1.amazonaws.com/uploads
+
+      // // s3 code
+      // // Get the presigned URL
+      // console.log("")
+      // const response = this.axios({
+      //   method: 'GET',
+      //   url: API_ENDPOINT
+      // })
+      // console.log('Response: ', response)
+      // console.log('Uploading: ', this.image)
+      // let binary = atob(this.image.split(',')[1])
+      // let array = []
+      // for (var i = 0; i < binary.length; i++) {
+      //   array.push(binary.charCodeAt(i))
+      // }
+      // let blobData = new Blob([new Uint8Array(array)], { type: 'image/jpeg' })
+      // console.log('Uploading to: ', response.data.uploadURL)
+      // const result = fetch(response.data.uploadURL, {
+      //   method: 'PUT',
+      //   body: blobData
+      // })
+      // console.log('Result: ', result)
+      // // Final URL for the user doesn't need the query string params
+      // this.uploadURL = response.data.uploadURL.split('?')[0]
+      // console.log(`image url at ${result.url.split("?")[0]}`);
+
     }
   },
 };

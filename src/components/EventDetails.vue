@@ -4,6 +4,9 @@
         <v-card
         class="mx-auto mt-2 pt-4"
         :width="cardWidth"
+        data-aos="zoom-in"
+        data-aos-duration="800"
+
         >
         <v-container>
             <v-row>
@@ -12,6 +15,8 @@
                 :width="width"
                 outlined
                 color="transparent"
+                data-aos="flip-up"
+                data-aos-duration="1200"
                 >
                   <img v-bind:src="this.specificEvent.eventPhotoURL"
                       aspect-ratio="16/9"
@@ -23,25 +28,28 @@
                 :width="width"
                 outlined
                 color="transparent"
+                data-aos="flip-up"
+                data-aos-duration="1200"
                 >
                     <v-container class="fill-height">
                     <v-row class="d-flex flex-column">
                         <v-col>
-                            <h3 class="text-left">{{this.newDate(this.specificEvent.eventDate)}}</h3>
+                            <h2 class="text-left font-weight-medium">{{this.newDate(this.specificEvent.eventDate)}}</h2>
                         </v-col>
                         <v-col>
                             <h1 class="text-left"> {{this.specificEvent.eventName}} </h1>
                         </v-col>
                         <v-col class="justify-start">
                             <span>
-                            <h3 class="text-left">by
+                            <h3 class="text-left font-weight-medium">by
                             <v-btn
                             v-if="this.specificEvent.eventHost"
                             @click="hostProfile()"
                             text
                             tile
                             color=""
-                            class="pd"
+                            class="pd ml-2"
+                            x-large
                             > {{this.specificEvent.eventHost.userName}}</v-btn></h3> 
 
                         </span>
@@ -60,19 +68,6 @@
                             </v-card-title>
                             </v-card>
                         </template>
-                        <template v-else-if="this.specificEvent.attendees.length >= this.specificEvent.maxCapacity">
-                            <v-card
-                                class="peachDark"
-                            >
-                            <v-card-title
-                            class="justify-center white--text"
-                            >
-                            <v-icon color="#FFFFFF" class="mr-10">mdi-beehive-off-outline</v-icon>
-                            Event Full
-                            <v-icon color="#FFFFFF" class="ml-10">mdi-beehive-off-outline</v-icon>
-                            </v-card-title>
-                            </v-card>
-                        </template>
                         <template v-else-if="!(this.$store.state.user == null) && (this.specificEvent.eventHost._id == this.$store.state.user._id)">
                             <v-card
                                 class="greenDark"
@@ -87,6 +82,32 @@
                             
                             </v-card>
                         </template>
+                        <template v-else-if="this.specificEvent.attendees.length >= this.specificEvent.maxCapacity">
+                            <v-card
+                                class="peachDark"
+                            >
+                            <v-card-title
+                            class="justify-center white--text"
+                            >
+                            <v-icon color="#FFFFFF" class="mr-10">mdi-beehive-off-outline</v-icon>
+                            Event Full
+                            <v-icon color="#FFFFFF" class="ml-10">mdi-beehive-off-outline</v-icon>
+                            </v-card-title>
+                            </v-card>
+                        </template>
+                        <template v-else-if="this.specificEvent.eventDate < this.today">
+                            <v-card
+                                color="#90A4AE"
+                            >
+                            <v-card-title
+                            class="justify-center white--text"
+                            >
+                            <v-icon color="#FFFFFF" class="mr-10">mdi-beehive-off-outline</v-icon>
+                            Event passed
+                            <v-icon color="#FFFFFF" class="ml-10">mdi-beehive-off-outline</v-icon>
+                            </v-card-title>
+                            </v-card>
+                        </template>
                         <template v-else>
                             <div>
                             <v-dialog
@@ -94,7 +115,7 @@
                             width="500"
                             >
                             <template v-slot:activator="{ on, attrs }">
-                                <v-btn
+                                <v-card
                                     block
                                     color="greenDark"
                                     class="white--text no-text-transform btn-multiline"
@@ -102,10 +123,14 @@
                                     v-on="on"
                                     
                                 >
+                                <v-card-title
+                                class="justify-center"
+                                >
                                 <v-icon color="#FFFFFF" class="mr-10">mdi-bee-flower</v-icon>
                                     Register
                                 <v-icon color="#FFFFFF" class="ml-10">mdi-bee-flower</v-icon>
-                                </v-btn>
+                            </v-card-title>
+                                </v-card>
                         </template>
                         <v-card>
                             <v-card-title class="text-h5 grey lighten-2">
@@ -125,7 +150,7 @@
                                 text
                                 @click="intermediate"
                                 >
-                                I accept
+                                Confirm
                                 </v-btn>
                             </v-card-actions>
                         </v-card>
@@ -146,9 +171,10 @@
                 :width="width"
                 outlined
                 color="transparent"
+                data-aos="flip-up"
+                data-aos-duration="1000"
                 >
-                    <h3 class="text-left">Description</h3>
-                    <br>
+                    <h2 class="text-left font-weight-medium mb-12">Description</h2>
                     <span v-html="desc" class="text-left">
                     </span>
                 </v-card>
@@ -160,14 +186,14 @@
                 >
                     <div class="d-flex flex-column">
 
-                            <v-card class="mb-4 pa-4">
+                            <v-card class="mb-4 pa-4" data-aos="flip-up" data-aos-duration="1000">
                                 <v-container fill-height>
                                 <v-row class="justify-start align-center mb-1">
                                     <v-col cols="1">
                                         <v-icon>mdi-calendar</v-icon>
                                     </v-col>
                                     <v-col cols="11" >
-                                        <h3 class="text-left">Date and Time</h3>
+                                        <h2 class="text-left font-weight-medium">Date and Time</h2>
                                     </v-col>
                                 </v-row>
                         <v-row align-center class="justify-start">
@@ -182,14 +208,18 @@
                         </v-row>
                         </v-container>
                     </v-card>
-                    <v-card class="pa-4 mt-4" :width="width">
+                    <v-card 
+                      class="pa-4 mt-4" 
+                      :width="width"
+                      data-aos="flip-up"
+                      data-aos-duration="1000">
                         <v-container fill-height>
-                        <v-row class="justify-start  mb-1">
+                        <v-row class="justify-start align-center mb-1">
                             <v-col cols="1">
                                 <v-icon>mdi-map-marker</v-icon>
                             </v-col>
                             <v-col cols="11">
-                                <h3 class="text-left align-center">Location</h3>
+                                <h2 class="text-left align-center font-weight-medium">Location</h2>
                             </v-col>
                         </v-row >
                         <v-row class="justify-start my-3">
@@ -227,8 +257,10 @@
                         max-width="500"
                         class="mx-auto text-start"
                         border="1px solid"
+                        data-aos="flip-up"
+                        data-aos-duration="1000"
                     >
-                        <h2 class="my-4">Reviews</h2>
+                        <h2 class="my-4 font-weight-medium">Reviews</h2>
                         <div v-if="this.specificEvent.eventReviews.length > 0">
                         <v-virtual-scroll
                         :items="this.specificEvent.eventReviews"
@@ -285,6 +317,7 @@
 
 <script>
   import GoogleMap from "@/components/GoogleMap.vue"
+  import AOS from 'aos'
     export default {
         name: 'EventDetails',
 
@@ -302,6 +335,7 @@
             registered: false,
             dialog: false,
             isHost: false,
+            today: new Date().toISOString(),
             
         }
     },
@@ -427,8 +461,9 @@ created() {
     this.$store.dispatch('getUser')
 },
     async mounted()  {
+        AOS.init()
         await this.setup()
-        console.log(this.specificEvent)
+        console.log(this.specificEvent.eventDate)
         this.isRegistered()
         setTimeout(() => {
       this.isLoading = false;

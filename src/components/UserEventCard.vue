@@ -60,7 +60,7 @@
           >
         </v-img>
       </v-avatar>
-      <div class="my-auto">
+      <div class="my-auto flex">
         <p class="ml-4 mb-5 font-weight-medium text-left mt-3">{{eventDateString}}</p>
         <v-card-title class="text-h5 text-left mb-5 font-weight-bold ">{{eventObj.eventName}}</v-card-title>
         <v-card-subtitle class="text-left text-h6 font-weight-medium mb-5"><v-icon class="mx-1" color="greenDark">place</v-icon>{{eventObj.eventLocation.SEARCHVAL}}</v-card-subtitle>

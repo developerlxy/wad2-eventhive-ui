@@ -1,9 +1,7 @@
 <template>
   <LandingScreen v-if="isLoading"></LandingScreen>
-  <div v-else class="fill-height brownLight">
-    <div class="my-12">
+  <div v-else class="fill-height brownLight py-10">
       <LoginCard></LoginCard>
-    </div>
   </div>
 </template>
 
