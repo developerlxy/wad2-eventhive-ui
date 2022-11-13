@@ -52,6 +52,7 @@ export default {
     mounted() {
         this.allEvents = this.$store.state.events
         this.$store.dispatch('getUser')
+        this.user = this.$store.state.user
         AOS.init()
         
     },
