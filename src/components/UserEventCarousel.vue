@@ -1,12 +1,13 @@
 <template>
     <div class="user-event-carousel mx-lg-12 mx-sm-10 mx-6 mt-2 mb-16 pb-16">
-      <p class="d-flex text-h4 brownDark--text font-weight-bold  ml-4 mt-6" data-aos="fade-up">
+      <h1 class="d-flex brownDark--text font-weight-bold  ml-4 mt-6" data-aos="fade-up">
         {{this.title}}
-      </p>
-      <div v-if="message!=''" class="pt-10">
-        <p class="text-h6 mt-6 font-weight-medium my-16 py-16" data-aos="zoom-out">
+      </h1>
+      <div v-if="filteredEvents.length==0" class="pt-10 my-auto">
+        <img src="../assets/images/flying-bee.gif"/>
+        <h3 class="mt-6 font-weight-medium" data-aos="zoom-out">
           {{this.message}}
-        </p>
+        </h3>
       </div>
       <v-row
           v-for="event in this.filteredEvents"
@@ -15,7 +16,7 @@
           data-aos="fade-left"
       >
         <v-col>
-          <UserEventCard :event-obj="event" :event-type="userEventType" ></UserEventCard>
+          <UserEventCard :event-obj="event" :event-type="userEventType" @unregistered="unregistered"></UserEventCard>
         </v-col>
           
       </v-row>
@@ -50,13 +51,35 @@ export default {
         }
     },
     mounted() {
-        this.allEvents = this.$store.state.events
         this.$store.dispatch('getUser')
-        this.user = this.$store.state.user
+        .then(()=> {
+          this.user = this.$store.state.user
+        })
+        this.$store.dispatch('getEvents')
+        .then(()=> {
+          this.allEvents = this.$store.state.events
+        })
+        
         AOS.init()
         
     },
     methods: {
+      unregistered(newUserRegisteredList) {
+        console.log(newUserRegisteredList)
+        this.$store.dispatch('getUser')
+        .then(()=> {
+          this.filteredEvents = []
+          for (let eventObj of this.$store.state.events) {
+            if (newUserRegisteredList.includes(eventObj._id))
+            this.filteredEvents.push(eventObj)
+          }
+          if (this.filteredEvents.length == 0) {
+            this.message = "No registered events. What are you waiting for?"
+          } else {
+            this.message = ""
+          }
+        })
+      },
       isAfterToday(date) {
         const today = new Date();
 

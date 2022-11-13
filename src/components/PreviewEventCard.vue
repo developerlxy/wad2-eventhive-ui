@@ -1,14 +1,14 @@
 <template>
   <v-card @click="toEvent()">
     <div
-      class="d-flex flex-column flex-lg-row flex-no-wrap justify-sm-center align-center"
+      class="d-flex flex-column flex-lg-row flex-no-wrap justify-sm-center justify-md-left align-center align-md-left"
     >
       <v-avatar class="ma-3" size="300" tile>
         <v-img :src="eventDetails.eventPhotoURL"></v-img>
       </v-avatar>
       <div>
         <h1 class="mt-3 ml-3 mr-2">
-          <v-row class="py-2 mx-1 mt-1 mb-2 font-weight-bold text-left">
+          <v-row class="py-2 mx-1 mt-1 mb-2 font-weight-bold text-center text-lg-left">
             {{ eventDetails.eventName }}
           </v-row>
         </h1>
@@ -30,7 +30,7 @@
       </div>
     </div>
     <div class="mt-2">
-      <v-card-subtitle v-html="eventDetails.eventDesc"> </v-card-subtitle>
+      <v-card-subtitle v-html="eventDetails.eventDesc" class="text-left"> </v-card-subtitle>
     </div>
   </v-card>
 </template>

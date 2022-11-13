@@ -30,7 +30,7 @@
         />
         <SearchBar class="col-md-7 mt-6"></SearchBar>
         <div class="col-sm-2 col-md-2 text-right mr-2 ml-0 pl-0 mt-1">
-          <v-btn color="greenDark" class="white--text font-weight-medium" elevation="0" @click="createEvent()"
+          <v-btn color="greenDark" class="white--text font-weight-medium" @click="createEvent()"
           >Create Event</v-btn
         >
         </div>

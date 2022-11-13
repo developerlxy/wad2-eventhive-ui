@@ -17,7 +17,7 @@
               elevation="0"
             >
             <v-avatar size="150" class="mt-2">
-                <img :src="'/src/assets/images/test.jpg'">
+                <img :src="host['userPhotoURL']">
             </v-avatar>
             <v-rating
               :value="avgRating"
@@ -60,7 +60,8 @@
               <h1 class="mb-5 mt-2 greenDark--text">Hey, I'm {{ host["userName"] }}!</h1>
               <hr>
               <h1 class="mb-6 mt-5 peachDark--text">About Me</h1>
-              <p v-html="host['userDesc']" class="mb-10"></p>
+              <p v-if="host['userDesc']" v-html="host['userDesc']" class="mb-10"></p>
+              <p v-else>No introduction yet...</p>
               <hr>
               <h1 class="mb-6 mt-5 peachDark--text">Rating & Reviews</h1>
               
