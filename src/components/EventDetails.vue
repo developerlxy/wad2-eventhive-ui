@@ -133,12 +133,12 @@
                                 </v-card>
                         </template>
                         <v-card>
-                            <v-card-title class="text-h5 grey lighten-2">
+                            <v-card-title class="peachMid brownDark--text" color="#735019"><strong>
                                 Confirmation
-                            </v-card-title>
+                            </strong></v-card-title>
 
-                            <v-card-text>
-                                You are signing up for the event: {{this.specificEvent.eventName}}.
+                            <v-card-text class="pt-3">
+                                You are signing up for the event: <strong>{{this.specificEvent.eventName}}</strong>.
                             </v-card-text>
 
                             <v-divider></v-divider>
@@ -146,8 +146,8 @@
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn
-                                color="primary"
-                                text
+                                color="greenDark darken-1 white--text"
+                                
                                 @click="intermediate"
                                 >
                                 Confirm
