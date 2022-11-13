@@ -1,5 +1,5 @@
 <template>
-    <div class="event-card brownLight py-4 py-lg-8 px-lg-16"
+    <div class="brownLight py-4 py-lg-8 px-lg-16"
     >
         <v-card
         class="mx-auto mt-2 pt-4"
@@ -57,20 +57,20 @@
                         <v-col class="text-left">
                             <template v-if="this.registered">
                                 <v-card
-                                color="#D3E0D7"
+                                color="greenLight"
                             >
                             <v-card-title
-                            class="justify-center"
+                            class="justify-center greenDark--text"
                             >
-                            <v-icon color="#FFFFFF" class="mr-10">mdi-flower</v-icon>
+                            <v-icon color="greenDark" class="mr-10">mdi-flower</v-icon>
                             Registered!
-                            <v-icon color="#FFFFFF" class="ml-10">mdi-flower</v-icon>
+                            <v-icon color="greenDark" class="ml-10">mdi-flower</v-icon>
                             </v-card-title>
                             </v-card>
                         </template>
                         <template v-else-if="!(this.$store.state.user == null) && (this.specificEvent.eventHost._id == this.$store.state.user._id)">
                             <v-card
-                                class="greenDark"
+                                class="peachDark"
                             >
                             <v-card-title
                             class="justify-center white--text"
@@ -379,8 +379,9 @@
             this.$store.dispatch('getUser')
             console.log("user registered events" , this.acctUser.registeredEvents)
             console.log("event attendees" , this.specificEvent.attendees)
-            if(this.acctUser.registeredEvents.includes(this.specificEvent._id) && this.specificEvent.attendees.includes(this.acctUser)){
+            if(this.acctUser.registeredEvents.includes(this.specificEvent._id)){
                 this.registered = true
+                console.log('event registered already')
             }
             else {
                 this.registered = false
@@ -467,7 +468,7 @@ created() {
         this.isRegistered()
         setTimeout(() => {
       this.isLoading = false;
-    },2000);
+    },1500);
     },
     watch: {
     '$route.params': {

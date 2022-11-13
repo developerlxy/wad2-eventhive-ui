@@ -60,7 +60,7 @@ export default {
   mounted() {
     setTimeout(() => {
       this.isLoading = false;
-    }, 2000);
+    }, 1500);
   },
   data() {
     return {
@@ -214,7 +214,7 @@ export default {
         this.isLoading = true;
         setTimeout(() => {
           this.isLoading = false;
-        }, 2000);
+        }, 1000);
         let nameSearch = this.$route.query.name;
         let locationSearch = this.$route.query.location;
         if (locationSearch != "") {
