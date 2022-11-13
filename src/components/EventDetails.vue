@@ -126,7 +126,7 @@
                                 <v-icon color="#FFFFFF" class="mr-10">mdi-bee-flower</v-icon>
                                     Register
                                 <v-icon color="#FFFFFF" class="ml-10">mdi-bee-flower</v-icon>
-                                </v-card>
+                                </v-btn>
                                 
                                 <v-card-title class="text-wrap justify-center">
                                     <v-icon>mdi-bee-flower</v-icon>
