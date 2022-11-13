@@ -6,7 +6,7 @@ EventHive is a centralised platform for grassroot events. We allow organisers of
 ## About the code
 EventHive (frontend) is a **Vue** (Vue 2) project, build with **Vite**. This project also imports various libraries such as **Vuex**, **Vue Router** and **Vuetify** for state management, routing and components library.
 
-EventHive (backend) is build with **ExpressJS** and deployed on Google Firebase. It is connected to our **MongoDB** on the cloud to retrieve information such as user data and event details.
+EventHive (backend) is built with **ExpressJS** and deployed on Google Firebase. It is connected to our **MongoDB** on the cloud to retrieve information such as user data and event details.
 
 ## Getting started
 
@@ -25,4 +25,4 @@ npm run dev # runs the application
 yarn install --ignore-engines # install required dependencies in node_modules
 yarn dev # runs the application
 ```
-Once successful, you may view the application at http://localhost:8080/
+Once successful, you may view the application at http://localhost:8080/, else you can also see the deployed application at https://event-hive.netlify.app/
