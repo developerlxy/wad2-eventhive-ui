@@ -40,7 +40,7 @@ export default {
     data() {
       return {
         isLoading: true,
-        events:[],
+        events:[]
       }
     },
     methods: {
@@ -60,7 +60,6 @@ export default {
           },
           data : data
         };
-
         this.axios(config)
         .then(function (response) {
           for (let indiv of response.data) {
@@ -73,6 +72,7 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+        this.events=[]
       },
       gotoEvent: function (id){
         this.$router.push({ path:`/event?id=${id}`})
