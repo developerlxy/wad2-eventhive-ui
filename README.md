@@ -1,6 +1,6 @@
 # EventHive 🐝
 
-## About the EventHive
+## About EventHive
 EventHive is a centralised platform for grassroot events. We allow organisers of small-scale events to list their events publicly so that more people can find their events and participate in them.
 
 ## About the code
