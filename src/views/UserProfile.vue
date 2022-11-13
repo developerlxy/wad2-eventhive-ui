@@ -13,6 +13,19 @@
       <h1 class="d-flex brownDark--text font-weight-bold ma-4 mb-6">
         My Profile
       </h1>
+      <!-- upload image section -->
+      <v-row class="col-12 pt-3 ma-0">
+        <div v-if="!image">
+          <!-- <h3>Upload cool photo below!</h3> -->
+          <!-- <input type="file" @change="onFileChange" accept="image/jpeg"> -->
+          <v-file-input outlined dense @change="onFileChange()" accept="image/jpeg,image/png" label="Upload here!" prepend-icon="mdi-camera" v-model="uploadedImage"></v-file-input>
+        </div>
+        <div v-else>
+          <img :src="image" style="border:1px grey; border-radius: 3%;" width="250" height=auto />
+          <br>
+          <v-btn outlined @click="removeImage">Change your picture?</v-btn>
+        </div>
+      </v-row>
       <v-row class="col-12 pa-0 ma-0">
         <v-text-field
           v-model="userName"
@@ -96,26 +109,6 @@
           hide-details
           @click:append="showPass = !showPass"
         ></v-text-field>
-      </v-row>
-
-      <!-- <ProfilePhotoUpload
-        :photoDefault="this.image"
-        :enableEdits="true"
-        @photo-submit="photo_submit">
-      </ProfilePhotoUpload> -->
-
-      <!-- upload image section -->
-      <v-row class="col-12 pt-3 ma-0">
-        <div v-if="!image">
-          <!-- <h3>Upload cool photo below!</h3> -->
-          <!-- <input type="file" @change="onFileChange" accept="image/jpeg"> -->
-          <v-file-input outlined dense @change="onFileChange()" accept="image/jpeg,image/png" label="Upload here!" prepend-icon="mdi-camera" v-model="uploadedImage"></v-file-input>
-        </div>
-        <div v-else>
-          <img :src="image" style="border:1px grey; border-radius: 3%;" width="250" height=auto />
-          <br>
-          <v-btn outlined @click="removeImage">Change your picture?</v-btn>
-        </div>
       </v-row>
 
       <hr class="my-12">
