@@ -531,13 +531,11 @@ export default {
       console.log('Response: ', response)
       console.log('Uploading: ', this.image)
       let binary = atob(this.image.split(',')[1])
-      console.log("binary", binary)
       let array = []
       for (var i = 0; i < binary.length; i++) {
         array.push(binary.charCodeAt(i))
       }
       let blobData = new Blob([new Uint8Array(array)], { type: 'image/jpeg' })
-      console.log("blobData", blobData)
       console.log('Uploading to: ', response.data.uploadURL)
       const result = await fetch(response.data.uploadURL, {
         method: 'PUT',
