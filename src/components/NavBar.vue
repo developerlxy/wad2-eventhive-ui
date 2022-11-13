@@ -8,7 +8,7 @@
           class="my-4 mx-0"
           max-height="100px"
           max-width="80px"
-          src="../assets/images/logo.png"
+          :src="require('../assets/images/logo.png')"
           @click="toHome()"
         />
         <v-spacer></v-spacer>
@@ -24,7 +24,7 @@
           class="logo mr-3 mt-5"
           max-height="100px"
           max-width="100px"
-          src="../assets/images/logo.png"
+          :src="require('../assets/images/logo.png')"
           contain
           @click="toHome()"
         />
