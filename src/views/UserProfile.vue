@@ -15,7 +15,7 @@
       </h1>
       <!-- upload image section -->
       <v-row class="col-12 pt-3 ma-0">
-        <div v-if="!image">
+        <div v-if="!image" class="col-12">
           <!-- <h3>Upload cool photo below!</h3> -->
           <!-- <input type="file" @change="onFileChange" accept="image/jpeg"> -->
           <v-file-input outlined dense @change="onFileChange()" accept="image/jpeg,image/png" label="Upload here!" prepend-icon="mdi-camera" v-model="uploadedImage"></v-file-input>
@@ -23,9 +23,10 @@
         <div v-else>
           <img :src="image" style="border:1px grey; border-radius: 3%;" width="250" height=auto />
           <br>
-          <v-btn outlined @click="removeImage">Change your picture?</v-btn>
+          <v-btn outlined @click="removeImage">Choose another picture?</v-btn>
         </div>
       </v-row>
+      <hr class="my-8">
       <v-row class="col-12 pa-0 ma-0">
         <v-text-field
           v-model="userName"
