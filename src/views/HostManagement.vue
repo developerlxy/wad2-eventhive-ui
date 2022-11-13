@@ -83,8 +83,6 @@ export default {
     setTimeout(() => {
       this.isLoading = false;
     }, 2000);
-    this.setPicker();
-    this.getCapacity();
   },
   data() {
     return {
