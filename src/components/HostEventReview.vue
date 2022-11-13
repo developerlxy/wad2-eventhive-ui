@@ -19,6 +19,7 @@
 
                 </v-card-subtitle>
                 <v-card-text>  {{ eventReview["reviewText"] }}</v-card-text>
+                
             </div>
         </v-card><br/>
   </div>
