@@ -157,13 +157,12 @@ import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragrap
 
 export default {
   name: "UserProfile",
-  components: { LoadingScreen, TiptapVuetify },
+  components: { LoadingScreen, TiptapVuetify},
   mounted() {
     setTimeout(() => {
       this.isLoading = false;
     }, 2000);
     this.setExistingPrefs();
-    // TODO: fix this - user profile still not updated in this.$store.state.user
     this.$store.dispatch('getUser') // use this to get the current user after updating their particulars in db
   },
   data() {
@@ -205,6 +204,7 @@ export default {
       userDescription: this.$store.state.user["userDesc"] == null ? "" : this.$store.state.user["userDesc"],
       fullName: this.$store.state.user["userFullName"] == null ? "" : this.$store.state.user["userFullName"],
 
+      image: this.$store.state.user["userImage"] == null ? "/src/assets/images/test.jpg" : this.$store.state.user["userImage"],
       //FOR RICH TEXT
       extensions: [
         History,
@@ -298,6 +298,39 @@ export default {
         }
         this.chips = existingPrefs;
       }
+    },
+    photo_submit (e) {
+      console.log("test", e)
+      // console.log(e.target.result)
+      // // variables to upload image
+      // // const MAX_IMAGE_SIZE = 1000000
+      // const API_ENDPOINT = 'https://xt96j6drmd.execute-api.ap-southeast-1.amazonaws.com/uploads' // e.g. https://ab1234ab123.execute-api.us-east-1.amazonaws.com/uploads
+
+      // // s3 code
+      // // Get the presigned URL
+      // console.log("")
+      // const response = this.axios({
+      //   method: 'GET',
+      //   url: API_ENDPOINT
+      // })
+      // console.log('Response: ', response)
+      // console.log('Uploading: ', this.image)
+      // let binary = atob(this.image.split(',')[1])
+      // let array = []
+      // for (var i = 0; i < binary.length; i++) {
+      //   array.push(binary.charCodeAt(i))
+      // }
+      // let blobData = new Blob([new Uint8Array(array)], { type: 'image/jpeg' })
+      // console.log('Uploading to: ', response.data.uploadURL)
+      // const result = fetch(response.data.uploadURL, {
+      //   method: 'PUT',
+      //   body: blobData
+      // })
+      // console.log('Result: ', result)
+      // // Final URL for the user doesn't need the query string params
+      // this.uploadURL = response.data.uploadURL.split('?')[0]
+      // console.log(`image url at ${result.url.split("?")[0]}`);
+
     }
   },
 };

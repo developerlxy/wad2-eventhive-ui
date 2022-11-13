@@ -22,7 +22,7 @@
               data-aos="flip-up"
             >
             <v-avatar size="150" class="mt-2">
-                <img :src="'/src/assets/images/test.png'">
+                <img :src="'/src/assets/images/test.jpg'">
             </v-avatar>
             <v-rating
               :value="avgRating"
@@ -105,7 +105,7 @@
           data-aos-duration="1000"
         >
         <v-avatar size="150" class="mt-2">
-            <img :src="'/src/assets/images/test.png'">
+            <img :src="'/src/assets/images/test.jpg'">
         </v-avatar>
         <v-rating
           :value="avgRating"

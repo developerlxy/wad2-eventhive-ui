@@ -58,7 +58,7 @@ export default {
     },
     imageURL: {
       type: String,
-      default: "../src/assets/images/test.png",
+      default: "../src/assets/images/test.jpg",
     },
   },
   data(){
