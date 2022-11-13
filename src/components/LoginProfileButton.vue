@@ -28,7 +28,7 @@
             v-on="on"
           >
             <img v-if="$store.state.user.userPhotoURL" :src="$store.state.user.userPhotoURL"> 
-            <img v-else src="/src/assets/images/test.jpg">
+            <img v-else src="../assets/images/test.jpg">
           </v-avatar>
         </button>
       </template>
