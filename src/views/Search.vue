@@ -28,7 +28,7 @@
             </v-col>
           </v-row>
         </v-col>
-        <v-col class="">
+        <v-col v-if="this.$vuetify.breakpoint.mdAndUp" class="">
           <div
             v-if="eventPreview != false && mdBreakpoint"
             class="mt-2 mr-8 preview"
