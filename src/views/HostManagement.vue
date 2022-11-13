@@ -1,180 +1,154 @@
 <template>
-    <LoadingScreen v-if="isLoading"></LoadingScreen>
-  
-    <div v-else>
-        <v-container fluid>
-    <v-row
-      no-gutters
-      style="flex-wrap: nowrap;"
-    >
-      <v-col
-        class="text-left">
-        <h1>Event: {{ eventObj["eventName"] }}</h1>
-      </v-col>
-</v-row>
-          
-            <div>
-
-              <v-row
-      no-gutters
-      style="flex-wrap: nowrap;"
-    >
-    <v-col
-        cols="7"
-        class="text-left"> 
-        <v-img :src="eventObj['eventPhotoURL']"></v-img>
-    </v-col>
-    <v-col
-        cols="1"
-        style="min-width: 100px; max-width: 100%;"
-        class="flex-grow-1 flex-shrink-0"
-      >
-        <v-card
-          class="pa-2 text-left"
-          outlined
-          tile
-        >
-
-          <h2>Attendees</h2>
+  <div class="event-card brownLight py-4 py-lg-8 px-lg-16">
+    <v-card class="mx-auto mt-2 pt-4" :width="cardWidth">
+      <v-container>
+        <v-row>
           <v-card
-    class="pa-4"
-    flat
-    height="100px"
-  >
-  </v-card>
-  <v-divider></v-divider>
-        <v-card>
-          <div v-if="attendees.length==0">No attendees yet...</div>
-            <div v-else>
-              <div v-for="attendee of attendees">
-                <v-card-title><v-avatar><img :src="'/src/assets/images/test.jpg'"></v-avatar>&nbsp;  {{attendee["userName"]}}</v-card-title>
-                <v-card-subtitle></v-card-subtitle>
-              </div>
-              
-    
+            class="mx-auto mt-5"
+            :width="width"
+            outlined
+            color="transparent"
+          >
+            <img
+              v-bind:src="eventObj['eventPhotoURL']"
+              aspect-ratio="16/9"
+              width="100%"
+            />
+          </v-card>
+          <v-card class="mx-auto" :width="width" outlined color="transparent">
+            <v-container class="fill-height">
+              <v-row class="d-flex flex-column">
+                <v-col>
+                  <h1 class="text-left">{{ eventObj["eventName"] }}</h1>
+                  <p class="text-left"> <span><v-icon>mdi-map-marker</v-icon></span> {{eventObj["eventLocation"].ADDRESS}}</p>
+                </v-col>
+                <v-col class="justify-start text-left"> </v-col>
+              </v-row>
+              <v-row class="align-end justify-left">
+                <v-card
+                  class="mx-auto px-4 pb-9"
+                  :width="width"
+                  outlined
+                  color="transparent"
+                >
+                  <div class="d-flex flex-column">
+                    <v-card class="pa-4" :width="width">
+                      <h2 class="my-4 font-weight-medium">Attendees</h2>
+                      <div v-if="eventObj.attendees.length > 0">
+                        <v-virtual-scroll
+                          :items="eventObj.attendees"
+                          height="200"
+                          item-height="30"
+                        >
+                          <template v-slot:default="{ item }">
+                            <v-list-item :key="item">
+                              <v-list-item-content>
+                                <v-list-item-title>
+                                  <p>
+                                    <strong class="mb-2">{{
+                                      item.userName
+                                    }}</strong>
+                                  </p>
+                                </v-list-item-title>
+                              </v-list-item-content>
+                            </v-list-item>
+                          </template>
+                        </v-virtual-scroll>
+                      </div>
+                      <div v-else>
+                        <p>No attendees yet!</p>
+                      </div>
+                    </v-card>
+                  </div>
+                </v-card>
+              </v-row>
+            </v-container>
+            
+          </v-card>
+        </v-row>
+        <v-row> 
+            <EditEvent :eventobject="eventObj"></EditEvent>
+        </v-row>
+      </v-container>
+    </v-card>
   </div>
-        </v-card><br/>
-        </v-card>
-      </v-col>
-      </v-row>
-      
-    <v-row>
-      <v-col>
-        <v-date-picker v-model="picker" :landscape="!landscape" :reactive=true ></v-date-picker>
-        <v-btn color="primary"
-    @click="changeDate"
-    >
-      change event date
-    </v-btn>
-        <v-btn
-      class="ma-2"
-      color="success"
-      @click="increasePax"
-    >
-      increase pax
-    </v-btn>
-
-    <v-text-field
-  v-model="capacity"
-  hide-details
-  single-line
-  type="number"
-/>
-    
-    
-    <v-btn
-      class="ma-2"
-      color="error"
-      @click="deleteEvent"
-    >
-      delete event
-    </v-btn>
-{{ getFormattedDate }}
-    
-   
-      </v-col>
-    </v-row>
-  </div>
-  
-  </v-container>
-    </div>
-
 </template>
 
 <script>
-  import LoadingScreen from '../components/LoadingScreen.vue';  
-  
-  export default {
-      name: "HostManagement",
-      components: { LoadingScreen },
-      mounted() {
-      setTimeout(() => {
-        this.isLoading = false;
-      }, 1500);
-      this.setPicker();
-      this.getCapacity()
-      },
-      data() {
-        return {
-          // landscape: true,
-          reactive: true,
-          showSlider:false,
-          isLoading: true,
-          eventID:'',
-          picker:'',
-          capacity:0,
-        }
-      },
-      computed: {
-        eventObj() {
-          for (let event of this.$store.state.events) {
-            if (event["_id"]==this.eventID) {
-              return event
-            }
-          }
-        },
-        attendees() {
-          return this.eventObj["attendees"]
-        },
-        landscape() {
-        return this.$vuetify.breakpoint.width <= 700
-      }
-      },
-      watch: {
-    '$route.params': {
-        handler() {
-            this.eventID = this.$route.query.id
-        },
-        immediate: true,
-    }
-},
-methods: {
-  deleteEvent() {
-    if (confirm("Are you sure you want to delete this event?")) {
-      this.axios.delete(`https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/delete/${this.eventID}`);
-      this.$store.dispatch('getEvents')
-      this.$router.push('/') 
-  }
+import EditEvent from '../components/EditEvent.vue';
+export default {
+  name: "HostManagement",
+  components: {EditEvent},
+  mounted() {
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 2000);
+    this.setPicker();
+    this.getCapacity();
   },
-  increasePax() {
-    console.log(typeof this.capacity)
-    this.axios.put(`https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/capacity`,{'_id':this.eventID, 'maxCapacity':parseInt(this.capacity)})
-    this.$store.dispatch('getEvents')
+  data() {
+    return {
+      // landscape: true,
+      reactive: true,
+      showSlider: false,
+      isLoading: true,
+      eventID: "",
+      picker: "",
+      capacity: 0,
+      dialog: false,
+    };
   },
-  changeDate() {
-    this.axios.put(`https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/date`,{'_id':this.eventID, 'eventDate':this.picker})
-    this.$store.dispatch('getEvents')
-  },
-  setPicker() {
-          let thearray = this.eventObj["eventDate"].split("T"); 
-            this.picker = thearray[0]
-          },
-  getCapacity() {
-    this.capacity = this.eventObj["maxCapacity"]
-  }
-  
-  }
-}
+  computed: {
+    eventObj() {
+      for (let event of this.$store.state.events) {
+        if (event["_id"] == this.eventID) {
+          return event;
 
-  
-  </script>
+        }
+      }
+    },
+    attendees() {
+      return this.eventObj["attendees"];
+    },
+    landscape() {
+      return this.$vuetify.breakpoint.width <= 700;
+    },
+    width() {
+      switch (this.$vuetify.breakpoint.name) {
+        case "xs":
+          return 450;
+        case "sm":
+          return 450;
+        case "md":
+          return 450;
+        case "lg":
+          return 500;
+        case "xl":
+          return 500;
+      }
+    },
+    cardWidth() {
+      switch (this.$vuetify.breakpoint.name) {
+        case "xs":
+          return 500;
+        case "sm":
+          return 760;
+        case "md":
+          return 1000;
+        case "lg":
+          return 1300;
+        case "xl":
+          return 1500;
+      }
+    },
+  },
+  watch: {
+    "$route.params": {
+      handler() {
+        this.eventID = this.$route.query.id;
+      },
+      immediate: true,
+    },
+  },
+};
+</script>
