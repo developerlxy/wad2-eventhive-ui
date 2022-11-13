@@ -8,10 +8,10 @@
       style="flex-wrap: nowrap;"
     >
       <v-col
-        cols="7"
         class="text-left">
         <h1>Event: {{ eventObj["eventName"] }}</h1>
-            <img :src="eventObj['eventPhotoURL']">
+      </v-col>
+</v-row>
           
             <div>
 
@@ -22,46 +22,9 @@
     <v-col
         cols="7"
         class="text-left"> 
-        <v-date-picker v-model="picker" :landscape=true :reactive=true ></v-date-picker>
+        <v-img :src="eventObj['eventPhotoURL']"></v-img>
     </v-col>
-    <v-col>
-      <v-btn
-      class="ma-2"
-      color="success"
-      @click="increasePax"
-    >
-      increase pax
-    </v-btn>
-
-    <v-text-field
-  v-model="capacity"
-  hide-details
-  single-line
-  type="number"
-/>
-    </v-col>
-  </v-row>
-    
-    <v-btn
-      class="ma-2"
-      color="error"
-      @click="deleteEvent"
-    >
-      delete event
-    </v-btn>
-{{ getFormattedDate }}
-    
-    <v-btn color="primary"
-    @click="changeDate"
-    >
-      change event date
-    </v-btn>
-  </div>
-
-
-      </v-col>
-
-      <v-col
+    <v-col
         cols="1"
         style="min-width: 100px; max-width: 100%;"
         class="flex-grow-1 flex-shrink-0"
@@ -72,7 +35,7 @@
           tile
         >
 
-          <h1>Attendees</h1>
+          <h2>Attendees</h2>
           <v-card
     class="pa-4"
     flat
@@ -87,6 +50,7 @@
                 <v-card-title><v-avatar><img :src="'/src/assets/images/test.png'"></v-avatar>&nbsp;  {{attendee["userName"]}}</v-card-title>
                 <v-card-subtitle></v-card-subtitle>
               </div>
+              
     
   </div>
         </v-card><br/>
@@ -95,8 +59,46 @@
         <br/>
         </v-card>
       </v-col>
-    </v-row>
+      </v-row>
+      
+    <v-row>
+      <v-col>
+        <v-date-picker v-model="picker" :landscape="!landscape" :reactive=true ></v-date-picker>
+        <v-btn color="primary"
+    @click="changeDate"
+    >
+      change event date
+    </v-btn>
+        <v-btn
+      class="ma-2"
+      color="success"
+      @click="increasePax"
+    >
+      increase pax
+    </v-btn>
 
+    <v-text-field
+  v-model="capacity"
+  hide-details
+  single-line
+  type="number"
+/>
+    
+    
+    <v-btn
+      class="ma-2"
+      color="error"
+      @click="deleteEvent"
+    >
+      delete event
+    </v-btn>
+{{ getFormattedDate }}
+    
+   
+      </v-col>
+    </v-row>
+  </div>
+  
   </v-container>
     </div>
 
@@ -117,7 +119,7 @@
       },
       data() {
         return {
-          landscape: true,
+          // landscape: true,
           reactive: true,
           showSlider:false,
           isLoading: true,
@@ -136,7 +138,10 @@
         },
         attendees() {
           return this.eventObj["attendees"]
-        }
+        },
+        landscape() {
+        return this.$vuetify.breakpoint.width <= 700
+      }
       },
       watch: {
     '$route.params': {

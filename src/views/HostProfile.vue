@@ -41,7 +41,7 @@
         </div>
         <v-list-item-content style="text-align:left"><br>
           
-            Email: eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee <br>
+            Email: {{ host["userEmail"] }} <br>
 
         </v-list-item-content>
         <v-list-item-content style="text-align:left"><br>
@@ -75,7 +75,7 @@
           tile
         >
           <h1>Hey, I'm {{ host["userFullName"] }}!</h1><br/>
-          <p>Descripion here...</p>
+          <p v-html="host['userDesc']"></p>
           <h2>Rating & Reviews</h2><br>
           <div v-if="reviews.length==0">
           <p>No reviews yet...</p>
