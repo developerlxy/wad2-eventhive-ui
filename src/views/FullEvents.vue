@@ -54,7 +54,7 @@ export default {
 
         var config = {
           method: 'post',
-          url: 'https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/categories',
+          url:`${import.meta.env.VITE_API_BASE_URL}events/categories`,
           headers: { 
             'Content-Type': 'application/json'
           },

@@ -103,10 +103,10 @@ export default {
             // Get the presigned URL
             const response = await this.axios({
                 method: 'GET',
-                url: 'https://xt96j6drmd.execute-api.ap-southeast-1.amazonaws.com/uploads'
+                url: import.meta.env.VITE_S3_UPLOAD_URL
             })
-            console.log('Response: ', response)
-            console.log('Uploading: ', typeof this.vue_photo_cropped, this.vue_photo_cropped)
+            // console.log('Response: ', response)
+            // console.log('Uploading: ', typeof this.vue_photo_cropped, this.vue_photo_cropped)
             // let binary = atob(String(this.vue_photoFile).split(',')[1])
             // let array = []
             // for (var i = 0; i < binary.length; i++) {

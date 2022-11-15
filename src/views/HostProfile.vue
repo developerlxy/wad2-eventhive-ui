@@ -89,7 +89,7 @@
       name: "Home",
       components: { LoadingScreen, HostEventReview },
       mounted() {
-      this.axios.get('https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users').
+      this.axios.get(`${import.meta.env.VITE_API_BASE_URL}users`).
       then(result=>{
         this.allUsers = result.data
       })

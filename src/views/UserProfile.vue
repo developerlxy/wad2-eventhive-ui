@@ -171,7 +171,7 @@ import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragrap
 
 // variables to upload image
 const MAX_IMAGE_SIZE = 10000000
-const API_ENDPOINT = 'https://xt96j6drmd.execute-api.ap-southeast-1.amazonaws.com/uploads' // e.g. https://ab1234ab123.execute-api.us-east-1.amazonaws.com/uploads
+const API_ENDPOINT = import.meta.env.VITE_S3_UPLOAD_URL // e.g. https://ab1234ab123.execute-api.us-east-1.amazonaws.com/uploads
 
 
 export default {
@@ -263,7 +263,7 @@ export default {
       
       // UPLOAD IMAGE
       await this.uploadImage()
-      console.log(this.uploadURL)
+      // console.log(this.uploadURL)
       reqBody['userPhotoURL'] = this.uploadURL;
       
       // update categoryPrefs
@@ -309,7 +309,7 @@ export default {
 
       this.axios
         .put(
-          `https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users/${this.$store.state.user["_id"]}`,
+          `${import.meta.env.VITE_API_BASE_URL}users/${this.$store.state.user["_id"]}`,
           reqBody
         )
         .then((response) => {
@@ -338,7 +338,7 @@ export default {
       // console.log(e.target.result)
       // // variables to upload image
       // // const MAX_IMAGE_SIZE = 1000000
-      // const API_ENDPOINT = 'https://xt96j6drmd.execute-api.ap-southeast-1.amazonaws.com/uploads' // e.g. https://ab1234ab123.execute-api.us-east-1.amazonaws.com/uploads
+      // const API_ENDPOINT = '
 
       // // s3 code
       // // Get the presigned URL
@@ -401,7 +401,7 @@ export default {
         method: 'GET',
         url: API_ENDPOINT
       })
-      console.log('Response: ', response)
+      // console.log('Response: ', response)
       console.log('Uploading: ', this.image)
       let binary = atob(this.image.split(',')[1])
       let array = []
@@ -409,12 +409,12 @@ export default {
         array.push(binary.charCodeAt(i))
       }
       let blobData = new Blob([new Uint8Array(array)], { type: 'image/jpeg' })
-      console.log('Uploading to: ', response.data.uploadURL)
+      // console.log('Uploading to: ', response.data.uploadURL)
       const result = await fetch(response.data.uploadURL, {
         method: 'PUT',
         body: blobData
       })
-      console.log('Result: ', result)
+      // console.log('Result: ', result)
       // Final URL for the user doesn't need the query string params
       this.uploadURL = response.data.uploadURL.split('?')[0]
       console.log(`image url at ${result.url.split("?")[0]}`);
