@@ -272,7 +272,7 @@ const MAX_IMAGE_SIZE = 10000000
 
 /* ENTER YOUR ENDPOINT HERE */
 
-const API_ENDPOINT = 'https://xt96j6drmd.execute-api.ap-southeast-1.amazonaws.com/uploads' // e.g. https://ab1234ab123.execute-api.us-east-1.amazonaws.com/uploads
+const API_ENDPOINT = import.meta.env.VITE_S3_UPLOAD_URL // e.g. https://ab1234ab123.execute-api.us-east-1.amazonaws.com/uploads
 
 
 export default {
@@ -420,7 +420,7 @@ export default {
   
         var config = {
           method: 'post',
-          url: 'https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events',
+          url: `${import.meta.env.VITE_API_BASE_URL}events`,
           headers: {
             'Content-Type': 'application/json'
           },
@@ -472,7 +472,7 @@ export default {
       
       var config = {
         method: 'put',
-        url: 'https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users/created',
+        url: `${import.meta.env.VITE_API_BASE_URL}users/created`,
         headers: { 
           'Content-Type': 'application/json'
         },
@@ -538,7 +538,7 @@ export default {
         array.push(binary.charCodeAt(i))
       }
       let blobData = new Blob([new Uint8Array(array)], { type: 'image/jpeg' })
-      console.log('Uploading to: ', response.data.uploadURL)
+      // console.log('Uploading to: ', response.data.uploadURL)
       const result = await fetch(response.data.uploadURL, {
         method: 'PUT',
         body: blobData

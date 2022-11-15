@@ -44,14 +44,14 @@ export default new Vuex.Store({
   },
   actions: {
     getEvents({commit}) {
-      Vue.axios.get('https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events')
+      Vue.axios.get(`${import.meta.env.VITE_API_BASE_URL}events`)
         .then(result => {
           commit('saveEvents', result.data)
         })
         .catch(console.log("Get events error"))
     },
     getUser({commit}) {
-      Vue.axios.get('https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users')
+      Vue.axios.get(`${import.meta.env.VITE_API_BASE_URL}users`)
         .then(result => {
           var currUser = null
           const users = result.data

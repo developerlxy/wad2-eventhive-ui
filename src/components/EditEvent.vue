@@ -352,8 +352,7 @@ const MAX_IMAGE_SIZE = 10000000;
 
 /* ENTER YOUR ENDPOINT HERE */
 
-const API_ENDPOINT =
-  "https://xt96j6drmd.execute-api.ap-southeast-1.amazonaws.com/uploads"; // e.g. https://ab1234ab123.execute-api.us-east-1.amazonaws.com/uploads
+const API_ENDPOINT = import.meta.env.VITE_S3_UPLOAD_URL; 
 
 export default {
   name: "createEvent",
@@ -500,25 +499,10 @@ export default {
         eventHost: this.currentUser,
       };
 
-      // await this.axios
-      //   .put(
-      //     `https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/capacity`,
-      //     data
-      //   )
-      //   .then(function (response) {
-      //     console.log('update works')
-      //     console.log(JSON.stringify(response.data));
-      //     return
-      //     
-          
-      //   })
-      //   .catch(function (error) {
-      //     console.log(error);
-      //   });
       
       var config = {
         method: 'put',
-        url: 'https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/edit/'+this.eventobject["_id"],
+        url: `${import.meta.env.VITE_API_BASE_URL}events/edit/`+this.eventobject["_id"],
         headers: { 
           'Content-Type': 'application/json'
         },
@@ -552,7 +536,7 @@ export default {
     deleteEvent() {
 
           this.axios.delete(
-            `https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/delete/${this.eventobject["_id"]}`
+            `${import.meta.env.VITE_API_BASE_URL}events/delete/${this.eventobject["_id"]}`
           );
           console.log("Delete success")
           this.alert=false;

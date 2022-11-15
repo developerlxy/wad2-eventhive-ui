@@ -122,7 +122,7 @@ export default {
       login: function (event) {
         if(this.$refs.form.validate()) {
           this.isDisabled = true
-          this.axios.post("https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users/signin",
+          this.axios.post(`${import.meta.env.VITE_API_BASE_URL}users/signin`,
             {
               userEmail: this.email,
               userPassword: this.password
@@ -168,7 +168,7 @@ export default {
           const user = result.user;
           this.googleUser = user
           console.log(this.googleUser.email)
-          this.axios.get('https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users')
+          this.axios.get(`${import.meta.env.VITE_API_BASE_URL}users`)
           .then(result => {
             console.log(result.data)
             const allUsers = result.data
@@ -179,7 +179,7 @@ export default {
               this.$router.push('/')
             } else {
               console.log("no google user found")
-              this.axios.post('https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users/register', 
+              this.axios.post(`${import.meta.env.VITE_API_BASE_URL}users/register`, 
               {
                 userName: this.googleUser.email.split("@")[0],
                 userPassword: null,

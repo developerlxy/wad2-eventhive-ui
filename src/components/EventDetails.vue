@@ -410,7 +410,7 @@
 
             var config = {
             method: 'put',
-            url: 'https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/attendees',
+            url: `${import.meta.env.VITE_API_BASE_URL}events/attendees`,
             headers: { 
                 'Content-Type': 'application/json'
             },
@@ -435,7 +435,7 @@
 
             var config = {
             method: 'put',
-            url: 'https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users/registered',
+            url: `${import.meta.env.VITE_API_BASE_URL}users/registered`,
             headers: { 
                 'Content-Type': 'application/json'
             },

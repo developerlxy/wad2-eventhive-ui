@@ -157,7 +157,7 @@
               this.usernameExists = false
               this.bothExists = false
               this.isDisabled = true
-              this.axios.post("https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users/register",
+              this.axios.post(`${import.meta.env.VITE_API_BASE_URL}users/register`,
                   {
                       userName: this.userName,
                       userPassword: this.password,

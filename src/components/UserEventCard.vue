@@ -215,13 +215,13 @@ import Review from './Review.vue'
               newUserRegisteredList.push(this.registeredEventsList[x])
             }
           }
-          this.axios.put(`https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/events/attendees`,
+          this.axios.put(`${import.meta.env.VITE_API_BASE_URL}events/attendees`,
             {
               '_id': this.eventObj._id, 
               'attendees': newAttendees
             })
           .then(()=> {
-            this.axios.put(`https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users/registered`,
+            this.axios.put(`${import.meta.env.VITE_API_BASE_URL}users/registered`,
             {
               'userEmail': this.$store.state.user.userEmail, 
               'registeredEvents': newUserRegisteredList

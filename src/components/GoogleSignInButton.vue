@@ -28,7 +28,7 @@ export default {
         const user = result.user;
         this.googleUser = user
         console.log(this.googleUser.email)
-        axios.get('https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users')
+        axios.get(`${import.meta.env.VITE_API_BASE_URL}users`)
         .then(result => {
           console.log(result.data)
           const allUsers = result.data
@@ -39,7 +39,7 @@ export default {
             this.$router.go()
           } else {
             console.log("no google user found")
-            axios.post('https://us-central1-wad2-eventhive-backend-d0f2c.cloudfunctions.net/app/api/users/register', 
+            axios.post(`${import.meta.env.VITE_API_BASE_URL}users/register`, 
             {
               userName: this.googleUser.email.split("@")[0],
               userPassword: null,
